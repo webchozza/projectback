@@ -11,10 +11,10 @@
 	<result property="bgroup_id" column="bgroup_id" />
 </resultMap> -->
 
-<resultMap id="scrapBoard" type="first.com.model.ScrapDTO">
-	<collection property="board" column="member_id" javaType="java.util.ArrayList"
+	<resultMap id="scrapBoard" type="first.com.model.ScrapDTO">
+		<collection property="board" column="member_id" javaType="java.util.ArrayList"
 		ofType="first.com.model.BoardDTO" select="list" />
-</resultMap>
+	</resultMap>
 
 
     <!-- scrap테이블의 member_id칼럼에 존재하는 값과 비교하는 값은 둘 다 세션에서 전달받음 -->

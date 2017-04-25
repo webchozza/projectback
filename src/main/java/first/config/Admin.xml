@@ -5,6 +5,43 @@
 
 <mapper namespace="admin">
 
+	<!-- 회원 목록 불러오기 -->
+	<select id="memberList" resultType="first.com.model.MemberDTO">
+		SELECT FROM member ORDER BY member_date DESC
+	</select>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="memberModify" parameterType="first.com.model.MemberDTO">
+	UPDATE member SET 
+	<where>
+		<if test="member_pw == null"></if>
+		member_pw = member_pw,
+		<if test="member_pw != null">
+		#{member_pw}, 
+		</if>
+		<if test="member_name == null">
+		member_name = member_name,
+		</if>
+		<if test="member_name != null">
+		member_name = #{member_name}, 
+		</if>
+		<if test="member_photo == null">
+		member_photo = member_photo
+		</if>
+		<if test="member_photo != null">
+		member_photo = #{member_photo}
+		</if>
+	</where>
+	</update>
+	
+	<delete id="memberDelete" parameterType="first.com.model.MemberDTO">
+	DELETE FROM member WHERE member_id = #{member_id}
+	</delete>
+	
+	<!-- 로그아웃하거나 세션이 만료되었을 때 ch(접속확인 칼럼)을 2로 변경 -->
+	<update id="updateCh" parameterType="first.com.model.MemberDTO">
+	UPDATE member SET member_ch = 2 WHERE member_id = #{member_id}
+	</update>
 
 
 </mapper>
