@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class aop {
-
+	/*วะมุ*/
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	public Object log(ProceedingJoinPoint joinPoint) throws Throwable {
