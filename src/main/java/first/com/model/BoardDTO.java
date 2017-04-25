@@ -19,6 +19,8 @@ public class BoardDTO {
 	private int board_filecount;
 	private int bgroup_id;
 	
+	private String member_name;
+	
 	
 	public int getBoard_id() {
 		return board_id;
@@ -103,6 +105,12 @@ public class BoardDTO {
 	}
 	public void setBgroup_id(int bgroup_id) {
 		this.bgroup_id = bgroup_id;
+	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 	
 	

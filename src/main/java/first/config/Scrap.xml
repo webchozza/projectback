@@ -4,23 +4,20 @@
 
 <mapper namespace="scrap">
 
-<!-- <resultMap id="scrap" type="first.com.model.ScrapDTO">
-	<result property="scrap_id" column="scrap_id" />
-	<result property="member_id" column="member_id" />
-	<result property="board_id" column="board_id" />
-	<result property="bgroup_id" column="bgroup_id" />
-</resultMap> -->
-
 	<resultMap id="scrapBoard" type="first.com.model.ScrapDTO">
-		<collection property="board" column="member_id" javaType="java.util.ArrayList"
-		ofType="first.com.model.BoardDTO" select="list" />
+		<association property="member_name" column="member_id" javaType="first.com.model.MemberDTO" select="name" />
+		<collection property="board" column="member_id" javaType="java.util.ArrayList" ofType="first.com.model.BoardDTO" select="list" />
 	</resultMap>
-
-
+	
+	<!-- 해당 게시글의 작성자 닉네임을 가져온다 -->
+ 	<select id="name" resultMap="scrapBoard">
+	SELECT member_name FROM member WHERE member_id = #{member_id}
+	</select>
+	
     <!-- scrap테이블의 member_id칼럼에 존재하는 값과 비교하는 값은 둘 다 세션에서 전달받음 -->
-	<select id="list" resultType="scrapBoard"><!-- 컬렉션에서 설정해준 column의 값이 아래 #{}의 값으로 설정된다 -->
-	SELECT b.* FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id}) a 
-	INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_date DESC;
+	<select id="list" resultMap="scrapBoard">컬렉션에서 설정해준 column의 값이 아래 #{}의 값으로 설정된다
+	<![CDATA[SELECT b.* FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id}) a 
+	INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_date DESC;]]>
 	</select>
 	
 	<insert id="insert" parameterType="first.com.model.ScrapDTO">

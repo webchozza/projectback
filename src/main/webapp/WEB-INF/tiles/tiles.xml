@@ -12,16 +12,8 @@
 		<put-attribute name="menu" value="/WEB-INF/views/main/SideMenu.jsp" />
 	</definition>
 
-	<definition name="MemberList" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/admin/MemberList.jsp" />
-	</definition>
-	
-	<definition name="Sound" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/chat/cha.jsp" />
-	</definition>
-	
 	<definition name="ScrapList" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/search/Search.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
 
 
