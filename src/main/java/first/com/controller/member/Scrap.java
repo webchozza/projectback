@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import first.com.common.Paging;
+import first.com.common.AjaxPaging;
 import first.com.dao.ScrapDAO;
 import first.com.model.BoardDTO;
 import first.com.model.ScrapDTO;
@@ -29,7 +29,7 @@ public class Scrap {
 	private int blockCount = 10; // 한 페이지의 게시물의 수
 	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
 	private String pagingHtml; // 페이징을 구현한 HTML
-	private Paging page; // 페이징 클래스
+	private AjaxPaging page; // 페이징 클래스
 	private String path = "ScrapList";//if (RequestMapping("/here.do")) => here = path
 	
 	
@@ -40,6 +40,7 @@ public class Scrap {
 							@RequestParam(value="n", defaultValue="0") int n,
 							@RequestParam(value="search", required=false, defaultValue="") String search,
 							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+							@RequestParam(value="ap", required=false) String ap,
 							Model model){
 		
 		map.put("member_id", 1000);//테스트끝나면 여기 바꿔줘야한다
@@ -50,7 +51,7 @@ public class Scrap {
 		
 		totalCount = list.size();
 		
-		page = new Paging(path, currentPage, totalCount, blockCount, blockPage, search, n);
+		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
 		int lastCount = totalCount;
@@ -62,6 +63,10 @@ public class Scrap {
 		model.addAttribute("board", list);
 		model.addAttribute("page", pagingHtml);
 		model.addAttribute("n", n);
+		
+		if(ap != null){
+			return "scrap/ScrapList";//at Ajax request
+		}
 		
 		return "ScrapList";
 		
@@ -76,7 +81,7 @@ public class Scrap {
 		
 		response.setContentType("text/html; charset=UTF-8"); //캐릭터셋 설정(한글 사용)
 		PrintWriter out = response.getWriter();
-		out.println("<script>alert('스크랩 되었습니다.'); history.go(-1); </script>");
+		out.println("<script>alert('스크랩 되었습니다.'); history.go(-1); </script>");//이것도 Ajax로 다시 구현하자(통신 성공시 callback함수에서 alert창 띄워주면 된다.)
 		out.close();
 		
 		return "ScrapInsert";//스크립트가 동작하지 않는다면 스크랩 목록으로 이동

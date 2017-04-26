@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import first.com.common.AjaxPaging;
 import first.com.common.Paging;
 import first.com.dao.AdminDAO;
 import first.com.model.MemberDTO;
@@ -25,8 +26,8 @@ public class MemberList {
 	private int blockCount = 10; // 한 페이지의 게시물의 수
 	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
 	private String pagingHtml; // 페이징을 구현한 HTML
-	private Paging page; // 페이징 클래스
-	private String path = "MemberList";//url에서 프로젝트 경로 다음부터 .do의 앞부분까지 ex)/dokky/~~~.do =>> ~~~ = path
+	private AjaxPaging page; // 페이징 클래스
+	private String path = "MemberList";//if (RequestMapping("/here.do")) => here = path
 	private String[] kind = { "member_email", "member_name" };
 	
 	
@@ -35,7 +36,13 @@ public class MemberList {
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
 							 @RequestParam(value="ch", required=false) String ch,
+							 @RequestParam(value="ap", required=false) String ap,
 							 Model model){
+		
+		System.out.println(search);
+		System.out.println(currentPage);
+		System.out.println(n);
+		System.out.println(ap);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -47,7 +54,7 @@ public class MemberList {
 		
 		totalCount = list.size();
 		
-		page = new Paging(path, currentPage, totalCount, blockCount, blockPage, search, n);
+		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
 		int lastCount = totalCount;
@@ -58,7 +65,16 @@ public class MemberList {
 
 		model.addAttribute("memberlist", list);
 		model.addAttribute("page", pagingHtml);
-		model.addAttribute("n", n);
+		
+		model.addAttribute("n", n);//select문의 selected 속성 부여를 위한 조건 구현에 필요
+		
+		//ajax를 이용한 검색을 구현하기 위해 넣어 보내준다
+		model.addAttribute("i", currentPage);
+		model.addAttribute("path", page.getFullPath());
+		
+		if(ap != null){
+			return "admin/MemberList";//at Ajax request
+		}
 		
 		
 		return "MemberList";
