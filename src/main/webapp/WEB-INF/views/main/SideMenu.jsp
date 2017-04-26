@@ -38,7 +38,7 @@
 					
 					<br />
 					<br /> 관리자이면
-					<a href="/dokky/ml.do" class="icon fa-cogs">관리자 페이지</a>
+					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
 				</ul>
 			</section>
 

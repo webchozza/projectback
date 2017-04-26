@@ -4,9 +4,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.AdminDAO;
+import first.com.model.MemberDTO;
 
 @Controller
 public class AdminDelete {
@@ -15,11 +16,14 @@ public class AdminDelete {
 	private AdminDAO admin;
 	
 	@RequestMapping("/MemberDelete.do")
-	public String adminDelete(@RequestParam(value="id") int member_id) {
-
-		admin.memberDelete(member_id);
+	public ModelAndView adminDelete(MemberDTO member) {
+		ModelAndView mv = new ModelAndView();
 		
-		return "MemberList";
+		admin.memberDelete(member);
+		
+		mv.setViewName("redirect:/dokky/MemberList.do");
+		
+		return mv;
 	}
 
 }

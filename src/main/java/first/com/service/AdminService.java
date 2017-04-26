@@ -1,6 +1,7 @@
 package first.com.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,6 +24,12 @@ public class AdminService implements AdminDAO{
 		List<MemberDTO> list = sqlSessionTemplate.selectList("admin.memberList");
 		return list;
 	}
+	
+	@Override
+	public MemberDTO memberSelect(Map model) {
+		MemberDTO member = sqlSessionTemplate.selectOne("admin.selectOne", model);
+		return member;
+	}
 
 	@Override
 	public void memberModify(MemberDTO member) {
@@ -30,8 +37,8 @@ public class AdminService implements AdminDAO{
 	}
 
 	@Override
-	public void memberDelete(int member_id) {
-		sqlSessionTemplate.delete("admin.memberDelete", member_id);
+	public void memberDelete(MemberDTO member) {
+		sqlSessionTemplate.update("admin.memberDelete", member);
 	}
 
 	

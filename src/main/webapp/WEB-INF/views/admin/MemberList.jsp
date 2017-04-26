@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/main/Taglib.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script>
+	function deleteMember() {
+
+		if (confirm("탈퇴처리 하시겠습니까?") == false) {
+			return false;
+		}
+
+	}
+</script>
 </head>
 <style>
 input[type="text"] {
@@ -34,13 +44,13 @@ input[type="text"] {
 <body>
 	<h4>Member Information Management</h4>
 	<form action="#" method="post">
-			<div class="select-wrapper">
-				<select name="demo-category" id="demo-category">
-					<option value="">이메일</option>
-					<option value="1">닉네임</option>
-					<option value="1">가입일</option>
-				</select>
-			</div>
+		<div class="select-wrapper">
+			<select name="demo-category" id="demo-category">
+				<option value="">이메일</option>
+				<option value="1">닉네임</option>
+				<option value="1">가입일</option>
+			</select>
+		</div>
 		<input type="text" name="search" /> <input type="submit" value="검색" />
 		<a href="#">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속
 			회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> <a href="#">미접속
@@ -59,15 +69,29 @@ input[type="text"] {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td align="center">여기에 이메일</td>
-					<td align="center">여기에 닉네임</td>
-					<td align="center">여기에 가입일</td>
-					<td align="center">여기에 등급</td>
-					<td align="center"><a href="#">수정</a>&nbsp;&nbsp;&nbsp;<a
-						href="#">차단</a>&nbsp;&nbsp;&nbsp;<a href="#">탈퇴</a></td>
-					<td align="center"><img src="">접속 여부에 따라 해당 이미지 노출</td>
-				</tr>
+				<c:forEach var="member" items="${memberlist}">
+					<tr>
+						<td align="center">${member.member_email}</td>
+						<td align="center">${member.member_name}</td>
+						<td align="center"><fmt:formatDate
+								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
+						<td align="center">여기에 등급</td>
+						<td align="center"><a
+							href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;
+							<a href="#">차단</a>&nbsp;&nbsp;&nbsp; <a
+							href="/dokky/MemberDelete.do?member_id=${member.member_id}"
+							onclick="deleteMember()">탈퇴</a></td>
+						<c:if test="${member.member_ch eq 0 or member.member_ch eq 2}">
+							<td align="center"><img
+								src="/dokky/resources/images/chu.jpg"
+								style="width: 17%; height: 35%;"></td>
+						</c:if>
+						<c:if test="${member.member_ch eq 1}">
+							<td align="center"><img src="/dokky/resources/images/ch.jpg"
+								style="width: 17%; height: 35%;"></td>
+						</c:if>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

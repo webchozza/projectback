@@ -22,6 +22,8 @@ public class MemberList {
 		
 		List<MemberDTO> list = admin.memberList();
 		
+		System.out.println(list);
+		
 		model.addAttribute("memberlist", list);
 		
 		return "MemberList";
