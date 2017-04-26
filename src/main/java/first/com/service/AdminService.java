@@ -20,13 +20,13 @@ public class AdminService implements AdminDAO{
 	
 	
 	@Override
-	public List<MemberDTO> memberList() {
-		List<MemberDTO> list = sqlSessionTemplate.selectList("admin.memberList");
+	public List<MemberDTO> memberList(Map<String, Object> map) {
+		List<MemberDTO> list = sqlSessionTemplate.selectList("admin.memberList", map);
 		return list;
 	}
 	
 	@Override
-	public MemberDTO memberSelect(Map model) {
+	public MemberDTO memberSelect(Map<String, Object> model) {
 		MemberDTO member = sqlSessionTemplate.selectOne("admin.selectOne", model);
 		return member;
 	}

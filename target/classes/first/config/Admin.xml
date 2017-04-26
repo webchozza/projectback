@@ -6,8 +6,15 @@
 <mapper namespace="admin">
 
 	<!-- 회원 목록 불러오기 -->
-	<select id="memberList" resultType="first.com.model.MemberDTO">
-		SELECT * FROM member WHERE member_del = 'Y' ORDER BY member_date DESC
+	<select id="memberList" resultType="first.com.model.MemberDTO" parameterType="java.util.Map">
+		SELECT * FROM (SELECT * FROM member WHERE member_del = 'Y' AND ${n} like '%'||#{search}||'%') 
+	 	<if test="ch != null and ch == 0">
+		WHERE member_ch = 0
+		</if>
+		<if test="ch != null and ch == 1">
+		WHERE member_ch = 1 
+		</if>
+		ORDER BY member_date DESC
 	</select>
 	
 	<!-- 수정을 위해 한 줄의 회원 정보 불러오기 -->

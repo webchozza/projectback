@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import first.com.common.Paging;
 import first.com.dao.ScrapDAO;
 import first.com.model.BoardDTO;
 import first.com.model.ScrapDTO;
@@ -24,20 +25,43 @@ public class Scrap {
 	@Resource
 	private ScrapDAO Scrap;
 	
+	private int totalCount; // 총 게시물의 수
+	private int blockCount = 10; // 한 페이지의 게시물의 수
+	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
+	private String pagingHtml; // 페이징을 구현한 HTML
+	private Paging page; // 페이징 클래스
+	private String path = "ScrapList";//if (RequestMapping("/here.do")) => here = path
+	
+	
 	Map<String, Object> map = new HashMap<String, Object>();
 			
 	@RequestMapping(value="/ScrapList.do")
 	public String scrapList(@RequestParam(value="id", required=false, defaultValue="0") int id, 
+							@RequestParam(value="n", defaultValue="0") int n,
 							@RequestParam(value="search", required=false, defaultValue="") String search,
+							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							Model model){
 		
-		map.put("member_id", 1000);
+		map.put("member_id", 1000);//테스트끝나면 여기 바꿔줘야한다
 		map.put("search", search);
 		
 		//세션 아이디를 전송받아서 파라미터 값으로 넘겨준다
 		List<BoardDTO> list = Scrap.scrapList(map);
 		
+		totalCount = list.size();
+		
+		page = new Paging(path, currentPage, totalCount, blockCount, blockPage, search, n);
+		pagingHtml = page.getPagingHtml().toString();
+		
+		int lastCount = totalCount;
+
+		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
+		
+		list= list.subList(page.getStartCount(), lastCount);
+		
 		model.addAttribute("board", list);
+		model.addAttribute("page", pagingHtml);
+		model.addAttribute("n", n);
 		
 		return "ScrapList";
 		

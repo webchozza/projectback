@@ -2,29 +2,17 @@ package first.com.common;
 
 public class Paging {
 
-	private int currentPage; 
-	private int totalCount;
 	private int totalPage;
-	private int blockCount;
-	private int blockPage; 
-	private int startCount; 
-	private int endCount; 
-	private int startPage; 
-	private int endPage; 
-	private String search;
-	private String n;
+	private int startCount;
+	private int endCount;
+	private int startPage;
+	private int endPage;
 
 	private StringBuffer pagingHtml;
 
+	public Paging(String path, int currentPage, int totalCount, int blockCount, int blockPage, String search, int n) {
 
-	public Paging(int currentPage, int totalCount, int blockCount, int blockPage, String search, String n) {
-
-		this.blockCount = blockCount;
-		this.blockPage = blockPage;
-		this.currentPage = currentPage;
-		this.totalCount = totalCount;
-		this.search = search;
-		this.n = n;
+		path = "/dokky/" + path;
 
 		totalPage = (int) Math.ceil((double) totalCount / blockCount);
 		if (totalPage == 0) {
@@ -47,164 +35,49 @@ public class Paging {
 
 		pagingHtml = new StringBuffer();
 
-		if (search == "" && n.equals("0")) {
-			if (currentPage > blockPage) {
-				pagingHtml.append("<a href=ListHotel.action?currentPage=" + (startPage - 1) + ">");
-				pagingHtml.append("[이전]");
-				pagingHtml.append("</a>");	}
+		if (currentPage > blockPage) {
+			pagingHtml.append(
+					"<a href='" + path + ".do?currentPage=" + (startPage - 1) + "&search=" + search + "&n=" + n + "'>");
+			pagingHtml.append("[이전]");
+			pagingHtml.append("</a>");
+		}
 
-
-			for (int i = startPage; i <= endPage; i++) {
-				if (i > totalPage) {
-					break; 	}
-				if (i == currentPage) {
-					pagingHtml.append("&nbsp;<b> <font color='red'>");
-					pagingHtml.append(i);
-					pagingHtml.append("</font></b>");
-				} else {
-					pagingHtml.append("&nbsp;<a href='ListHotel.action?currentPage=");
-					pagingHtml.append(i);
-					pagingHtml.append("'>");
-					pagingHtml.append(i);
-					pagingHtml.append("</a>");	}
-
-				pagingHtml.append("&nbsp;"); 	}
-
-
-		
-			if (totalPage - startPage >= blockPage) {
-				pagingHtml.append("<a href=ListHotel.action?currentPage=" + (endPage + 1) + ">");
-				pagingHtml.append("[다음]");
-				pagingHtml.append("</a>");	}
-			
-		} else {
-			
-			if (currentPage > blockPage) {
-				pagingHtml.append("<a href='ListHotel.action?currentPage=" + (startPage - 1) + "&search=" + search
-						+ "&n=" + n + "'>");
-				pagingHtml.append("[이전]");
-				pagingHtml.append("</a>"); }
-
-
-			for (int i = startPage; i <= endPage; i++) {
-				if (i > totalPage) {
-					break; 	}
-				if (i == currentPage) {
-					pagingHtml.append("&nbsp;<b> <font color='red'>");
-					pagingHtml.append(i);
-					pagingHtml.append("</font></b>");
-				} else {
-					pagingHtml.append("&nbsp;<a href='ListHotel.action?currentPage=" + i + "&search=" + search + "&n="
-							+ n + "'>");
-					pagingHtml.append(i);
-					pagingHtml.append("</a>"); 	}
-
-				pagingHtml.append("&nbsp;"); }
-
-
-			if (totalPage - startPage >= blockPage) {
-				pagingHtml.append("<a href='ListHotel.action?currentPage=" + (endPage + 1) + "&search=" + search
-						+ "&n=" + n + "'>");
-				pagingHtml.append("[다음]");
+		for (int i = startPage; i <= endPage; i++) {
+			if (i > totalPage) {
+				break;
+			}
+			if (i == currentPage) {
+				pagingHtml.append("&nbsp;<b> <font color='red'>");
+				pagingHtml.append(i);
+				pagingHtml.append("</font></b>");
+			} else {
+				pagingHtml.append(
+						"&nbsp;<a href='" + path + ".do?currentPage=" + i + "&search=" + search + "&n=" + n + "'>");
+				pagingHtml.append(i);
 				pagingHtml.append("</a>");
 			}
+
+			pagingHtml.append("&nbsp;");
 		}
-	}
 
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public int getTotalCount() {
-		return totalCount;
-	}
-
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
-	}
-
-	public int getTotalPage() {
-		return totalPage;
-	}
-
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
-	public int getBlockCount() {
-		return blockCount;
-	}
-
-	public void setBlockCount(int blockCount) {
-		this.blockCount = blockCount;
-	}
-
-	public int getBlockPage() {
-		return blockPage;
-	}
-
-	public void setBlockPage(int blockPage) {
-		this.blockPage = blockPage;
-	}
-
-	public int getStartCount() {
-		return startCount;
-	}
-
-	public void setStartCount(int startCount) {
-		this.startCount = startCount;
-	}
-
-	public int getEndCount() {
-		return endCount;
-	}
-
-	public void setEndCount(int endCount) {
-		this.endCount = endCount;
-	}
-
-	public int getStartPage() {
-		return startPage;
-	}
-
-	public void setStartPage(int startPage) {
-		this.startPage = startPage;
-	}
-
-	public int getEndPage() {
-		return endPage;
-	}
-
-	public void setEndPage(int endPage) {
-		this.endPage = endPage;
-	}
-
-	public String getSearch() {
-		return search;
-	}
-
-	public void setSearch(String search) {
-		this.search = search;
+		if (totalPage - startPage >= blockPage) {
+			pagingHtml.append(
+					"<a href='" + path + ".do?currentPage=" + (endPage + 1) + "&search=" + search + "&n=" + n + "'>");
+			pagingHtml.append("[다음]");
+			pagingHtml.append("</a>");
+		}
 	}
 
 	public StringBuffer getPagingHtml() {
 		return pagingHtml;
 	}
 
-	public void setPagingHtml(StringBuffer pagingHtml) {
-		this.pagingHtml = pagingHtml;
+	public int getStartCount() {
+		return startCount;
 	}
 
-	public String getN() {
-		return n;
-	}
-
-	public void setN(String n) {
-		this.n = n;
+	public int getEndCount() {
+		return endCount;
 	}
 
 }

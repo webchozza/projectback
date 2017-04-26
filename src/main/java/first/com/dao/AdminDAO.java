@@ -7,9 +7,9 @@ import first.com.model.MemberDTO;
 
 public interface AdminDAO {
 	
-	public List<MemberDTO> memberList();
+	public List<MemberDTO> memberList(Map<String, Object> map);
 	
-	public MemberDTO memberSelect(Map map);
+	public MemberDTO memberSelect(Map<String, Object> map);
 	
 	public void memberModify(MemberDTO member);
 	

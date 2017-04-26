@@ -40,20 +40,21 @@ input[type="text"] {
 	position: relative;
 	width: 10%;
 }
+
 </style>
 <body>
 	<h4>Member Information Management</h4>
-	<form action="#" method="post">
+	<form action="/dokky/MemberList.do" method="post">
 		<div class="select-wrapper">
-			<select name="demo-category" id="demo-category">
-				<option value="">이메일</option>
-				<option value="1">닉네임</option>
-				<option value="1">가입일</option>
+			<select name="n" id="demo-category">
+				<option value="0" <c:if test="${n eq 0}">selected</c:if>>이메일</option>
+				<option value="1" <c:if test="${n eq 1}">selected</c:if>>닉네임</option>
 			</select>
 		</div>
 		<input type="text" name="search" /> <input type="submit" value="검색" />
-		<a href="#">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속
-			회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> <a href="#">미접속
+		<a href="/dokky/MemberList.do?ch=1">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속
+			회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> <a href="/dokky/MemberList.do?ch=0">미접속
+			회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> <a href="/dokky/MemberList.do">전체
 			회원&nbsp;&nbsp;|&nbsp;&nbsp;</a>
 	</form>
 	<div class="table-wrapper">
@@ -95,5 +96,15 @@ input[type="text"] {
 			</tbody>
 		</table>
 	</div>
+	
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
+			<div><p id="cm" class="hc vc">${page}</p></div>
+			<style>
+			div { position:relative; } 
+			#cm { position:absolute; } 
+			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
+			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
+			</style>
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 </body>
 </html>

@@ -58,6 +58,15 @@ border-bottom-color: #FFFFFF;
 			</div>
 		</div>
 	</section>
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
+			<div><p id="cm" class="hc vc">${page}</p></div>
+			<style>
+			div { position:relative; } 
+			#cm { position:absolute; } 
+			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
+			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
+			</style>
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 
 </body>
 </html>
