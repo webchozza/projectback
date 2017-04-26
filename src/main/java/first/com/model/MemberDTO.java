@@ -10,6 +10,7 @@ public class MemberDTO {
 	private int member_ch;//현재 접속자 확인 칼럼
 	private String member_photo;
 	
+	
 	public int getMember_id() {
 		return member_id;
 	}

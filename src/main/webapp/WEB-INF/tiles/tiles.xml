@@ -24,6 +24,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
 	
+		<definition name="MemberList" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/MemberList.jsp" />
+	</definition>
+	
 
 
 </tiles-definitions>

@@ -16,8 +16,6 @@ import first.com.model.ScrapDTO;
 @Resource(name = "Scrap")
 public class ScrapService implements ScrapDAO {
 
-	BoardDTO board = new BoardDTO();
-
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 
