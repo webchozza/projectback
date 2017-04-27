@@ -12,7 +12,7 @@
 function gosubmit1(){
 	var f = document.frm;
 	f.method = "post";
-	f.action = "main.do";
+	f.action = "/dokky/main.do";
 	f.submit();
 }
 </script>
@@ -24,15 +24,17 @@ function gosubmit1(){
 	<div id="wrapper">
 		<div id="main" align="center">
 			<div class="inner">
-	<!-- FindEmail -->			
+	<!-- FindEmail -->
+			<form name="frm">			
 			<h3>비밀번호 찾기</h3>
 					<div class="box" style="width:400pt;">
 					감사합니다 !<br/>
-					회원님의 이메일로 임시비밀번호가  발송되었습니다.  <br/>
+					회원님의 이메일로 임시비밀번호가  발송되었습니다.<br/>
 					메일을 확인해 주세요. ^^
 					<br/>
 				<input  type="button" style="width:300pt;" value="메인화면" class="button special" onclick="javascript:gosubmit1()">
 					</div>
+				</form>
 				</div>		
 		   </div>
 		 </div> 

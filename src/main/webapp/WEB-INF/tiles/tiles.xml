@@ -15,6 +15,36 @@
 	<definition name="ScrapList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
-
-
+	
+	
+	<!--LoginForm  -->
+	 <definition name="LoginForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/LoginForm.jsp" />
+	</definition>
+	
+	<!--LoginError  -->
+	<definition name="LoginError" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/LoginError.jsp" />
+	</definition>
+	
+	<!--JoinForm  -->
+	 <definition name="JoinForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/JoinForm.jsp" />
+	</definition>
+	
+	<!--FindPWForm -->
+	 <definition name="FindPWForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/FindForm.jsp" />
+	</definition>
+	
+	<!--CheckEmailForm -->
+	 <definition name="FindEmail" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/FindEmail.jsp" />
+	</definition>
+	
+	<!--SendEmail -->
+	 <definition name="JoinEmail" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/member/JoinEmail.jsp" />
+	</definition>
+	
 </tiles-definitions>

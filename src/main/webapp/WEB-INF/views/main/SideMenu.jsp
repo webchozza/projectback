@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -24,21 +25,29 @@
 					<input type="text" name="query" id="query" placeholder="Search" />
 				</form>
 			</section>
-
+			<c:if test="${sessionScope.member_email eq null}">
 			<!-- 로그인 회원가입등 -->
 			<section id="icons">
-				<a href="#" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="#" class="icon fa-user-plus"> 회원가입</a>
+				<a href="/dokky/loginform.do" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="/dokky/joinform.do" class="icon fa-user-plus"> 회원가입</a>
+			
 				<!-- 로그인 처리 -->
 				<ul>
-					<br /> 로그인했으면
-					<a href="#" class="icon fa-sign-out"> 로그아웃</a>
+			</c:if>	
+					<br /> 
+			<c:if test="${sessionScope.member_email ne null}">
+					<a href="/dokky/logout.do" class="icon fa-sign-out"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="#" class="icon fa-bell" id="notice"> 알림</a>
-					
+					<br/>
+					안녕하세요! 
+					${sessionScope.member_name}님
 					<br />
-					<br /> 관리자이면
+			</c:if>				
+					<c:if test="${sessionScope.member_email}=='admin'">
+					<br />
 					<a href="/dokky/ml.do" class="icon fa-cogs">관리자 페이지</a>
+					</c:if>
 				</ul>
 			</section>
 
