@@ -16,7 +16,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
 	
-	
 	<!--LoginForm  -->
 	 <definition name="LoginForm" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/member/LoginForm.jsp" />
@@ -47,4 +46,23 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/JoinEmail.jsp" />
 	</definition>
 	
+
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+	</definition>
+	
+	<definition name="ScrapDelete" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
+	</definition>
+	
+	<definition name="MemberList" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/MemberList.jsp" />
+	</definition>
+	
+	<definition name="AdminModifyForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/admin/AdminModifyForm.jsp" />
+	</definition>
+	
+
 </tiles-definitions>
+

@@ -46,7 +46,8 @@
 			</c:if>				
 					<c:if test="${sessionScope.member_email}=='admin'">
 					<br />
-					<a href="/dokky/ml.do" class="icon fa-cogs">관리자 페이지</a>
+					<br />
+					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
 					</c:if>
 				</ul>
 			</section>
