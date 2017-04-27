@@ -9,6 +9,17 @@
 input[name=ss] {
 display:none;
 }
+
+a {
+border-bottom-color: #FFFFFF;
+	color: #f56a6a;
+	text-decoration:none !important
+}
+
+#b{
+  color: #3d4449;
+  text-decoration:none !important
+}
 </style>
 </head>
 <body>
@@ -22,7 +33,7 @@ display:none;
 					<thead>
 						<tr>
 						<td><section id="search" class="alt" style="width: 400px">
-					<form method="post" action="/dokky/ee.do">
+					<form method="post" action="/dokky/ScrapList.do">
 						<input type="text" name="search" id="search" placeholder="Search"
 							width="100px" />
 							<input type="submit" name="ss"/>
@@ -33,12 +44,13 @@ display:none;
 					<tbody>
 					<c:forEach var="board" items="${board}">
 					<tr>
-							<td><a href="#">board.board_subject</a></td>
-							<td><a class="icon fa-comment">3</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-thumbs-up">10</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-eye">10</a></td>
-							<td><a href="#">board.member_name</a></td>
-							<td>작성일자</td>
+							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
+							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
+								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
+								class="icon fa-eye">${board.board_hit}</a></td>
+							<td width="10%" align="center"><a href="#" id="b">${board.member_name}</a></td>
+							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
+							<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -46,6 +58,15 @@ display:none;
 			</div>
 		</div>
 	</section>
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
+			<div><p id="cm" class="hc vc">${page}</p></div>
+			<style>
+			div { position:relative; } 
+			#cm { position:absolute; } 
+			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
+			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
+			</style>
+			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 
 </body>
 </html>

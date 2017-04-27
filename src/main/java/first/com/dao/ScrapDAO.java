@@ -1,12 +1,17 @@
 package first.com.dao;
 
-import first.com.model.MemberDTO;
+import java.util.List;
+import java.util.Map;
+
+import first.com.model.BoardDTO;
 import first.com.model.ScrapDTO;
 
 public interface ScrapDAO {
 	
-	public ScrapDTO scrapList(MemberDTO md);
+	public List<BoardDTO> scrapList(Map<String, Object> map);
 	
-	public String deleteScrap();
+	public void insertScrap(ScrapDTO scrap);
+	
+	public String deleteScrap(int scrap_id);
 
 }

@@ -1,5 +1,7 @@
 package first.com.model;
 
+import java.util.Date;
+
 public class MemberDTO {
 	
 	private int member_id;
@@ -9,6 +11,8 @@ public class MemberDTO {
 	private String member_del;
 	private int member_ch;//현재 접속자 확인 칼럼
 	private String member_photo;
+	private Date member_date;
+	
 	
 	public int getMember_id() {
 		return member_id;
@@ -52,7 +56,12 @@ public class MemberDTO {
 	public void setMember_photo(String member_photo) {
 		this.member_photo = member_photo;
 	}
-	
+	public Date getMember_date() {
+		return member_date;
+	}
+	public void setMember_date(Date member_date) {
+		this.member_date = member_date;
+	}
 	
 
 }
