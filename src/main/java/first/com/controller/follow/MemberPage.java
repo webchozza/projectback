@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class FollowMain {
+public class MemberPage {
 	
-	@RequestMapping("/test.do")
+	@RequestMapping("/MemberPage.do")
 	public String followMain(){
-		return "FollowMain";
+		return "MemberPage";
 	}
 
 }

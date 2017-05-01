@@ -66,8 +66,8 @@
 		<put-attribute name="body" value="/WEB-INF/views/main/AllSearchList.jsp"/>
 	</definition>
 
-	<definition name="FollowMain" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/follow/FollowMain.jsp"/>
+	<definition name="MemberPage" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/memberpage/MemberPage.jsp"/>
 	</definition>
 	
 	
