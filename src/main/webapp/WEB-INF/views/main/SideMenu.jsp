@@ -35,14 +35,18 @@ function notipop(){
 				
 				//noti
 				var str = "<ul> \n";
+				
+				//comment
 				var pren = "회원님의 ";
 				var postn = " 댓글이 등록되었습니다.";
 				
+				//follow => new board
 				var pref = " 님이 새 ";
 				var postf = "을 등록하셨습니다.";
+			
 				//follow
 				$.each(data, function(key,value){
-					if(value.noti == "1"){
+					if(value.noti_kinds == "comment"){
 						alert('1');
 					str += "<li>"+pren+"<a href='"+value.list.noti_url+"'>"+value.list.noti_subject+"</a>"+postn+"</li>\n"; 
 					} else if(value.noti == null) {

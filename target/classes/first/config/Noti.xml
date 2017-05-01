@@ -4,7 +4,7 @@
 	 
 	 <mapper namespace="noti">
 	 
-	 <select id="memberid" parameterType="int">
+	 <select id="select_board" resultType="first.com.model.BoardDTO" parameterType="int">
 	 SELECT * FROM board WHERE board_id = #{board_id}
 	 </select>
 	 
@@ -17,7 +17,9 @@
 	 , NOTI_URL
 	 , NOTI_DATE
 	 , NOTI_TYPEID
-	 , BOARD_ID) 
+	 , BOARD_ID
+	 , NOTI_KINDS
+	 ) 
 	 VALUES
 	 ( SEQ_NOTI.NEXTVAL
 	 , #{member_id}
@@ -26,8 +28,13 @@
  	 , #{board_url}
  	 , SYSDATE
  	 , #{bgroup_id}
- 	 , #{board_id}) 
+ 	 , #{board_id}
+ 	 , #{noti_kinds}) 
 	 </insert>
+	 
+	 <select id="list" resultType="first.com.model.NotiDTO" parameterType="int">
+	 SELECT * FROM notification WHERE member_id = #{member_id}
+	 </select>
 	 
 	 
 	 </mapper>

@@ -30,23 +30,8 @@ public class Alram {
 		
 		//Notification테이블에 있는 정보 중 현재 접속 중인 회원의 session_id를 이용하여 일치하는 정보들을 꺼내온다.
 		//NotiDTO에 값을 넣어서 전달하기 때문에 json객체의 키는 DTO의 각 property이다.
-		/*List<NotiDTO> list = noti.notiList(member_id);*/
-		List list = new ArrayList();
-		NotiDTO no = new NotiDTO();
+		List<NotiDTO> list = noti.notiList(member_id);
 		
-		no.setNoti_url("/dokky/main.do?"+no.getBoard_id());
-		no.setBoard_id(member_id);
-		no.setNoti_subject("title");
-		
-		Map map = new HashMap();
-		
-		map.put("list", no);
-		map.put("noti", "1");
-		
-		
-		list.add(0, map);
-		list.add(1, no);
-
 		return list;
 	}
 

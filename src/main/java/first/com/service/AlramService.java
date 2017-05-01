@@ -19,7 +19,7 @@ public class AlramService implements AlramDAO{
 
 	@Override
 	public List<NotiDTO> notiList(int member_id) {
-		List<NotiDTO> list = sqlSessionTemplate.selectList("list", member_id);
+		List<NotiDTO> list = sqlSessionTemplate.selectList("noti.list", member_id);
 		return list;
 	}
 
