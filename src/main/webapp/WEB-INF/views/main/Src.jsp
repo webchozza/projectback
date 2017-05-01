@@ -8,8 +8,9 @@
 
 <!-- js -->
 <!-- JQuery -->
-<script src="/dokky/resources/assets/js/jquery.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+<script src="//code.jquery.com/jquery.min.js"></script>
 <script src="/dokky/resources/assets/js/skel.min.js"></script>
 <script src="/dokky/resources/assets/js/util.js"></script>
 <script src="/dokky/resources/assets/js/main.js"></script>
+<script src="/dokky/resources/assets/js/page.js"></script>

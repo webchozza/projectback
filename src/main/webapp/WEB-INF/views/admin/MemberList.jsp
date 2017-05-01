@@ -5,9 +5,23 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="/dokky/resources/assets/js/page.js"></script>
 <script>
+function sch() {
+	
+	var form = document.getElementById('searchform');
+	var path = form.path.value;
+	var i = form.i.value;
+	var search = form.search.value;
+	var n = form.n.value;
+	
+	$('#area').load(path, {
+		currentPage : i,
+		search : search,
+		n : n,
+		ap : 'AjaxSearch'
+	});
+}
+
 function MemberCheck(i){
 	
 	if(i == 'all'){

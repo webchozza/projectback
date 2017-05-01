@@ -4,6 +4,20 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<script>
+function sch() {
+	var form = document.getElementById('searchform');
+	var path = form.path.value;
+	var i = form.i.value;
+	var search = form.search.value;
+	
+	$('#area').load(path, {
+		currentPage : i,
+		search : search,
+		ap : 'AjaxSearch'
+	});
+}
+</script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -23,6 +37,7 @@ border-bottom-color: #FFFFFF;
 </style>
 </head>
 <body>
+<div id="area">
 	<h4>Scrap</h4>
 
 	<!-- 바디 -->
@@ -33,10 +48,11 @@ border-bottom-color: #FFFFFF;
 					<thead>
 						<tr>
 						<td><section id="search" class="alt" style="width: 400px">
-					<form method="post" action="/dokky/ScrapList.do">
-						<input type="text" name="search" id="search" placeholder="Search"
-							width="100px" />
-							<input type="submit" name="ss"/>
+					<form action="javascript:;" method="post" id="searchform" >
+					<input type="hidden" name="i" id="i" value="${i}"/>
+					<input type="hidden" name="path" id="path" value="${path}"/>
+						<input type="text" name="search" id="search" placeholder="Search" width="100px" />
+							<input type="submit" name="ss" onclick="sch()"/>
 					</form>
 				</section></td>
 						</tr>
@@ -67,6 +83,6 @@ border-bottom-color: #FFFFFF;
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-
+</div>
 </body>
 </html>

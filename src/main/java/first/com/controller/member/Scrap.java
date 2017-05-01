@@ -62,9 +62,14 @@ public class Scrap {
 		
 		model.addAttribute("board", list);
 		model.addAttribute("page", pagingHtml);
+		
 		model.addAttribute("n", n);
 		
+		model.addAttribute("i", currentPage);
+		model.addAttribute("path", page.getFullPath());
+		
 		if(ap != null){
+			System.out.println("斐馬馬馬馬馬馬馬");
 			return "scrap/ScrapList";//at Ajax request
 		}
 		
