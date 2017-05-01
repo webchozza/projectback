@@ -10,6 +10,10 @@ public interface MemberDAO {
 	
 	public void loginUpdate(MemberDTO member);
 	
+	public void logOut(MemberDTO member);
+	
+	public MemberDTO checkModify(MemberDTO member);
+	
 	public String findForm();
 	
 	public MemberDTO findPw(MemberDTO member);
@@ -26,9 +30,9 @@ public interface MemberDAO {
 	
 	public boolean checkEmail(MemberDTO member);
 	
-	public String modifyMemberForm();
+	public MemberDTO modifyMemberForm(MemberDTO member);
 	
-	public String modifyMember();
+	public void modifyMember(MemberDTO member);
 	
 	
 	

@@ -32,6 +32,12 @@ public class MemberService implements MemberDAO {
 		sqlSession.update("member.loginUpdate", member);
 		
 	}
+	
+	@Override
+	public void logOut(MemberDTO member) {
+		sqlSession.update("member.logOut",member);
+		
+	}
 
 	@Override
 	public String findForm() {
@@ -82,6 +88,12 @@ public class MemberService implements MemberDAO {
 	}
 	
 	@Override
+	public MemberDTO checkModify(MemberDTO member) {
+		
+		return sqlSession.selectOne("member.checkModify", member);
+	}
+
+	@Override
 	public String email() {
 		// TODO Auto-generated method stub
 		return null;
@@ -89,15 +101,16 @@ public class MemberService implements MemberDAO {
 	
 
 	@Override
-	public String modifyMemberForm() {
+	public MemberDTO modifyMemberForm(MemberDTO member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String modifyMember() {
-		// TODO Auto-generated method stub
-		return null;
+	public void modifyMember(MemberDTO member) {
+		System.out.println("¸â¹ö ÀÌ¸§"+member.getMember_name());
+		System.out.println("¸â¹ö ÀÌ¸§"+member.getMember_email());
+		sqlSession.update("member.modifyMember", member);
 	}
 
 	@Override

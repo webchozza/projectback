@@ -36,15 +36,16 @@
 			</c:if>	
 					<br /> 
 			<c:if test="${sessionScope.member_email ne null}">
-					<a href="/dokky/logout.do" class="icon fa-sign-out"> 로그아웃</a>
+					<a href="/dokky/logout.do?member_email=${sessionScope.member_email}" class="icon fa-sign-out"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="#" class="icon fa-bell" id="notice"> 알림</a>
 					<br/>
+					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-bell" id="notice">회원정보수정</a>
 					안녕하세요! 
-					${sessionScope.member_name}님
+					${member_name}님
 					<br />
 			</c:if>				
-					<c:if test="${sessionScope.member_email}=='admin'">
+					<c:if test="${member_email}=='admin'">
 					<br />
 					<br />
 					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>

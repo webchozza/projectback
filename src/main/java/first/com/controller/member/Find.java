@@ -102,9 +102,12 @@ public class Find {
 				message.setRecipient(Message.RecipientType.TO, new InternetAddress(member.getMember_email()));
 				System.out.println("이메일 전송 9");
 				Multipart mp = new MimeMultipart();
+				
 				MimeBodyPart mbp1 = new MimeBodyPart();
-				mbp1.setText("회원님의 임시비밀번호는 "+pw+" 입니다.\n\n비밀번호를 즉시 변경하시기 바랍니다.\n\n"
-						+ "http://localhost:8080/dokky/loginform.do (DOKKY 로그인화면으로 이동)");
+				String confirmUrl = "회원님의 임시비밀번호는 "+pw+" 입니다.\n\n비밀번호를 즉시 변경하시기 바랍니다.\n\n<a href='http://localhost:8080/dokky/loginform.do'>DOKKY 로그인화면으로 이동</a>";
+				mbp1.setContent(confirmUrl, "text/html;charset=UTF-8");
+				/*mbp1.setText("회원님의 임시비밀번호는 "+pw+" 입니다.\n\n비밀번호를 즉시 변경하시기 바랍니다.\n\n"
+						+ "http://localhost:8080/dokky/loginform.do (DOKKY 로그인화면으로 이동)");*/
 				mp.addBodyPart(mbp1);
 				MailcapCommandMap mc = (MailcapCommandMap) CommandMap.getDefaultCommandMap();
 				mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html");

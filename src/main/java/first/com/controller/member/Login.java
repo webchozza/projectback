@@ -56,6 +56,7 @@ public class Login {
 		HttpSession session = request.getSession(false);
 		//왜 false가 뜰까용???
 		if(session!=null){
+			memberService.logOut(member);
 			//저장한 세션 영역 삭제
 			session.invalidate();
 		}

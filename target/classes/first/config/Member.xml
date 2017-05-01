@@ -14,6 +14,12 @@ MEMBER_CH = 1
 WHERE MEMBER_EMAIL = #{member_email}
 </update>
 
+<update id="logOut" parameterType="first.com.model.MemberDTO">
+UPDATE MEMBER SET
+MEMBER_CH = 0
+WHERE MEMBER_EMAIL = #{member_email}
+</update>
+
 <select id="findPw" parameterType="first.com.model.MemberDTO"  resultType="first.com.model.MemberDTO">
 SELECT MEMBER_PW FROM MEMBER 
 WHERE MEMBER_EMAIL = #{member_email}
@@ -40,9 +46,18 @@ INSERT INTO MEMBER(MEMBER_ID,MEMBER_EMAIL,MEMBER_PW,MEMBER_NAME,MEMBER_DATE)
 VALUES(SEQ_MEMBER.NEXTVAL,#{member_email},#{member_pw},#{member_name},SYSDATE)
 </insert>
 
+<select id="checkModify" parameterType="first.com.model.MemberDTO"  resultType="first.com.model.MemberDTO">
+SELECT * FROM MEMBER 
+WHERE MEMBER_EMAIL = #{member_email} AND MEMBER_PW = #{member_pw}
+</select>
 
-
-
+<update id="modifyMember" parameterType="first.com.model.MemberDTO">
+UPDATE MEMBER SET
+MEMBER_NAME = #{member_name},
+MEMBER_PW = #{member_pw},
+MEMBER_CH = 1
+WHERE MEMBER_EMAIL = #{member_email}
+</update>
 
 
 </mapper>
