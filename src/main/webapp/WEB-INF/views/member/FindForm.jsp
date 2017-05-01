@@ -10,21 +10,23 @@
 <!--input="button" 누락확인과  submit하기   -->
 <script type="text/javascript">
 	function gosubmit1() {
-
-		if (frm.email.value == "") {
+		
+		
+		if (frm.member_email.value == "") {
 			alert("이메일을 입력해주세요.");
 			return false;
 		}
-		if(((frm.email.value.indexOf('@'))<=0)&&(frm.email.value.indexOf('.')<=0))
+		if(((frm.member_email.value.indexOf('@'))<=0)&&(frm.member_email.value.indexOf('.')<=0))
 		{
 			alert("정상적인 email이 아닙니다.");
-			frm.email.value="";
-			frm.email.focus();
+			frm.member_email.value="";
+			frm.member_email.focus();
 			return;
 		}
 		var f = document.frm;
-		f.method = "post";
-		f.action = "findpw.do";
+		f.method = "get";
+		f.member_email.value = f.member_email.value;
+		f.action = "/dokky/findpwform.do";
 		f.submit();
 	}
 	
@@ -42,7 +44,7 @@
 				<form name="frm">
 					<!--이메일 입력창  -->
 					<div class="6u 12u$(xsmall)" style="float: inherit;">
-						<input type="text" style="width: 300pt;" name="email" id="email"
+						<input type="text" style="width: 300pt;" name="member_email" id="member_email"
 							value="" placeholder="Email" /> <br /> 
 						<!--홈 버튼 -->
 						<input type="button" value="확인" style="width: 300pt;"
@@ -50,8 +52,8 @@
 						<br />
 						<hr style="margin: 0 auto; width: 300pt;">
 					</div>
-			</div>
 			</form>
+			</div>
 		</div>
 	</div>
 </body>

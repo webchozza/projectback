@@ -1,8 +1,12 @@
 package first.com.dao;
 
+import java.util.List;
+
+import first.com.model.BoardDTO;
+
 public interface BqnaDAO {
 	
-	public String bqnaList();
+	public List<BoardDTO> bqnaList();
 	
 	public String bqnaDetail();
 	
@@ -18,8 +22,11 @@ public interface BqnaDAO {
 	
 	public String bqnaRecommand();
 	
+	public List<BoardDTO> bqnaSearch0(String search);
 	
+	public List<BoardDTO> bqnaSearch1(String search);
 	
+	public List<BoardDTO> bqnaSearch2(String search);
 	
 	public String bCqnaWrite();
 	

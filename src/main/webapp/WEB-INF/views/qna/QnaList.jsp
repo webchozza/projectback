@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/main/Taglib.jsp" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -33,17 +34,22 @@ display:none;
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach var="list" items="${bqnalist}">
 						<tr>
-							<td><a href="#">여기에 게시글 제목</a></td>
-							<td><a class="icon fa-comment">3</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-thumbs-up">10</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-eye">10</a></td>
-							<td><a href="#">작성자 닉네임</a></td>
-							<td>작성일자</td>
+							<td><a href="#">${list.board_title }</a></td>
+							<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp; <a
+								class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp; <a
+								class="icon fa-eye">${list.board_hit }</a></td>
+							<td><a href="#">${list.board_nickname }</a></td>
+							<td>${list.board_date }</td>
 						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
+			
+			<div class="paging" aling="center">${paingHtml}</div>
+			
 			<div align="center">
 				<section id="search" class="alt" style="width: 400px">
 					<form method="post" action="#">
