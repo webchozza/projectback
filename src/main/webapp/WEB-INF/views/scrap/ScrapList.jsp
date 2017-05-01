@@ -41,9 +41,8 @@ border-bottom-color: #FFFFFF;
 	<h4>Scrap</h4>
 
 	<!-- 바디 -->
-	<section id="banner">
-		<div class="content">
 			<div class="table-wrapper">
+			<hr style="width: 70%; align: left;">
 				<table>
 					<thead>
 						<tr>
@@ -72,8 +71,6 @@ border-bottom-color: #FFFFFF;
 					</tbody>
 				</table>
 			</div>
-		</div>
-	</section>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			<div><p id="cm" class="hc vc">${page}</p></div>
 			<style>

@@ -13,8 +13,8 @@
 	</select>
 	
 	
-	<insert id="insert" parameterType="first.com.model.ScrapDTO">
-	INSERT INTO scrap VALUES (SEQ_SCRAP.NEXTVAL, #{member_id}, #{board_id}, #{bgroup_id})
+	<insert id="insert" parameterType="first.com.model.ScrapDTO">	
+	INSERT INTO scrap VALUES (#{member_id}, #{board_id}, #{bgroup_id}, SEQ_SCRAP.NEXTVAL)
 	</insert>
 	
 	

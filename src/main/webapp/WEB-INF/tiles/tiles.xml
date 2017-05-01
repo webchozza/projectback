@@ -46,7 +46,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/member/JoinEmail.jsp" />
 	</definition>
 	
-
 	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
 	</definition>
@@ -62,6 +61,15 @@
 	<definition name="AdminModifyForm" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/admin/AdminModifyForm.jsp" />
 	</definition>
+	
+	<definition name="AllSearchList" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/main/AllSearchList.jsp"/>
+	</definition>
+
+	<definition name="FollowMain" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/follow/FollowMain.jsp"/>
+	</definition>
+	
 	
 
 </tiles-definitions>

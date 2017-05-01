@@ -6,6 +6,11 @@
 <link href="../css/main.css" rel="stylesheet" type="text/css" />
 <script src="//code.jquery.com/jquery.min.js"></script>
 <title>음성 인식</title>
+<style>
+#soundsubmit{
+display: none;
+}
+</style>
 </head>
 
 <body>

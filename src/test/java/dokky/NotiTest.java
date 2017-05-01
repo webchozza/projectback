@@ -36,7 +36,7 @@ public class NotiTest {
 
 	@Test
 	public void testAlramList() throws Exception {
-		mockMvc.perform(get("/test.do").param("board_id", "2").param("session_id", "1000").param("board_url", "/test.list").param("kinds", "comment"))
+		mockMvc.perform(get("/testAlramList.do").param("board_id", "2").param("session_id", "1000").param("board_url", "/test.list").param("kinds", "comment"))
 			.andExpect(status().isOk());
 		//MockHttpServletRequestBuilder의 모든 요청 정보 생성 메소드는 MockHttpServletRequestBuilder를 리턴하기 때문에 메소트 체이닝 방식으로 요청 정보를 구성할 수 있다.
 	}

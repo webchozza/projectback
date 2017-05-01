@@ -38,7 +38,7 @@ function notipop(){
 				
 				//comment
 				var pren = "회원님의 ";
-				var postn = " 댓글이 등록되었습니다.";
+				var postn = "글에 댓글이 등록되었습니다.";
 				
 				//follow => new board
 				var pref = " 님이 새 ";
@@ -72,6 +72,7 @@ function notipop(){
 	}
 }
 
+
 </script>
 <style>
 .nb {
@@ -94,6 +95,19 @@ function notipop(){
 display:none;
 }
 
+input[name=ss] {
+display:none;
+}
+
+#sidebar>.inner>.alt {
+	background-color: #eff1f2;
+	border-bottom: 0;
+	margin: -2.22222em 0 4.44444em -2.22222em;
+	padding: 2.22222em;
+	width: calc(100% + 3.8em);
+	padding-right: 50px;
+}
+
 </style>
 </head>
 <body>
@@ -102,8 +116,9 @@ display:none;
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">
-				<form method="post" action="#">
-					<input type="text" name="query" id="query" placeholder="Search" />
+				<form method="post" action="/dokky/AllSearchList.do" style="width:85%;">
+					<input type="text" name="soundsearch" id="soundsearch" placeholder="Search All" />
+					<input type="submit" name="ss" id="soundsubmit"/>
 				</form>
 			</section>
 			<c:if test="${sessionScope.member_email eq null}">
@@ -144,10 +159,11 @@ display:none;
 						</ul></li>
 					<li><a href="elements.html">자유게시판</a></li>
 					<li><a href="elements.html">오픈소스</a></li>
-					<li><a href="/dokky/soundtest.do">음성인식 검색 테스트</a></li>
 				</ul>
 			</nav>
 		</div>
 	</div>
+	
+	
 </body>
 </html>

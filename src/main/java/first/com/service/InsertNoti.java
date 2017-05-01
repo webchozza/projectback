@@ -6,13 +6,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import first.com.model.BoardDTO;
 
-@Controller//test
-/*@Service*/
+/*@Controller*///test
+@Service
 @Resource(name="insertNoti")
 public class InsertNoti {
 	
@@ -21,7 +21,7 @@ public class InsertNoti {
 
 	Map<String, Object> map = new HashMap<String, Object>();
 	
-	@RequestMapping("/test.do")
+	/*@RequestMapping("/testAlramList.do")*/
 	public void insertNoti(int board_id, int session_id, String path, String kinds){//board_id = The ID of the post where the comment was written
 																		      //session_id = Session ID at the time of comment creation
 																	          //board_url = The URL of the post where the comment was written
