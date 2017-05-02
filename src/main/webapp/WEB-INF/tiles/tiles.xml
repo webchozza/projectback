@@ -15,22 +15,47 @@
 	<definition name="ScrapList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
-	
-	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
-		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
+			스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
+			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
 	</definition>
-	
+
 	<definition name="ScrapDelete" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
 	</definition>
-	
+
 	<definition name="MemberList" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/admin/MemberList.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/MemberList.jsp" />
 	</definition>
-	
+
 	<definition name="AdminModifyForm" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/admin/AdminModifyForm.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/AdminModifyForm.jsp" />
+	</definition>
+
+	<!-- 이밑으로자유게시판 -->
+	
+	<!-- 리스트 -->
+	<definition name="FreeList" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/free/FreeList.jsp" />
 	</definition>
 	
+	<!-- 글쓰기폼 -->
+	<definition name="FreeWriteForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/free/FreeWriteForm.jsp"/>
+	</definition>
+	
+	<!-- 상세보기 -->
+	<definition name="FreeDetail" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/free/FreeDetail.jsp"/>
+	</definition>
+	
+	<!-- 글수정폼 -->
+	<definition name="FreeModifyForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/free/FreeModifyForm.jsp"/>
+	</definition>
 
 </tiles-definitions>
