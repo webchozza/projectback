@@ -79,6 +79,10 @@
 	<definition name="QnaList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/qna/QnaList.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="QnaDetail" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/qna/QnaDetail.jsp"></put-attribute>
+	</definition>
 
 </tiles-definitions>
 

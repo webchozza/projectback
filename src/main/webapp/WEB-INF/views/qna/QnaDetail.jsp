@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/main/Taglib.jsp" %>
 <!DOCTYPE HTML>
 
 <html>
@@ -31,22 +32,18 @@
 									</colgroup>
 									<tbody>
 										<tr>
-											<td colspan="2"><strong><a href="#">ID입니다<!-- 여기에 아이디 --></a></strong>
-												<br> <i>2017.4.27<!-- 여기에 작성일 --></i></td>
+											<td colspan="2"><strong><a href="#">${detail.board_id }</a></strong>
+												<br> <i><fmt:formatDate value="${detail.board_date}" pattern="yyyy.MM.dd hh:mm" /></i></td>
 										</tr>
 										<tr>
 											<td><h2>
-													모니터 추천 부탁드려요...
-													<!-- 여기에 글제목 -->
+												${detail.board_title }
 												</h2>
 												<hr class="major" />
 
 												<p>
-
-													<!-- 여기에 글내용 -->
-													안녕하세요 모니터 구매고려중이고 27인치 QHD 생각중입니다. 레노버 L27q-10 IPS DP 무결점 이
-													끌리긴 하는데 검색하다보니 커브드 모니터도 눈에 들어오더라고요 ㅎ 혹시 커브드 모니터 사용하신분 계신가여?
-													27인치중 괜찮은거 있으면 추천 부탁드립니다~
+												${detail.board_content }
+					
 												</p>
 												<div align="right">
 												<a href="#" class="button special small">수정</a>

@@ -8,7 +8,7 @@ public interface BqnaDAO {
 	
 	public List<BoardDTO> bqnaList();
 	
-	public String bqnaDetail();
+	public BoardDTO bqnaDetail(int id);
 	
 	public String bqnaWriteForm();
 	
@@ -31,5 +31,6 @@ public interface BqnaDAO {
 	public String bCqnaWrite();
 	
 	public String bCqnaDelete();
-
+	
+	public BoardDTO bqnaUpdateHit(int id);
 }

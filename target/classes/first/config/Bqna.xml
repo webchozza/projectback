@@ -38,7 +38,21 @@
 		bgroup_id=4
 		ORDER BY board_id DESC
 	</select>
-
-
+	
+	<!-- 상세보기 -->
+	<select id="bqnaDetail" resultType="first.com.model.BoardDTO"
+		parameterType="int">
+		SELECT * FROM board
+		WHERE board_id = #{board_id}
+	</select>
+	
+	<!-- 조회수증가 -->
+	<update id="bqnaUpdateHit" parameterType="int">
+		UPDATE board
+		SET
+			board_hit = board_hit + 1
+		WHERE
+			board_id = #{board_id}
+	</update>
 
 </mapper>

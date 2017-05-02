@@ -36,12 +36,12 @@ display:none;
 					<tbody>
 						<c:forEach var="list" items="${bqnalist}">
 						<tr>
-							<td><a href="#">${list.board_title }</a></td>
+							<td><a href="bqnadetail.do?board_id=${list.board_id }&currentPage=${currentPage}">${list.board_title }</a></td>
 							<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-eye">${list.board_hit }</a></td>
 							<td><a href="#">${list.board_nickname }</a></td>
-							<td>${list.board_date }</td>
+							<td><fmt:formatDate value="${list.board_date}" pattern="yyyy.MM.dd" /></td>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -50,15 +50,25 @@ display:none;
 			
 			<div class="paging" aling="center">${paingHtml}</div>
 			
-			<div align="center">
-				<section id="search" class="alt" style="width: 400px">
-					<form method="post" action="#">
-						<input type="text" name="search" id="search" placeholder="Search"
-							width="100px" />
-							<input type="submit" name="ss"/>
-					</form>
-				</section>
-			</div>
+			<div class="row uniform" align="center">
+            <form method="post" action="bqnalist.do">
+            <div class="select-wrapper" style="width: 200px; display: inherit;"
+               align="center">
+               <select name="n" id="demo-category">
+                  <option value="1">제목</option>
+                  <option value="2">내용</option>
+                  <option value="3">작성자</option>
+               </select>
+            </div>
+            <section id="search" class="alt"
+               style="width: 200px; display: inherit;">
+               
+                  <input type="text" name="search" id="search" placeholder="Search"
+                     width="100px"  /> <input type="submit" name="ss" />
+               
+            </section>
+            </form>
+         </div>
 		</div>
 	</section>
 

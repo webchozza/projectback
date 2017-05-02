@@ -23,9 +23,9 @@ public class BqnaService implements BqnaDAO {
 	}
 
 	@Override
-	public String bqnaDetail() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardDTO bqnaDetail(int id) {
+		// qna 상세보기
+		return SST.selectOne("bqna.bqnaDetail", id);
 	}
 
 	@Override
@@ -92,6 +92,12 @@ public class BqnaService implements BqnaDAO {
 	public List<BoardDTO> bqnaSearch2(String search) {
 		// TODO Auto-generated method stub
 		return SST.selectList("bqna.bqnaSearchMember", "%"+search+"%");
+	}
+
+	@Override
+	public BoardDTO bqnaUpdateHit(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

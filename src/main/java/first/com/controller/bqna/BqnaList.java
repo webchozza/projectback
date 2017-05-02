@@ -43,19 +43,20 @@ public class BqnaList {
 			List<BoardDTO> boardDTO =null;
 		
 		String search = request.getParameter("search");
-		if (search != null)
-			search = new String(search.getBytes("8859_1"), "UTF-8");
 		
 		// °Ë»öÇÒ‹š
 		if (search != null) {
 			n = Integer.parseInt(request.getParameter("n"));
 			
-			if (n ==0)
-				boardDTO = bqnaService.bqnaSearch0(search);
-			else if (n == 1)
-				boardDTO = bqnaService.bqnaSearch1(search);
-			else if (n == 2)
-				boardDTO = bqnaService.bqnaSearch2(search);
+	         if (n == 1)
+	             boardDTO = bqnaService.bqnaSearch0(search);
+	          else if (n == 2)
+	             boardDTO = bqnaService.bqnaSearch1(search);
+	          else if (n == 3)
+	             boardDTO = bqnaService.bqnaSearch2(search);
+	          else if (n==0) {
+	             boardDTO= bqnaService.bqnaList();
+	          }
 		
 		totalCount = boardDTO.size();
 		page = new Paging("bqnalist", currentPage, totalCount, blockCount, blockPage, search, n);
