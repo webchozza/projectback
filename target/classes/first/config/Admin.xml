@@ -37,12 +37,6 @@
 		<if test="member_name != null">
 		member_name = #{member_name}
 		</if>
-		<!-- <if test="member_photo == null">
-		member_photo = member_photo
-		</if>
-		<if test="member_photo != null">
-		member_photo = #{member_photo}
-		</if> -->
 	WHERE member_id = #{member_id}
 	</update>
 	

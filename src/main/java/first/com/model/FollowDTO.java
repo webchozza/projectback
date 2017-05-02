@@ -6,8 +6,15 @@ public class FollowDTO {
 	private int follow_member_id;
 	private int following_count;//자신이 팔로잉한 수
 	private int follower_count;//자신을 팔로우한 팔로워의 수
+	private int followCheck;//팔로우한 사람인지 체크
 	
-
+	
+	public int getFollowCheck() {
+		return followCheck;
+	}
+	public void setFollowCheck(int followCheck) {
+		this.followCheck = followCheck;
+	}
 	public int getFollowing_count() {
 		return following_count;
 	}

@@ -5,27 +5,13 @@
 <html>
 <head>
 <script>
-function paging(path, i, search, n) {
-	
-	var member_id = ${member_id};
-	
-	$('#area').load(path, {
-		member_id : member_id,
-		currentPage : i,
-		n : n,
-		search : search,
-		ap : 'AjaxPaging'
-	});
-}
-
 function sch() {
 	var form = document.getElementById('searchform');
+	var path = form.path.value;
 	var i = form.i.value;
-	var member_id = ${member_id};
 	var search = form.search.value;
 	
-	$('#area').load("/dokky/ScrapList.do", {
-		member_id: member_id,
+	$('#area').load(path, {
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
@@ -53,7 +39,7 @@ function memberpage(){
 	var i = form.i.value;
 	var search = form.search.value;
 	var member_id = ${member_id};
-
+	
 	$('#movearea').load("/dokky/MemberPage.do", {
 		member_id : member_id,
 		currentPage : i,
@@ -88,8 +74,6 @@ border-bottom-color: #FFFFFF;
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 			<hr style="width: 70%; align: left;">
 				<table>
 					<thead>
@@ -105,13 +89,13 @@ border-bottom-color: #FFFFFF;
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="board" items="${board}">
+					<c:forEach var="board" items="${list}">
 					<tr>
 							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-eye">${board.board_hit}</a></td>
-							<td width="10%" align="center"><a href="/dokky/MemberPage.do?member_id=${board.member_id}&session_id=${sessionScope.member_id}" id="b">${board.member_name}</a></td>
+							<td width="10%" align="center"><a href="#" id="b">${board.member_name}</a></td>
 							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 							<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
 						</tr>

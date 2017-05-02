@@ -32,23 +32,31 @@ public class MemberPage {
 	private String pagingHtml; // 페이징을 구현한 HTML
 	private AjaxPaging page; // 페이징 클래스
 	private String path = "MemberPage";//if (RequestMapping("/here.do")) => here = path
+	FollowDTO followCheck;
 	
 	//회원정보 화면 게시물 목록
 	@RequestMapping("/MemberPage.do")
 	public String followMain(@RequestParam(value="member_id") int member_id, 
+							 @RequestParam(value="session_id", defaultValue="0") int session_id, 
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="search", required=false, defaultValue="") String search,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							 @RequestParam(value="ap", required=false) String ap,
 							 Model model){
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("member_id", member_id);//테스트끝나면 여기 바꿔줘야한다
 		map.put("search", search);
 		
+		
 		List<BoardDTO> list = memberpage.myBoardList(map);
 		FollowDTO follow = followService.followCount(member_id);
+		
+		if(session_id != 0){
+		map.put("session_id", session_id);
+		followCheck = memberpage.followCheck(map);
+		}
 
 		totalCount = list.size();
 		
@@ -70,6 +78,12 @@ public class MemberPage {
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("member_id", member_id);
+		
+		if(session_id != 0){ 
+			model.addAttribute("followCheck", followCheck);
+		}else if(session_id == 0){
+			model.addAttribute("me", "me");
+		}
 		
 		if(ap != null){
 			return "memberpage/MyBoard";//at Ajax request

@@ -7,12 +7,14 @@
 <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
 <script>
 function paging(path, i, search, n) {
-
-	$('#area').load(path, {
-		member_id : ${member_id},
+	
+	var member_id = ${member_id};
+	
+	$('#movearea').load(path, {
+		member_id : member_id,
 		currentPage : i,
-		search : search,
 		n : n,
+		search : search,
 		ap : 'AjaxPaging'
 	});
 }
@@ -20,12 +22,12 @@ function paging(path, i, search, n) {
 function sch() {
 
 	var form = document.getElementById('searchform');
-	var path = form.path.value;
 	var i = form.i.value;
+	var member_id = ${member_id};
 	var search = form.search.value;
 
-	$('#area').load(path, {
-		member_id : ${member_id},
+	$('#area').load("/dokky/MemberPage.do", {
+		member_id : member_id,
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
@@ -53,7 +55,7 @@ function memberpage(){
 	var i = form.i.value;
 	var search = form.search.value;
 	var member_id = ${member_id};
-	
+
 	$('#movearea').load("/dokky/MemberPage.do", {
 		member_id : member_id,
 		currentPage : i,
@@ -62,6 +64,42 @@ function memberpage(){
 	});
 }
 
+function followclick(){
+	
+	var plus = document.getElementById("plus").value;
+
+	if(plus == "0"){
+	$("#plusFollow").html("");
+	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
+	$("#plus").val("1");
+	} 
+	
+	if(plus == "1"){
+	$("#plusFollow").html("");
+	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a>');
+	$("#plus").val("0");
+	}
+	
+	return true;
+}
+
+function followcheck(){
+	
+	var me = '${me}';
+	var check = '${followCheck.followCheck}';
+	
+	if(me == "me"){
+		$("#me").html("");
+	} else if(check != null){//멤버페이지를 불러올 때 팔로우여부 체크값을 보내서 조건을 준다음 plus의 값을 설정함
+	$("#plus").val("0");
+	$("#plusFollow").html("");
+	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a>');
+	} else if(check == null){
+	$("#plus").val("1");
+	$("#plusFollow").html("");
+	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
+	}
+}
 </script>
 <title>회원 정보 보기</title>
 <style>
@@ -94,16 +132,18 @@ function memberpage(){
 		<input type="hidden" id="plus" value=""/>
 		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-width:30%; max-height:30%;">
 		<div class="4u" style="width: 90%;">
-		<span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
-		<a href="javascript:;" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a></span>
+		<div id="me" style="height: 93px;"><span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
+		<a href="/dokky/AddFollow.do?member_id=${member_id}" onclick="return followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a></span></div>
 		</div>
 		</div>
 	</div>
 	<div id="movearea">
 	<div class="table-wrapper">
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<hr style="width: 70%; align: left;">
 		<table>

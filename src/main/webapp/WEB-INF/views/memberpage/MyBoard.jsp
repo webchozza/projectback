@@ -5,6 +5,19 @@
 <html>
 <head>
 <script>
+function paging(path, i, search, n) {
+	
+	var member_id = ${member_id};
+	
+	$('#area').load(path, {
+		member_id : member_id,
+		currentPage : i,
+		n : n,
+		search : search,
+		ap : 'AjaxPaging'
+	});
+}
+
 function sch() {
 	var form = document.getElementById('searchform');
 	var path = form.path.value;
@@ -73,6 +86,8 @@ border-bottom-color: #FFFFFF;
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 			<hr style="width: 70%; align: left;">
 				<table>

@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ include file="/WEB-INF/views/main/Taglib.jsp" %>
 <html>
 <head>
 <title>WriteForm</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
