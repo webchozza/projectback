@@ -1,28 +1,38 @@
 package first.com.dao;
 
+import first.com.model.MemberDTO;
+
 public interface MemberDAO {
 	
 	public String loginForm();
 	
-	public String login();
+	public MemberDTO login(MemberDTO member);
 	
+	public void loginUpdate(MemberDTO member);
+	
+	public void logOut(MemberDTO member);
+	
+	public MemberDTO checkModify(MemberDTO member);
 	
 	public String findForm();
 	
-	public String findPw();
+	public MemberDTO findPw(MemberDTO member);
 	
+	public void updatePw(MemberDTO member);
 	
 	public String joinForm();
 	
 	public String email();
 	
-	public String join();
+	public void join(MemberDTO member);
 	
+	public boolean checkName(MemberDTO member);
 	
+	public boolean checkEmail(MemberDTO member);
 	
-	public String modifyMemberForm();
+	public MemberDTO modifyMemberForm(MemberDTO member);
 	
-	public String modifyMember();
+	public void modifyMember(MemberDTO member);
 	
 	
 	

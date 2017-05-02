@@ -77,10 +77,14 @@
 			<tx:method name="*" rollback-for="Exception" /><!-- Transaction processing when an exception occurs in all methods -->
 		</tx:attributes>
 	</tx:advice>
-	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-	
-	
-	
+	<!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinterceptors ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*"/> 
+			<bean id="loggerInterceptor" class="first.com.common.LoggerInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> 
+     
 	<!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡlog(aop) ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
 	<bean id="aoplog" class="first.com.common.aop" />
 
@@ -90,17 +94,11 @@
 		<aop:pointcut id="check" expression="execution(public * first..*.*(..))" />
 			<aop:around pointcut-ref="check" method="log" />
 		</aop:aspect>
-	</aop:config> 
+	</aop:config>  
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	
 	
 	
-	<!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡinterceptors ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
-	<!-- <mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path=""/> 여기 경로만 인터셉터 적용할 지점 작성하면됨
-			<bean id="loggerInterceptor" class="first.common.logger.LoggerInterceptor"></bean>
-		</mvc:interceptor>
-	</mvc:interceptors> -->
+	
 
 </beans>

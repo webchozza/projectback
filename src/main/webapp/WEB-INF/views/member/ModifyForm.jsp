@@ -34,10 +34,6 @@
 			alert("이름을 입력해 주세요");
 			return false;
 		}
-		if (frm.member_email.value == "") {
-			alert("email을 입력해 주세요");
-			return false;
-		}
 		if (frm.member_pw.value == "") {
 			alert("비밀번호를 입력해 주세요");
 			return false;
@@ -53,10 +49,10 @@
 	
 		var f = document.frm;
 		f.method = "get";
-		f.member_name.value = f.member_name.value;
 		f.member_email.value = f.member_email.value;
+		f.member_name.value = f.member_name.value;
 		f.member_pw.value = f.member_pw.value;
-		f.action = "/dokky/sendemail.do";
+		f.action = "/dokky/modifyMember.do";
 		f.submit();
 	}
 	function gosubmit2() {
@@ -90,38 +86,6 @@
 			}
 		});
 	}
-	function gosubmit4() {
-		if (((frm.member_email.value.indexOf('@')) <= 0)
-				&& (frm.member_email.value.indexOf('.') <= 0)) {
-			alert("정상적인 email이 아닙니다.");
-			frm.member_email.value = "";
-			frm.member_email.focus();
-			return;
-		}
-		var prmEmail = $('#member_email').val();
-
-		if ($("#member_email").val() == '') {
-			alert('이메일을 입력해주세요.');
-			return;
-		}
-
-		$.ajax({
-			type : 'GET',
-			data : {member_email : prmEmail},
-			dataType : 'text',
-			url : '/dokky/checkemail.do',
-			success : function(rData, textStatus, xhr) {
-				var chkRst = rData;
-				if (chkRst == "true") {
-					alert("등록 가능 합니다.");
-					$("#emailChk").val('true');
-				} else {
-					alert("중복 되어 있습니다.");
-					$("#emailChk").val('false');
-				}
-			}
-		});
-	}
 </script>
 </head>
 
@@ -129,33 +93,30 @@
 	<div id="wrapper">
 		<div id="main" align="center">
 			<div class="inner">
-				<!-- Join Form -->
+				<!-- Modify Form -->
 
-				<h3>회원가입</h3>
+				<h3>회원정보수정</h3>
 				<form name="frm">
 
 					<div class="row uniform" style="float: inherit;">
 						<div class="6u 12u$(xsmall)">
 							<input type="hidden" id="nameChk" value="false" /> <input
 								type="hidden" id="emailChk" value="false" /> <input type="text"
-								name="member_name" id="member_name" value="" placeholder="닉네임" />
+								name="member_name" id="member_name" value="${member.member_name}" placeholder="닉네임" />
 							<ul class="actions" style="float: left;">
 								<li><input type="button" value="중복확인"
 									class="button special" onclick="javascript:gosubmit3()"></li>
 							</ul>
 							<br /> <input type="text" name="member_email" id="member_email"
-								value="" placeholder="DOKKY에서 사용할 이메일을 입력해주세요">
-							<ul class="actions" style="float: left;">
-								<li><input type="button" value="중복확인"
-									class="button special" onclick="javascript:gosubmit4()"></li>
-							</ul>
+								value="${member.member_email}" readonly>
+							<br/>
 							<input type="password" style="width: 500;" name="member_pw"
 								id="member_pw" value="" placeholder="비밀번호" /> <br /> <input
 								type="password" style="width: 500;" name="chpass" id="chpass"
-								value="" placeholder="비밀번호 확인" /> <font name="check" size="2"
-								style="float: left" color="pink"></font> <br />
+								value="" placeholder="비밀번호 확인" /> 
+								<font name="check" size="2" style="float: left" color="pink"></font> <br />
 							<ul class="actions">
-								<input type="button" value="가입" class="button special"
+								<input type="button" value="수정" class="button special"
 									onclick="javascript:gosubmit1()">
 								<input type="button" value="메인으로 가기" class="button special"
 									onclick="javascript:gosubmit2()">
