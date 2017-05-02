@@ -1,28 +1,49 @@
 package first.com.dao;
 
+import java.util.List;
+
+import first.com.model.BcommentDTO;
+import first.com.model.BoardDTO;
+
 public interface BfreeDAO {
 	
-	public String bfreeList();
+	public List<BoardDTO> bfreeList();
 	
-	public String bfreeDetail();
+	public BoardDTO bfreeDetail(int board_id);
 	
 	public String bfreeWriteForm();
 	
-	public String bfreeWrite();
+	public int bfreeWrite(BoardDTO boardDTO);
 	
-	public String bfreeModifyForm();
+	public BoardDTO bfreeModifyForm(BoardDTO boardDTO);
 	
-	public String bfreeModify();
+	public int bfreeModify(BoardDTO boardDTO);
 	
-	public String bfreeDelete();
+	public int bfreeDelete(int board_id);
 	
-	public String bfreeRecommand();
+	public int bfreeHit(int board_id);
 	
+	public int bfreeRecommand(int board_id);
 	
+	public int bfreeLike(int board_id);
 	
+	public int bfreeBad(int board_id);	
+		
 	
-	public String bCfreeWrite();
+	public int bCfreeWrite(BcommentDTO bcommentDTO);
 	
-	public String bCfreeDelete();
+	public int bCfreeDelete(int bcomment_id);
+	
+	public int bfreeUpdateCountco(int board_id);
+
+	public List<BoardDTO> bfreeSearch0(String search);
+	
+	public List<BoardDTO> bfreeSearch1(String search);
+	
+	public List<BoardDTO> bfreeSearch2(String search);
+
+	public List<BcommentDTO> bcfreeList(int board_id);
+
+	
 
 }
