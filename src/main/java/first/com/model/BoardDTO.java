@@ -4,22 +4,21 @@ import java.util.Date;
 
 public class BoardDTO {
 	
-	private int board_id;
-	private int member_id;
-	private String board_title;
-	private String board_content;
-	private Date board_date;
-	private String board_nickname;
-	private int board_hit;
-	private int board_like;
-	private int board_bad;
-	private int board_comment_count;
-	private String board_password;
-	private int board_ip;
-	private int board_filecount;
-	private int bgroup_id;
-	
-	private String member_name;
+	private int board_id; //pk시퀀스
+	private int member_id; //회원 시퀀스
+	private String board_title; //게시글 제목
+	private String board_content; //게시글 내용
+	private Date board_date; //게시글 작성일
+	private String board_nickname; //회원닉네임
+	private int board_hit; //조회수
+	private int board_like; //좋아요
+	private int board_bad; //싫어요
+	private int board_comment_count; //코멘트 갯수
+	private String board_password; 
+	private int board_ip; //회원 ip
+	private int board_filecount; //파일갯수
+	private int bgroup_id;	//카테고리 구분 번호
+	private String member_name; //회원 이름
 	
 	
 	public int getBoard_id() {

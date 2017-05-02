@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/main/Taglib.jsp" %>
 <html>
 <head>
-<title>WriteForm</title>
+<title>ModifyForm</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -28,30 +28,22 @@
 	<div id="main" align="center">
 		<div class="inner">
 			<h3>Community</h3>
-			<form name="frm" action="bfreewrite.do" onsubmit="return gosubmit1()">
+			<form name="frm" action="bfreemodify.do" onsubmit="return gosubmit1()">
 
 				<div class="6u 12u$(xsmall)" style="width: 300pt;">
-					<input type="text" name="member_id" id="subject" value=""
-						style="width: 300pt;" placeholder="아이디" />
-				</div>
-
-				<div class="6u 12u$(xsmall)" style="width: 300pt;">
-					<input type="text" name="board_nickname" id="subject" value=""
-						style="width: 300pt;" placeholder="닉네임" />
-				</div>
-
-				<div class="6u 12u$(xsmall)" style="width: 300pt;">
-					<input type="text" name="board_title" id="subject" value=""
+					<input type="text" name="board_title" id="subject" value="${boardDTO.board_title }"
 						style="width: 300pt;" placeholder="제목" />
 				</div>
 				<div class="12u$">
 					<textarea name="board_content" id="message"
 						style="width: 300pt; height: 400px;" placeholder="내용을 적어주세요"
-						rows="6"></textarea>
+						rows="6">${boardDTO.board_content }</textarea>
 				</div>
 				<div class="12u$">
 					<ul class="actions" style="float: inherit;">
-						<input type="submit" style="width: 300pt;" value="글쓰기"
+					<input type="hidden" name="currentPage" value="${currentPage }">
+					<input type="hidden" name="board_id" value="${boardDTO.board_id}">
+						<input type="submit" style="width: 300pt;" value="수정"
 							class="button special">
 					</ul>
 				</div>
