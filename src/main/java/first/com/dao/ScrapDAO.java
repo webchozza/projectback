@@ -12,6 +12,6 @@ public interface ScrapDAO {
 	
 	public void insertScrap(ScrapDTO scrap);
 	
-	public String deleteScrap(int scrap_id);
-
+	public void deleteScrap(int scrap_id);
+	
 }

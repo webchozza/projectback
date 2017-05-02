@@ -30,9 +30,8 @@ public class ScrapService implements ScrapDAO {
 	}
 
 	@Override
-	public String deleteScrap(int scrap_id) {
+	public void deleteScrap(int scrap_id) {
 		sqlSessionTemplate.delete("scrap.delete", scrap_id);
-		return null;
 	}
 
 }

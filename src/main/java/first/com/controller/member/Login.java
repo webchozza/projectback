@@ -41,6 +41,7 @@ public class Login {
 			
 			session.setAttribute("member_email", result.getMember_email());
 			session.setAttribute("member_name", result.getMember_name());
+			session.setAttribute("member_id", result.getMember_id());
 			
 			mav.setViewName("Main");
 			

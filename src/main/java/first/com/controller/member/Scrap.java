@@ -36,14 +36,14 @@ public class Scrap {
 	Map<String, Object> map = new HashMap<String, Object>();
 			
 	@RequestMapping(value="/ScrapList.do")
-	public String scrapList(@RequestParam(value="id", required=false, defaultValue="0") int id, 
+	public String scrapList(@RequestParam(value="member_id", required=false, defaultValue="0") int member_id, 
 							@RequestParam(value="n", defaultValue="0") int n,
 							@RequestParam(value="search", required=false, defaultValue="") String search,
 							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							@RequestParam(value="ap", required=false) String ap,
 							Model model){
 		
-		map.put("member_id", 1000);//테스트끝나면 여기 바꿔줘야한다
+		map.put("member_id", member_id);//테스트끝나면 여기 바꿔줘야한다
 		map.put("search", search);
 		
 		//세션 아이디를 전송받아서 파라미터 값으로 넘겨준다
@@ -67,9 +67,9 @@ public class Scrap {
 		
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
+		model.addAttribute("member_id", member_id);
 		
 		if(ap != null){
-			System.out.println("흐하하하하하하하");
 			return "scrap/ScrapList";//at Ajax request
 		}
 		

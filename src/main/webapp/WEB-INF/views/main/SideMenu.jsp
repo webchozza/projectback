@@ -19,7 +19,7 @@ $(document).ready(function(){
 function notipop(){
 	
 	var ch = $("#notich").val();
-	var session_id = 1;
+	var session_id = ${sessionScope.member_id};
 	
 	if(ch == "N"){
 		$.ajax({
@@ -28,6 +28,7 @@ function notipop(){
 			cache: false,
 			data: {session_id: session_id},
 			success: function(data){
+				
 				$("#notibox").html("");
 				$("#notibox").append('<div class="notibox"><div>');
 				$(".notibox").addClass("nb");
@@ -105,7 +106,6 @@ display:none;
 	margin: -2.22222em 0 4.44444em -2.22222em;
 	padding: 2.22222em;
 	width: calc(100% + 3.8em);
-	padding-right: 50px;
 }
 
 </style>
@@ -121,31 +121,43 @@ display:none;
 					<input type="submit" name="ss" id="soundsubmit"/>
 				</form>
 			</section>
-			<c:if test="${sessionScope.member_email eq null}">
+			
+			
 			<!-- 로그인 회원가입등 -->
+			<c:if test="${sessionScope.member_email eq null}">
 			<section id="icons">
+				<ul>
 				<a href="/dokky/loginform.do" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="/dokky/joinform.do" class="icon fa-user-plus"> 회원가입</a>
+						</ul>
+			</section>
+			</c:if>	
+			
 			
 				<!-- 로그인 처리 -->
-			</c:if>	
-				<ul>
 			<c:if test="${sessionScope.member_email ne null}">
+			<section id="icons">
+				<ul>
 					<a href="/dokky/logout.do" class="icon fa-sign-out"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:;" class="icon fa-bell" id="noti" onclick="notipop()"> 알림</a>
 					<input type="hidden" id="notich"/>
 					<div id="notibox" ></div>
-			</c:if>				
-					<c:if test="${sessionScope.member_email}=='admin'">
-					<br />
-					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
-					안녕하세요! 
-					${sessionScope.member_name}님
-					<br />
-					</c:if>
 				</ul>
 			</section>
+				<div style="padding-left: 5%;">안녕하세요! <a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${sessionScope.member_name}</a>님</div>
+			</c:if>				
+			
+				<!-- 관리자 로그인 -->
+			<c:if test="${sessionScope.member_email}=='admin'">
+			<section id="icons">
+				<ul>
+					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
+					</ul>
+			</section>
+				<div  style="padding-left: 5%;">안녕하세요! <a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${sessionScope.member_name}</a>님</div>
+			</c:if>
+
 
 			<!-- 메뉴 -->
 			<nav id="menu">

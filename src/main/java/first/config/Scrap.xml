@@ -21,4 +21,5 @@
 	<delete id="delete" parameterType="int">
 	DELETE FROM scrap WHERE scrap_id = #{scrap_id}
 	</delete>
+	
 </mapper>

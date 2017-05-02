@@ -20,11 +20,13 @@ function micOn(){//이미지 바뀌게하는 js
 	
 		if (micStatus == "on") {
 			$("#micImg").attr("class","icon fa-microphone-slash"); 
+			$("#soundsearch").attr("placeholder","Search All")
 			$("#micImg").html("음성 검색");
 		  $("#micCheck").val("off");
 		   }
 		if (micStatus == "off") {
 			$("#micImg").attr("class","icon fa-microphone");
+			$("#soundsearch").attr("placeholder","음성 명령어: '검색', '다시'")
 			$("#micImg").html("음성 검색 중...");
         $("#micCheck").val("on");
            }
@@ -59,11 +61,11 @@ display:none;
 <body>
 	<!-- 헤더 (윗부분)-->
 	<header id="header">
-		<a href="/dokky/main.do"><h2>DOKKY</h2></a>
+		<a href="/dokky/main.do" style="max-width: 10%;"><h2>DOKKY</h2></a>
 		<button name="bb" id="btn-mic" class="off"></button>
 			<input type="hidden" id="micCheck" value="off"/>
 			<span id="soundInput"></span>
-			<a href="javascript:;" onclick="micOn()" id="micImg" class="icon fa-microphone-slash" style="width:10%; height:10%;">음성 검색</a>
+			<a href="javascript:;" onclick="micOn()" id="micImg" class="icon fa-microphone-slash" style="width:50%; height:50%;">음성 검색</a>
 	</header>
 
 

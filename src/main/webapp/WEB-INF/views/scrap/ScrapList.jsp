@@ -38,10 +38,38 @@ border-bottom-color: #FFFFFF;
 </head>
 <body>
 <div id="area">
-	<h4>Scrap</h4>
-
-	<!-- 바디 -->
+	<h4>스크랩</h4>
+	<span class="image fit"><h2><b>여기에 회원의 닉네임</b></h2></span>
+	<div class="box alt">
+		<div class="row 50% uniform" style="background-color: #f5f6f7; width:60%; display: inline-block;">
+			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center;"><h3>팔로잉</h3></span>
+			</div>
+			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center;"><h3>팔로워</h3></span>
+			</div>
+			<!-- Break -->
+			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center; font-size: 30px;">0</span>
+			</div>
+			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center; font-size: 30px;">1</span>
+			</div>
+		</div>
+		<input type="hidden" id="plus" value=""/>
+		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-width:30%; max-height:30%;">
+		<div class="4u" style="width: 90%;">
+		<span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
+		<a href="javascript:;" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a></span>
+		</div>
+		</div>
+		</div>
+			<!-- 바디 -->
 			<div class="table-wrapper">
+			<div style="max-width: 15%; text-align:center; display: inline-block;"><a href="/dokky/MemberPage.do?member_id=${member_id}">게시물</a></div>
+			<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+			<div style="max-width: 15%; text-align:center; display: inline-block;"><span style="color: #f56a6a;">스크랩</span></div>
+			<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 			<hr style="width: 70%; align: left;">
 				<table>
 					<thead>
@@ -80,6 +108,7 @@ border-bottom-color: #FFFFFF;
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
+			<br/><br/><br/>
 </div>
 </body>
 </html>
