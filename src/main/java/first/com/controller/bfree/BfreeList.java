@@ -16,7 +16,8 @@ import first.com.model.BoardDTO;
 
 @Controller
 public class BfreeList {
-
+	
+	//인코딩다시했어여
 	@Resource
 	private BfreeDAO bfreeService;
 
