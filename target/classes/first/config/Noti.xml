@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	 
+	 <mapper namespace="noti">
+	 
+	 <select id="select_board" resultType="first.com.model.BoardDTO" parameterType="int">
+	 SELECT * FROM board WHERE board_id = #{board_id}
+	 </select>
+	 
+	 <insert id="insert" parameterType="java.util.Map">
+	 INSERT INTO NOTIFICATION 
+	 ( NOTI_ID
+	 , MEMBER_ID
+	 , NOTI_SENDER_ID
+	 , NOTI_SUBJECT
+	 , NOTI_URL
+	 , NOTI_DATE
+	 , NOTI_TYPEID
+	 , BOARD_ID
+	 , NOTI_KINDS
+	 ) 
+	 VALUES
+	 ( SEQ_NOTI.NEXTVAL
+	 , #{member_id}
+	 , #{session_id}
+	 , #{board_title}
+ 	 , #{board_url}
+ 	 , SYSDATE
+ 	 , #{bgroup_id}
+ 	 , #{board_id}
+ 	 , #{noti_kinds}) 
+	 </insert>
+	 
+	 <select id="list" resultType="first.com.model.NotiDTO" parameterType="int">
+	 SELECT * FROM notification WHERE member_id = #{member_id}
+	 </select>
+	 
+	 
+	 </mapper>
