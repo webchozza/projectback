@@ -18,13 +18,13 @@ public class BqnaService implements BqnaDAO {
 	
 	@Override
 	public List<BoardDTO> bqnaList() {
-		// qna ¸®½ºÆ®
+		// qna ë¦¬ìŠ¤íŠ¸
 		return SST.selectList("bqna.bqnaList");
 	}
 
 	@Override
 	public BoardDTO bqnaDetail(int id) {
-		// qna »ó¼¼º¸±â
+		// qna ìƒì„¸ë³´ê¸°
 		return SST.selectOne("bqna.bqnaDetail", id);
 	}
 
@@ -35,9 +35,9 @@ public class BqnaService implements BqnaDAO {
 	}
 
 	@Override
-	public String bqnaWrite() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bqnaWrite(BoardDTO boardDTO) {
+		// qna ê¸€ì“°ê¸°
+		return SST.insert("bqna.bqnaWrite", boardDTO);
 	}
 
 	@Override
