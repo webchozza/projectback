@@ -18,110 +18,110 @@ public class BfreeService implements BfreeDAO {
 	
 	@Override
 	public List<BoardDTO> bfreeList() {
-		// 리스트 나오게하깅
+		// 由ъ뒪�듃 �굹�삤寃뚰븯源�
 		return SqlSessionTemplate.selectList("bfree.bfreeList");
 	}
 
 	@Override
 	public BoardDTO bfreeDetail(int board_id) {
-		// 상세보기
+		// �긽�꽭蹂닿린
 		return SqlSessionTemplate.selectOne("bfree.bfreeSelect",board_id);
 	}
 	
 	@Override
 	public List<BcommentDTO> bcfreeList(int board_id){
-		//댓글가져오기
+		//�뙎湲�媛��졇�삤湲�
 		return SqlSessionTemplate.selectList("bfree.bcfreeList", board_id);
 	}
 
 	@Override
 	public String bfreeWriteForm() {
-		// 글쓰기폼가기
+		// 湲��벐湲고뤌媛�湲�
 		return null;
 	}
 
 	@Override
 	public int bfreeWrite(BoardDTO boardDTO) {
-		// 글쓰깅
+		// 湲��벐源�
 		return SqlSessionTemplate.insert("bfree.bfreeWrite", boardDTO);
 	}
 
 	@Override
 	public BoardDTO bfreeModifyForm(BoardDTO boardDTO) {
-		// 글수정폼
+		// 湲��닔�젙�뤌
 		return boardDTO;
 	}
 
 	@Override
 	public int bfreeModify(BoardDTO boardDTO) {
-		// 수정하기
+		// �닔�젙�븯湲�
 		return SqlSessionTemplate.update("bfree.bfreeModify", boardDTO);
 	}
 
 	@Override
 	public int bfreeDelete(int board_id) {
-		// 글삭제
+		// 湲��궘�젣
 		return SqlSessionTemplate.delete("bfree.bfreeDelete", board_id);
 	}
 	
 	@Override
 	public int bfreeHit(int board_id){
-		//조회수 올리기
+		//議고쉶�닔 �삱由ш린
 		return SqlSessionTemplate.update("bfree.bfreeUpdateHit", board_id);
 	}
 
 	@Override
 	public int bfreeRecommand(int board_id) {
-		// 추천수올리기
+		// 異붿쿇�닔�삱由ш린
 		return SqlSessionTemplate.update("bfree.bfreeUpdateHit", board_id);
 	}
 	
 
 	@Override
 	public int bfreeLike(int board_id) {
-		// 좋아요
+		// 醫뗭븘�슂
 		return SqlSessionTemplate.update("bfree.bfreeUpdateLike", board_id);
 	}
 
 	@Override
 	public int bfreeBad(int board_id) {
-		// 싫어요
+		// �떕�뼱�슂
 		return SqlSessionTemplate.update("bfree.bfreeUpdateBad", board_id);
 	}	
 
 	@Override
 	public int bCfreeWrite(BcommentDTO bcommentDTO) {
-		// 댓글쓰기
+		// �뙎湲��벐湲�
 		return SqlSessionTemplate.insert("bfree.bcfreeWrite", bcommentDTO);
 	}
 
 	@Override
 	public int bCfreeDelete(int bcomment_id) {
-		// 댓글삭제
+		// �뙎湲��궘�젣
 		return SqlSessionTemplate.delete("bfree.bcfreeDelete", bcomment_id);
 	}
 
 	@Override
 	public int bfreeUpdateCountco(int board_id) {
-		// 댓글쓰고나서 댓글수업데이트
+		// �뙎湲��벐怨좊굹�꽌 �뙎湲��닔�뾽�뜲�씠�듃
 		return SqlSessionTemplate.update("bfree.bfreeUpdateCountco", board_id);
 	}
 
 	@Override
 	public List<BoardDTO> bfreeSearch0(String search) {
-		// 제목서치
+		// �젣紐⑹꽌移�
 		return SqlSessionTemplate.selectList("bfree.bfreeSearchTitle", "%"+search+"%");
 	}
 
 	@Override
 	public List<BoardDTO> bfreeSearch1(String search) {
-		// 내용서치
+		// �궡�슜�꽌移�
 		return SqlSessionTemplate.selectList("bfree.bfreeSearchContent", "%"+search+"%");
 	}
 
 	@Override
 	public List<BoardDTO> bfreeSearch2(String search) {
-		// 작성자서치
+		// �옉�꽦�옄�꽌移�
 		return SqlSessionTemplate.selectList("bfree.bfreeSearchMember", "%"+search+"%");
 	}
 	
