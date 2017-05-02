@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
 <script>
 function paging(path, i, search, n) {
-	alert(path);
+
 	$('#area').load(path, {
 		member_id : ${member_id},
 		currentPage : i,
@@ -32,6 +32,36 @@ function sch() {
 	});
 }
 
+function scrap(){
+
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var member_id = ${member_id};
+
+	$('#movearea').load("/dokky/ScrapList.do", {
+		member_id : member_id,
+		currentPage : i,
+		search : search,
+		ap : 'AjaxScrap'
+	});
+}
+
+function memberpage(){
+	
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var member_id = ${member_id};
+	
+	$('#movearea').load("/dokky/MemberPage.do", {
+		member_id : member_id,
+		currentPage : i,
+		search : search,
+		ap : 'AjaxMemberPage'
+	});
+}
+
 </script>
 <title>회원 정보 보기</title>
 <style>
@@ -42,7 +72,6 @@ function sch() {
 </style>
 </head>
 <body onload="followcheck()">
-<div id="area">
 	<h4>회원 정보</h4>
 	
 	<span class="image fit"><h2><b>여기에 회원의 닉네임</b></h2></span>
@@ -70,13 +99,13 @@ function sch() {
 		</div>
 		</div>
 	</div>
+	<div id="movearea">
 	<div class="table-wrapper">
-	<div style="max-width: 15%; text-align:center; display: inline-block;"><span style="color: #f56a6a;">게시물</span></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;"><a href="/dokky/ScrapList.do?id=${member_id}">스크랩</a></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<hr style="width: 70%; align: left;">
-	<div id="area">
 		<table>
 					<thead>
 						<tr>
@@ -92,7 +121,7 @@ function sch() {
 						</tr>
 					</thead>
 			<tbody>
-			<c:forEach var="board" items="${list}">
+			<span id="move"><c:forEach var="board" items="${list}"></span>
 			<tr>
 					<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
 					<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
@@ -105,8 +134,7 @@ function sch() {
 			</c:forEach>
 			</tbody>
 		</table>
-	</div>
-	</div>
+			</div>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			<div><p id="cm" class="hc vc">${page}</p></div>
 			<style>
@@ -116,7 +144,7 @@ function sch() {
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-			</div>
+	</div>
 			<br/><br/><br/>
 </body>
 </html>

@@ -72,7 +72,7 @@ public class MemberPage {
 		model.addAttribute("member_id", member_id);
 		
 		if(ap != null){
-			return "memberpage/MemberPage";//at Ajax request
+			return "memberpage/MyBoard";//at Ajax request
 		}
 		
 		return "MemberPage";

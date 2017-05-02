@@ -7,12 +7,11 @@
 <script>
 function sch() {
 	var form = document.getElementById('searchform');
+	var path = form.path.value;
 	var i = form.i.value;
-	var member_id = ${member_id};
 	var search = form.search.value;
 	
-	$('#area').load("/dokky/ScrapList.do", {
-		member_id: member_id,
+	$('#area').load(path, {
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
@@ -90,7 +89,7 @@ border-bottom-color: #FFFFFF;
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="board" items="${board}">
+					<c:forEach var="board" items="${list}">
 					<tr>
 							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
