@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import first.com.dao.MemberPageDAO;
 import first.com.model.BoardDTO;
-import first.com.model.FollowDTO;
 
 @Component
 @Resource(name="memberpage")
@@ -23,6 +22,11 @@ public class MemberPageService implements MemberPageDAO {
 	public List<BoardDTO> myBoardList(Map<String, Object> map) {
 		List<BoardDTO> list = sqlSessionTemplate.selectList("memberpage.myBoardList", map);
 		return list;
+	}
+
+	@Override
+	public Map<String, Object> myCount(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("memberpage.myCount", map);
 	}
 
 

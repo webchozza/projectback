@@ -46,13 +46,14 @@ public class MemberPage {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("member_id", member_id);//테스트끝나면 여기 바꿔줘야한다
+		map.put("member_id", member_id);
 		map.put("search", search);
 		
 		
 		List<BoardDTO> list = memberpage.myBoardList(map);
+		Map<String, Object> myCount = memberpage.myCount(map);
 		FollowDTO follow = followService.followCount(member_id);
-		
+		System.out.println(myCount);
 		if(session_id != 0){
 		map.put("session_id", session_id);
 		followCheck = followService.followCheck(map);
@@ -70,7 +71,9 @@ public class MemberPage {
 		list= list.subList(page.getStartCount(), lastCount);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("myCount", myCount);
 		model.addAttribute("followCount", follow);
+		
 		model.addAttribute("page", pagingHtml);
 		
 		model.addAttribute("n", n);

@@ -83,7 +83,7 @@ border-bottom-color: #FFFFFF;
 <div id="area">
 			<!-- 바디 -->
 	<div class="table-wrapper">
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()" style="color: #f56a6a;">게시물</span></a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
