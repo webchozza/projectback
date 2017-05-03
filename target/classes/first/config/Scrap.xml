@@ -17,7 +17,7 @@
 	</insert>
 	
 	<delete id="delete" parameterType="java.util.Map">
-	DELETE FROM scrap WHERE board_id = #{board_id} and member_id = #{session_id}
+	DELETE FROM scrap WHERE board_id = #{board_id} and member_id = #{member_id}
 	</delete>
 	
 	<select id="Check" resultType="int" parameterType="java.util.Map">

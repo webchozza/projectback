@@ -38,6 +38,11 @@ public class ListScrap {
 							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							@RequestParam(value="ap", required=false) String ap,
 							Model model){
+		System.out.println(member_id);
+		System.out.println(n);
+		System.out.println(search);
+		System.out.println(currentPage);
+		System.out.println(ap);
 		
 		map.put("member_id", member_id);//테스트끝나면 여기 바꿔줘야한다
 		map.put("search", search);
@@ -69,7 +74,7 @@ public class ListScrap {
 			return "scrap/ScrapList";//at Ajax request
 		}
 		
-		return "ScrapList";
+		return null;
 		
 	}
 }

@@ -36,7 +36,6 @@
 			data: {board_id: board_id, member_id: member_id},
 			success: function(data){
 					scrapcheck(data);
-					alert("스크랩되었습니다.");
 				}
 				//여기에 스크랩 버튼 클릭 안되게 하는 로직 처리
 				//팔로우처럼 체크값을 이용해 해당 글의 스크랩 버튼이 안눌리게 하는 함수를 작성하여 data를 인자로 넘긴다.(상세보기 컨트롤러에서도 체크값 넘겨야 함)
@@ -46,10 +45,10 @@
 	function scrapcheck(checkValue){
 		//스크랩하지 않은 글이면 클릭 가능
 		var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
-			strA += '<br><h2 style="color: #f56a6a;">0</h2>';
+			strA += '<h2 style="color: #f56a6a;">0</h2>';
 		//스크랩한 글이면 클릭 불가능
 		var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
-			strDiv += '<br><h2 style="color: #f56a6a;">0</h2>';
+			strDiv += '<h2 style="color: #f56a6a;">0</h2>';
 			
 		if(checkValue == 1){
 		$("#scrapbutton").html(strDiv);
@@ -88,9 +87,8 @@
 
 									<p>${bfreeDetail.board_content }</p></td>
 								<td><center>
-										<a href="#" style="font-size: 30px" class="icon fa-thumbs-up"></a><br><h2 style="color: #f56a6a;">${bfreeDetail.board_like }</h2><br>
-										<div id="scrapbutton"><a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>
-										<br><h2 style="color: #f56a6a;">0</h2><!-- 스크랩수 --></div>
+										<a href="#" style="font-size: 30px" class="icon fa-thumbs-up"></a><br><h2 style="color: #f56a6a;">${bfreeDetail.board_like}</h2><br>
+										<div id="scrapbutton"></div>
 									</center>
 							</tr>
 						</tbody>

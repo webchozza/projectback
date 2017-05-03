@@ -63,6 +63,9 @@ function memberpage(){
 }
 
 function deletescrap(){
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
 	
 	if(!confirm("스크랩에서 지우시겠습니까?")){
 		return false;
@@ -71,7 +74,14 @@ function deletescrap(){
 	var session_id = ${sessionScope.member_id};
 	var board_id = $("#board_id").val();
 	
-	$("#area").load("/dokky/ScrapDelete.do", {board_id: board_id, session_id: session_id});
+	$.ajax({
+		url:"/dokky/ScrapDelete.do",
+		type:"post",
+		data: {board_id: board_id, member_id: session_id, currentPage : i, search : search, ap : "AjaxScrapDelete"},
+		success: function(data){
+			$("#area").html(data);
+		}
+		});
 }
 </script>
 <title>DOKKY</title>
