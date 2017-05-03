@@ -7,14 +7,7 @@
 
 <head>
 <title>DOKKY</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
-<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-</head>
 <script type="text/javascript">
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""||frm.bcomment_content.value == null) {
@@ -45,10 +38,10 @@
 	function scrapcheck(checkValue){
 		//스크랩하지 않은 글이면 클릭 가능
 		var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
-			strA += '<h2 style="color: #f56a6a;">0</h2>';
+			strA += '<h2 style="color: #7f888f;">스크랩</h2>';
 		//스크랩한 글이면 클릭 불가능
 		var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
-			strDiv += '<h2 style="color: #f56a6a;">0</h2>';
+			strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
 			
 		if(checkValue == 1){
 		$("#scrapbutton").html(strDiv);
@@ -61,6 +54,12 @@
 		scrapcheck("${scrapCheck}");
 	});
 </script>
+<style>
+.fa-bookmark{
+color: #7f888f; 
+}
+</style>
+</head>
 <body>
 	<h4>Community</h4>
 
@@ -76,7 +75,7 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<td colspan="2"><strong><a href="#">${bfreeDetail.board_nickname }</a></strong>
+								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id}&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
 									<br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>

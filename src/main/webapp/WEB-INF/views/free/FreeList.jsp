@@ -47,7 +47,7 @@ input[name=ss] {
 								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-eye">${list.board_hit }</a></td>
-								<td><a href="#">${list.board_nickname }</a></td>
+								<td><a href="/dokky/MemberPage.do?member_id=${list.member_id}&session_id=${sessionScope.member_id}">${list.board_nickname }</a></td>
 								<td><fmt:formatDate value="${list.board_date }" pattern="yyyy.MM.dd" /></td>
 							</tr>
 						</c:forEach>
