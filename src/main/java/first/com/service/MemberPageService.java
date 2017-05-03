@@ -25,11 +25,5 @@ public class MemberPageService implements MemberPageDAO {
 		return list;
 	}
 
-	@Override
-	public FollowDTO followCheck(Map<String, Object> map) {
-		FollowDTO followCheck = sqlSessionTemplate.selectOne("memberpage.followCheck", map);
-		System.out.println(followCheck.getFollowCheck());
-		return followCheck;
-	}
 
 }

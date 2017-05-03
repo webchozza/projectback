@@ -1,6 +1,7 @@
 package first.com.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -36,6 +37,13 @@ public class FollowService implements FollowDAO {
 	@Override
 	public FollowDTO followCount(int member_id) {
 		FollowDTO follow = (FollowDTO)sqlSessionTemplate.selectOne("follow.followCount", member_id);
+		follow = (FollowDTO)sqlSessionTemplate.selectOne("memberpage.name", member_id);
+		return follow;
+	}
+	
+	@Override
+	public int followCheck(Map<String, Object> map) {
+		int follow = sqlSessionTemplate.selectOne("memberpage.followCheck", map);
 		return follow;
 	}
 

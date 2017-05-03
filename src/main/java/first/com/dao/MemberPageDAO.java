@@ -10,6 +10,4 @@ public interface MemberPageDAO {
 	
 	public List<BoardDTO> myBoardList(Map<String, Object> map);
 	
-	public FollowDTO followCheck(Map<String, Object> map);
-
 }

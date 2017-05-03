@@ -40,6 +40,7 @@ input[name=ss] {
 						<c:url var="detailURL" value="bfreedetail.do">
 							<c:param name="board_id" value="${list.board_id }"/>
 							<c:param name="currentPage" value="${currentPage }"/>
+							<c:param name="session_id" value="${sessionScope.member_id}"/>
 						</c:url>
 							<tr>
 								<td><a href="${detailURL }">${list.board_title }</a></td>

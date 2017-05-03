@@ -32,7 +32,7 @@ public class MemberPage {
 	private String pagingHtml; // 페이징을 구현한 HTML
 	private AjaxPaging page; // 페이징 클래스
 	private String path = "MemberPage";//if (RequestMapping("/here.do")) => here = path
-	FollowDTO followCheck;
+	int followCheck;
 	
 	//회원정보 화면 게시물 목록
 	@RequestMapping("/MemberPage.do")
@@ -55,7 +55,7 @@ public class MemberPage {
 		
 		if(session_id != 0){
 		map.put("session_id", session_id);
-		followCheck = memberpage.followCheck(map);
+		followCheck = followService.followCheck(map);
 		}
 
 		totalCount = list.size();
@@ -82,7 +82,7 @@ public class MemberPage {
 		if(session_id != 0){ 
 			model.addAttribute("followCheck", followCheck);
 		}else if(session_id == 0){
-			model.addAttribute("me", "me");
+			model.addAttribute("followCheck", "me");
 		}
 		
 		if(ap != null){

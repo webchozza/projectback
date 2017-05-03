@@ -15,4 +15,6 @@ public interface FollowDAO {
 	
 	public FollowDTO followCount(int member_id);
 	
+	public int followCheck(Map<String, Object> map);
+	
 }

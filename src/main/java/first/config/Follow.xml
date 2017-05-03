@@ -8,9 +8,9 @@
 	 SELECT e.member_name, e.following_count, count(f.member_id) as follower_count FROM 
 	 (SELECT c.member_name, count(d.member_id) as following_count, c.member_id FROM 
 	 (SELECT b.member_name, b.member_id FROM (SELECT follow_member_id FROM follow WHERE member_id = #{member_id}) a 
-	 INNER JOIN member b on a.follow_member_id = b.member_id) c 
-	 LEFT OUTER JOIN follow d on c.member_id = d.member_id group by c.member_name, c.member_id) e 
-	 INNER JOIN follow f on e.member_id = f.follow_member_id group by e.member_name, e.following_count ORDER BY e.member_name ASC
+	 INNER JOIN member b ON a.follow_member_id = b.member_id) c 
+	 LEFT OUTER JOIN follow d on c.member_id = d.member_id group by c.member_name, c.member_id) e, 
+	 follow f WHERE e.member_id = f.follow_member_id group by e.member_name, e.following_count ORDER BY e.member_name ASC
 	 </select>
 	 
 	 <select id="followCount" resultType="first.com.model.FollowDTO" parameterType="int">

@@ -12,14 +12,16 @@
 	WHERE c.board_title like '%'||#{search}||'%' OR c.board_content like '%'||#{search}||'%' ORDER BY c.board_date DESC
 	</select>
 	
-	
 	<insert id="insert" parameterType="first.com.model.ScrapDTO">	
-	INSERT INTO scrap VALUES (#{member_id}, #{board_id}, #{bgroup_id}, SEQ_SCRAP.NEXTVAL)
+	INSERT INTO scrap VALUES (#{member_id}, #{board_id}, SYSDATE, SEQ_SCRAP.NEXTVAL)
 	</insert>
 	
-	
-	<delete id="delete" parameterType="int">
-	DELETE FROM scrap WHERE scrap_id = #{scrap_id}
+	<delete id="delete" parameterType="java.util.Map">
+	DELETE FROM scrap WHERE board_id = #{board_id} and member_id = #{session_id}
 	</delete>
+	
+	<select id="Check" resultType="int" parameterType="java.util.Map">
+	SELECT count(scrap_id) FROM scrap WHERE member_id = #{session_id} and board_id = #{board_id}
+	</select>
 	
 </mapper>

@@ -10,7 +10,11 @@
 	 WHERE a.member_id = #{member_id} and board_title like '%'||#{search}||'%' OR board_content like '%'||#{search}||'%' ORDER BY board_date DESC
 	 </select>
 	 
-	 <select id="followCheck" resultType="first.com.model.FollowDTO" parameterType="java.util.Map">
+	 <select id="followCheck" resultType="int" parameterType="java.util.Map">
 	 SELECT count(follow_id) as followCheck FROM follow WHERE member_id = #{session_id} and follow_member_id = #{member_id}
+	 </select>
+	 
+	 <select id="name" resultType="first.com.model.FollowDTO" parameterType="int">
+	 SELECT member_name FROM member WHERE member_id = #{member_id}
 	 </select>
 </mapper>

@@ -61,6 +61,18 @@ function memberpage(){
 		ap : 'AjaxMemberPage'
 	});
 }
+
+function deletescrap(){
+	
+	if(!confirm("스크랩에서 지우시겠습니까?")){
+		return false;
+	}
+	
+	var session_id = ${sessionScope.member_id};
+	var board_id = $("#board_id").val();
+	
+	$("#area").load("/dokky/ScrapDelete.do", {board_id: board_id, session_id: session_id});
+}
 </script>
 <title>DOKKY</title>
 <style>
@@ -106,6 +118,7 @@ border-bottom-color: #FFFFFF;
 					</thead>
 					<tbody>
 					<c:forEach var="board" items="${board}">
+						<input type="hidden" id="board_id" value="${board.board_id}"/>
 					<tr>
 							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
@@ -113,7 +126,7 @@ border-bottom-color: #FFFFFF;
 								class="icon fa-eye">${board.board_hit}</a></td>
 							<td width="10%" align="center"><a href="/dokky/MemberPage.do?member_id=${board.member_id}&session_id=${sessionScope.member_id}" id="b">${board.member_name}</a></td>
 							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
-							<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
+							<td width="5%"><a href="javascript:;" onclick="return deletescrap()"><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
 						</tr>
 						</c:forEach>
 					</tbody>

@@ -64,42 +64,49 @@ function memberpage(){
 	});
 }
 
-function followclick(){
+function followclick(addordelete){
 	
-	var plus = document.getElementById("plus").value;
-
-	if(plus == "0"){
-	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
-	$("#plus").val("1");
-	} 
+	var session_id = ${sessionScope.member_id};//팔로우 거는 사람
+	var member_id = ${member_id};//팔로우 당하는 사람
 	
-	if(plus == "1"){
-	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a>');
-	$("#plus").val("0");
-	}
-	
-	return true;
+	if(addordelete == "add"){
+	$.ajax({
+		url:"/dokky/AddFollow.do",
+		type:"get",
+		dataType:"json",
+		data: {follow_member_id : member_id, member_id : session_id},
+		success: function(data){
+			followcheck(data);
+		}
+	});}
+	else if (addordelete == "delete"){
+	$.ajax({
+		url:"/dokky/DeleteFollow.do",
+		type:"get",
+		dataType:"json",
+		data: {follow_member_id : member_id, member_id : session_id},
+		success: function(data){
+			followcheck(data);
+		}
+	});}
 }
 
-function followcheck(){
-	
-	var me = '${me}';
-	var check = '${followCheck.followCheck}';
-	
-	if(me == "me"){
+function followcheck(checkValue){
+
+	if(checkValue == "me"){
 		$("#me").html("");
-	} else if(check != null){//멤버페이지를 불러올 때 팔로우여부 체크값을 보내서 조건을 준다음 plus의 값을 설정함
-	$("#plus").val("0");
+	} else if(checkValue == null || checkValue == "0"){//멤버페이지를 불러올 때 팔로우여부 체크값을 보내서 조건을 준다음 plus의 값을 설정함
 	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a>');
-	} else if(check == null){
-	$("#plus").val("1");
+	$("#plusFollow").html('<a href="#" onclick=\'followclick("add")\'><h4 style="color: #f56a6a;">+팔로우</h4></a>');
+	} else if(checkValue != null || checkValue == "1"){
 	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick="followclick()"><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
+	$("#plusFollow").html('<a href="#" onclick=\'followclick("delete")\'><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
 	}
 }
+
+$(document).ready(function(){
+	followcheck("${followCheck}");
+});
 </script>
 <title>회원 정보 보기</title>
 <style>
@@ -109,10 +116,10 @@ function followcheck(){
 }
 </style>
 </head>
-<body onload="followcheck()">
+<body>
 	<h4>회원 정보</h4>
 	
-	<span class="image fit"><h2><b>여기에 회원의 닉네임</b></h2></span>
+	<span class="image fit"><h2><b>${followCount.member_name}</b></h2></span>
 	<div class="box alt">
 		<div class="row 50% uniform" style="background-color: #f5f6f7; width:60%; display: inline-block;">
 			<div class="4u" style="width: 50%;">
@@ -129,11 +136,10 @@ function followcheck(){
 				<span class="image fit" style="text-align: center; font-size: 30px;">${followCount.follower_count}</span>
 			</div>
 		</div>
-		<input type="hidden" id="plus" value=""/>
 		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-width:30%; max-height:30%;">
 		<div class="4u" style="width: 90%;">
 		<div id="me" style="height: 93px;"><span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
-		<a href="/dokky/AddFollow.do?member_id=${member_id}" onclick="return followclick()"><h4 style="color: #f56a6a;">+팔로우</h4></a></span></div>
+		<a href="javascript:;" onclick='followclick("add")'><h4 style="color: #f56a6a;">+팔로우</h4></a></span></div>
 		</div>
 		</div>
 	</div>
@@ -143,7 +149,7 @@ function followcheck(){
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" id="a" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
 	<hr style="width: 70%; align: left;">
 		<table>
