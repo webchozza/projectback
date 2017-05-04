@@ -144,9 +144,25 @@ border-bottom-color: #FFFFFF;
 					</thead>
 					<tbody>
 					<c:forEach var="board" items="${board}">
+					<c:if test="${board.bgroup_id eq 1}">
+						<c:url var="detailurl" value="#"/><!-- qna -->
+					</c:if>
+					<c:if test="${board.bgroup_id eq 2}">
+						<c:url var="detailurl" value="/bfreedetail.do">
+							<c:param name="board_id" value="${board.board_id }"/>
+							<c:param name="currentPage" value="1"/>
+		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
+						</c:url>
+					</c:if>
+					<c:if test="${board.bgroup_id eq 3 || board.bgroup_id eq 4}">
+						<c:url var="detailurl" value="#"/><!-- 구인구직 -->
+					</c:if>
+					<c:if test="${board.bgroup_id eq 5}">
+						<c:url var="detailurl" value="#"/><!-- 오픈소스 -->
+					</c:if>
 						<input type="hidden" id="board_id" value="${board.board_id}"/>
 					<tr>
-							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
+							<td width="30%"><a href="${detailurl}" id="b">${board.board_title}</a></td>
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-eye">${board.board_hit}</a></td>
