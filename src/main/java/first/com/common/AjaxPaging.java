@@ -15,7 +15,7 @@ public class AjaxPaging {
 
 		path = "\"/dokky/" + path + ".do\"";
 		
-		fullPath = path;
+		fullPath = path;//jsp에 모델에 path라는 이름으로 전달해준 후  Ajax 통신시 data로 컨트롤러로 쏴준다
 
 		totalPage = (int) Math.ceil((double) totalCount / blockCount);
 		if (totalPage == 0) {

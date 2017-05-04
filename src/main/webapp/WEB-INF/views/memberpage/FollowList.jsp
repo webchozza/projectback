@@ -5,16 +5,46 @@
 <html>
 <head>
 <script>
+function paging(path, i, search, n) {
+	
+	var member_id = ${member_id};
+	
+	$('#area').load(path, {
+		member_id : member_id,
+		currentPage : i,
+		n : n,
+		search : search,
+		ap : 'AjaxPaging'
+	});
+}
+
 function sch() {
 	var form = document.getElementById('searchform');
-	var path = form.path.value;
+	var path = ${path};
+	var member_id = ${member_id};
 	var i = form.i.value;
 	var search = form.search.value;
 	
 	$('#area').load(path, {
+		member_id: member_id,
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
+	});
+}
+
+function follow(){
+	
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var member_id = ${member_id};
+	
+	$("#movearea").load("/dokky/ListFollow.do", {
+		member_id : member_id,
+		currentPage : i,
+		search : search,
+		ap : 'AjaxFollow'
 	});
 }
 
@@ -71,9 +101,11 @@ border-bottom-color: #FFFFFF;
 			<!-- 바디 -->
 	<div class="table-wrapper">
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYBOARDCOUNT}</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYSCRAPCOUNT}</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3 style="color: #f56a6a;">팔로우</h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYFOLLOWCOUNT}</div>
 			<hr style="width: 70%; align: left;">
 				<table>
 					<thead>
@@ -81,7 +113,6 @@ border-bottom-color: #FFFFFF;
 						<td><section id="search" class="alt" style="width: 400px">
 					<form action="javascript:;" method="post" id="searchform" >
 					<input type="hidden" name="i" id="i" value="${i}"/>
-					<input type="hidden" name="path" id="path" value="${path}"/>
 						<input type="text" name="search" id="search" placeholder="Search" width="100px" />
 							<input type="submit" name="ss" onclick="sch()"/>
 					</form>

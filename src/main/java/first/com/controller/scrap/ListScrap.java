@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import first.com.common.AjaxPaging;
+import first.com.dao.MemberPageDAO;
 import first.com.dao.ScrapDAO;
 import first.com.model.BoardDTO;
 
 @Controller
 public class ListScrap {
+	
+	@Resource
+	private MemberPageDAO memberpage;
 	
 	@Resource
 	private ScrapDAO Scrap;
@@ -38,17 +42,12 @@ public class ListScrap {
 							@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							@RequestParam(value="ap", required=false) String ap,
 							Model model){
-		System.out.println(member_id);
-		System.out.println(n);
-		System.out.println(search);
-		System.out.println(currentPage);
-		System.out.println(ap);
 		
-		map.put("member_id", member_id);//테스트끝나면 여기 바꿔줘야한다
+		map.put("member_id", member_id);
 		map.put("search", search);
 		
-		//세션 아이디를 전송받아서 파라미터 값으로 넘겨준다
 		List<BoardDTO> list = Scrap.scrapList(map);
+		Map<String, Object> myCount = memberpage.myCount(map);
 		
 		totalCount = list.size();
 		
@@ -62,6 +61,8 @@ public class ListScrap {
 		list= list.subList(page.getStartCount(), lastCount);
 		
 		model.addAttribute("board", list);
+		model.addAttribute("myCount", myCount);
+		
 		model.addAttribute("page", pagingHtml);
 		
 		model.addAttribute("n", n);
@@ -74,7 +75,7 @@ public class ListScrap {
 			return "scrap/ScrapList";//at Ajax request
 		}
 		
-		return null;
+		return null;//스크랩 페이지를 따로 만들고 싶다면 여기에 타일즈 설정 잇자
 		
 	}
 }

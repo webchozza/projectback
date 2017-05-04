@@ -20,17 +20,32 @@ function paging(path, i, search, n) {
 }
 
 function sch() {
-
 	var form = document.getElementById('searchform');
-	var i = form.i.value;
+	var path = ${path};
 	var member_id = ${member_id};
+	var i = form.i.value;
 	var search = form.search.value;
 
-	$('#area').load("/dokky/MemberPage.do", {
-		member_id : member_id,
+	$('#movearea').load(path, {
+		member_id: member_id,
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
+	});
+}
+
+function follow(){
+	
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var member_id = ${member_id};
+	
+	$("#movearea").load("/dokky/ListFollow.do", {
+		member_id : member_id,
+		currentPage : i,
+		search : search,
+		ap : 'AjaxFollow'
 	});
 }
 
@@ -145,7 +160,7 @@ $(document).ready(function(){
 	</div>
 	<div id="movearea">
 	<div class="table-wrapper">
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()" style="color: #f56a6a;">게시물</a></h3></div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYBOARDCOUNT}</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYSCRAPCOUNT}</div>
@@ -157,9 +172,7 @@ $(document).ready(function(){
 						<tr>
 						<td><section id="search" class="alt" style="width: 400px">
 					<form action="javascript:;" method="post" id="searchform" >
-					<input type="hidden" name="member_id" id="member_id" value="${member_id}"/>
 					<input type="hidden" name="i" id="i" value="${i}"/>
-					<input type="hidden" name="path" id="path" value="${path}"/>
 						<input type="text" name="search" id="search" placeholder="Search"/>
 							<input type="submit" name="ss" onclick="sch()"/>
 					</form>

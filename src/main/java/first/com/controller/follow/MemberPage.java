@@ -53,7 +53,7 @@ public class MemberPage {
 		List<BoardDTO> list = memberpage.myBoardList(map);
 		Map<String, Object> myCount = memberpage.myCount(map);
 		FollowDTO follow = followService.followCount(member_id);
-		System.out.println(myCount);
+
 		if(session_id != 0){
 		map.put("session_id", session_id);
 		followCheck = followService.followCheck(map);

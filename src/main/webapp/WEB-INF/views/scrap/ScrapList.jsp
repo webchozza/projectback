@@ -4,12 +4,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
 <script>
 function paging(path, i, search, n) {
 	
 	var member_id = ${member_id};
 	
-	$('#area').load(path, {
+	$('#movearea').load(path, {
 		member_id : member_id,
 		currentPage : i,
 		n : n,
@@ -20,15 +21,31 @@ function paging(path, i, search, n) {
 
 function sch() {
 	var form = document.getElementById('searchform');
+	var path = ${path};
 	var i = form.i.value;
 	var member_id = ${member_id};
 	var search = form.search.value;
-	
-	$('#area').load("/dokky/ScrapList.do", {
+
+	$('#movearea').load(path, {
 		member_id: member_id,
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
+	});
+}
+
+function follow(){
+	
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var member_id = ${member_id};
+	
+	$("#movearea").load("/dokky/ListFollow.do", {
+		member_id : member_id,
+		currentPage : i,
+		search : search,
+		ap : 'AjaxFollow'
 	});
 }
 
@@ -103,15 +120,15 @@ border-bottom-color: #FFFFFF;
 </style>
 </head>
 <body>
-<div id="area">
+<div id="movearea">
 			<!-- 바디 -->
 	<div class="table-wrapper">
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3><a href="javascript:;" onclick="memberpage()">게시물</span></a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()" style="color: #f56a6a;">스크랩</a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYBOARDCOUNT}</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3 style="color: #f56a6a;">스크랩</h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYSCRAPCOUNT}</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
-	<div style="width: 10%; text-align:left; display: inline-block;">개수</div>
+	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYFOLLOWCOUNT}</div>
 			<hr style="width: 70%; align: left;">
 				<table>
 					<thead>
@@ -119,7 +136,6 @@ border-bottom-color: #FFFFFF;
 						<td><section id="search" class="alt" style="width: 400px">
 					<form action="javascript:;" method="post" id="searchform" >
 					<input type="hidden" name="i" id="i" value="${i}"/>
-					<input type="hidden" name="path" id="path" value="${path}"/>
 						<input type="text" name="search" id="search" placeholder="Search" width="100px" />
 							<input type="submit" name="ss" onclick="sch()"/>
 					</form>
