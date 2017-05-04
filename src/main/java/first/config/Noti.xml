@@ -4,8 +4,16 @@
 	 
 	 <mapper namespace="noti">
 	 
+	 <select id="New_Board_select_board" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	 SELECT a.*, rownum FROM (SELECT * FROM board WHERE member_id = #{session_id} and bgroup_id = #{bgroup_id} ORDER BY board_date DESC) a WHERE rownum = 1
+	 </select>
+	 
 	 <select id="select_board" resultType="first.com.model.BoardDTO" parameterType="int">
 	 SELECT * FROM board WHERE board_id = #{board_id}
+	 </select>
+	 
+	 <select id="follower_member_id" resultType="first.com.model.FollowDTO" parameterType="java.util.Map">
+	 SELECT member_id FROM follow WHERE follow_member_id = #{session_id}
 	 </select>
 	 
 	 <insert id="insert" parameterType="java.util.Map">

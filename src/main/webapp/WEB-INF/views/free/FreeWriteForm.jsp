@@ -25,11 +25,7 @@
 		<div class="inner">
 			<h3>Community</h3>
 			<form name="frm" action="bfreewrite.do" onsubmit="return gosubmit1()">
-
-				<div class="6u 12u$(xsmall)" style="width: 300pt;">
-					<input type="text" name="member_id" id="subject" value=""
-						style="width: 300pt;" placeholder="아이디" />
-				</div>
+			<input type="hidden" name="member_id" value="${sessionScope.member_id}"/>
 
 				<div class="6u 12u$(xsmall)" style="width: 300pt;">
 					<input type="text" name="board_nickname" id="subject" value=""

@@ -29,6 +29,7 @@ public class BfreeDetail {
 
 	@RequestMapping("/bfreedetail")
 	public ModelAndView bfreeDetail(HttpServletRequest request,@RequestParam("session_id") int session_id) {
+		
 
 		ModelAndView mav = new ModelAndView();
 
@@ -38,7 +39,6 @@ public class BfreeDetail {
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
 
 		bfreeService.bfreeHit(board_id);
-		System.out.println(currentPage);
 
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("bfreeDetail", bfreeDetail);
@@ -46,7 +46,7 @@ public class BfreeDetail {
 		mav.setViewName("FreeDetail");
 		
 		//add by eongoo
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("session_id", session_id);
 		map.put("board_id", board_id);
 		mav.addObject("scrapCheck", Scrap.scrapCheck(map));

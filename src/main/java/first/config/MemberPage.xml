@@ -22,7 +22,7 @@
 	 SELECT count(follow_id) as followCheck FROM follow WHERE member_id = #{session_id} and follow_member_id = #{member_id}
 	 </select>
 	 
-	 <select id="name" resultType="first.com.model.FollowDTO" parameterType="int">
+	 <select id="name" resultType="java.lang.String" parameterType="int">
 	 SELECT member_name FROM member WHERE member_id = #{member_id}
 	 </select>
 </mapper>

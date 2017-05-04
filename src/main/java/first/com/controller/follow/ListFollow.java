@@ -45,7 +45,7 @@ public class ListFollow {
 		map.put("member_id", member_id);
 		map.put("search", search);
 		
-		List<FollowDTO> list = followService.listFollow(member_id);
+		List<FollowDTO> list = followService.listFollow(map);
 		Map<String, Object> myCount = memberpage.myCount(map);
 		
 		totalCount = list.size();

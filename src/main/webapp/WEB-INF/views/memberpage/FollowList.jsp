@@ -94,6 +94,11 @@ border-bottom-color: #FFFFFF;
   color: #3d4449;
   text-decoration:none !important
 }
+
+table {
+	margin: 0 0 2em 0;
+	width: 60%;
+}
 </style>
 </head>
 <body>
@@ -120,15 +125,11 @@ border-bottom-color: #FFFFFF;
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="board" items="${list}">
+					<c:forEach var="follow" items="${list}">
 					<tr>
-							<td width="30%"><a href="#" id="b">${board.board_title}</a></td>
-							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-eye">${board.board_hit}</a></td>
-							<td width="10%" align="center"><a href="#" id="b">${board.member_name}</a></td>
-							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
-							<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
+							<td width="30%" align="center"><a href="/dokky/MemberPage.do?member_id=${follow.member_id}&session_id=${sessionScope.member_id}" id="b">${follow.member_name}</a></td>
+							<td width="10%" style="padding-right: 30px;"><a class="icon fa-hand-paper-o">${follow.following_count}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							<a class="icon fa-hand-o-up">${follow.follower_count}</a>
 						</tr>
 						</c:forEach>
 					</tbody>
@@ -139,7 +140,7 @@ border-bottom-color: #FFFFFF;
 			<style>
 			div { position:relative; } 
 			#cm { position:absolute; } 
-			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
+			.hc { width:10%; left:0; right:0; margin-left:27%; margin-right:auto; }
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->

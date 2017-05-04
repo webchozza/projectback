@@ -19,8 +19,8 @@ public class FollowService implements FollowDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public List<FollowDTO> listFollow(int member_id) {
-		List<FollowDTO> list = sqlSessionTemplate.selectList("follow.list", member_id);
+	public List<FollowDTO> listFollow(Map<String, Object> map) {
+		List<FollowDTO> list = sqlSessionTemplate.selectList("follow.list", map);
 		return list;
 	}
 
@@ -37,7 +37,7 @@ public class FollowService implements FollowDAO {
 	@Override
 	public FollowDTO followCount(int member_id) {
 		FollowDTO follow = (FollowDTO)sqlSessionTemplate.selectOne("follow.followCount", member_id);
-		follow = (FollowDTO)sqlSessionTemplate.selectOne("memberpage.name", member_id);
+		follow.setMember_name((String)sqlSessionTemplate.selectOne("memberpage.name", member_id));
 		return follow;
 	}
 	

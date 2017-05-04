@@ -7,7 +7,7 @@ import first.com.model.FollowDTO;
 
 public interface FollowDAO {
 	
-	public List<FollowDTO> listFollow(int member_id);
+	public List<FollowDTO> listFollow(Map<String, Object> map);
 
 	public void addFollow(FollowDTO follow);
 	

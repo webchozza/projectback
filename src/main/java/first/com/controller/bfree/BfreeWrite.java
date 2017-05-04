@@ -8,10 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.common.Paging;
+import first.com.dao.AlramDAO;
 import first.com.dao.BfreeDAO;
 import first.com.model.BoardDTO;
 
@@ -20,6 +21,11 @@ public class BfreeWrite {
 	
 	@Resource
 	private BfreeDAO bfreeService;
+	
+	//알림을 위해 DI
+	@Resource 
+	private AlramDAO noti;
+	/////
 	
 	private int n;
 	private String search;
@@ -41,7 +47,10 @@ public class BfreeWrite {
 	}
 
 	@RequestMapping(value="/bfreewrite")
-	public ModelAndView bfreeWrite(@ModelAttribute("BoardDTO")BoardDTO boardDTO, BindingResult result, HttpServletRequest request, HttpSession session) {
+	public ModelAndView bfreeWrite(@ModelAttribute("BoardDTO")BoardDTO boardDTO, 
+								   BindingResult result, 
+								   HttpServletRequest request, 
+								   HttpSession session) {
 		
 		ModelAndView mav= new ModelAndView();
 		
@@ -49,8 +58,9 @@ public class BfreeWrite {
 		
 		mav.addObject("boardDTO", boardDTO);
 		
-		mav.setViewName("redirect:bfreelist.do");
+		noti.insertNewBoardNoti(boardDTO.getMember_id(), "/bfreedetail", 2);
 		
+		mav.setViewName("redirect:bfreelist.do");
 		
 		return mav;
 	}

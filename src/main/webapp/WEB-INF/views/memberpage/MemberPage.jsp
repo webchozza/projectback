@@ -35,12 +35,11 @@ function sch() {
 }
 
 function follow(){
-	
 	var form = document.getElementById('searchform');
 	var i = form.i.value;
 	var search = form.search.value;
 	var member_id = ${member_id};
-	
+
 	$("#movearea").load("/dokky/ListFollow.do", {
 		member_id : member_id,
 		currentPage : i,
@@ -138,10 +137,10 @@ $(document).ready(function(){
 	<div class="box alt">
 		<div class="row 50% uniform" style="background-color: #f5f6f7; width:60%; display: inline-block;">
 			<div class="4u" style="width: 50%;">
-				<span class="image fit" style="text-align: center;"><h3><b>팔로잉</b></h3></span>
+				<span class="image fit" style="text-align: center;"><h3 class="icon fa-hand-paper-o" style="color: #f56a6a;"><b>팔로잉</b></h3></span>
 			</div>
 			<div class="4u" style="width: 50%;">
-				<span class="image fit" style="text-align: center;"><h3><b>팔로워</b></h3></span>
+				<span class="image fit" style="text-align: center;"><h3 class="icon fa-hand-o-up" style="color: #f56a6a;"><b>팔로워</b></h3></span>
 			</div>
 			<!-- Break -->
 			<div class="4u" style="width: 50%;">
@@ -186,7 +185,7 @@ $(document).ready(function(){
 					<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
 					<a class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; 
 					<a class="icon fa-eye">${board.board_hit}</a></td>
-	 				<td width="10%" align="center"><a href="#" id="b">${board.member_name}</a></td>
+	 				<td width="10%" align="center"><div id="b">${board.member_name}<div></td>
 					<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 					<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
 				</tr>

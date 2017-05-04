@@ -107,7 +107,7 @@ color: #7f888f;
 								<tr>
 									<td colspan="2"><strong><a href="#">${clist.member_id }<!-- 수정필요 --></a></strong>
 										<i><fmt:formatDate value="${clist.bcomment_date }" pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp;<a
-										href="bfreedeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bfreeDetail.board_id}&currentPage=${currentPage}"
+										href="bfreedeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bfreeDetail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}"
 										class="icon fa-trash" style="font-size: 14px; color: #7f888f"></a>
 										<p>${clist.bcomment_content }</p></td>
 								</tr>
@@ -122,7 +122,7 @@ color: #7f888f;
 									<td><textarea cols="20" rows="3" name="bcomment_content"
 											placeholder="댓글을 입력해주세요."></textarea></td>
 									<td valign="middle"><center>
-											<input type="text" name="member_id" placeholder="멤버번호"><input
+											<input type="hidden" name="member_id" value="${sessionScope.member_id}"><input
 												type="hidden" name="board_id"
 												value="${bfreeDetail.board_id}"><input type="hidden"
 												name=currentPage value="${currentPage}"><input

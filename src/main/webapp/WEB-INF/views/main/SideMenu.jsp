@@ -138,27 +138,23 @@ display:none;
 			<c:if test="${sessionScope.member_email ne null}">
 			<section id="icons">
 				<ul>
-					<a href="/dokky/logout.do" class="icon fa-sign-out"> 로그아웃</a>
+					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
+					
 					<a href="javascript:;" class="icon fa-bell" id="noti" onclick="notipop()"> 알림</a>
 					<input type="hidden" id="notich"/>
+					
 					<div id="notibox" ></div>
+					
+					<c:if test="${sessionScope.member_email}=='admin'">
+					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
+					</c:if>
+					
 				</ul>
 			</section>
 				<div style="padding-left: 5%;">안녕하세요! <a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${sessionScope.member_name}</a>님</div>
 			</c:if>				
 			
-				<!-- 관리자 로그인 -->
-			<c:if test="${sessionScope.member_email}=='admin'">
-			<section id="icons">
-				<ul>
-					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
-					</ul>
-			</section>
-				<div  style="padding-left: 5%;">안녕하세요! <a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${sessionScope.member_name}</a>님</div>
-			</c:if>
-
-
 			<!-- 메뉴 -->
 			<nav id="menu">
 				<ul>

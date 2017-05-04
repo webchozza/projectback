@@ -1,5 +1,8 @@
 package first.com.controller.bfree;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,7 +25,14 @@ public class BCfreeDelete {
 		int bcomment_id= Integer.parseInt(request.getParameter("bcomment_id"));
 		bfreeService.bCfreeDelete(bcomment_id);
 		bfreeService.bfreeUpdateCountco(Integer.parseInt(request.getParameter("board_id")));
-		mav.setViewName("redirect:bfreedetail.do?board_id="+request.getParameter("board_id")+"&currentPage="+request.getParameter("currentPage"));
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_id", request.getParameter("board_id"));
+		map.put("currentPage", request.getParameter("currentPage"));
+		map.put("session_id", request.getParameter("session_id"));
+		
+		mav.addAllObjects(map);
+		mav.setViewName("redirect:bfreedetail.do");
 
 		return mav;
 	}
