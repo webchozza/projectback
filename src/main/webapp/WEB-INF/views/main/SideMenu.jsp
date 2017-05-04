@@ -34,38 +34,26 @@ function notipop(){
 				$(".notibox").addClass("nb");
 				$("#notich").val("Y");
 				
-				//noti
 				var str = "<ul> \n";
 				
-				//comment
-				var pren = "회원님의 ";
-				var postn = "글에 댓글이 등록되었습니다.";
-				
-				//follow => new board
-				var pref = " 님이 새 ";
-				var postf = "을 등록하셨습니다.";
-			
-				//follow
 				$.each(data, function(key,value){
 					if(value.noti_kinds == "comment"){
-						alert('1');
-					str += "<li>"+pren+"<a href='"+value.list.noti_url+"'>"+value.list.noti_subject+"</a>"+postn+"</li>\n"; 
-					} else if(value.noti == null) {
-					str += "<li>"+value.noti_id+pref+"<a href='"+value.noti_url+"'>게시글</a>"+postf+"</li>\n"; 
+					str += "<li>회원님의 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>"+value.noti_subject;
+					str += "</a>글에 댓글이 등록되었습니다</li>\n"; 
+					} else if(value.noti_kinds == "follow_NewBoard") {
+					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id=${sessionScope.member_id}'>"+value.sender_name;
+					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>글</a>을 작성했습니다</li>\n"; 
+					} else if(value.noti_kinds == "follow_comment"){
+					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id=${sessionScope.member_id}'>"+value.sender_name;
+					str += "</a>님이 새로운<a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>댓글</a>을 등록했습니다</li>\n";
 					}
-					
 				});
 				str += "</ul>";
 				
 				$(".notibox").html(str);
-			},
-			error: function(data){
-				var e = data.status;
-				alert(e);
-			},
-			
-			});
-		}
+			}
+		});
+	}
 	
 	if(ch == "Y"){
 		$("#notibox").html("");

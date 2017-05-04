@@ -45,7 +45,7 @@ public class AlramService implements AlramDAO{
 		List<FollowDTO> followComment = sqlSessionTemplate.selectList("noti.follower_member_id", map);
 		
 		//알림창에서 해당 게시글로 바로 이동할 수 있도록 url 생성
-		path = "/dokky"+path+".do?"+board_id;
+		path = "/dokky"+path+".do?board_id="+board_id;
 
 		map.put("board_title", board.getBoard_title());//게시글 제목
 		map.put("board_url", path);//게시글 주소

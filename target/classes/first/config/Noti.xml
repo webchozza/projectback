@@ -41,7 +41,7 @@
 	 </insert>
 	 
 	 <select id="list" resultType="first.com.model.NotiDTO" parameterType="int">
-	 SELECT * FROM notification WHERE member_id = #{member_id}
+	 SELECT a.*, b.member_name as sender_name, b.member_id as sender_id FROM (SELECT * FROM notification WHERE member_id = #{member_id}) a, member b WHERE a.noti_sender_id = b.member_id
 	 </select>
 	 
 	 

@@ -178,12 +178,22 @@ function deleteMyBoard(board_id){
 	</div>
 	<div id="movearea">
 	<div class="table-wrapper">
+	<c:if test="${myCount eq null}">
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
+	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" id="a" onclick="follow()">팔로우</a></h3></div>
+	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
+	</c:if>
+	<c:if test="${myCount ne null}">
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYBOARDCOUNT}</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYSCRAPCOUNT}</div>
 	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" id="a" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYFOLLOWCOUNT}</div>
+	</c:if>
 	<hr style="width: 70%; align: left;">
 		<table>
 					<thead>

@@ -26,11 +26,7 @@
 			<h3>Community</h3>
 			<form name="frm" action="bfreewrite.do" onsubmit="return gosubmit1()">
 			<input type="hidden" name="member_id" value="${sessionScope.member_id}"/>
-
-				<div class="6u 12u$(xsmall)" style="width: 300pt;">
-					<input type="text" name="board_nickname" id="subject" value=""
-						style="width: 300pt;" placeholder="닉네임" />
-				</div>
+			<input type="hidden" name="board_nickname" id="subject" value="${sessionScope.member_name}"/>
 
 				<div class="6u 12u$(xsmall)" style="width: 300pt;">
 					<input type="text" name="board_title" id="subject" value=""

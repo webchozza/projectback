@@ -49,7 +49,6 @@ public class MemberPage {
 		map.put("member_id", member_id);
 		map.put("search", search);
 		
-		
 		List<BoardDTO> list = memberpage.myBoardList(map);
 		Map<String, Object> myCount = memberpage.myCount(map);
 		FollowDTO follow = followService.followCount(member_id);
@@ -69,7 +68,7 @@ public class MemberPage {
 		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
 		
 		list= list.subList(page.getStartCount(), lastCount);
-		
+		System.out.println(myCount);
 		model.addAttribute("list", list);
 		model.addAttribute("myCount", myCount);
 		model.addAttribute("followCount", follow);

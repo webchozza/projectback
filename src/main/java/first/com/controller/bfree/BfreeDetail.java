@@ -28,13 +28,12 @@ public class BfreeDetail {
 	private ScrapDAO Scrap;
 
 	@RequestMapping("/bfreedetail")
-	public ModelAndView bfreeDetail(HttpServletRequest request,@RequestParam("session_id") int session_id) {
+	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+									@RequestParam("board_id") int board_id,
+									@RequestParam("session_id") int session_id) {
 		
-
 		ModelAndView mav = new ModelAndView();
 
-		int currentPage= Integer.parseInt(request.getParameter("currentPage"));
-		int board_id = Integer.parseInt(request.getParameter("board_id"));
 		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
 
