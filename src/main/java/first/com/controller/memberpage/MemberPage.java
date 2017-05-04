@@ -1,4 +1,4 @@
-package first.com.controller.follow;
+package first.com.controller.memberpage;
 
 import java.util.HashMap;
 import java.util.List;

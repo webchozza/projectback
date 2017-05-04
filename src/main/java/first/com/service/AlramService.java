@@ -38,7 +38,6 @@ public class AlramService implements AlramDAO{
 	public void insertCommentNoti(int board_id, int session_id, String path){//board_id = 댓글 작성한 게시글의 board_id 값 넣어주세요
 																			 //session_id = jsp단에서 session_id값을 받아와서 넣어주세요.
 																		     //board_url = 상세보기의 url을 넣어주세요 ex) /dokky/bfreedetail.do => "bfreedetail"
-		System.out.println("댓글 작성 알림간다");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("session_id", session_id);//댓글을 작성한 사람의 id
 		
@@ -76,15 +75,8 @@ public class AlramService implements AlramDAO{
 		map.put("bgroup_id", bgroup_id);//게시판 종류
 
 		BoardDTO board = (BoardDTO)sqlSessionTemplate.selectOne("noti.New_Board_select_board", map);
-		System.out.println("전이냐 후냐");
+
 		List<FollowDTO> followNewBoard = sqlSessionTemplate.selectList("noti.follower_member_id", session_id);
-		
-		System.out.println(session_id);
-		System.out.println(board.getBoard_title());
-		System.out.println(path);
-		System.out.println(board.getBgroup_id());
-		System.out.println(board.getBoard_id());
-		System.out.println(followNewBoard);
 		
 		path = "/dokky"+path+".do?"+board.getBoard_id();
 		

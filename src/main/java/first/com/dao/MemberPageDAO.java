@@ -11,4 +11,6 @@ public interface MemberPageDAO {
 	
 	public Map<String, Object> myCount(Map<String, Object> map);
 	
+	public void deleteMyBoard(int board_id);
+	
 }

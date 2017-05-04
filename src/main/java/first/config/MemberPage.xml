@@ -25,4 +25,8 @@
 	 <select id="name" resultType="java.lang.String" parameterType="int">
 	 SELECT member_name FROM member WHERE member_id = #{member_id}
 	 </select>
+	 
+	 <delete id="deleteMyBoard" parameterType="int">
+	 DELETE FROM board WHERE board_id = #{board_id}
+	 </delete>
 </mapper>

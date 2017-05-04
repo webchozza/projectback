@@ -29,5 +29,10 @@ public class MemberPageService implements MemberPageDAO {
 		return sqlSessionTemplate.selectOne("memberpage.myCount", map);
 	}
 
+	@Override
+	public void deleteMyBoard(int board_id) {
+		sqlSessionTemplate.delete("memberpage.deleteMyBoard", board_id);
+	}
+
 
 }

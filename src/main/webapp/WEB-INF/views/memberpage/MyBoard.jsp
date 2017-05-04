@@ -78,6 +78,28 @@ function memberpage(){
 		ap : 'AjaxMemberPage'
 	});
 }
+
+$(document).ready(function(){
+	followcheck("${followCheck}");
+});
+
+function deleteMyBoard(board_id){
+	var form = document.getElementById('searchform');
+	var i = form.i.value;
+	var search = form.search.value;
+	var session_id = ${sessionScope.member_id};
+	
+	if(!confirm("해당 글을 지우시겠습니까?")){ return false; }
+	
+	$.ajax({
+		url:"/dokky/deleteMyBoard.do",
+		type: "post",
+		data: {board_id: board_id, member_id: session_id, currentPage : i, search : search, ap : "AjaxMyBoardDelete"},
+		success: function(data){
+			$("#movearea").html(data);
+		}
+	});
+}
 </script>
 <title>DOKKY</title>
 <style>
@@ -145,7 +167,7 @@ border-bottom-color: #FFFFFF;
 								class="icon fa-eye">${board.board_hit}</a></td>
 							<td width="10%" align="center"><a href="#" id="b">${board.member_name}</a></td>
 							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
-							<td width="5%"><a href=""><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
+							<td width="5%"><a href="javascript:;" onclick='return deleteMyBoard("${board.board_id}")'><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
 						</tr>
 						</c:forEach>
 					</tbody>
