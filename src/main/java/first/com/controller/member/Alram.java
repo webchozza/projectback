@@ -1,9 +1,6 @@
 package first.com.controller.member;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.com.dao.AlramDAO;
+import first.com.dao.NotiCountDAO;
 import first.com.model.NotiDTO;
 
 @Controller
@@ -21,6 +19,9 @@ public class Alram {
 
 	@Resource
 	private AlramDAO noti;
+	
+	@Resource
+	private NotiCountDAO noticount;
 
 	@RequestMapping(value = "/notilist.do")
 	@ResponseBody
@@ -30,12 +31,22 @@ public class Alram {
 		//NotiDTO에 값을 넣어서 전달하기 때문에 json객체의 키는 DTO의 각 property이다.
 		List<NotiDTO> list = noti.notiList(member_id);
 		
+		noticount.initCount(member_id);//알림을 확인할 때 새로운 알림을 알려주는 카운트가 있다면 초기화
+		
 		return list;
 	}
-
-	public String deleteAlram() {
+	
+	@RequestMapping(value="/notiDelete.do")
+	public String notiDelete() {
 
 		return null;
+	}
+	
+	@RequestMapping(value="/notiCount.do")
+	@ResponseBody
+	public int notiCount(@RequestParam(value="session_id") int member_id){
+		
+		return noticount.getNotiCount(member_id);
 	}
 
 }

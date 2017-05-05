@@ -6,11 +6,6 @@
 <head>
 <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
 <title>사이드 메뉴</title>
-<!--  
-class="notibox"
-<ul>
-<li>회원님의 <a href="">게시글</a>에 댓글이 달렸습니다.</li>
-</ul> -->
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#notich").val("N");
@@ -32,20 +27,21 @@ function notipop(){
 				$("#notibox").html("");
 				$("#notibox").append('<div class="notibox"><div>');
 				$(".notibox").addClass("nb");
+				$("#notibutton").attr("class","icon fa-bell alramon");
 				$("#notich").val("Y");
 				
 				var str = "<ul> \n";
 				
 				$.each(data, function(key,value){
 					if(value.noti_kinds == "comment"){
-					str += "<li>회원님의 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>"+value.noti_subject;
-					str += "</a>글에 댓글이 등록되었습니다</li>\n"; 
+					str += "<li>회원님의 글 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>"+value.noti_subject;
+					str += "</a>에 댓글이 등록되었습니다</li>\n"; 
 					} else if(value.noti_kinds == "follow_NewBoard") {
 					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id=${sessionScope.member_id}'>"+value.sender_name;
 					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>글</a>을 작성했습니다</li>\n"; 
 					} else if(value.noti_kinds == "follow_comment"){
 					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id=${sessionScope.member_id}'>"+value.sender_name;
-					str += "</a>님이 새로운<a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>댓글</a>을 등록했습니다</li>\n";
+					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>댓글</a>을 등록했습니다</li>\n";
 					}
 				});
 				str += "</ul>";
@@ -56,14 +52,33 @@ function notipop(){
 	}
 	
 	if(ch == "Y"){
+		$("#notibutton").attr("class","icon fa-bell alram");
 		$("#notibox").html("");
 		$("#notich").val("N");
 	}
 }
 
-
+setInterval(function(){
+	$.ajax({
+		url: "/dokky/notiCount.do",
+		type: "post",
+		dataType: "json",
+		data: {session_id : '${sessionScope.member_id}'},
+		success: function(data){
+			if(data == 0){
+				$("#notiarea").html("");
+			}else{
+			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
+			$("#notiarea").html("");
+			$("#notiarea").html(str);
+			}
+		}
+	});
+}, 3000);
 </script>
 <style>
+.alram{ color: #3d4449; }
+.alramon{ color: #f56a6a; }
 .nb {
 	-ms-overflow-style: none;
 	border: solid 1px rgba(210, 215, 217, 0.75);
@@ -126,10 +141,11 @@ display:none;
 			<c:if test="${sessionScope.member_email ne null}">
 			<section id="icons">
 				<ul>
-					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out"> 로그아웃</a>
+					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					
-					<a href="javascript:;" class="icon fa-bell" id="noti" onclick="notipop()"> 알림</a>
+					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;
+					<div id="notiarea" style="display:inline-block;"></div>
 					<input type="hidden" id="notich"/>
 					
 					<div id="notibox" ></div>
