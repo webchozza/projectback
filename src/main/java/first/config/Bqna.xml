@@ -11,6 +11,17 @@
 		bgroup_id = 4
 		ORDER BY board_id DESC
 	</select>
+	
+	<!-- 글쓰기 -->
+	<insert id="bqnaWrite" parameterType="int">
+		INSERT INTO board
+		(board_id, member_id, board_title, board_content, board_date,
+		board_nickname, board_hit, board_like, board_bad, board_comment_count,
+		bgroup_id)
+		VALUES
+		(seq_board.NEXTVAL, #{member_id}, #{board_title},
+		#{board_content}, SYSDATE, #{board_nickname}, 0, 0, 0, 0, 4)
+	</insert>
 
 	<!-- 제목검색 -->
 	<select id="bqnaSearchTitle" resultType="first.com.model.BoardDTO"
@@ -54,5 +65,7 @@
 		WHERE
 			board_id = #{board_id}
 	</update>
+	
+	
 
 </mapper>

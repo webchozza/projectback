@@ -9,7 +9,7 @@ import first.com.dao.BfreeDAO;
 import first.com.model.BcommentDTO;
 import first.com.model.BoardDTO;
 
-
+//주석확인
 @Service
 public class BfreeService implements BfreeDAO {
 
@@ -18,6 +18,7 @@ public class BfreeService implements BfreeDAO {
 	
 	@Override
 	public List<BoardDTO> bfreeList() {
+
 		return SqlSessionTemplate.selectList("bfree.bfreeList");
 	}
 

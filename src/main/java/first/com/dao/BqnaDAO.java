@@ -12,7 +12,7 @@ public interface BqnaDAO {
 	
 	public String bqnaWriteForm();
 	
-	public String bqnaWrite();
+	public int bqnaWrite(BoardDTO boardDTO);
 	
 	public String bqnaModifyForm();
 	
