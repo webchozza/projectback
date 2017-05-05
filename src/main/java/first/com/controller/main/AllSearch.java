@@ -1,6 +1,8 @@
 package first.com.controller.main;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -22,7 +24,7 @@ public class AllSearch {
 	private String pagingHtml; // 페이징을 구현한 HTML
 	private AjaxPaging page; // 페이징 클래스
 	private String path = "AllSearchList";//if (RequestMapping("/here.do")) => here = path
-	
+	private String[] category = { "board_date", "board_like", "board_comment_count", "scrap_count", "board_hit" };
 	@Resource
 	private MainDAO mainSearch;
 	
@@ -33,10 +35,14 @@ public class AllSearch {
 							@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
 							@RequestParam(value="ap", required=false) String ap,
 							Model model){
-		
+
 		if(AllSearch != null){ search = AllSearch; }
 
-		List<BoardDTO> list = mainSearch.AllSearch(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("category", category[n]);
+
+		List<BoardDTO> list = mainSearch.AllSearch(map);
 		
 		totalCount = list.size();
 		
@@ -57,6 +63,7 @@ public class AllSearch {
 		//ajax를 이용한 검색을 구현하기 위해 넣어 보내준다
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
+		model.addAttribute("AllSearch", search);
 		
 		if(ap != null){
 			return "main/AllSearchList";//at Ajax request

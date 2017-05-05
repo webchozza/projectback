@@ -17,14 +17,33 @@ function paging(path, i, search, n) {
 
 function sch() {
 	var form = document.getElementById('searchform');
-	var path = form.path.value;
+	var path = ${path};
 	var i = form.i.value;
-	var search = form.soundsearch.value;
+	var AllSearch = form.AllSearch.value;
 	
 	$('#area').load(path, {
 		currentPage : i,
-		search : search,
+		AllSearch : AllSearch,
 		ap : 'AjaxSearch'
+	});
+}
+
+function category(n){
+	var form = document.getElementById('searchform');
+	var path = ${path};
+	var i = form.i.value;
+	if(n=="all"){
+		var AllSearch = "";
+		n = 0;
+	}else{
+		var AllSearch = form.AllSearch.value;
+	}
+	
+	$("#area").load(path, {
+		currentPage : i,
+		AllSearch : AllSearch,
+		n : n,
+		ap : "AjaxCategory"
 	});
 }
 </script>
@@ -64,11 +83,12 @@ border-bottom-color: #FFFFFF;
 					<thead>
 						<tr>
 							<td colspan="2">
-							<a href="#">최신순</a> 
-							<a href="#">추천순</a> 
-							<a href="#">댓글순</a> 
-							<a href="#">스크랩순</a> 
-							<a href="#">조회순</a></td>
+							<a href="javascript:;" onclick='category("all")'>전체&nbsp;</a>
+							<a href="javascript:;" onclick="category(0)">최신순</a> 
+							<a href="javascript:;" onclick="category(1)">추천순</a> 
+							<a href="javascript:;" onclick="category(2)">댓글순</a> 
+							<a href="javascript:;" onclick="category(3)">스크랩순</a> 
+							<a href="javascript:;" onclick="category(4)">조회순</a></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -87,10 +107,11 @@ border-bottom-color: #FFFFFF;
 			</div>
 			<div align="center">
 				<section id="search" class="alt" style="width: 400px">
-					<form method="post" action="#">
-						<input type="text" name="AllSearch" id="AllSearch" placeholder="Search All"
+					<form method="post" action="javascript:;" id="searchform">
+					<input type="hidden" name="i" id="i" value="${i}"/>
+						<input type="text" name="AllSearch" id="AllSearch" value="${AllSearch}" placeholder="Search All"
 							width="100px" />
-							<input type="submit" name="ss"/>
+							<input type="submit" name="ss" onclick="sch()"/>
 					</form>
 				</section>
 			</div>

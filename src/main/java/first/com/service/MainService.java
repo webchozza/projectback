@@ -24,9 +24,8 @@ public class MainService implements MainDAO{
 	}
 
 	@Override
-	public List<BoardDTO> AllSearch(String search) {
-		List<BoardDTO> list = sqlSessionTemplate.selectList("allSearchList", search); 
-		return list;
+	public List<BoardDTO> AllSearch(Map<String,Object> map) {
+		return sqlSessionTemplate.selectList("allSearchList", map);
 	}
 	
 	

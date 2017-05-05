@@ -9,6 +9,6 @@ public interface MainDAO {
 	
 	public String Main();
 	
-	public List<BoardDTO> AllSearch(String search);
+	public List<BoardDTO> AllSearch(Map<String, Object> map);
 
 }

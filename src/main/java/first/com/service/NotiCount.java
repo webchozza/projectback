@@ -16,7 +16,9 @@ public class NotiCount implements NotiCountDAO{
 	private Map<Integer, Integer> NotiCount;
 
 	public int getNotiCount(int member_id) {//주기적으로 갱신을 할 때마다 새로운 알림이 몇개인지 뽑아오는 메소드(실시간으로 알림생성을 체크해서 메뉴에 띄워줌)
+		
 		int count = 0;
+		
 		if(NotiCount != null && NotiCount.containsKey(member_id)){
 			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
 				if(entry.getKey() == member_id){
@@ -25,11 +27,11 @@ public class NotiCount implements NotiCountDAO{
 				}
 			}
 		}
-			System.out.println(count+"get메소드");
 			return count;
 	}
 
 	public void setNotiCount(int member_id) {//새로운 알림이 생길때 카운트를 더해주는 메소드
+	
 		int count = 1;
 		
 		if(NotiCount != null && NotiCount.containsKey(member_id)){
@@ -43,7 +45,6 @@ public class NotiCount implements NotiCountDAO{
 		
 		Map<Integer, Integer> notiCount = new HashMap<Integer, Integer>();
 		notiCount.put(member_id, count);
-		System.out.println(count+"set메소드");
 		
 		NotiCount = notiCount;
 	}
@@ -53,7 +54,6 @@ public class NotiCount implements NotiCountDAO{
 			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
 				if(entry.getKey() == member_id){
 					NotiCount.remove(member_id);
-					System.out.println(NotiCount+"초기화");
 				}
 			}
 		}
