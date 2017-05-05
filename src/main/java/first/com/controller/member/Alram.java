@@ -47,5 +47,4 @@ public class Alram {
 	public int notiCount(@RequestParam(value="session_id") int member_id){
 		return noticount.getNotiCount(member_id);
 	}
-
 }
