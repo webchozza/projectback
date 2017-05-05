@@ -39,14 +39,12 @@ public class Alram {
 	@RequestMapping(value="/notiDelete.do")
 	@ResponseBody
 	public int notiDelete(@RequestParam("noti_id") int noti_id) {
-		System.out.println(noti.deleteAlram(noti_id));
 		return noti.deleteAlram(noti_id);
 	}
 	
 	@RequestMapping(value="/notiCount.do")
 	@ResponseBody
 	public int notiCount(@RequestParam(value="session_id") int member_id){
-		
 		return noticount.getNotiCount(member_id);
 	}
 
