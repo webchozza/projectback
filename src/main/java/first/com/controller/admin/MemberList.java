@@ -43,8 +43,10 @@ public class MemberList {
 		
 		map.put("search", search.trim());
 		map.put("n", kind[n]);
-		if(ch != null){ map.put("ch", ch); }
-		
+		if(ch != null && !ch.equals("")){ map.put("ch", ch);
+		model.addAttribute("ch", ch);
+		}
+
 		List<MemberDTO> list = admin.memberList(map);
 		
 		totalCount = list.size();
@@ -66,9 +68,10 @@ public class MemberList {
 		//ajax를 이용한 검색을 구현하기 위해 넣어 보내준다
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
+		model.addAttribute("search", search);
 		
 		if(ap != null){
-			return "admin/MemberList";//at Ajax request
+			return "admin/MemberListPage";//at Ajax request
 		}
 		
 		

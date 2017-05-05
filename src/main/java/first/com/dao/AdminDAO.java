@@ -15,6 +15,5 @@ public interface AdminDAO {
 	
 	public void memberDelete(MemberDTO member);
 	
-	/*public void outCh();*/
 
 }

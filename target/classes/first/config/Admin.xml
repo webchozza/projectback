@@ -44,15 +44,9 @@
 	UPDATE member SET member_del = 'N' WHERE member_id = #{member_id}
 	</update>
 
-	<!-- Ch칼럼 값이 2인 회원의 Ch값을 0으로 변경, ajax로 주기적으로 요청을 받아처리 -->
-	<!-- 굳이 2번 나누는 이유는 Layout.jsp에서 지속적으로 요청을 보내 홈페이지 이용중 세션이 1분만에 만료되는걸 방지 -->
-	<!-- <update id="outCh">
-	UPDATE member SET member_ch = 0 WHERE member_ch = 2;
-	</update> -->
-	
 	<!-- 세션이 만료된 회원의 ch(접속확인 칼럼)을 0로 변경 --><!-- SessionListener에서 사용 -->
-	<!-- <update id="updateCh" parameterType="int">
+	<update id="updateCh" parameterType="int">
 	UPDATE member SET member_ch = 0 WHERE member_id = #{member_id}
-	</update> -->
+	</update>
 
 </mapper>

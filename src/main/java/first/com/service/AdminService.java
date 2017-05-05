@@ -40,14 +40,7 @@ public class AdminService implements AdminDAO{
 	public void memberDelete(MemberDTO member) {
 		sqlSessionTemplate.update("admin.memberDelete", member);
 	}
-
 	
-	
-	//ajax로 지속적으로 요청을 받아 Ch칼럼값이 2인 회원들의 Ch값을 0으로 수정
-	/*@Override
-	public void outCh() {
-		sqlSessionTemplate.update("admin.outCh");
-	}*/
 	
 	
 /*	@Resource

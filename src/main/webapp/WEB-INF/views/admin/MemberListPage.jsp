@@ -18,55 +18,26 @@ function paging(path, i, search, n) {
 	});
 }
 
-function sch() {
-	
-	stoploop();
-	
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	var search = form.search.value;
-	var n = form.n.value;
-	
-	$('#area').load(path, {
-		currentPage : i,
-		search : search,
-		n : n,
-		ap : 'AjaxSearch'
-	});
-}
-
-function MemberCheck(i){
-	
-	stoploop();
-	
-	if(i == 'all'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange'});
-	}
-	if(i == 'on'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:1});
-	}
-	if(i == 'out'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:0});
-	}
-}
-
-	//멤버리스트 화면 로딩시 한번만 동작함(이후엔 #area영역에 호출된 MemberListPage의 setTimeout함수가 동작함)
 var loop = setTimeout(function(){
-	var form = document.getElementById('searchform');
+	var form = document.getElementById('valueform');
 	var path = ${path};
 	var i = form.i.value;
-	var search = form.search.value;
+	var search = $("#searchvalue").val();
 	var n = $("#demo-category").val();
+	var ch = form.ch.value;
 	
+	if(ch != "0" && ch != "1"){ ch = ""; }
+	
+	console.log(ch);
 	$("#area").load(path,{
 		currentPage: i, 
 		search: search, 
+		ch: ch,
 		n: n, 
 		ap: 'AjaxMemberCheck'
 		});
-	setTimeout(loop, 3000);
-}, 3000);
+	setTimeout(loop, 500);
+}, 500);
 
 function stoploop(){
 	console.log("멈춰");
@@ -101,23 +72,7 @@ input[type="text"] {
 
 </style>
 <body>
-	<h4>Member Information Management</h4>
-	
-	<form id="searchform" method="post">
-	<input type="hidden" name="i" id="i" value="${i}"/>
-		<div class="select-wrapper">
-			<select name="n" id="demo-category">
-				<option value="0" <c:if test="${n eq 0}">selected</c:if>>이메일</option>
-				<option value="1" <c:if test="${n eq 1}">selected</c:if>>닉네임</option>
-			</select>
-		</div>
-		<input type="text" id="searchvalue" name="search" value="${search}"/> <input type="button" value="검색" onclick="sch()"/>
-	</form>
-	
-		<a href="javascript:;" onclick='MemberCheck("on")'>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
-			<a href="javascript:;" onclick='MemberCheck("out")'>미접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
-			<a href="javascript:;" onclick='MemberCheck("all")'>전체 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-	<div id="area">
+<div id="area">
 	<div class="table-wrapper">
 		<table>
 			<thead>
@@ -166,4 +121,8 @@ input[type="text"] {
 			</div>
 			<br/><br/><br/>
 </body>
+<form id="valueform">
+	<input type="hidden" name="ch" id="ch" value="${ch}"/>
+	<input type="hidden" name="i" id="i" value="${i}"/>
+</form>
 </html>

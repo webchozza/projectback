@@ -74,7 +74,7 @@ setInterval(function(){
 			}
 		}
 	});
-}, 20000);
+}, 3000);
 </script>
 <style>
 .alram{ color: #3d4449; }
