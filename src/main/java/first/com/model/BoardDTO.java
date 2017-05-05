@@ -19,8 +19,14 @@ public class BoardDTO {
 	private int board_filecount; //파일갯수
 	private int bgroup_id;	//카테고리 구분 번호
 	private String member_name; //회원 이름
+	private String scrap_member_id;
 	
-	
+	public String getScrap_member_id() {
+		return scrap_member_id;
+	}
+	public void setScrap_member_id(String scrap_member_id) {
+		this.scrap_member_id = scrap_member_id;
+	}
 	public int getBoard_id() {
 		return board_id;
 	}

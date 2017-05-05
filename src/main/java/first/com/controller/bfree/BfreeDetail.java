@@ -22,7 +22,6 @@ public class BfreeDetail {
 
 	@Resource
 	private BfreeDAO bfreeService;
-	private int currentPage;
 	
 	@Resource 
 	private ScrapDAO Scrap;

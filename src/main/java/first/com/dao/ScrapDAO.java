@@ -10,7 +10,7 @@ public interface ScrapDAO {
 	
 	public List<BoardDTO> scrapList(Map<String, Object> map);
 	
-	public void insertScrap(ScrapDTO scrap);
+	public int insertScrap(ScrapDTO scrap);
 	
 	public void deleteScrap(Map map);
 	

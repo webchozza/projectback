@@ -25,8 +25,9 @@ public class ScrapService implements ScrapDAO {
 	}
 
 	@Override
-	public void insertScrap(ScrapDTO scrap) {
-		sqlSessionTemplate.insert("scrap.insert", scrap);
+	public int insertScrap(ScrapDTO scrap) {
+		System.out.println("???");
+		return sqlSessionTemplate.insert("scrap.insert", scrap);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class DeleteScrap {
 									@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 									@RequestParam(value="ap", required=false) String ap){
 		
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("board_id", board_id);
 		map.put("member_id", member_id);

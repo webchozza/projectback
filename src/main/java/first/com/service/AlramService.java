@@ -33,9 +33,8 @@ public class AlramService implements AlramDAO{
 	}
 
 	@Override
-	public String deleteAlram() {
-		
-		return null;
+	public int deleteAlram(int noti_id) {
+		return sqlSessionTemplate.delete("noti.delete", noti_id);
 	}
 	
 	//댓글 작성시 나를 팔로우한 회원과 해당 게시글의 작성자에게 알림을 보내주는 메소드

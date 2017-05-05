@@ -48,7 +48,7 @@
 			
 		if(checkValue == -1){
 			$("#scrapbutton").html(strDivNo);
-		} else if(checkValue == 1){
+		} else if(checkValue > 0){
 			$("#scrapbutton").html(strDiv);
 		} else {
 			$("#scrapbutton").html(strA);

@@ -21,9 +21,7 @@ public class InsertScrap {
 	@ResponseBody
 	public int insertScrap(ScrapDTO scrap) throws IOException{
 		
-		Scrap.insertScrap(scrap);
-		
-		return 1;
+		return Scrap.insertScrap(scrap);
 	}
 
 }
