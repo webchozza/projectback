@@ -14,7 +14,7 @@ $(document).ready(function(){
 function notipop(){
 	
 	var ch = $("#notich").val();
-	var session_id = ${sessionScope.member_id};
+	var session_id = $("#session_id").val();
 	
 	if(ch == "N"){
 		$.ajax({
@@ -175,7 +175,8 @@ display:none;
 			</nav>
 		</div>
 	</div>
-	
-	
 </body>
+<form name="valueform">
+<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+</form>
 </html>

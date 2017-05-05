@@ -18,29 +18,22 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		//session member_id로 저장 
 		String member_email = (String)session.getAttribute("member_email");
-		System.out.println("인터셉터 :1");
 		/*비 로그인 시 writeform, memberlist, recommend 로 이동 불가  따라서, main.do로 이동*/
 		if(member_email==null){ 
-			System.out.println("인터셉터 :2");
 			if(request.getRequestURI().contains("writeform.do")||
 			 request.getRequestURI().contains("memberlist.do")||
 			 request.getRequestURI().contains("recommand.do")){
 				response.sendRedirect("/dokky/loginform.do");
 				return false;
 			}else{
-				System.out.println("인터셉터 :3");
 				return true;
 			}
 		}else{
 			if(member_email.equals("admin")){
-				System.out.println("인터셉터 :4");
 				return true;
 			}else if(request.getRequestURI().contains("memberlist.do")){
-				System.out.println("인터셉터 :5");
-				
 				return false;
 			}
-			System.out.println("인터셉터 :6");
 				return true;
 				
 		}

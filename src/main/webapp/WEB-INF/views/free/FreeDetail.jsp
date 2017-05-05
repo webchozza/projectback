@@ -19,7 +19,7 @@
 	
 	function insertScrap(){
 		
-		var member_id = ${sessionScope.member_id};
+		var member_id = "${sessionScope.member_id}";
 		var board_id = ${bfreeDetail.board_id}; 
 
 		$.ajax({
@@ -37,16 +37,21 @@
 	
 	function scrapcheck(checkValue){
 		//스크랩하지 않은 글이면 클릭 가능
-		var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
+		var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="return insertScrap()"></a>';
 			strA += '<h2 style="color: #7f888f;">스크랩</h2>';
 		//스크랩한 글이면 클릭 불가능
 		var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
 			strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
 			
-		if(checkValue == 1){
-		$("#scrapbutton").html(strDiv);
+		var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-bookmark"></div>';
+			strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
+			
+		if(checkValue == -1){
+			$("#scrapbutton").html(strDivNo);
+		} else if(checkValue == 1){
+			$("#scrapbutton").html(strDiv);
 		} else {
-		$("#scrapbutton").html(strA);
+			$("#scrapbutton").html(strA);
 		}
 	}	
 	
@@ -75,7 +80,7 @@ color: #7f888f;
 						</colgroup>
 						<tbody>
 							<tr>
-								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id}&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
+								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id}&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname}</a></strong>
 									<br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>

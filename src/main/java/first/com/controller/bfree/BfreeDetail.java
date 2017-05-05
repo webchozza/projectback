@@ -30,10 +30,10 @@ public class BfreeDetail {
 	@RequestMapping("/bfreedetail")
 	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 									@RequestParam("board_id") int board_id,
-									@RequestParam("session_id") int session_id) {
+									@RequestParam(value="session_id", defaultValue="-1") int session_id) {
 		
 		ModelAndView mav = new ModelAndView();
-
+		
 		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
 
@@ -48,8 +48,12 @@ public class BfreeDetail {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("session_id", session_id);
 		map.put("board_id", board_id);
-		mav.addObject("scrapCheck", Scrap.scrapCheck(map));
-		//
+		if(session_id == -1){ 
+			mav.addObject("scrapCheck", "-1");
+		} else {
+			mav.addObject("scrapCheck", Scrap.scrapCheck(map));
+		}
+		/////
 		
 		return mav;
 	}

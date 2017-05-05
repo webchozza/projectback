@@ -49,7 +49,6 @@ function follow(){
 }
 
 function scrap(){
-
 	var form = document.getElementById('searchform');
 	var i = form.i.value;
 	var search = form.search.value;
@@ -80,7 +79,7 @@ function memberpage(){
 
 function followclick(addordelete){
 	
-	var session_id = ${sessionScope.member_id};//팔로우 거는 사람
+	var session_id = "${sessionScope.member_id}";//팔로우 거는 사람
 	var member_id = ${member_id};//팔로우 당하는 사람
 	
 	if(addordelete == "add"){
@@ -127,7 +126,7 @@ function deleteMyBoard(board_id){
 	var form = document.getElementById('searchform');
 	var i = form.i.value;
 	var search = form.search.value;
-	var session_id = ${sessionScope.member_id};
+	var session_id = "${sessionScope.member_id}";
 	
 	if(!confirm("해당 글을 지우시겠습니까?")){ return false; }
 	
@@ -230,9 +229,13 @@ function deleteMyBoard(board_id){
 					<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
 					<a class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; 
 					<a class="icon fa-eye">${board.board_hit}</a></td>
-	 				<td width="10%" align="center"><div id="b">${board.member_name}<div></td>
+	 				<td width="10%" align="center"><div id="b">${board.member_name}</div></td>
 					<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
-					<td width="5%"><a href="javascript:;" onclick='return deleteMyBoard("${board.board_id}")'><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a></td>
+					<td width="5%">
+					<c:if test="${board.member_id eq sessionScope.member_id}">
+					<a href="javascript:;" onclick='return deleteMyBoard("${board.board_id}")'><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a>
+					</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 			</tbody>

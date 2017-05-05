@@ -68,7 +68,7 @@ public class MemberPage {
 		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
 		
 		list= list.subList(page.getStartCount(), lastCount);
-		System.out.println(myCount);
+
 		model.addAttribute("list", list);
 		model.addAttribute("myCount", myCount);
 		model.addAttribute("followCount", follow);
@@ -81,10 +81,10 @@ public class MemberPage {
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("member_id", member_id);
 		
-		if(session_id != 0){ 
-			model.addAttribute("followCheck", followCheck);
-		}else if(session_id == 0){
+		if(session_id == 0 || session_id == member_id){
 			model.addAttribute("followCheck", "me");
+		} else if(session_id != 0){ 
+			model.addAttribute("followCheck", followCheck);
 		}
 		
 		if(ap != null){

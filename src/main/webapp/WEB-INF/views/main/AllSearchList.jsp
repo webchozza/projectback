@@ -98,7 +98,7 @@ border-bottom-color: #FFFFFF;
 							<td><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-eye">${board.board_hit}</a></td>
-							<td><a href="#" id="b">${board.board_nickname}</a></td>
+							<td><a href="/dokky/MemberPage.do?member_id=${board.member_id}&session_id=${sessionScope.member_id}" id="b">${board.board_nickname}</a></td>
 							<td><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 						</tr>
 						</c:forEach>
