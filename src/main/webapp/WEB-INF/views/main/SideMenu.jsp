@@ -24,23 +24,25 @@
 				<form method="post" action="#">
 					<input type="text" name="query" id="query" placeholder="Search" />
 				</form>
-			</section>
+			</section> 
 			<c:if test="${sessionScope.member_email eq null}">
 			<!-- 로그인 회원가입등 -->
 			<section id="icons">
 				<a href="/dokky/loginform.do" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="/dokky/joinform.do" class="icon fa-user-plus"> 회원가입</a>
+				<a href="/dokky/joinform.do" class="icon fa-user-plus"> 회원가입 </a>
 			
 				<!-- 로그인 처리 -->
 				<ul>
 			</c:if>	
 					<br /> 
 			<c:if test="${sessionScope.member_email ne null}">
-					<a href="/dokky/logout.do?member_email=${sessionScope.member_email}" class="icon fa-sign-out"> 로그아웃</a>
+					<a href="/dokky/logout.do?member_email=${member_email}" class="icon fa-sign-out"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="#" class="icon fa-bell" id="notice"> 알림</a>
 					<br/>
-					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-bell" id="notice">회원정보수정</a>
+					<a href="/dokky/checkmodify.do?member_email=${member_email}" class="icon fa-bell" id="notice">회원정보수정</a>
+					<a href="/dokky/massagelist.do" class="icon fa-bell" id="notice">쪽지함</a>
+					<br/>
 					안녕하세요! 
 					${member_name}님
 					<br />

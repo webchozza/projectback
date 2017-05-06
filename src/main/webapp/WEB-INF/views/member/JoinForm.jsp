@@ -132,10 +132,10 @@
 				<!-- Join Form -->
 
 				<h3>회원가입</h3>
-				<form name="frm">
+				<form name="frm" >
 
-					<div class="row uniform" style="float: inherit;">
-						<div class="6u 12u$(xsmall)">
+					<div class="row uniform" style="float: inherit;" >
+						<div class="6u 12u$(xsmall)"  style="float: inherit;">
 							<input type="hidden" id="nameChk" value="false" /> <input
 								type="hidden" id="emailChk" value="false" /> <input type="text"
 								name="member_name" id="member_name" value="" placeholder="닉네임" />

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+
+<select id="getList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
+WHERE EMAIL_TO = #{email_to} order by MESSAGE_DATE DESC
+</select>
+
+<select id="getReadList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
+WHERE EMAIL_TO = #{email_to} AND MESSAGE_READ = 'N'
+</select>
+
+<select id="getSearchList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
+WHERE NAME_FROM LIKE '%'||#{search}||'%'  AND EMAIL_TO = #{email_to} OR MESSAGE_SUBJECT LIKE '%'||#{search}||'%'  AND EMAIL_TO = #{email_to} order by MESSAGE_DATE DESC
+</select>
+
+<select id="getOne" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
+WHERE MESSAGE_ID = #{message_id}
+</select>
+
+
+<insert id="setContent" parameterType="first.com.model.MessageDTO">
+INSERT INTO MESSAGE
+(MESSAGE_ID,EMAIL_FROM,EMAIL_TO,NAME_FROM,NAME_TO,MESSAGE_SUBJECT,MESSAGE_CONTENT,MESSAGE_DATE)
+VALUES(SEQ_MESSAGE.NEXTVAL,#{email_from},#{email_to},#{name_from},#{name_to},#{message_subject},#{message_content},SYSDATE)
+</insert> 
+
+<delete id="delete" parameterType="first.com.model.MessageDTO">
+DELETE FROM MESSAGE
+WHERE MESSAGE_ID = #{message_id}
+</delete>
+
+<update id="setRead" parameterType="first.com.model.MessageDTO">
+UPDATE MESSAGE SET
+MESSAGE_READ = 'Y'
+WHERE MESSAGE_ID = #{message_id}
+</update>
+
+
+</mapper>

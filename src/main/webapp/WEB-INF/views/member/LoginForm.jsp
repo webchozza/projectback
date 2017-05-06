@@ -130,7 +130,10 @@ function gosubmit3(){
 				<br/>
 				<hr style="margin:0 auto;width:300pt;">					
 				<!--helper-->
-					<a href="javascript:gosubmit2()" class="pagination">회원가입</a> | <a href="javascript:gosubmit3()">비밀번호찾기</a>	
+					<a href="javascript:gosubmit2()" class="pagination">회원가입</a> | <a href="javascript:gosubmit3()">비밀번호찾기</a>
+					<br/>
+					<br/>
+					 <a href="${url}"><img src="/dokky/resources/images/네이버 아이디로 로그인_완성형_Green.PNG" height="50" width="170"></a>
 				</div>		
 		   </div>
 			</form>
