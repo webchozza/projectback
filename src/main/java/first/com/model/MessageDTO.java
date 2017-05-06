@@ -6,10 +6,6 @@ public class MessageDTO {
 	
 	private int message_id;
 	
-	private String email_from;
-	
-	private String email_to;
-	
 	private String name_from;
 	
 	private String name_to;
@@ -39,21 +35,6 @@ public class MessageDTO {
 		this.message_id = message_id;
 	}
 
-	public String getEmail_from() {
-		return email_from;
-	}
-
-	public void setEmail_from(String email_from) {
-		this.email_from = email_from;
-	}
-
-	public String getEmail_to() {
-		return email_to;
-	}
-
-	public void setEmail_to(String email_to) {
-		this.email_to = email_to;
-	}
 	public String getName_from() {
 		return name_from;
 	}

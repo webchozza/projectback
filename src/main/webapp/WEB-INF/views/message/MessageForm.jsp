@@ -20,8 +20,6 @@
 			return false;
 		}
 		var f = document.frm;
-		f.email_from.value;
-		f.email_to.value;
 		f.name_to.value;
 		f.name_from.value;
 		f.message_subject.value = f.message_subject.value;
@@ -37,9 +35,7 @@
 		 <div class="inner">
 			<h3>MESSAGE</h3>
 			<form name="frm">
-			 <input type="hidden" id="email_from" name="email_from" value="${email_from}">
-			 <input type="hidden" id="email_to" name="email_to" value="${email_to}">
-			  <input type="hidden" id="name_from" name="name_from" value="${name_from}">
+			 <input type="hidden" id="name_from" name="name_from" value="${name_from}">
 			 <input type="hidden" id="name_to" name="name_to" value="${name_to}">
 				<div class="6u 12u$(xsmall)" style="width:300pt;">
 					<input type="text" name="message_subject" id="message_subject" value=""

@@ -17,7 +17,7 @@ WHERE MEMBER_EMAIL = #{member_email}
 <update id="logOut" parameterType="first.com.model.MemberDTO">
 UPDATE MEMBER SET
 MEMBER_CH = 0
-WHERE MEMBER_EMAIL = #{member_email}
+WHERE MEMBER_ID = #{member_id}
 </update>
 
 <select id="findPw" parameterType="first.com.model.MemberDTO"  resultType="first.com.model.MemberDTO">

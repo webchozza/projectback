@@ -22,10 +22,9 @@ public class Message {
 	
 	@RequestMapping("/massagelist.do")
 	public ModelAndView listMassage(MessageDTO message,HttpSession session){
-		     String email_to = (String)session.getAttribute("member_email");
-		     message.setEmail_to(email_to);
+		     String name_to = (String)session.getAttribute("member_name");
+		     message.setName_to(name_to);
 		     ModelAndView mav = new ModelAndView();
-		     System.out.println(message.getSearch());
 		if(message.getSearch()==null){
 		List<MessageDTO> result = messageService.getList(message);
 		List<MessageDTO> read = messageService.getReadList(message);
@@ -43,17 +42,14 @@ public class Message {
 	
 	@RequestMapping("/messagewriteform.do") //글 쓰기  session 영역에 있는 email과  name값은 from으로 바뀌어야 한다.
 	public ModelAndView writeMessageForm(MessageDTO message,HttpSession session){   
-			String email_to = message.getEmail_from();
+
 			String name_to = message.getName_from();
-			
-			String email_from = (String)session.getAttribute("member_email");
 			String name_from = (String)session.getAttribute("member_name");
 		 	
 			ModelAndView mav = new ModelAndView();
 		 	
-			mav.addObject("email_from", email_from);
+		
 		 	mav.addObject("name_from", name_from);
-		 	mav.addObject("email_to", email_to);
 		 	mav.addObject("name_to",name_to);
 		 	mav.setViewName("MessageForm");
 		return mav;

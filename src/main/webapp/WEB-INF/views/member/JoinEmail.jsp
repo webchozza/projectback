@@ -12,7 +12,7 @@
 function gosubmit1(){
 	var f = document.frm;
 	f.method = "post";
-	f.action = "join.do";
+	f.action = "/dokky/main.do";
 	f.submit();
 }
 </script>
@@ -30,7 +30,9 @@ function gosubmit1(){
 					회원님의 이메일로 회원가입 인증 메일이 발송되었습니다.  <br/>
 					메일을 확인해 주세요. ^^
 					<br/>
+					<form name="frm">
 				<input  type="button" style="width:300pt;" value="메인화면" class="button special" onclick="javascript:gosubmit1()">
+					</form>
 					</div>
 				</div>		
 		   </div>

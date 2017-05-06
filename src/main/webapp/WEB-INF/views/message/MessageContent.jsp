@@ -14,7 +14,6 @@
 	function gosubmit1() {
 
 		var f = document.frm;
-		f.email_from.value;
 		f.name_from.value;
 		f.method = "post";
 		f.action = "/dokky/messagewriteform.do";
@@ -29,9 +28,7 @@
 			<div class="table-wrapper">
 				<div class="table-wrapper" style="float: inherit;">
 					<form name="frm">
-						<input type="hidden" name="email_from" id="email_from"
-							value="${message.email_from}"> <input type="hidden"
-							name="name_from" id="name_from" value="${message.name_from}">
+						<input type="hidden" name="name_from" id="name_from" value="${message.name_from}">
 						<table class="alt">
 							<colgroup>
 								<col width="100%" />

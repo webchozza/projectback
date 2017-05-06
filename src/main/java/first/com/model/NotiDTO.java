@@ -15,8 +15,28 @@ public class NotiDTO {
 	private int noti_confirm;
 	private int board_id;
 	private int bgroup_id;
+	private String noti_kinds;
+	private String sender_name;
+	private int sender_id;
 	
-	
+	public String getSender_name() {
+		return sender_name;
+	}
+	public void setSender_name(String sender_name) {
+		this.sender_name = sender_name;
+	}
+	public int getSender_id() {
+		return sender_id;
+	}
+	public void setSender_id(int sender_id) {
+		this.sender_id = sender_id;
+	}
+	public String getNoti_kinds() {
+		return noti_kinds;
+	}
+	public void setNoti_kinds(String noti_kinds) {
+		this.noti_kinds = noti_kinds;
+	}
 	public int getNoti_id() {
 		return noti_id;
 	}

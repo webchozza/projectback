@@ -5,6 +5,13 @@
 
 <mapper namespace="main">
 
-
+	<select id="allSearchList" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	SELECT b.*, count(a.scrap_id) as scrap_count FROM SCRAP a RIGHT OUTER JOIN 
+	(SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, 
+	board_hit, board_like, board_comment_count, bgroup_id FROM board WHERE BOARD_TITLE like '%'||#{search}||'%' or 
+	BOARD_CONTENT like '%'||#{search}||'%' or BOARD_NICKNAME like '%'||#{search}||'%') b 
+	ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, b.board_content, 
+	b.board_date, b.board_nickname, b.board_hit, b.board_like, b.board_comment_count, b.bgroup_id ORDER BY ${category} DESC
+	</select>
 
 </mapper>

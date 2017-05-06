@@ -18,10 +18,9 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		//session member_id로 저장 
 		String member_email = (String)session.getAttribute("member_email");
-		System.out.println("인터셉터 :1");
-		/*비 로그인 시 writeform, memberlist, recommend 로 이동 불가  따라서, main.do로 이동*/
+
+		
 		if(member_email==null){ 
-			System.out.println("인터셉터 :2");
 			if(request.getRequestURI().contains("writeform.do")||
 			 request.getRequestURI().contains("memberlist.do")||
 			 request.getRequestURI().contains("recommand.do")){
@@ -32,11 +31,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 			}
 		}else{
 			if(member_email.equals("admin")){
-			
 				return true;
 			}else if(request.getRequestURI().contains("memberlist.do")){
-				
-				
 				return false;
 			}
 				return true;

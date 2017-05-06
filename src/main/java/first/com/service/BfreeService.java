@@ -1,67 +1,112 @@
 package first.com.service;
 
-import first.com.dao.BfreeDAO;
+import java.util.List;
+import javax.annotation.Resource;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Service;
 
+import first.com.dao.BfreeDAO;
+import first.com.model.BcommentDTO;
+import first.com.model.BoardDTO;
+
+//주석확인
+@Service
 public class BfreeService implements BfreeDAO {
 
+	@Resource
+	private SqlSessionTemplate SqlSessionTemplate;
+	
 	@Override
-	public String bfreeList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardDTO> bfreeList() {
+
+		return SqlSessionTemplate.selectList("bfree.bfreeList");
 	}
 
 	@Override
-	public String bfreeDetail() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardDTO bfreeDetail(int board_id) {
+		return SqlSessionTemplate.selectOne("bfree.bfreeSelect",board_id);
+	}
+	
+	@Override
+	public List<BcommentDTO> bcfreeList(int board_id){
+		return SqlSessionTemplate.selectList("bfree.bcfreeList", board_id);
 	}
 
 	@Override
 	public String bfreeWriteForm() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String bfreeWrite() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bfreeWrite(BoardDTO boardDTO) {
+		return SqlSessionTemplate.insert("bfree.bfreeWrite", boardDTO);
 	}
 
 	@Override
-	public String bfreeModifyForm() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardDTO bfreeModifyForm(BoardDTO boardDTO) {
+		return boardDTO;
 	}
 
 	@Override
-	public String bfreeModify() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bfreeModify(BoardDTO boardDTO) {
+		return SqlSessionTemplate.update("bfree.bfreeModify", boardDTO);
 	}
 
 	@Override
-	public String bfreeDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bfreeDelete(int board_id) {
+		return SqlSessionTemplate.delete("bfree.bfreeDelete", board_id);
+	}
+	
+	@Override
+	public int bfreeHit(int board_id){
+		return SqlSessionTemplate.update("bfree.bfreeUpdateHit", board_id);
 	}
 
 	@Override
-	public String bfreeRecommand() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bfreeRecommand(int board_id) {
+		return SqlSessionTemplate.update("bfree.bfreeUpdateHit", board_id);
+	}
+	
+
+	@Override
+	public int bfreeLike(int board_id) {
+		return SqlSessionTemplate.update("bfree.bfreeUpdateLike", board_id);
 	}
 
 	@Override
-	public String bCfreeWrite() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bfreeBad(int board_id) {
+		return SqlSessionTemplate.update("bfree.bfreeUpdateBad", board_id);
+	}	
+
+	@Override
+	public int bCfreeWrite(BcommentDTO bcommentDTO) {
+		return SqlSessionTemplate.insert("bfree.bcfreeWrite", bcommentDTO);
 	}
 
 	@Override
-	public String bCfreeDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bCfreeDelete(int bcomment_id) {
+		return SqlSessionTemplate.delete("bfree.bcfreeDelete", bcomment_id);
 	}
+
+	@Override
+	public int bfreeUpdateCountco(int board_id) {
+		return SqlSessionTemplate.update("bfree.bfreeUpdateCountco", board_id);
+	}
+
+	@Override
+	public List<BoardDTO> bfreeSearch0(String search) {
+		return SqlSessionTemplate.selectList("bfree.bfreeSearchTitle", "%"+search+"%");
+	}
+
+	@Override
+	public List<BoardDTO> bfreeSearch1(String search) {
+		return SqlSessionTemplate.selectList("bfree.bfreeSearchContent", "%"+search+"%");
+	}
+
+	@Override
+	public List<BoardDTO> bfreeSearch2(String search) {
+		return SqlSessionTemplate.selectList("bfree.bfreeSearchMember", "%"+search+"%");
+	}
+	
 	
 }

@@ -31,7 +31,7 @@ public class MemberList {
 	private String[] kind = { "member_email", "member_name" };
 	
 	
-	@RequestMapping("/MemberList.do")
+	@RequestMapping("/MemberList.do")//ch= 접소자 학인 칼럼 값
 	public String memberList(@RequestParam(value="search", defaultValue="") String search,
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
@@ -39,17 +39,14 @@ public class MemberList {
 							 @RequestParam(value="ap", required=false) String ap,
 							 Model model){
 		
-		System.out.println(search);
-		System.out.println(currentPage);
-		System.out.println(n);
-		System.out.println(ap);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("search", search.trim());
 		map.put("n", kind[n]);
-		if(ch != null){ map.put("ch", ch); }
-		
+		if(ch != null && !ch.equals("")){ map.put("ch", ch);
+		model.addAttribute("ch", ch);
+		}
+
 		List<MemberDTO> list = admin.memberList(map);
 		
 		totalCount = list.size();
@@ -71,9 +68,10 @@ public class MemberList {
 		//ajax를 이용한 검색을 구현하기 위해 넣어 보내준다
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
+		model.addAttribute("search", search);
 		
 		if(ap != null){
-			return "admin/MemberList";//at Ajax request
+			return "admin/MemberListPage";//at Ajax request
 		}
 		
 		

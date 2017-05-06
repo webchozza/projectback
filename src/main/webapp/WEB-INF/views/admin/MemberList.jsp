@@ -5,10 +5,40 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="/dokky/resources/assets/js/page.js"></script>
 <script>
+function paging(path, i, search, n) {
+	
+	stoploop();
+	
+	$('#area').load(path, {
+		currentPage : i,
+		search : search,
+		n : n,
+		ap : 'AjaxPaging'
+	});
+}
+
+function sch() {
+	
+	stoploop();
+	
+	var form = document.getElementById('searchform');
+	var path = ${path};
+	var i = form.i.value;
+	var search = form.search.value;
+	var n = form.n.value;
+	
+	$('#area').load(path, {
+		currentPage : i,
+		search : search,
+		n : n,
+		ap : 'AjaxSearch'
+	});
+}
+
 function MemberCheck(i){
+	
+	stoploop();
 	
 	if(i == 'all'){
 		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange'});
@@ -19,7 +49,28 @@ function MemberCheck(i){
 	if(i == 'out'){
 		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:0});
 	}
+}
+
+	//멤버리스트 화면 로딩시 한번만 동작함(이후엔 #area영역에 호출된 MemberListPage의 setTimeout함수가 동작함)
+var loop = setTimeout(function(){
+	var form = document.getElementById('searchform');
+	var path = ${path};
+	var i = form.i.value;
+	var search = form.search.value;
+	var n = $("#demo-category").val();
 	
+	$("#area").load(path,{
+		currentPage: i, 
+		search: search, 
+		n: n, 
+		ap: 'AjaxMemberCheck'
+		});
+	setTimeout(loop, 3000);
+}, 3000);
+
+function stoploop(){
+	console.log("멈춰");
+	clearTimeout(loop);
 }
 </script>
 </head>
@@ -50,29 +101,23 @@ input[type="text"] {
 
 </style>
 <body>
-<div id="area">
-<form name="param"><!-- 주기적으로 현재 접속자 확일 할 때 Ajax요청에 포함시켜 보낼 파라미터 값들(보내지 않으면 주기적으로 처음 페이지로 이동된다) -->
-<input type="hidden" name="currentPage" id="currentPage" value=""/>
-<input type="hidden" name="search" id="serach" value=""/>
-<input type="hidden" name="n" id="n" value=""/>
-</form>
 	<h4>Member Information Management</h4>
 	
 	<form id="searchform" method="post">
 	<input type="hidden" name="i" id="i" value="${i}"/>
-	<input type="hidden" name="path" id="path" value="${path}"/>
 		<div class="select-wrapper">
 			<select name="n" id="demo-category">
 				<option value="0" <c:if test="${n eq 0}">selected</c:if>>이메일</option>
 				<option value="1" <c:if test="${n eq 1}">selected</c:if>>닉네임</option>
 			</select>
 		</div>
-		<input type="text" name="search" /> <input type="button" value="검색" onclick="sch()"/>
+		<input type="text" id="searchvalue" name="search" value="${search}"/> <input type="button" value="검색" onclick="sch()"/>
 	</form>
 	
 		<a href="javascript:;" onclick='MemberCheck("on")'>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
 			<a href="javascript:;" onclick='MemberCheck("out")'>미접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
 			<a href="javascript:;" onclick='MemberCheck("all")'>전체 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+	<div id="area">
 	<div class="table-wrapper">
 		<table>
 			<thead>
@@ -97,14 +142,11 @@ input[type="text"] {
 						<a href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;
 							<a href="/dokky/MemberDelete.do?member_id=${member.member_id}"
 							onclick="return deleteMember()">탈퇴</a></td>
-						<c:if test="${member.member_ch eq 0 or member.member_ch eq 2}">
-							<td align="center"><img
-								src="/dokky/resources/images/chu.jpg"
-								style="width: 17%; height: 35%;"></td>
+						<c:if test="${member.member_ch eq 0}">
+							<td align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 17%; height: 35%;"></td>
 						</c:if>
 						<c:if test="${member.member_ch eq 1}">
-							<td align="center"><img src="/dokky/resources/images/ch.jpg"
-								style="width: 17%; height: 35%;"></td>
+							<td align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 17%; height: 35%;"></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -122,5 +164,6 @@ input[type="text"] {
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			</div>
+			<br/><br/><br/>
 </body>
 </html>

@@ -5,17 +5,17 @@
 
 <select id="getList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
-WHERE EMAIL_TO = #{email_to} order by MESSAGE_DATE DESC
+WHERE NAME_TO = #{name_to} order by MESSAGE_DATE DESC
 </select>
 
 <select id="getReadList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
-WHERE EMAIL_TO = #{email_to} AND MESSAGE_READ = 'N'
+WHERE NAME_TO = #{name_to} AND MESSAGE_READ = 'N'
 </select>
 
 <select id="getSearchList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
-WHERE NAME_FROM LIKE '%'||#{search}||'%'  AND EMAIL_TO = #{email_to} OR MESSAGE_SUBJECT LIKE '%'||#{search}||'%'  AND EMAIL_TO = #{email_to} order by MESSAGE_DATE DESC
+WHERE NAME_TO = #{name_to} AND NAME_FROM LIKE '%'||#{search}||'%'  OR NAME_TO = #{name_to} AND MESSAGE_SUBJECT LIKE '%'||#{search}||'%'  order by MESSAGE_DATE DESC
 </select>
 
 <select id="getOne" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
@@ -26,8 +26,8 @@ WHERE MESSAGE_ID = #{message_id}
 
 <insert id="setContent" parameterType="first.com.model.MessageDTO">
 INSERT INTO MESSAGE
-(MESSAGE_ID,EMAIL_FROM,EMAIL_TO,NAME_FROM,NAME_TO,MESSAGE_SUBJECT,MESSAGE_CONTENT,MESSAGE_DATE)
-VALUES(SEQ_MESSAGE.NEXTVAL,#{email_from},#{email_to},#{name_from},#{name_to},#{message_subject},#{message_content},SYSDATE)
+(MESSAGE_ID,NAME_FROM,NAME_TO,MESSAGE_SUBJECT,MESSAGE_CONTENT,MESSAGE_DATE)
+VALUES(SEQ_MESSAGE.NEXTVAL,#{name_from},#{name_to},#{message_subject},#{message_content},SYSDATE)
 </insert> 
 
 <delete id="delete" parameterType="first.com.model.MessageDTO">

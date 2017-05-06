@@ -1,166 +1,176 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/main/Taglib.jsp"%>
 <!DOCTYPE HTML>
 
 <html>
 
 <head>
 <title>DOKKY</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="assets/css/main.css" />
-<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<script type="text/javascript">
+	function gosubmit1() {
+		if (frm.bcomment_content.value == ""||frm.bcomment_content.value == null) {
+			alert("댓글을 입력해주세요.");
+			frm.bcomment_content.focus();
+			return false;
+		}
+	}
+	
+	function insertScrap(){
+		
+		var member_id = "${sessionScope.member_id}";
+		var board_id = ${bfreeDetail.board_id}; 
+
+		$.ajax({
+			url:"/dokky/ScrapInsert.do",
+			type: "get",
+			dataType: "json",
+			data: {board_id: board_id, member_id: member_id},
+			success: function(data){
+					scrapcheck(data);
+				}
+				//여기에 스크랩 버튼 클릭 안되게 하는 로직 처리
+				//팔로우처럼 체크값을 이용해 해당 글의 스크랩 버튼이 안눌리게 하는 함수를 작성하여 data를 인자로 넘긴다.(상세보기 컨트롤러에서도 체크값 넘겨야 함)
+		});
+	}
+	
+	function scrapcheck(checkValue){
+		//스크랩하지 않은 글이면 클릭 가능
+		var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="return insertScrap()"></a>';
+			strA += '<h2 style="color: #7f888f;">스크랩</h2>';
+		//스크랩한 글이면 클릭 불가능
+		var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
+			strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
+			
+		var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-bookmark"></div>';
+			strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
+			
+		if(checkValue == -1){
+			$("#scrapbutton").html(strDivNo);
+		} else if(checkValue > 0){
+			$("#scrapbutton").html(strDiv);
+		} else {
+			$("#scrapbutton").html(strA);
+		}
+	}	
+	
+	$(document).ready(function(){
+		scrapcheck("${scrapCheck}");
+	});
+</script>
+<script type="text/javascript">
+	function gosubmit1() {
+
+		var f = document.frn;
+		f.name_from.value;
+		f.method = "post";
+		f.action = "/dokky/messagewriteform.do";
+		f.submit();
+	}
+</script>
+<style>
+.fa-bookmark{
+color: #7f888f; 
+}
+</style>
 </head>
-
-
 <body>
-				<h4>Community</h4>
+	<h4>Community</h4>
 
-				<!-- 바디 -->
-				<section id="banner">
-					<div class="content">
-						<div class="table-wrapper">
-							<div class="table-wrapper">
-								<table class="alt">
-									<colgroup>
-										<col width="85%" />
-										<col width="15%" />
-									</colgroup>
-									<tbody>
-										<tr>
-											<td colspan="2"><strong><a href="#">ID입니다<!-- 여기에 아이디 --></a></strong>
-												<br> <i>2017.4.27<!-- 여기에 작성일 --></i></td>
-										</tr>
-										<tr>
-											<td><h2>
-													모니터 추천 부탁드려요...
-													<!-- 여기에 글제목 -->
-												</h2>
-												<hr class="major" />
+	<!-- 바디 -->
+	<section id="banner">
+		<div class="content">
+			<div class="table-wrapper">
+				<div class="table-wrapper">
+				<form name="frn">
+				<input type="hidden" name="name_from" id="name_from" value="${bfreeDetail.board_nickname}">
+					<table class="alt">
+						<colgroup>
+							<col width="85%" />
+							<col width="15%" />
+						</colgroup>
+						
+						<tbody>
+						
+							<tr>
+								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id}&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname}</a></strong>
+									<br> <i><fmt:formatDate
+											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
+								</i></td>
+							</tr>
+							<tr>
+								<td><h2>${bfreeDetail.board_title }</h2>
+									<hr class="major" />
 
-												<p>
+									<p>${bfreeDetail.board_content }</p></td>
+								<td><center>
+										<a href="#" style="font-size: 30px" class="icon fa-thumbs-up"></a><br><h2 style="color: #f56a6a;">${bfreeDetail.board_like}</h2><br>
+										<div id="scrapbutton"></div>
+										<input type="button" style="font-size: 30px" value="쪽지" class="button special" onclick="javascript:gosubmit1()">
+									</center>
+							</tr>
+							
+						</tbody>
 
-													<!-- 여기에 글내용 -->
-													안녕하세요 모니터 구매고려중이고 27인치 QHD 생각중입니다. 레노버 L27q-10 IPS DP 무결점 이
-													끌리긴 하는데 검색하다보니 커브드 모니터도 눈에 들어오더라고요 ㅎ 혹시 커브드 모니터 사용하신분 계신가여?
-													27인치중 괜찮은거 있으면 추천 부탁드립니다~
-												</p>
-												<div align="right">
-												<a href="#" class="button special small">수정</a>
-														<a href="#" class="button small">삭제</a>
-												</div>
-												</td>
-											<td><center>
-													<a href="#" style="font-size: 30px"
-														class="icon fa-thumbs-up"><br>10<!-- 여기에추천수 --></a><br>
-													<a href="#" style="font-size: 30px"
-														class="icon fa-bookmark"><br>10<!-- 여기에스크랩수 --></a>
-												</center>
-										</tr>
-
-									</tbody>
-								</table>
-
-								<table class="alt">
-									<colgroup>
-										<col width="85%" />
-										<col width="15%" />
-									</colgroup>
-									<tbody>
-										<tr>
-											<td colspan="2">댓글 3<!-- 코멘트수 -->&nbsp;&nbsp;&nbsp;
-										</tr>
-										<tr>
-											<td colspan="2"><strong><a href="#">ID<!-- 여기에 댓글작성자 아이디 --></a></strong>
-												<i>2017.4.27<!-- 여기에 댓글 작성일 --></i>
-
-												<p>
-													QHD모니터를 FHD로 설정해서 게임하면 배수가 부족해서 도트가 어그러지지만 UHD에서 FHD 설정하면
-													상당히 괜찮습니다. 어색함이 거의 없어요.
-													<!-- 여기에 댓글내용 -->
-												</p></td>
-										</tr>
-										<tr>
-											<td colspan="2"><strong><a href="#">EEE222<!-- 여기에 댓글작성자 아이디 --></a></strong>
-												<i>2017.4.27<!-- 여기에 댓글 작성일 --></i>
-
-												<p>
-													1920 1200 24인치~27인치 추천합니다. 적당히 쓰실거면 15만언 아래로 저가 브랜드 쓰셔도 되고,
-													세로로 돌리고 싶으면 델 모니터가 가장 무난하다고 생각합니다. 눈 안 아프고 코드 7줄 정도 더
-													보이는거.. 은근히 좋습니다 ㅎㅎ
-													<!-- 여기에 댓글내용 -->
-												</p></td>
-										</tr>
-										<tr height="50px">
-											<td valign="middle" colspan="2" align="center">
-											
-											이전 1 2 3 4 5 다음
-											
-											</td>
-										</tr>
-										<tr height="50px">
-											<td valign="middle" colspan="2"><center>
-													<a href="#">로그인</a>을 하시면 댓글을 등록할 수 있습니다.
-												</center></td>
-										</tr>
-										<tr>
-											<td><textarea cols="20" rows="3">댓글을 적어주세요</textarea></td>
-											<td valign="middle"><center><input type="submit" value="작성"
-												class="button special"></center></td>
-										</tr>
-									</tbody>
-								</table>
-
-							</div>
-
-						</div>
-					</div>
-				</section>
-			</div>
-		</div>
-
-		<!-- 슬라이드바 -->
-		<div id="sidebar">
-			<div class="inner">
-
-				<!-- 서치 -->
-				<section id="search" class="alt">
-					<form method="post" action="#">
-						<input type="text" name="query" id="query" placeholder="Search" />
+					</table>
 					</form>
-				</section>
+					<table class="alt">
+						<colgroup>
+							<col width="85%" />
+							<col width="15%" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td colspan="2">댓글 ${bfreeDetail.board_comment_count }&nbsp;&nbsp;&nbsp;
+							</tr>
+							<c:forEach var="clist" items="${bcfreeList }">
+								<tr>
+									<td colspan="2"><strong><a href="#">${clist.member_id }<!-- 수정필요 --></a></strong>
+										<i><fmt:formatDate value="${clist.bcomment_date }" pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp;<a
+										href="bfreedeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bfreeDetail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}"
+										class="icon fa-trash" style="font-size: 14px; color: #7f888f"></a>
+										<p>${clist.bcomment_content }</p></td>
+								</tr>
+							</c:forEach>
+							<tr height="50px">
+								<td valign="middle" colspan="2"><center>
+										<a href="#">로그인</a>을 하시면 댓글을 등록할 수 있습니다.
+									</center></td>
+							</tr>
+							<form name="frm" action="bfreewritecomment.do" onsubmit="return gosubmit1()">
+								<tr>
+									<td><textarea cols="20" rows="3" name="bcomment_content"
+											placeholder="댓글을 입력해주세요."></textarea></td>
+									<td valign="middle"><center>
+											<input type="hidden" name="member_id" value="${sessionScope.member_id}"><input
+												type="hidden" name="board_id"
+												value="${bfreeDetail.board_id}"><input type="hidden"
+												name=currentPage value="${currentPage}"><input
+												type="submit" value="작성" class="button special">
+										</center></td>
+								</tr>
+							</form>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="2" align="right">
+									<div align="right">
+										<a href="bfreemodifyform.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}" class="button">수정</a> <a
+											href="bfreedelete.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}"
+											class="button">삭제</a> <a
+											href="bfreelist.do?currentPage=${currentPage }"
+											class="button special">목록</a>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
 
-				<!-- 로그인 회원가입등 -->
-				<section id="icons">
-					<a href="#" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="#" class="icon fa-user-plus"> 회원가입</a>
-					<!-- 					로그인했으면
-					<ul>
-						<a href="#" class="icon fa-sign-out">
-							로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="icon fa-bell">
-							알림</a>
-					</ul> -->
-				</section>
+				</div>
 
-				<!-- 메뉴 -->
-				<nav id="menu">
-					<ul>
-						<li><a href="index.html">메인</a></li>
-						<li><a href="generic.html">Q&A게시판</a></li>
-						<li><span class="opener">구인구직</span>
-							<ul>
-								<li><a href="#">구인</a></li>
-								<li><a href="#">구직</a></li>
-							</ul></li>
-						<li><a href="elements.html">자유게시판</a></li>
-						<li><a href="elements.html">오픈소스</a></li>
-					</ul>
-				</nav>
 			</div>
 		</div>
+	</section>
 </body>
 </html>

@@ -4,8 +4,16 @@
 	 
 	 <mapper namespace="noti">
 	 
-	 <select id="memberid" parameterType="int">
+	 <select id="New_Board_select_board" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	 SELECT a.*, rownum FROM (SELECT * FROM board WHERE member_id = #{session_id} and bgroup_id = #{bgroup_id} ORDER BY board_date DESC) a WHERE rownum = 1
+	 </select>
+	 
+	 <select id="select_board" resultType="first.com.model.BoardDTO" parameterType="int">
 	 SELECT * FROM board WHERE board_id = #{board_id}
+	 </select>
+	 
+	 <select id="follower_member_id" resultType="first.com.model.FollowDTO" parameterType="java.util.Map">
+	 SELECT member_id FROM follow WHERE follow_member_id = #{session_id}
 	 </select>
 	 
 	 <insert id="insert" parameterType="java.util.Map">
@@ -17,7 +25,9 @@
 	 , NOTI_URL
 	 , NOTI_DATE
 	 , NOTI_TYPEID
-	 , BOARD_ID) 
+	 , BOARD_ID
+	 , NOTI_KINDS
+	 ) 
 	 VALUES
 	 ( SEQ_NOTI.NEXTVAL
 	 , #{member_id}
@@ -26,8 +36,17 @@
  	 , #{board_url}
  	 , SYSDATE
  	 , #{bgroup_id}
- 	 , #{board_id}) 
+ 	 , #{board_id}
+ 	 , #{noti_kinds}) 
 	 </insert>
+	 
+	 <select id="list" resultType="first.com.model.NotiDTO" parameterType="int">
+	 SELECT a.*, b.member_name as sender_name, b.member_id as sender_id FROM (SELECT * FROM notification WHERE member_id = #{member_id}) a, member b WHERE a.noti_sender_id = b.member_id
+	 </select>
+	 
+	 <delete id="delete" parameterType="int">
+	 DELETE FROM notification WHERE noti_id = #{noti_id}
+	 </delete>
 	 
 	 
 	 </mapper>

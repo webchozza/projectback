@@ -44,7 +44,7 @@ public class Login {
 	@RequestMapping("/loginform.do")
 	public ModelAndView loginForm(HttpSession session) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-		System.out.println("로그인 폼 : " + naverAuthUrl);
+		
 		return new ModelAndView("LoginForm", "url", naverAuthUrl);
 	}
 
@@ -64,6 +64,7 @@ public class Login {
 			session.setAttribute("member_email", result.getMember_email());
 			session.setAttribute("member_name", result.getMember_name());
 			session.setAttribute("member_id", result.getMember_id());
+
 			mav.setViewName("Main");
 
 			return mav;
@@ -72,18 +73,18 @@ public class Login {
 		return mav;
 	}
 
+	
 	// Logout
 	@RequestMapping("/logout.do")
 	public ModelAndView logout(HttpServletResponse response,HttpServletRequest request, MemberDTO member)throws IOException{
 		HttpSession session = request.getSession(false);
-		
-		if (session != null) {
-			memberService.logOut(member);
-			// 저장한 세션 영역 삭제
+
+	
+		memberService.logOut(member);
+			//저장한 세션 영역 삭제
 			session.invalidate();
-		}
-		// 새로운 객체 생성하여 기존에 객체에 저장한 값 delete
-		mav.addObject("member", new MemberDTO());
+		//새로운 객체 생성하여 기존에 객체에 저장한 값 delete
+		mav.addObject("member",new MemberDTO());
 		// MainForm으로 이동
 		mav.setViewName("Main");
 
@@ -102,7 +103,6 @@ public class Login {
 		try {
 			JSONObject jsonObjAll = (JSONObject)parser.parse(apiResult);
 			String result = jsonObjAll.get("response").toString();
-			System.out.println(jsonObjAll.toJSONString());
 			JSONObject jsonObj = (JSONObject)parser.parse(result);
 				String member_name	= jsonObj.get("nickname").toString();
 				String member_email = jsonObj.get("email").toString();

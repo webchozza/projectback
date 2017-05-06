@@ -15,7 +15,7 @@ public class AjaxPaging {
 
 		path = "\"/dokky/" + path + ".do\"";
 		
-		fullPath = path;
+		fullPath = path;//jsp에 모델에 path라는 이름으로 전달해준 후  Ajax 통신시 data로 컨트롤러로 쏴준다
 
 		totalPage = (int) Math.ceil((double) totalCount / blockCount);
 		if (totalPage == 0) {
@@ -41,12 +41,12 @@ public class AjaxPaging {
 		if (currentPage > blockPage) {
 			if(search.equals("")){
 					pagingHtml.append(
-							"<a href='javascript:;' onclick='ch("+path+","+(startPage - 1)+","+"\"\""+","+n+")'>");
+							"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+"\"\""+","+n+")'>");
 					pagingHtml.append("[이전]");
 					pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
-						"<a href='javascript:;' onclick='ch("+path+","+(startPage - 1)+","+search+","+n+")'>");
+						"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+search+","+n+")'>");
 				pagingHtml.append("[이전]");
 				pagingHtml.append("</a>");
 			}
@@ -63,13 +63,13 @@ public class AjaxPaging {
 			} else {
 				if(search.equals("")){
 					pagingHtml.append(
-							"&nbsp;<a href='javascript:;' onclick='ch("+path+","+i+","+"\"\""+","+n+")'>");
+							"&nbsp;<a href='javascript:;' onclick='paging("+path+","+i+","+"\"\""+","+n+")'>");
 					pagingHtml.append(i);
 					pagingHtml.append("</a>");
 					
 				} else{
 				pagingHtml.append(
-						"&nbsp;<a href='javascript:;' onclick='ch("+path+","+i+","+search+","+n+")'>");
+						"&nbsp;<a href='javascript:;' onclick='paging("+path+","+i+","+search+","+n+")'>");
 				pagingHtml.append(i);
 				pagingHtml.append("</a>");
 				}
@@ -81,12 +81,12 @@ public class AjaxPaging {
 		if (totalPage - startPage >= blockPage) {
 			if(search.equals("")){
 			pagingHtml.append(
-					"<a href='javascript:;' onclick='ch("+path+","+(endPage + 1)+","+"\"\""+","+n+")'>");
+					"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+"\"\""+","+n+")'>");
 			pagingHtml.append("[다음]");
 			pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
-						"<a href='javascript:;' onclick='ch("+path+","+(endPage + 1)+","+search+","+n+")''>");
+						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+search+","+n+")''>");
 				pagingHtml.append("[다음]");
 				pagingHtml.append("</a>");
 			}

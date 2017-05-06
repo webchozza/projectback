@@ -3,11 +3,9 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Body</title>
 </head>
 <body>
-<input type="text" value="${soundsearch}"/>
 				<!-- 바디 -->
 				<section id="banner">
 					<div class="content">
