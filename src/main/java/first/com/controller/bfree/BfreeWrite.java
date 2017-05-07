@@ -53,7 +53,7 @@ public class BfreeWrite {
 								   HttpSession session) {
 		
 		ModelAndView mav= new ModelAndView();
-		
+		String member_id =(String)session.getAttribute("member_email");
 		bfreeService.bfreeWrite(boardDTO);
 		
 		mav.addObject("boardDTO", boardDTO);

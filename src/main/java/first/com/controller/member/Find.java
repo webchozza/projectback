@@ -43,8 +43,7 @@ public class Find {
 	//비밀번호 찾기 form으로 이동
 	@RequestMapping(value = "/findpwform.do", method = RequestMethod.POST)
 	public String findForm(){
-		System.out.println("패스워드찾기 폼");
-		return"FindPWForm";
+			return"FindPWForm";
 	}
 	
 

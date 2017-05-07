@@ -59,6 +59,16 @@
 		scrapcheck("${scrapCheck}");
 	});
 </script>
+<script type="text/javascript">
+	function gosubmit1() {
+
+		var f = document.frn;
+		f.name_from.value;
+		f.method = "post";
+		f.action = "/dokky/messagewriteform.do";
+		f.submit();
+	}
+</script>
 <style>
 .fa-bookmark{
 color: #7f888f; 
@@ -73,12 +83,16 @@ color: #7f888f;
 		<div class="content">
 			<div class="table-wrapper">
 				<div class="table-wrapper">
+				<form name="frn">
+				<input type="hidden" name="name_from" id="name_from" value="${bfreeDetail.board_nickname}">
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />
 							<col width="15%" />
 						</colgroup>
+						
 						<tbody>
+						
 							<tr>
 								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id}&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname}</a></strong>
 									<br> <i><fmt:formatDate
@@ -93,12 +107,14 @@ color: #7f888f;
 								<td><center>
 										<a href="#" style="font-size: 30px" class="icon fa-thumbs-up"></a><br><h2 style="color: #f56a6a;">${bfreeDetail.board_like}</h2><br>
 										<div id="scrapbutton"></div>
+										<input type="button" style="font-size: 30px" value="쪽지" class="button special" onclick="javascript:gosubmit1()">
 									</center>
 							</tr>
+							
 						</tbody>
 
 					</table>
-
+					</form>
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />

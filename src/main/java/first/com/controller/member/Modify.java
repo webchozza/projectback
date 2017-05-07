@@ -23,8 +23,8 @@ public class Modify {
 	
 	@RequestMapping("checkmodify.do")
 	public ModelAndView checkModify(MemberDTO member) {
-		
-		mav.addObject("member_email", member.getMember_email());
+		 System.out.println(member.getMember_email());
+		mav.addObject("member_email", member.getMember_email().toString());
 		mav.setViewName("CheckModify");
 		
 		return mav;

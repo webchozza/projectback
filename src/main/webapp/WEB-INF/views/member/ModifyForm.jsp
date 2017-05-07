@@ -99,7 +99,7 @@
 				<form name="frm">
 
 					<div class="row uniform" style="float: inherit;">
-						<div class="6u 12u$(xsmall)">
+						<div class="6u 12u$(xsmall)" style="float: inherit;">
 							<input type="hidden" id="nameChk" value="false" /> <input
 								type="hidden" id="emailChk" value="false" /> <input type="text"
 								name="member_name" id="member_name" value="${member.member_name}" placeholder="닉네임" />

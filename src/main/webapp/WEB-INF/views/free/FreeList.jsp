@@ -35,6 +35,8 @@ input[name=ss] {
 								class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a></td>
 						</tr>
 					</thead>
+								
+								
 					<tbody>
 						<c:forEach var="list" items="${bfreelist }">
 						<c:url var="detailURL" value="bfreedetail.do">
@@ -53,6 +55,7 @@ input[name=ss] {
 						</c:forEach>
 
 					</tbody>
+					
 				</table>
 			</div>
 

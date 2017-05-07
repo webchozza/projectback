@@ -141,14 +141,15 @@ display:none;
 					<input type="text" name="soundsearch" id="soundsearch" placeholder="Search All" />
 					<input type="submit" name="ss" id="soundsubmit"/>
 				</form>
+
 			</section>
-			
-			
+
 			<!-- 로그인 회원가입등 -->
 			<c:if test="${sessionScope.member_email eq null}">
 			<section id="icons">
 				<ul>
 				<a href="/dokky/loginform.do" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+
 				<a href="/dokky/joinform.do" class="icon fa-user-plus"> 회원가입</a>
 						</ul>
 			</section>
@@ -157,12 +158,15 @@ display:none;
 			
 				<!-- 로그인 처리 -->
 			<c:if test="${sessionScope.member_email ne null}">
+
 			<section id="icons">
 				<ul>
 					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="/dokky/checkmodify.do?member_email=${member_email}" class="icon fa-bell" id="notice">회원정보수정</a><br/>
 					
-					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;
+					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;<br/>
+					<a href="/dokky/massagelist.do" class="icon fa-bell" id="notice">쪽지함</a>&nbsp;
 					<div id="notiarea" style="display:inline-block;"></div>
 					<input type="hidden" id="notich"/>
 					

@@ -18,7 +18,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		//session member_id로 저장 
 		String member_email = (String)session.getAttribute("member_email");
-		/*비 로그인 시 writeform, memberlist, recommend 로 이동 불가  따라서, main.do로 이동*/
+
+		
 		if(member_email==null){ 
 			if(request.getRequestURI().contains("writeform.do")||
 			 request.getRequestURI().contains("memberlist.do")||

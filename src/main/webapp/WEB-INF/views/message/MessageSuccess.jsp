@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
-<title>JoinEmail</title>
+<title>FindEmail</title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -12,7 +12,7 @@
 function gosubmit1(){
 	var f = document.frm;
 	f.method = "post";
-	f.action = "/dokky/main.do";
+	f.action = "/dokky/massagelist.do";
 	f.submit();
 }
 </script>
@@ -20,20 +20,19 @@ function gosubmit1(){
 
 
 <body>
+<br/><br/>
 	<div id="wrapper">
 		<div id="main" align="center">
 			<div class="inner">
-	<!-- JoinEmail -->			
-			<h3>회원가입</h3>
+	<!-- Message Success -->
+			<form name="frm">			
+			<h3>MESSAGE</h3>
 					<div class="box" style="width:400pt;">
-					감사합니다 !<br/>
-					회원님의 이메일로 회원가입 인증 메일이 발송되었습니다.  <br/>
-					메일을 확인해 주세요. ^^
+					회원님의 쪽지가  성공적으로 전송되었습니다..<br/>
 					<br/>
-					<form name="frm">
-				<input  type="button" style="width:300pt;" value="메인화면" class="button special" onclick="javascript:gosubmit1()">
-					</form>
+				<input  type="button" style="width:300pt;" value="목록으로 이동" class="button special" onclick="javascript:gosubmit1()">
 					</div>
+				</form>
 				</div>		
 		   </div>
 		 </div> 
