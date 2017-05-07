@@ -163,10 +163,10 @@ display:none;
 				<ul>
 					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/dokky/checkmodify.do?member_email=${member_email}" class="icon fa-bell" id="notice">회원정보수정</a><br/>
+					<a href="/dokky/massagelist.do" class="icon fa-bell" id="notice">쪽지함</a>&nbsp;<br>
 					
+					<a href="/dokky/checkmodify.do?member_email=${member_email}" class="icon fa-bell" id="notice">회원정보수정</a>
 					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;<br/>
-					<a href="/dokky/massagelist.do" class="icon fa-bell" id="notice">쪽지함</a>&nbsp;
 					<div id="notiarea" style="display:inline-block;"></div>
 					<input type="hidden" id="notich"/>
 					

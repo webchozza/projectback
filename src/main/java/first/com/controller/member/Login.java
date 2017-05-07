@@ -79,7 +79,6 @@ public class Login {
 	public ModelAndView logout(HttpServletResponse response,HttpServletRequest request, MemberDTO member)throws IOException{
 		HttpSession session = request.getSession(false);
 
-	
 		memberService.logOut(member);
 			//历厘茄 技记 康开 昏力
 			session.invalidate();
