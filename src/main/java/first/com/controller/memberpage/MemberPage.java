@@ -48,7 +48,7 @@ public class MemberPage {
 		
 		map.put("member_id", member_id);
 		map.put("search", search);
-		
+
 		List<BoardDTO> list = memberpage.myBoardList(map);
 		Map<String, Object> myCount = memberpage.myCount(map);
 		FollowDTO follow = followService.followCount(member_id);

@@ -13,9 +13,9 @@ public class AjaxPaging {
 
 	public AjaxPaging(String path, int currentPage, int totalCount, int blockCount, int blockPage, String search, int n) {
 
+		fullPath = "/dokky/"+path+".do";//jsp에 모델에 path라는 이름으로 전달해준 후  Ajax 통신시 data로 컨트롤러로 쏴준다
+
 		path = "\"/dokky/" + path + ".do\"";
-		
-		fullPath = path;//jsp에 모델에 path라는 이름으로 전달해준 후  Ajax 통신시 data로 컨트롤러로 쏴준다
 
 		totalPage = (int) Math.ceil((double) totalCount / blockCount);
 		if (totalPage == 0) {

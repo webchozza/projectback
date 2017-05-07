@@ -26,7 +26,7 @@ public class Alram {
 	@RequestMapping(value = "/notilist.do")
 	@ResponseBody
 	public List<NotiDTO> alramList(@RequestParam(value = "session_id", required=false) int member_id, Model model) {
-
+		
 		//Notification테이블에 있는 정보 중 현재 접속 중인 회원의 session_id를 이용하여 일치하는 정보들을 꺼내온다.
 		//NotiDTO에 값을 넣어서 전달하기 때문에 json객체의 키는 DTO의 각 property이다.
 		List<NotiDTO> list = noti.notiList(member_id);

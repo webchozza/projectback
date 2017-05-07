@@ -16,8 +16,8 @@
 	 
 	 <select id="followCount" resultType="first.com.model.FollowDTO" parameterType="int">
 	   SELECT a.following_count, count(b.member_id) as follower_count FROM 
-	   (SELECT count(follow_member_id) as following_count FROM follow where member_id = #{member_id}) a 
-	   LEFT OUTER JOIN follow b on #{member_id} = b.follow_member_id GROUP BY a.following_count
+	   (SELECT count(follow_member_id) as following_count FROM follow where member_id = 300) a 
+	   LEFT OUTER JOIN follow b on 300 = b.follow_member_id GROUP BY a.following_count
 	 </select>
 	 
 	 <insert id="add" parameterType="first.com.model.FollowDTO">

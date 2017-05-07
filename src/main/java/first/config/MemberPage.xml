@@ -12,10 +12,10 @@
 	 
 	 <select id="myCount" resultType="java.util.HashMap" parameterType="java.util.Map">
 	 SELECT c.myboardcount, c.myscrapcount, count(d.follow_id) as myfollowcount FROM 
-	 (SELECT a.myboardcount, a.member_id, count(b.scrap_id) as myscrapcount FROM 
-	 (select count(board_id) as myboardcount, member_id FROM BOARD WHERE member_id = #{member_id} GROUP BY member_id) a 
-	 LEFT OUTER JOIN SCRAP b ON a.member_id = b.member_id GROUP BY a.myboardcount, a.member_id) c 
-	 LEFT OUTER JOIN FOLLOW d ON c.member_id = d.member_id GROUP BY c.myboardcount, c.myscrapcount
+	 (SELECT a.myboardcount, count(b.scrap_id) as myscrapcount FROM 
+	 (SELECT count(board_id) AS myboardcount FROM BOARD WHERE member_id = #{member_id}) a 
+	 LEFT OUTER JOIN SCRAP b ON #{member_id} = b.member_id GROUP BY a.myboardcount) c 
+	 LEFT OUTER JOIN FOLLOW d ON #{member_id} = d.member_id GROUP BY c.myboardcount, c.myscrapcount
 	 </select>
 	 
 	 <select id="followCheck" resultType="int" parameterType="java.util.Map">

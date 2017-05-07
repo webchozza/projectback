@@ -4,101 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
-<script>
-function paging(path, i, search, n) {
-	
-	var member_id = ${member_id};
-	
-	$('#movearea').load(path, {
-		member_id : member_id,
-		currentPage : i,
-		n : n,
-		search : search,
-		ap : 'AjaxPaging'
-	});
-}
-
-function sch() {
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	var member_id = ${member_id};
-	var search = form.search.value;
-
-	$('#movearea').load(path, {
-		member_id: member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxSearch'
-	});
-}
-
-function follow(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-	
-	$("#movearea").load("/dokky/ListFollow.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxFollow'
-	});
-}
-
-function scrap(){
-
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$('#movearea').load("/dokky/ScrapList.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxScrap'
-	});
-}
-
-function memberpage(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$('#movearea').load("/dokky/MemberPage.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxMemberPage'
-	});
-}
-
-function deletescrap(){
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-
-	if(!confirm("스크랩에서 지우시겠습니까?")){ return false; }
-	
-	var session_id = "${sessionScope.member_id}";
-	var board_id = $("#board_id").val();
-	
-	$.ajax({
-		url:"/dokky/ScrapDelete.do",
-		type:"post",
-		data: {board_id: board_id, member_id: session_id, currentPage : i, search : search, ap : "AjaxScrapDelete"},
-		success: function(data){
-			$("#movearea").html(data);
-		}
-	});
-}
-</script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/scrap.js"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -178,7 +84,7 @@ border-bottom-color: #FFFFFF;
 							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 							<td width="5%">
 							<c:if test="${board.scrap_member_id eq sessionScope.member_id}">
-							<a href="javascript:;" onclick="return deletescrap()"><img src="/dokky/resources/images/x.jpg" style="width: 20%; height: 5%;"/></a>
+							<a href="javascript:;" onclick="return deletescrap()"><img src="/dokky/resources/images/x.jpg" style="width: 15px; height: 12px;"/></a>
 							</c:if>
 							</td>
 						</tr>
@@ -197,5 +103,10 @@ border-bottom-color: #FFFFFF;
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			</div>
 			<br/><br/><br/>
+<form name="valueform">
+<input type="hidden" id="member_id" value="${member_id}"/>
+<input type="hidden" id="path" value="${path}"/>
+<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+</form>
 </body>
 </html>

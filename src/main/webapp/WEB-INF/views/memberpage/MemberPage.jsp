@@ -4,142 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
-<script>
-function paging(path, i, search, n) {
-	
-	var member_id = ${member_id};
-	
-	$('#movearea').load(path, {
-		member_id : member_id,
-		currentPage : i,
-		n : n,
-		search : search,
-		ap : 'AjaxPaging'
-	});
-}
-
-function sch() {
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var member_id = ${member_id};
-	var i = form.i.value;
-	var search = form.search.value;
-
-	$('#movearea').load(path, {
-		member_id: member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxSearch'
-	});
-}
-
-function follow(){
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$("#movearea").load("/dokky/ListFollow.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxFollow'
-	});
-}
-
-function scrap(){
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$('#movearea').load("/dokky/ScrapList.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxScrap'
-	});
-}
-
-function memberpage(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$('#movearea').load("/dokky/MemberPage.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxMemberPage'
-	});
-}
-
-function followclick(addordelete){
-	
-	var session_id = "${sessionScope.member_id}";//팔로우 거는 사람
-	var member_id = ${member_id};//팔로우 당하는 사람
-	
-	if(addordelete == "add"){
-	$.ajax({
-		url:"/dokky/AddFollow.do",
-		type:"get",
-		dataType:"json",
-		data: {follow_member_id : member_id, member_id : session_id},
-		success: function(data){
-			followcheck(data);
-		}
-	});}
-	else if (addordelete == "delete"){
-	$.ajax({
-		url:"/dokky/DeleteFollow.do",
-		type:"get",
-		dataType:"json",
-		data: {follow_member_id : member_id, member_id : session_id},
-		success: function(data){
-			followcheck(data);
-		}
-	});}
-}
-
-function followcheck(checkValue){
-
-	if(checkValue == "me"){
-		$("#me").html("");
-	} else if(checkValue == null || checkValue == "0"){//멤버페이지를 불러올 때 팔로우여부 체크값을 보내서 조건을 준다음 plus의 값을 설정함
-	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick=\'followclick("add")\'><h4 style="color: #f56a6a;">+팔로우</h4></a>');
-	} else if(checkValue != null || checkValue == "1"){
-	$("#plusFollow").html("");
-	$("#plusFollow").html('<a href="#" onclick=\'followclick("delete")\'><h4 style="color: #f56a6a;">팔로우 해제</h4></a>');
-	}
-}
-
-//페이지가 로딩될 때 함수실행(팔로우한 사람인지 아닌지 구분하는 값을 인자로 넘겨줌)
-$(document).ready(function(){
-	followcheck("${followCheck}");
-});
-
-function deleteMyBoard(board_id){
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var session_id = "${sessionScope.member_id}";
-	
-	if(!confirm("해당 글을 지우시겠습니까?")){ return false; }
-	
-	$.ajax({
-		url:"/dokky/deleteMyBoard.do",
-		type: "post",
-		data: {board_id: board_id, member_id: session_id, currentPage : i, search : search, ap : "AjaxMyBoardDelete"},
-		success: function(data){
-			$("#movearea").html(data);
-		}
-	});
-}
-</script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/memberpage.js"></script>
 <title>회원 정보 보기</title>
 <style>
 #b{
@@ -147,6 +12,12 @@ function deleteMyBoard(board_id){
   text-decoration:none !important
 }
 </style>
+<script>
+//페이지가 로딩될 때 함수실행(팔로우한 사람인지 아닌지 구분하는 값을 인자로 넘겨줌)
+$(document).ready(function(){
+	followcheck("${followCheck}");
+});
+</script>
 </head>
 <body>
 	<h4>회원 정보</h4>
@@ -252,5 +123,10 @@ function deleteMyBoard(board_id){
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 	</div>
 			<br/><br/><br/>
+<form name="valueform">
+<input type="hidden" id="member_id" value="${member_id}"/>
+<input type="hidden" id="path" value="${path}"/>
+<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+</form>
 </body>
 </html>
