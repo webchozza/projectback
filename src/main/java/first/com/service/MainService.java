@@ -19,13 +19,17 @@ public class MainService implements MainDAO{
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public String Main() {
+	public String main() {
 		return null;
 	}
 
+	public int allBordCount(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("main.allBoardCount", map);
+	}
+
 	@Override
-	public List<BoardDTO> AllSearch(Map<String,Object> map) {
-		return sqlSessionTemplate.selectList("allSearchList", map);
+	public List<BoardDTO> allSearch(Map<String,Object> map) {
+		return sqlSessionTemplate.selectList("main.allSearchList", map);
 	}
 	
 	

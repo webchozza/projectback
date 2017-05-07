@@ -17,4 +17,6 @@ public interface FollowDAO {
 	
 	public int followCheck(Map<String, Object> map);
 	
+	public int followAllCount(Map<String, Object> map);
+	
 }

@@ -15,5 +15,6 @@ public interface AdminDAO {
 	
 	public void memberDelete(MemberDTO member);
 	
+	public int memberCount(Map<String, Object> map);
 
 }

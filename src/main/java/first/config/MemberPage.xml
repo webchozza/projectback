@@ -5,9 +5,16 @@
 <mapper namespace="memberpage">
 
 	 <select id="myBoardList" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
-	 SELECT a.*, b.member_name FROM (SELECT * FROM board WHERE member_id = #{member_id}) a 
-	 inner join member b on a.member_id = b.member_id 
-	 WHERE a.member_id = #{member_id} and board_title like '%'||#{search}||'%' OR board_content like '%'||#{search}||'%' ORDER BY board_date DESC
+	 <![CDATA[SELECT * FROM (SELECT a.*, b.member_name, rownum r FROM (SELECT /*+index(board IDX_BOARD_DATE)*/ * FROM 
+	 board WHERE member_id = #{member_id}) a 
+	 INNER JOIN member b on a.member_id = b.member_id 
+	 WHERE rownum <= #{endrow} and board_title like '%'||#{search}||'%' OR 
+	 rownum <= #{endrow} and board_content like '%'||#{search}||'%') WHERE r >= #{startrow}]]>
+	 </select>
+	 
+	 <select id="myBoardCount" resultType="int" parameterType="java.util.Map">
+	 SELECT COUNT(board_id) FROM (SELECT board_id, board_title, board_content FROM board WHERE member_id = #{member_id}) 
+	 WHERE board_content like '%'||#{search}||'%' OR board_title like '%'||#{search}||'%'
 	 </select>
 	 
 	 <select id="myCount" resultType="java.util.HashMap" parameterType="java.util.Map">

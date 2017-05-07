@@ -5,74 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script>
-function paging(path, i, search, n) {
-	
-	stoploop();
-	
-	$('#area').load(path, {
-		currentPage : i,
-		search : search,
-		n : n,
-		ap : 'AjaxPaging'
-	});
-}
-
-function sch() {
-	
-	stoploop();
-	
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	var search = form.search.value;
-	var n = form.n.value;
-	
-	$('#area').load(path, {
-		currentPage : i,
-		search : search,
-		n : n,
-		ap : 'AjaxSearch'
-	});
-}
-
-function MemberCheck(i){
-	
-	stoploop();
-	
-	if(i == 'all'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange'});
-	}
-	if(i == 'on'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:1});
-	}
-	if(i == 'out'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:0});
-	}
-}
-
-	//멤버리스트 화면 로딩시 한번만 동작함(이후엔 #area영역에 호출된 MemberListPage의 setTimeout함수가 동작함)
-var loop = setTimeout(function(){
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	var search = form.search.value;
-	var n = $("#demo-category").val();
-	
-	$("#area").load(path,{
-		currentPage: i, 
-		search: search, 
-		n: n, 
-		ap: 'AjaxMemberCheck'
-		});
-	setTimeout(loop, 3000);
-}, 3000);
-
-function stoploop(){
-	console.log("멈춰");
-	clearTimeout(loop);
-}
-</script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlist.js"></script>
 </head>
 <style>
 input[type="text"] {
@@ -143,10 +76,10 @@ input[type="text"] {
 							<a href="/dokky/MemberDelete.do?member_id=${member.member_id}"
 							onclick="return deleteMember()">탈퇴</a></td>
 						<c:if test="${member.member_ch eq 0}">
-							<td align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 17%; height: 35%;"></td>
+							<td align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 						<c:if test="${member.member_ch eq 1}">
-							<td align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 17%; height: 35%;"></td>
+							<td align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -165,5 +98,10 @@ input[type="text"] {
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			</div>
 			<br/><br/><br/>
+<form name="valueform">
+<input type="hidden" id="member_id" value="${member_id}"/>
+<input type="hidden" id="path" value="${path}"/>
+<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+</form>
 </body>
 </html>

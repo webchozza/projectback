@@ -7,8 +7,10 @@ import first.com.model.BoardDTO;
 
 public interface MainDAO {
 	
-	public String Main();
+	public String main();
 	
-	public List<BoardDTO> AllSearch(Map<String, Object> map);
+	public List<BoardDTO> allSearch(Map<String, Object> map);
+	
+	public int allBordCount(Map<String, Object> map);
 
 }

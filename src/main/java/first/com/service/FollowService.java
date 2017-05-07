@@ -47,4 +47,9 @@ public class FollowService implements FollowDAO {
 		return follow;
 	}
 
+	@Override
+	public int followAllCount(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("follow.followAllCount", map);
+	}
+
 }

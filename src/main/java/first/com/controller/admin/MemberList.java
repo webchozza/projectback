@@ -22,6 +22,8 @@ public class MemberList {
 	@Resource
 	private AdminDAO admin;
 	
+	private int startrow;
+	private int endrow;
 	private int totalCount; // 총 게시물의 수
 	private int blockCount = 10; // 한 페이지의 게시물의 수
 	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
@@ -40,7 +42,12 @@ public class MemberList {
 							 Model model){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+
+		startrow = ((currentPage-1) * 10) + 1;
+		endrow = (startrow + blockCount) -1;
 		
+		map.put("startrow", startrow);
+		map.put("endrow", endrow);
 		map.put("search", search.trim());
 		map.put("n", kind[n]);
 		if(ch != null && !ch.equals("")){ map.put("ch", ch);
@@ -49,17 +56,11 @@ public class MemberList {
 
 		List<MemberDTO> list = admin.memberList(map);
 		
-		totalCount = list.size();
+		totalCount = admin.memberCount(map);
 		
 		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
-		int lastCount = totalCount;
-
-		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
-		
-		list= list.subList(page.getStartCount(), lastCount);
-
 		model.addAttribute("memberlist", list);
 		model.addAttribute("page", pagingHtml);
 		

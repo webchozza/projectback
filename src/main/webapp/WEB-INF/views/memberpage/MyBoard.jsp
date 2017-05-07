@@ -79,7 +79,7 @@ border-bottom-color: #FFFFFF;
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-eye">${board.board_hit}</a></td>
-							<td width="10%" align="center"><div id="b">${board.member_name}</div>></td>
+							<td width="10%" align="center"><div id="b">${board.member_name}</div></td>
 							<td width="5%" align="center"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 							<td width="5%">
 							<c:if test="${board.member_id eq sessionScope.member_id}">

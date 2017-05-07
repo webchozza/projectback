@@ -41,15 +41,9 @@ public class AdminService implements AdminDAO{
 		sqlSessionTemplate.update("admin.memberDelete", member);
 	}
 	
-	
-	
-/*	@Resource
-	private SqlSessionTemplate sqlSessionTemplate;
-	
-	public void updateCh() {//이 메소드는 세션 리스너에서 사용한다.
-		sqlSessionTemplate.update("admin.updateCh");
-	}*/
-	
-	
+	@Override
+	public int memberCount(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("admin.memberCount", map);
+	}
 
 }
