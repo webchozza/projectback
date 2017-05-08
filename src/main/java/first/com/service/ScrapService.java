@@ -19,7 +19,7 @@ public class ScrapService implements ScrapDAO {
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 
-	public List<BoardDTO> scrapList(Map<String, Object> map) {
+	public List<BoardDTO>  scrapList(Map<String, Object> map) {
 		List<BoardDTO> list = sqlSessionTemplate.selectList("scrap.list", map);// 스크랩 목록 불러오기
 		return list;
 	}
