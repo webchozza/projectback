@@ -17,6 +17,7 @@ function insertScrap(){
 	}
 	
 function scrapcheck(checkValue){
+	alert(checkValue);
 	//스크랩하지 않은 글이면 클릭 가능
 	var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
 		strA += '<h2 style="color: #7f888f;">스크랩</h2>';
@@ -28,10 +29,13 @@ function scrapcheck(checkValue){
 		strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
 		
 	if(checkValue == -1){
+		console.log("-1");
 		$("#scrapbutton").html(strDivNo);
 	} else if(checkValue > 0){
+		console.log("0>");
 		$("#scrapbutton").html(strDiv);
 	} else {
+		console.log("0");
 		$("#scrapbutton").html(strA);
 	}
 }
