@@ -4,11 +4,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+
 <script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js"></script>
 <script>
 $(document).ready(function(){
 	$("#notich").val("N");
 });
+
 </script>
 <title>사이드 메뉴</title>
 <style>
@@ -45,8 +47,16 @@ display:none;
 	padding: 2.22222em;
 	width: calc(100% + 3.8em);
 }
+.fa-envelope-open:before {
+	content: "\f2b6"
+	}
+.fa-cog:before {
+	content: "\f013" 
+}
+
 
 </style>
+
 </head>
 <body>
 	<!-- 사이드바 -->
@@ -80,16 +90,18 @@ display:none;
 				<ul>
 					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/dokky/massagelist.do" class="icon fa-bell" id="notice">쪽지함</a>&nbsp;<br>
+					<a href="/dokky/massagelist.do" class="fa-envelope-open" id="notice"> 쪽지함</a>&nbsp;<br>
 					
-					<a href="/dokky/checkmodify.do?member_email=${member_email}" class="icon fa-bell" id="notice">회원정보수정</a>
+					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-cog" id="notice"> 회원정보</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;<br/>
 					<div id="notiarea" style="display:inline-block;"></div>
 					<input type="hidden" id="notich"/>
 					
 					<div id="notibox" ></div>
 					
-					<c:if test="${sessionScope.member_email}=='admin'">
+					<c:if test="${sessionScope.member_email eq 'admin@'}">
+					<br/>
 					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
 					</c:if>
 					

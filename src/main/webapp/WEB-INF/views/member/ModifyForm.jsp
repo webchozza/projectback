@@ -86,6 +86,18 @@
 			}
 		});
 	}
+	
+	function gosubmit4() {
+		if (confirm("정말 탈퇴하시겠습니까?") == true){  
+			var f = document.frm;
+			f.member_email.value = f.member_email.value;
+			f.method = "POST";
+			f.action = "/dokky/deleteMember.do";
+			f.submit();
+		}else{   
+		    return;
+		}
+		}
 </script>
 </head>
 
@@ -118,8 +130,10 @@
 							<ul class="actions">
 								<input type="button" value="수정" class="button special"
 									onclick="javascript:gosubmit1()">
-								<input type="button" value="메인으로 가기" class="button special"
+								<input type="button" value="메인" class="button special"
 									onclick="javascript:gosubmit2()">
+								<input type="button" value="탈퇴" class="button special"
+									onclick="javascript:gosubmit4()">		
 							</ul>
 
 						</div>

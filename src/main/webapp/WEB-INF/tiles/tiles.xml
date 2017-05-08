@@ -80,6 +80,15 @@
 			스크랩 목록으로 이동 -->
 		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
 			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+	
+	<definition name="DeleteSuccess" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/DeleteSuccess.jsp" />
+	</definition>
+	
+	
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
 	</definition>
 
 	<definition name="ScrapDelete" extends="Main">

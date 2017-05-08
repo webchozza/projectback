@@ -30,7 +30,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 				return true;
 			}
 		}else{
-			if(member_email.equals("admin")){
+			if(member_email.equals("admin@")){
 				return true;
 			}else if(request.getRequestURI().contains("memberlist.do")){
 				return false;

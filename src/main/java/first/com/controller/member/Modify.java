@@ -56,5 +56,18 @@ public class Modify {
 		}
 		return mav;
 	}
-
+	
+	@RequestMapping("deleteMember.do")
+	public ModelAndView deleteMember(HttpServletRequest request,MemberDTO member) {
+		
+		HttpSession session = request.getSession(false);
+		memberService.deleteMember(member);
+		mav.setViewName("DeleteSuccess");
+		if(session!=null){
+			memberService.logOut(member);
+			//历厘茄 技记 康开 昏力
+			session.invalidate();
+		}
+		return mav;
+	}
 }
