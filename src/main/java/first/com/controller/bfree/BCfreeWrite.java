@@ -23,7 +23,7 @@ public class BCfreeWrite {
 	@Resource
 	private BfreeDAO bfreeService;
 	
-	//알림을 위해 DI
+	//notiI
 	@Resource 
 	private AlramDAO noti;
 	/////
@@ -32,6 +32,9 @@ public class BCfreeWrite {
 	public ModelAndView bCfreeWrite(@ModelAttribute("BcommentDTO") BcommentDTO bcommentDTO, BindingResult result,
 			HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		
+		String content= bcommentDTO.getBcomment_content().replaceAll("\r\n", "<br />");
+		bcommentDTO.setBcomment_content(content);
 		
 		bfreeService.bCfreeWrite(bcommentDTO);
 		bfreeService.bfreeUpdateCountco(bcommentDTO.getBoard_id());
@@ -46,6 +49,7 @@ public class BCfreeWrite {
 
 		mav.addAllObjects(map);
 		mav.setViewName("redirect:bfreedetail.do");
+
 
 		return mav;
 	}
