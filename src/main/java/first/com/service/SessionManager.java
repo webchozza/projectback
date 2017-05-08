@@ -1,5 +1,7 @@
 package first.com.service;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -18,6 +20,12 @@ public class SessionManager implements HttpSessionListener {
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent arg0) {
-		sst.update("admin.updateCh",arg0.getSession().getAttribute("member_id"));
+		Enumeration e = arg0.getSession().getAttributeNames();
+		while(e.hasMoreElements()){
+			if(e.nextElement().toString().equals("member_id")){
+				sst.update("admin.updateCh",arg0.getSession().getAttribute("member_id"));
+				break;
+			}
+		}
 	}
 }

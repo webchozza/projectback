@@ -78,11 +78,12 @@ public class Login {
 	@RequestMapping("/logout.do")
 	public ModelAndView logout(HttpServletResponse response,HttpServletRequest request, MemberDTO member)throws IOException{
 		HttpSession session = request.getSession(false);
-
-	
-		memberService.logOut(member);
-			//저장한 세션 영역 삭제
+			System.out.println("로그아웃");
 			session.invalidate();
+			
+			memberService.logOut(member);
+			//저장한 세션 영역 삭제
+			
 		//새로운 객체 생성하여 기존에 객체에 저장한 값 delete
 		mav.addObject("member",new MemberDTO());
 		// MainForm으로 이동

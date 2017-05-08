@@ -26,7 +26,6 @@ public class ScrapService implements ScrapDAO {
 
 	@Override
 	public int insertScrap(ScrapDTO scrap) {
-		System.out.println("???");
 		return sqlSessionTemplate.insert("scrap.insert", scrap);
 	}
 
@@ -38,6 +37,11 @@ public class ScrapService implements ScrapDAO {
 	@Override
 	public int scrapCheck(Map map) {
 		return sqlSessionTemplate.selectOne("scrap.Check", map);
+	}
+
+	@Override
+	public int scrapCount(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne("scrap.scrapCount", map);
 	}
 
 }

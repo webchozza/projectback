@@ -5,48 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script>
-function paging(path, i, search, n) {
-	$('#area').load(path, {
-		currentPage : i,
-		search : search,
-		n : n,
-		ap : 'AjaxPaging'
-	});
-}
-
-function sch() {
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	var AllSearch = form.AllSearch.value;
-	
-	$('#area').load(path, {
-		currentPage : i,
-		AllSearch : AllSearch,
-		ap : 'AjaxSearch'
-	});
-}
-
-function category(n){
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var i = form.i.value;
-	if(n=="all"){
-		var AllSearch = "";
-		n = 0;
-	}else{
-		var AllSearch = form.AllSearch.value;
-	}
-	
-	$("#area").load(path, {
-		currentPage : i,
-		AllSearch : AllSearch,
-		n : n,
-		ap : "AjaxCategory"
-	});
-}
-</script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/main/allsearchlist.js"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -128,5 +87,10 @@ border-bottom-color: #FFFFFF;
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 </div>
 <br/><br/><br/>
+<form name="valueform">
+<input type="hidden" id="member_id" value="${member_id}"/>
+<input type="hidden" id="path" value="${path}"/>
+<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+</form>
 </body>
 </html>

@@ -34,7 +34,7 @@ public interface MemberDAO {
 	
 	public void modifyMember(MemberDTO member);
 	
-	
+	public void deleteMember(MemberDTO member);
 	
 	public String deleteMemberForm();
 	

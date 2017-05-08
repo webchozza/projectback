@@ -26,6 +26,8 @@ public class MemberPage {
 	@Resource
 	private FollowDAO followService;
 	
+	private int startrow;
+	private int endrow;
 	private int totalCount; // 총 게시물의 수
 	private int blockCount = 10; // 한 페이지의 게시물의 수
 	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
@@ -44,11 +46,16 @@ public class MemberPage {
 							 @RequestParam(value="ap", required=false) String ap,
 							 Model model){
 		
+		startrow = ((currentPage-1) * blockCount)+1;
+		endrow = (startrow + blockCount)-1;
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		map.put("startrow", startrow);
+		map.put("endrow", endrow);
 		map.put("member_id", member_id);
 		map.put("search", search);
-		
+
 		List<BoardDTO> list = memberpage.myBoardList(map);
 		Map<String, Object> myCount = memberpage.myCount(map);
 		FollowDTO follow = followService.followCount(member_id);
@@ -58,17 +65,11 @@ public class MemberPage {
 		followCheck = followService.followCheck(map);
 		}
 
-		totalCount = list.size();
+		totalCount = memberpage.myBoardCount(map);
 		
 		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
-		int lastCount = totalCount;
-
-		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
-		
-		list= list.subList(page.getStartCount(), lastCount);
-
 		model.addAttribute("list", list);
 		model.addAttribute("myCount", myCount);
 		model.addAttribute("followCount", follow);

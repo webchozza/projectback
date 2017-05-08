@@ -4,80 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script>
-function paging(path, i, search, n) {
-	
-	var member_id = ${member_id};
-	
-	$('#area').load(path, {
-		member_id : member_id,
-		currentPage : i,
-		n : n,
-		search : search,
-		ap : 'AjaxPaging'
-	});
-}
-
-function sch() {
-	var form = document.getElementById('searchform');
-	var path = ${path};
-	var member_id = ${member_id};
-	var i = form.i.value;
-	var search = form.search.value;
-	
-	$('#area').load(path, {
-		member_id: member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxSearch'
-	});
-}
-
-function follow(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-	
-	$("#movearea").load("/dokky/ListFollow.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxFollow'
-	});
-}
-
-function scrap(){
-
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-
-	$('#movearea').load("/dokky/ScrapList.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxScrap'
-	});
-}
-
-function memberpage(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = ${member_id};
-	
-	$('#movearea').load("/dokky/MemberPage.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxMemberPage'
-	});
-}
-</script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/follow.js"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -156,5 +83,9 @@ table {
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			</div>
 			<br/><br/><br/>
+			<form name="valueform">
+<input type="hidden" id="member_id" value="${member_id}"/>
+<input type="hidden" id="path" value="${path}"/>
+</form>
 </body>
 </html>

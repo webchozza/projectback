@@ -12,8 +12,10 @@ public interface ScrapDAO {
 	
 	public int insertScrap(ScrapDTO scrap);
 	
-	public void deleteScrap(Map map);
+	public void deleteScrap(Map<String, Object> map);
 	
-	public int scrapCheck(Map map);
+	public int scrapCheck(Map<String, Object> map);
+	
+	public int scrapCount(Map<String, Object> map);
 	
 }

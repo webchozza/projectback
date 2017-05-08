@@ -92,6 +92,12 @@ public class MemberService implements MemberDAO {
 		
 		return sqlSession.selectOne("member.checkModify", member);
 	}
+	
+	@Override
+	public void deleteMember(MemberDTO member) {
+		sqlSession.update("member.delete", member);
+		
+	}
 
 	@Override
 	public String email() {

@@ -18,6 +18,11 @@ import first.com.model.BoardDTO;
 @Controller
 public class AllSearch {
 	
+	@Resource
+	private MainDAO mainSearch;
+	
+	private int startrow;
+	private int endrow;
 	private int totalCount; // 총 게시물의 수
 	private int blockCount = 10; // 한 페이지의 게시물의 수
 	private int blockPage = 5; // 한 화면에 보여줄 페이지 수
@@ -25,8 +30,6 @@ public class AllSearch {
 	private AjaxPaging page; // 페이징 클래스
 	private String path = "AllSearchList";//if (RequestMapping("/here.do")) => here = path
 	private String[] category = { "board_date", "board_like", "board_comment_count", "scrap_count", "board_hit" };
-	@Resource
-	private MainDAO mainSearch;
 	
 	@RequestMapping("/AllSearchList.do")
 	public String allSearch(@RequestParam(value="soundsearch", defaultValue="") String search,
@@ -38,23 +41,22 @@ public class AllSearch {
 
 		if(AllSearch != null){ search = AllSearch; }
 
+		startrow = ((currentPage-1) * blockCount)+1;
+		endrow = (startrow + blockCount)-1;
+		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startrow", startrow);
+		map.put("endrow", endrow);
 		map.put("search", search);
 		map.put("category", category[n]);
 
-		List<BoardDTO> list = mainSearch.AllSearch(map);
+		List<BoardDTO> list = mainSearch.allSearch(map);
 		
-		totalCount = list.size();
+		totalCount = mainSearch.allBordCount(map);
 		
 		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
-		int lastCount = totalCount;
-
-		if (page.getEndCount() < totalCount){ lastCount = page.getEndCount() + 1; }
-		
-		list= list.subList(page.getStartCount(), lastCount);
-
 		model.addAttribute("allSearchList", list);
 		model.addAttribute("page", pagingHtml);
 		

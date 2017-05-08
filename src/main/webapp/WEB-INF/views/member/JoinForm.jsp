@@ -50,7 +50,7 @@
 			alert("비밀번호가 일치하지 않습니다.");
 			return false;
 		}
-	
+		
 		var f = document.frm;
 		f.method = "get";
 		f.member_name.value = f.member_name.value;
@@ -122,6 +122,31 @@
 			}
 		});
 	}
+	
+	function len_chk(){  
+
+		  var frm = document.frm.member_pw; 
+
+		  if(frm.value.length > 10){  
+
+		       alert("비밀번호는 숫자 10자리 미만으로 제한합니다.");  
+		       frm.value = frm.value.substring(0,10);  
+		       frm.focus();  
+		  } 
+		} 
+	function len_chkk(){  
+
+		  var frm = document.frm.chpass; 
+
+		 	 if(frm.value.length > 10){  
+
+		 		msg = "비밀번호는 6 ~ 16 자리로 입력해주세요.";
+		       frm.value = frm.value.substring(0,10);  
+		       frm.focus();  
+		  } 
+		 	 
+		 	  return msg;
+		} 
 </script>
 </head>
 
@@ -150,14 +175,14 @@
 									class="button special" onclick="javascript:gosubmit4()"></li>
 							</ul>
 							<input type="password" style="width: 500;" name="member_pw"
-								id="member_pw" value="" placeholder="비밀번호" /> <br /> <input
+								id="member_pw" value="" placeholder="비밀번호" onKeyup="len_chk()"/> <br /> <input
 								type="password" style="width: 500;" name="chpass" id="chpass"
-								value="" placeholder="비밀번호 확인" /> <font name="check" size="2"
+								value="" placeholder="비밀번호 확인" onKeyup="len_chkk()"/> <font name="check" size="2"
 								style="float: left" color="pink"></font> <br />
 							<ul class="actions">
 								<input type="button" value="가입" class="button special"
 									onclick="javascript:gosubmit1()">
-								<input type="button" value="메인으로 가기" class="button special"
+								<input type="button" value="메인" class="button special"
 									onclick="javascript:gosubmit2()">
 							</ul>
 

@@ -86,7 +86,7 @@
    </mvc:interceptors> 
      
    <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡlog(aop) ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
-  <!--  <bean id="aoplog" class="first.com.common.aop" />
+  <bean id="aoplog" class="first.com.common.aop" />
 
    <aop:config>
       <aop:advisor advice-ref="txAdvice" pointcut-ref="check" />
@@ -94,7 +94,7 @@
       <aop:pointcut id="check" expression="execution(public * first..*.*(..))" />
          <aop:around pointcut-ref="check" method="log" />
       </aop:aspect>
-   </aop:config>  --> 
+   </aop:config>
    <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
    
    
