@@ -13,10 +13,10 @@
 		member WHERE member_del = 'Y' AND ${n} like '%'||#{search}||'%' AND MEMBER_DATE <= SYSDATE) WHERE 
 		ROWNUM <= #{endrow}) WHERE r >= #{startrow}]]>
 	 	<if test="ch != null and ch == 0">
-		WHERE member_ch = 0
+		AND member_ch = 0
 		</if>
 		<if test="ch != null and ch == 1">
-		WHERE member_ch = 1 
+		AND member_ch = 1 
 		</if>
 	</select>
 	
