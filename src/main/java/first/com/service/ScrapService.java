@@ -43,5 +43,4 @@ public class ScrapService implements ScrapDAO {
 	public int scrapCount(Map<String, Object> map) {
 		return sqlSessionTemplate.selectOne("scrap.scrapCount", map);
 	}
-
 }
