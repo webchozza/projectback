@@ -35,6 +35,10 @@ public class BfreeModify {
 	@RequestMapping(value="/bfreemodify")
 	public ModelAndView bfreeModify(BoardDTO boardDTO, HttpServletRequest request) {
 		ModelAndView mav= new ModelAndView();
+		
+		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
+		boardDTO.setBoard_content(content);
+		
 		bfreeService.bfreeModify(boardDTO);
 		mav.setViewName("redirect:bfreedetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage"));
 		return mav;

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +24,16 @@ public class BfreeDetail {
 	
 	@Resource 
 	private ScrapDAO Scrap;
-
+	
 	@RequestMapping("/bfreedetail")
-	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
-									@RequestParam("board_id") int board_id,
-									@RequestParam(value="session_id", defaultValue="-1") int session_id) {
-		
+	public ModelAndView bfreeDetail(@RequestParam(value="currentPage") int currentPage,
+			@RequestParam("board_id") int board_id,
+			@RequestParam(value="session_id", defaultValue="-1") int session_id) {
+
 		ModelAndView mav = new ModelAndView();
 		
 		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
-
 		bfreeService.bfreeHit(board_id);
 
 		mav.addObject("currentPage", currentPage);

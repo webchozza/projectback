@@ -6,13 +6,19 @@ public class BcommentDTO {
 	
 	private int bcomment_id;
 	private int board_id;
-	private int bgroup_id;//°Ô½ÃÆÇ º° ±¸ºÐ ¾ÆÀÌµð
+	private int bgroup_id;//ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
 	private String bcomment_content;
 	private Date bcomment_date;
 	private int bcomment_password;
 	private int member_id;
+	private String member_name;
 	
-	
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
 	public int getBcomment_id() {
 		return bcomment_id;
 	}

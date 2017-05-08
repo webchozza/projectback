@@ -17,13 +17,16 @@
 	</definition>
 
 
-	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
-		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
+			스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
+			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
 	</definition>
-	
-	<!--LoginForm  -->
-	 <definition name="LoginForm" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/member/LoginForm.jsp" />
+
+	<!--LoginForm -->
+	<definition name="LoginForm" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/LoginForm.jsp" />
 	</definition>
 
 	<!--LoginError -->
@@ -72,9 +75,11 @@
 			value="/WEB-INF/views/member/ModifySuccess.jsp" />
 	</definition>
 
-	
-	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 스크랩 목록으로 이동 -->
-		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
+			스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
+			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
 	</definition>
 
 	<definition name="ScrapDelete" extends="Main">
@@ -106,48 +111,51 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/message/MessageForm.jsp" />
 	</definition>
-	
+
 	<definition name="MessageSuccess" extends="Main">
 		<put-attribute name="body"
 			value="/WEB-INF/views/message/MessageSuccess.jsp" />
 	</definition>
+
 	<!-- 이밑으로자유게시판 -->
-	
 	<!-- 리스트 -->
 	<definition name="FreeList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/free/FreeList.jsp" />
 	</definition>
-	
+
 	<!-- 글쓰기폼 -->
 	<definition name="FreeWriteForm" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/free/FreeWriteForm.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/free/FreeWriteForm.jsp" />
 	</definition>
-	
+
 	<definition name="QnaList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/qna/QnaList.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="AllSearchList" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/main/AllSearchList.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/main/AllSearchList.jsp" />
 	</definition>
 
 	<definition name="MemberPage" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/memberpage/MemberPage.jsp"/>
+		<put-attribute name="body"
+			value="/WEB-INF/views/memberpage/MemberPage.jsp" />
 	</definition>
-	
+
 	<definition name="QnaDetail" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/qna/QnaDetail.jsp"></put-attribute>
 	</definition>
 
 	<!-- 상세보기 -->
 	<definition name="FreeDetail" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/free/FreeDetail.jsp"/>
-	</definition>
-	
-	<!-- 글수정폼 -->
-	<definition name="FreeModifyForm" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/free/FreeModifyForm.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/free/FreeDetail.jsp" />
 	</definition>
 
+	<!-- 글수정폼 -->
+	<definition name="FreeModifyForm" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/free/FreeModifyForm.jsp" />
+	</definition>
 
 </tiles-definitions>

@@ -4,11 +4,7 @@
 <html>
 <head>
 <title>ModifyForm</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 	function gosubmit1() {
 		if (frm.board_title.value == ""||frm.board_title.value == null) {

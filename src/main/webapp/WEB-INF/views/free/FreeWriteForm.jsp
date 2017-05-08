@@ -7,12 +7,12 @@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 	function gosubmit1() {
-		if (frm.board_title.value == ""||frm.board_title.value == null) {
+		if (frm.board_title.value == "" || frm.board_title.value == null) {
 			alert("제목을 입력해주세요");
 			frm.board_title.focus();
 			return false;
 		}
-		if (frm.board_content.value == ""||frm.board_content.value == null) {
+		if (frm.board_content.value == "" || frm.board_content.value == null) {
 			alert("글내용을 입력해주세요");
 			frm.board_content.focus();
 			return false;
@@ -25,8 +25,11 @@
 		<div class="inner">
 			<h3>Community</h3>
 			<form name="frm" action="bfreewrite.do" onsubmit="return gosubmit1()">
-			<input type="hidden" name="member_id" value="${sessionScope.member_id}"/>
-			<input type="hidden" name="board_nickname" id="subject" value="${sessionScope.member_name}"/>
+
+				<input type="hidden" name="member_id"
+					value="${sessionScope.member_id}"> <input type="hidden"
+					name="board_nickname" value="${sessionScope.member_name}">
+
 
 				<div class="6u 12u$(xsmall)" style="width: 300pt;">
 					<input type="text" name="board_title" id="subject" value=""
