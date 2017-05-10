@@ -12,7 +12,6 @@ public class BfileDTO {
 	private int bfile_size;
 	private int bfile_count;
 	
-	
 	public int getBfile_id() {
 		return bfile_id;
 	}

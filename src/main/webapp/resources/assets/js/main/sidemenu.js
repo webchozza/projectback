@@ -52,6 +52,7 @@ function notipop(){
 function notidelete(noti_id){
 	
 	if(!confirm("알림을 삭제하시겠습니까?")){ return false; }
+	
 	$.ajax({
 		url:"/dokky/notiDelete.do",
 		type: "post",
