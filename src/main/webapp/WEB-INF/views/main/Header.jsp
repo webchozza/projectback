@@ -4,6 +4,13 @@
 <html>
 <head>
 <script src="${pageContext.request.contextPath}/resources/assets/js/main/header.js"></script>
+<script>
+function filecheck(){
+	
+}
+</script>
+
+
 <title>Header</title>
 <style>
 .fa-microphone{

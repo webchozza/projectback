@@ -84,7 +84,7 @@ display:none;
 			
 			
 				<!-- 로그인 처리 -->
-			<c:if test="${sessionScope.member_email ne null}">
+			<c:if test="${sessionScope.member_email ne null }">
 
 			<section id="icons">
 				<ul>

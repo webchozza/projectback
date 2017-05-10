@@ -17,7 +17,6 @@ function insertScrap(){
 	}
 	
 function scrapcheck(checkValue){
-	alert(checkValue);
 	//스크랩하지 않은 글이면 클릭 가능
 	var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
 		strA += '<h2 style="color: #7f888f;">스크랩</h2>';

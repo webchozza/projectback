@@ -28,10 +28,10 @@ var loop = setTimeout(function(){
 		n: n, 
 		ap: 'AjaxMemberCheck'
 		});
-	setTimeout(loop, 500);
-}, 500);
+	setTimeout(loop, 300);
+}, 300);
 
 function stoploop(){
-	console.log("멈춰");
+	console.log("루프 멈춘다아아");
 	clearTimeout(loop);
 }
