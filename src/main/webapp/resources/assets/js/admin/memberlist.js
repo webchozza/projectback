@@ -57,9 +57,10 @@ var loop = setTimeout(function(){
 		n: n, 
 		ap: 'AjaxMemberCheck'
 		});
-	setTimeout(loop, 3000);
-}, 3000);
+	setTimeout(loop, 300);
+}, 300);
 
 function stoploop(){
+
 	clearTimeout(loop);
 }

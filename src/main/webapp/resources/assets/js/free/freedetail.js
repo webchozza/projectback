@@ -28,10 +28,13 @@ function scrapcheck(checkValue){
 		strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
 		
 	if(checkValue == -1){
+		console.log("-1");
 		$("#scrapbutton").html(strDivNo);
 	} else if(checkValue > 0){
+		console.log("0>");
 		$("#scrapbutton").html(strDiv);
 	} else {
+		console.log("0");
 		$("#scrapbutton").html(strA);
 	}
 }

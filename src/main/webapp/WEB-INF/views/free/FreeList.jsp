@@ -45,13 +45,14 @@ input[name=ss] {
 							<c:url var="detailURL" value="bfreedetail.do">
 								<c:param name="board_id" value="${list.board_id }" />
 								<c:param name="currentPage" value="${currentPage }" />
+								<c:param name="session_id" value="${sessionScope.member_id}"/>
 							</c:url>
 							<tr>
 								<td><a href="${detailURL }">${list.board_title }</a></td>
 								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-eye">${list.board_hit }</a></td>
-								<td><a href="MemberPage.do?member_id=${list.member_id }">${list.board_nickname }</a></td>
+								<td><a href="/dokky/MemberPage.do?member_id=${list.member_id }&session_id=${sessionScope.member_id}">${list.board_nickname }</a></td>
 								<td><fmt:formatDate value="${list.board_date }"
 										pattern="yyyy.MM.dd" /></td>
 							</tr>

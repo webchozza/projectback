@@ -4,12 +4,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<html>
 <title>DOKKY</title>
-<script
-	src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
+<script src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
 <script type="text/javascript">
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
@@ -65,9 +61,8 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<td colspan="2"><strong><a
-										href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
-									<a href="javascript:;" onclick="gosubmit1_message()"
+								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
+									<a href="javascript:gosubmit1_message()"
 									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>
@@ -76,14 +71,13 @@
 								<td><h2>${bfreeDetail.board_title }</h2>
 									<hr class="major" />
 
-									<p>${bfreeDetail.board_content }</p></td>
+									<p>${bfreeDetail.board_content }</p>${scrapCheck}</td>
 								<td><center>
 										<a
 											href="bfreerecommend.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}"
 											style="font-size: 30px" class="icon fa-thumbs-up"><br>${bfreeDetail.board_like }</a><br>
-										<a href="#" style="font-size: 30px; color: #7f888f"
-											class="icon fa-bookmark"><br>0</a><br>
 										<div id="scrapbutton"></div>
+										<input type="button" style="font-size: 30px" value="쪽지" class="button special" onclick="javascript:gosubmit1()">
 									</center>
 							</tr>
 						</tbody>
@@ -176,7 +170,6 @@
 			</div>
 		</div>
 	</section>
-
 	<form name="note">
 		<input type="hidden" name="name_from" id="name_from"
 			value="${bfreeDetail.board_nickname}">
