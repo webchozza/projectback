@@ -5,7 +5,8 @@
 <html>
 <head>
 <title>DOKKY</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
 <script type="text/javascript">
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
@@ -37,6 +38,10 @@
 	$(document).ready(function() {
 		scrapcheck("${scrapCheck}");
 	});
+
+	$(document).ready(function() {
+		viewTags("${board_tag}");
+	});
 </script>
 
 <style>
@@ -48,7 +53,6 @@
 </head>
 <body>
 	<h4>Community</h4>
-
 	<!-- 바디 -->
 	<section id="banner">
 		<div class="content">
@@ -61,7 +65,8 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
+								<td colspan="2"><strong><a
+										href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
 									<a href="javascript:gosubmit1_message()"
 									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
@@ -70,20 +75,19 @@
 							<tr>
 								<td><h2>${bfreeDetail.board_title }</h2>
 									<hr class="major" />
-
-									<p>${bfreeDetail.board_content }</p>${scrapCheck}</td>
+									<p>${bfreeDetail.board_content }</p></td>
 								<td><center>
 										<a
 											href="bfreerecommend.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}"
 											style="font-size: 30px" class="icon fa-thumbs-up"><br>${bfreeDetail.board_like }</a><br>
 										<div id="scrapbutton"></div>
-										<input type="button" style="font-size: 30px" value="쪽지" class="button special" onclick="javascript:gosubmit1()">
 									</center>
 							</tr>
+							<tr>
+								<td colspan="2"><div id="tags"></div>
+							</tr>
 						</tbody>
-
 					</table>
-
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />
@@ -92,9 +96,6 @@
 						<tbody>
 							<tr>
 								<td colspan="2">댓글 ${bfreeDetail.board_comment_count }&nbsp;&nbsp;&nbsp;
-
-
-								
 							</tr>
 							<c:forEach var="clist" items="${bcfreeList }">
 								<tr>

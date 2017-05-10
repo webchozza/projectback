@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
-import first.com.controller.bfree.BfreeListVO;
+import first.com.controller.bfree.BfreeListDTO;
 import first.com.dao.BfreeDAO;
 import first.com.model.BcommentDTO;
 import first.com.model.BoardDTO;
@@ -17,7 +17,7 @@ public class BfreeService implements BfreeDAO {
 	private SqlSessionTemplate SqlSessionTemplate;
 
 	@Override
-	public List<BoardDTO> bfreeList(BfreeListVO bfreeListVO) {// 리스트
+	public List<BoardDTO> bfreeList(BfreeListDTO bfreeListVO) {// 리스트
 		return SqlSessionTemplate.selectList("bfree.bfreeList", bfreeListVO);
 	}
 

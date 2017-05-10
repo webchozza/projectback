@@ -1,6 +1,6 @@
 package first.com.controller.bfree;
 
-public class BfreeListVO {
+public class BfreeListDTO {
 	
 	private String sort;
 	private int n;

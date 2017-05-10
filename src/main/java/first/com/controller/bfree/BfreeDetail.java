@@ -32,10 +32,12 @@ public class BfreeDetail {
 
 		ModelAndView mav = new ModelAndView();
 		
-		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);
+		
+		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);		
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
 		bfreeService.bfreeHit(board_id);
-
+		
+		mav.addObject("board_tag", bfreeDetail.getBoard_tag());
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("bfreeDetail", bfreeDetail);
 		mav.addObject("bcfreeList", bcfreeList);

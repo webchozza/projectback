@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.common.Paging;
+import first.com.common.Paging_tag;
 import first.com.dao.BqnaDAO;
 import first.com.model.BoardDTO;
 
@@ -44,7 +45,7 @@ public class BqnaList {
 		
 		String search = request.getParameter("search");
 		
-		// °Ë»öÇÒ‹š
+		// ï¿½Ë»ï¿½ï¿½Ò‹ï¿½
 		if (search != null) {
 			n = Integer.parseInt(request.getParameter("n"));
 			

@@ -1,4 +1,4 @@
-package first.com.controller.bfree;
+package first.com.controller.tag;
 
 import java.util.List;
 
@@ -7,33 +7,33 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import first.com.dao.BfreeDAO;
+import first.com.common.Paging_tag;
+import first.com.dao.TagDAO;
 import first.com.model.BoardDTO;
+import first.com.model.TagDTO;
 
 @Controller
-public class BfreeList {
-
+public class ListTag {
+	
 	@Resource
-	private BfreeDAO bfreeService;
-
-	private int n;
-	private String search;
-
+	private TagDAO tagService;
+	
+	private String tag;
+	
 	private int currentPage = 1;
 	private int totalCount;
 	private int blockCount = 10;
 	private int blockPage = 5;
 	private String pagingHtml;
-	private BfreePaging page;
+	private Paging_tag page;
 	private String sort;
 	
-	private BfreeListDTO bfreeListVO= new BfreeListDTO(); 
-
-	@RequestMapping(value = "/bfreelist")
-	public ModelAndView bfreeList(HttpServletRequest request) throws Exception {
+	private TagDTO tagDTO= new TagDTO(); 
+	
+	@RequestMapping(value = "/taglist")
+	public ModelAndView tagList(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		List<BoardDTO> boardDTO = null;
 
@@ -44,17 +44,10 @@ public class BfreeList {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		if (request.getParameter("n") == null || request.getParameter("n").trim().isEmpty()
-				|| request.getParameter("n").equals("0")) {
-			n = 0;
+		if (request.getParameter("tag") == null || request.getParameter("tag").trim().isEmpty()) {
+			tag = "";
 		} else {
-			n = Integer.parseInt(request.getParameter("n"));
-		}
-
-		if (request.getParameter("search") == null || request.getParameter("search").trim().isEmpty()) {
-			search = "";
-		} else {
-			search = request.getParameter("search");
+			tag = request.getParameter("tag");
 		}
 
 		if (request.getParameter("sort") == null || request.getParameter("sort").trim().isEmpty()) {
@@ -63,28 +56,26 @@ public class BfreeList {
 			sort = request.getParameter("sort");
 		}
 
-		bfreeListVO.setSort(sort);
-		bfreeListVO.setN(n);
-		bfreeListVO.setSearch(search);
-		boardDTO = bfreeService.bfreeList(bfreeListVO);
-		
+		tagDTO.setSort(sort);
+		tagDTO.setTag(tag);
+		boardDTO = tagService.tagList(tagDTO);
 		
 		totalCount = boardDTO.size();
-		page = new BfreePaging("bfreelist", currentPage, totalCount, blockCount, blockPage, search, n, sort);
+		page = new Paging_tag("taglist", currentPage, totalCount, blockCount, blockPage, tag, sort);
 		pagingHtml = page.getPagingHtml().toString();
 		int lastCount = totalCount;
 		if (page.getEndCount() < totalCount)
 			lastCount = page.getEndCount() + 1;
 		
 		boardDTO = boardDTO.subList(page.getStartCount(), lastCount);
-		mav.addObject("search", search);
-		mav.addObject("n", n);
+		
 		mav.addObject("totalCount", totalCount);
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("sort", sort);
-		mav.addObject("bfreelist", boardDTO);
-		mav.setViewName("FreeList");
+		mav.addObject("tag", tag);
+		mav.addObject("taglist", boardDTO);
+		mav.setViewName("TagList");
 		return mav;
 
 	}

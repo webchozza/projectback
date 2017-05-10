@@ -168,5 +168,11 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/free/FreeModifyForm.jsp" />
 	</definition>
+	
+	<!-- 태그리스트 -->
+	<definition name="TagList" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/tag/TagList.jsp" />
+	</definition>
 
 </tiles-definitions>
