@@ -8,6 +8,8 @@
 <title>DOKKY</title>
 <script
 	src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
 <script type="text/javascript">
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
@@ -29,7 +31,7 @@
 	}
 	function gosubmit1_message() {
 
-		var f = document.frn;
+		var f = document.note;
 		f.name_from.value;
 		f.method = "post";
 		f.action = "/dokky/messagewriteform.do";
@@ -65,7 +67,7 @@
 							<tr>
 								<td colspan="2"><strong><a
 										href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
-									<a href="javascript:gosubmit1_message()"
+									<a href="javascript:;" onclick="gosubmit1_message()"
 									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>
@@ -80,7 +82,8 @@
 											href="bfreerecommend.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}"
 											style="font-size: 30px" class="icon fa-thumbs-up"><br>${bfreeDetail.board_like }</a><br>
 										<a href="#" style="font-size: 30px; color: #7f888f"
-											class="icon fa-bookmark"><br>0</a>
+											class="icon fa-bookmark"><br>0</a><br>
+										<div id="scrapbutton"></div>
 									</center>
 							</tr>
 						</tbody>
@@ -173,9 +176,15 @@
 			</div>
 		</div>
 	</section>
-	<%-- <form name="valueform">
-<input type="hidden" id="board_id" value="${bfreeDetail.board_id}"/>
-<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
-</form> 이게뭐지 왜있지--%>
+
+	<form name="note">
+		<input type="hidden" name="name_from" id="name_from"
+			value="${bfreeDetail.board_nickname}">
+	</form>
+
+	<form name="valueform">
+		<input type="hidden" id="board_id" value="${bfreeDetail.board_id}" />
+		<input type="hidden" id="session_id" value="${sessionScope.member_id}" />
+	</form>
 </body>
 </html>
