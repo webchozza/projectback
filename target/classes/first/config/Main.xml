@@ -24,13 +24,40 @@
 		BOARD_NICKNAME like '%'||#{search}||'%'
 	</select>
 
+
+<!--태그검색 구버전
+ 	<select id="allSearchTag" resultType="first.com.model.BoardDTO">
+		SELECT * FROM board WHERE board_tag LIKE '%'||#{tag}||'%' ORDER BY
+		<if test="sort!=''">
+			<if test="sort == 'like'">board_like</if>
+			<if test="sort== 'comment'">board_comment_count</if>
+			<if test="sort== 'scrap'">board_hit</if>
+			★수정필요
+			<if test="sort== 'hit'">board_hit</if>
+			DESC,
+		</if>
+		board_id DESC
+	</select>
+
+	SELECT * FROM board WHERE 
+	board_tag LIKE '태' or board_tag LIKE '태,%' or
+	board_tag LIKE '%,태' or board_tag LIKE '%,태,%'
+	
+	이렇게 바꿔야할듯 -->
+
+
+	<!-- 태그검색 신버전 -->
 	<select id="allSearchTag" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board WHERE board_tag LIKE '%'||#{tag}||'%'
+		SELECT * FROM board WHERE 
+		board_tag LIKE #{tag} OR
+		board_tag LIKE #{tag2}||'%' OR
+		board_tag LIKE '%'||#{tag3} OR
+		board_tag LIKE '%'||#{tag4}||'%' 
 		ORDER BY
 		<if test="sort!=''">
 			<if test="sort == 'like'">board_like</if>
 			<if test="sort== 'comment'">board_comment_count</if>
-			<if test="sort== 'scrap'">board_hit</if><!-- ★수정필요 -->
+			<if test="sort== 'scrap'">board_hit</if><!-- 수정 -->
 			<if test="sort== 'hit'">board_hit</if>
 			DESC,
 		</if>

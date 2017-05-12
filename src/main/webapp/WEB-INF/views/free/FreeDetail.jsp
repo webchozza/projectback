@@ -158,7 +158,7 @@
 													class="button" onclick="return deleteconfirm()">삭제</a>
 											</c:if>
 										</c:if>
-										<a href="bfreelist.do?currentPage=${currentPage }"
+										<a href='#' onclick='history.go(-1); return false;'
 											class="button special">목록</a>
 									</div>
 								</td>
