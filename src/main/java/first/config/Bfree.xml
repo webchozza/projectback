@@ -113,7 +113,8 @@
 		UPDATE board
 		SET
 		board_title=#{board_title},
-		board_content=#{board_content}
+		board_content=#{board_content}, 
+		board_tag=#{board_tag}
 		WHERE
 		board_id=#{board_id}
 	</update>

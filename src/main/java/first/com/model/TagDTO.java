@@ -7,7 +7,7 @@ public class TagDTO {
 	private String tag2;
 	private String tag3;
 	private String tag4;
-	
+
 	public String getSort() {
 		return sort;
 	}
@@ -47,7 +47,6 @@ public class TagDTO {
 	public void setTag4(String tag) {
 		this.tag4 = ","+tag+",";
 	}
-	
 
 	
 }

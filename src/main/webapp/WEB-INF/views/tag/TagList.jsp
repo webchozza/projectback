@@ -24,11 +24,9 @@
 						<tr>
 							<td colspan="2"><a href="taglist.do?tag=${tag }&sort=">최신순</a>  <a
 								href="taglist.do?tag=${tag }&sort=like">추천순</a>  <a
-								href="taglist.do?tag=${tag }&sort=comment">댓글순</a>  <a href="#">스크랩순</a><a
+								href="taglist.do?tag=${tag }&sort=comment">댓글순</a>  <a href="#">스크랩순</a>  <a
 								href="taglist.do?tag=${tag }&sort=hit">조회순</a></td>
 							<td colspan="2" align="right"></td>
-
-
 						</tr>
 					</thead>
 					<tbody>
@@ -48,16 +46,12 @@
 										pattern="yyyy.MM.dd" /></td>
 							</tr>
 						</c:forEach>
-
 					</tbody>
 				</table>
 			</div>
-
 			<div class="paging" align="center">${pagingHtml}</div>
 			<br>
-
 		</div>
 	</section>
-
 </body>
 </html>

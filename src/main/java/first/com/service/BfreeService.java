@@ -17,8 +17,8 @@ public class BfreeService implements BfreeDAO {
 	private SqlSessionTemplate SqlSessionTemplate;
 
 	@Override
-	public List<BoardDTO> bfreeList(BfreeListDTO bfreeListVO) {// 리스트
-		return SqlSessionTemplate.selectList("bfree.bfreeList", bfreeListVO);
+	public List<BoardDTO> bfreeList(BfreeListDTO bfreeListDTO) {// 리스트
+		return SqlSessionTemplate.selectList("bfree.bfreeList", bfreeListDTO);
 	}
 
 	@Override
