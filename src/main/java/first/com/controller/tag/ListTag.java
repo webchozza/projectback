@@ -58,6 +58,9 @@ public class ListTag {
 
 		tagDTO.setSort(sort);
 		tagDTO.setTag(tag);
+		tagDTO.setTag2(tag);
+		tagDTO.setTag3(tag);
+		tagDTO.setTag4(tag);
 		boardDTO = tagService.tagList(tagDTO);
 		
 		totalCount = boardDTO.size();

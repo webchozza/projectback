@@ -51,8 +51,6 @@ public class Modify {
 		mav.setViewName("ModifySuccess");
 		if(session!=null){
 			memberService.logOut(member);
-			//ÀúÀåÇÑ ¼¼¼Ç ¿µ¿ª »èÁ¦
-			session.invalidate();
 		}
 		return mav;
 	}
@@ -65,7 +63,7 @@ public class Modify {
 		mav.setViewName("DeleteSuccess");
 		if(session!=null){
 			memberService.logOut(member);
-			//ÀúÀåÇÑ ¼¼¼Ç ¿µ¿ª »èÁ¦
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			session.invalidate();
 		}
 		return mav;

@@ -50,7 +50,7 @@ public class BCfreeWrite {
 		mav.addAllObjects(map);
 		mav.setViewName("redirect:bfreedetail.do");
 
-
+		
 		return mav;
 	}
 

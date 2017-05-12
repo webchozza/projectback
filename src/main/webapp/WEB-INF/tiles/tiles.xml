@@ -144,6 +144,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/qna/QnaList.jsp"></put-attribute>
 	</definition>
 
+	<definition name="QnaWriteForm" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/qna/QnaWriteForm.jsp" />
+	</definition>
+
 	<definition name="AllSearchList" extends="Main">
 		<put-attribute name="body"
 			value="/WEB-INF/views/main/AllSearchList.jsp" />
@@ -154,8 +159,14 @@
 			value="/WEB-INF/views/memberpage/MemberPage.jsp" />
 	</definition>
 
+	<!-- qna 상세보기 -->
 	<definition name="QnaDetail" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/qna/QnaDetail.jsp"></put-attribute>
+	</definition>
+	
+	<!-- qna 글수정 -->
+	<definition name="QnaModifyForm" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/qna/QnaModifyForm.jsp" />
 	</definition>
 
 	<!-- 상세보기 -->
@@ -168,11 +179,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/free/FreeModifyForm.jsp" />
 	</definition>
-	
+
 	<!-- 태그리스트 -->
 	<definition name="TagList" extends="Main">
-		<put-attribute name="body"
-			value="/WEB-INF/views/tag/TagList.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/tag/TagList.jsp" />
 	</definition>
 
 </tiles-definitions>

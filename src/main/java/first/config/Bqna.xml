@@ -6,21 +6,38 @@
 
 	<!-- qna 리스트 -->
 	<select id="bqnaList" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board
-		WHERE
-		bgroup_id = 4
-		ORDER BY board_id DESC
+		SELECT * FROM board WHERE bgroup_id = 4
+		<if test="n!=0">
+			AND
+			<if test="n==1">board_title</if>
+			<if test="n==2">board_content</if>
+			<if test="n==3">board_nickname</if>
+			LIKE '%'||#{search}||'%'
+		</if>
+		<if test="sort!=''">
+			ORDER BY
+			<if test="sort== 'like'">board_like</if>
+			<if test="sort== 'comment'">board_comment_count</if>
+			<if test="sort== 'scrap'">board_hit</if><!-- ★수정필요 -->
+			<if test="sort== 'hit'">board_hit</if>
+			DESC, board_id DESC
+		</if>
+		<if test="sort==''">
+			ORDER BY board_id DESC
+		</if>
 	</select>
-	
+
 	<!-- 글쓰기 -->
 	<insert id="bqnaWrite" parameterType="int">
 		INSERT INTO board
 		(board_id, member_id, board_title, board_content, board_date,
 		board_nickname, board_hit, board_like, board_bad, board_comment_count,
-		bgroup_id)
+		bgroup_id, board_tag)
 		VALUES
-		(seq_board.NEXTVAL, #{member_id}, #{board_title},
-		#{board_content}, SYSDATE, #{board_nickname}, 0, 0, 0, 0, 4)
+		(seq_board.NEXTVAL, #{member_id},
+		#{board_title},
+		#{board_content}, SYSDATE, #{board_nickname}, 0, 0, 0,
+		0, 4, #{board_tag})
 	</insert>
 
 	<!-- 제목검색 -->
@@ -36,36 +53,61 @@
 	<select id="bqnaSearchContent" resultType="first.com.model.BoardDTO"
 		parameterType="String">
 		SELECT * FROM board
-		WHERE board_content like #{search} AND
+		WHERE board_content like #{search}
+		AND
 		bgroup_id=4
 		ORDER BY board_id DESC
 	</select>
-	
+
 	<!-- 작성자검색 -->
 	<select id="bqnaSearchMember" resultType="first.com.model.BoardDTO"
 		parameterType="String">
 		SELECT * FROM board
-		WHERE board_nickname like #{search} AND
+		WHERE board_nickname like #{search}
+		AND
 		bgroup_id=4
 		ORDER BY board_id DESC
 	</select>
-	
+
 	<!-- 상세보기 -->
 	<select id="bqnaDetail" resultType="first.com.model.BoardDTO"
 		parameterType="int">
 		SELECT * FROM board
 		WHERE board_id = #{board_id}
 	</select>
-	
+
 	<!-- 조회수증가 -->
 	<update id="bqnaUpdateHit" parameterType="int">
 		UPDATE board
 		SET
-			board_hit = board_hit + 1
+		board_hit = board_hit + 1
 		WHERE
-			board_id = #{board_id}
+		board_id = #{board_id}
 	</update>
-	
-	
+
+	<!-- 글수정 -->
+	<update id="bqnaModify" parameterType="first.com.model.BoardDTO">
+		UPDATE board
+		SET
+		board_title=#{board_title},
+		board_content=#{board_content},
+		board_tag=#{board_tag}
+		WHERE
+		board_id=#{board_id}
+	</update>
+
+	<!-- 글삭제 -->
+	<update id="bqnaDelete" parameterType="first.com.model.BoardDTO">
+		DELETE FROM board WHERE
+		board_id=#{board_id}
+	</update>
+
+	<update id="bqnaUpdateLike" parameterType="Integer">
+		UPDATE board
+		SET
+		board_like= board_like+1
+		WHERE
+		board_id= #{board_id}
+	</update>
 
 </mapper>

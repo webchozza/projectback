@@ -23,11 +23,11 @@ public class BqnaDetail {
 		int currentPage= Integer.parseInt(request.getParameter("currentPage"));
 	    int id = Integer.parseInt(request.getParameter("board_id"));
 	    
-	    System.out.println(id);
 		BoardDTO boardDTO= bqnaService.bqnaDetail(id);
 		bqnaService.bqnaUpdateHit(id);
 		
 		mav.addObject("currentPage", currentPage);
+		mav.addObject("board_tag",boardDTO.getBoard_tag());
 		mav.addObject("detail", boardDTO);
 		mav.setViewName("QnaDetail");
 		return mav;

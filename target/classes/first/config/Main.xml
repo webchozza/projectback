@@ -25,7 +25,11 @@
 	</select>
 
 	<select id="allSearchTag" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board WHERE board_tag LIKE '%'||#{tag}||'%'
+		SELECT * FROM board WHERE 
+		board_tag LIKE #{tag} OR
+		board_tag LIKE #{tag2}||'%' OR
+		board_tag LIKE '%'||#{tag3} OR
+		board_tag LIKE '%'||#{tag4}||'%'
 		ORDER BY
 		<if test="sort!=''">
 			<if test="sort == 'like'">board_like</if>
