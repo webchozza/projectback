@@ -1,3 +1,26 @@
+setInterval(function(){
+	var session_id = $("#session_id").val();
+	console.log(session_id);
+	
+	if(session_id != null && session_id != ""){
+	$.ajax({
+		url: "/dokky/notiCount.do",
+		type: "post",
+		dataType: "json",
+		data: {session_id : session_id},
+		success: function(data){
+			if(data == 0){
+				$("#notiarea").html("");
+			}else{
+			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
+			$("#notiarea").html("");
+			$("#notiarea").html(str);
+			}
+		}
+	});
+	}
+}, 3000);
+
 function notipop(){
 	
 	var ch = $("#notich").val();
@@ -63,25 +86,3 @@ function notidelete(noti_id){
 		}
 	});
 }
-
-setInterval(function(){
-	var session_id = $("#session_id").val();
-	
-	if(session_id != null && session_id != ""){
-	$.ajax({
-		url: "/dokky/notiCount.do",
-		type: "post",
-		dataType: "json",
-		data: {session_id : session_id},
-		success: function(data){
-			if(data == 0){
-				$("#notiarea").html("");
-			}else{
-			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
-			$("#notiarea").html("");
-			$("#notiarea").html(str);
-			}
-		}
-	});
-	}
-}, 3000);

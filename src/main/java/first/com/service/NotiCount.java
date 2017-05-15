@@ -13,7 +13,7 @@ import first.com.dao.NotiCountDAO;
 @Resource(name="noticount")
 public class NotiCount implements NotiCountDAO{
 		
-	private Map<Integer, Integer> NotiCount;
+	private Map<Integer, Integer> NotiCount;//세션에 넣고 돌리다가 로그아웃시 칼럼에 넣고 로그인할떄 꺼내온다.
 
 	public int getNotiCount(int member_id) {//주기적으로 갱신을 할 때마다 새로운 알림이 몇개인지 뽑아오는 메소드(실시간으로 알림생성을 체크해서 메뉴에 띄워줌)
 		
