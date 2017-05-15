@@ -47,7 +47,6 @@ public class AlramService implements AlramDAO{
 		BoardDTO board = (BoardDTO)sqlSessionTemplate.selectOne("noti.select_board", board_id);
 		List<FollowDTO> followComment = sqlSessionTemplate.selectList("noti.follower_member_id", map);
 		
-		
 		//알림창에서 해당 게시글로 바로 이동할 수 있도록 url 생성
 		path = "/dokky"+path+".do?board_id="+board_id;
 
@@ -60,16 +59,14 @@ public class AlramService implements AlramDAO{
 			for(int i=0; i < followComment.size(); i++){
 				map.put("member_id", followComment.get(i).getMember_id());//댓글작성자를 팔로우한 회원의 아이디를 map객체에 세팅
 				map.put("noti_kinds", "follow_comment");//팔로우한 회원이 댓글을 작성했을 때
-				int noti_count = sqlSessionTemplate.selectOne("noti.noti_count", followComment.get(i).getMember_id());
-				noticount.setNotiCount(followComment.get(i).getMember_id(), noti_count);//알림을 받는 회원의 member_id를 키로 새 알림 카운트를 맵객체에 저장한다
+				noticount.setNotiCount(followComment.get(i).getMember_id());//알림을 받는 회원의 member_id를 키로 새 알림 카운트를 맵객체에 저장한다
 				sqlSessionTemplate.insert("noti.insert", map);//작성자를 팔로우한 회원의 알림테이블에 알림정보를 넣어준다.
 			}
 		}
 	
 		map.put("member_id", board.getMember_id());//댓글이 작성된 게시글의 작성자 id(만약 같은 이름의 key를 가진 map객체가 있다면 덮어씌워짐)
 		map.put("noti_kinds", "comment"); //본인 게시글에 댓글이 달렸을 때
-		int noti_count = sqlSessionTemplate.selectOne("noti.noti_count", board.getMember_id());
-		noticount.setNotiCount(board.getMember_id(), noti_count);
+		noticount.setNotiCount(board.getMember_id());
 		sqlSessionTemplate.insert("noti.insert", map);
 		
 	}
@@ -85,7 +82,6 @@ public class AlramService implements AlramDAO{
 
 		List<FollowDTO> followNewBoard = sqlSessionTemplate.selectList("noti.follower_member_id", session_id);
 		
-		
 		path = "/dokky"+path+".do?"+board.getBoard_id();
 		
 		map.put("board_title", board.getBoard_title());//게시글 제목
@@ -96,8 +92,7 @@ public class AlramService implements AlramDAO{
 			for(int i=0; i < followNewBoard.size(); i++){
 				map.put("member_id", followNewBoard.get(i).getMember_id());
 				map.put("noti_kinds", "follow_NewBoard");
-				int noti_count = sqlSessionTemplate.selectOne("noti.noti_count", followNewBoard.get(i).getMember_id());
-				noticount.setNotiCount(followNewBoard.get(i).getMember_id(), noti_count);
+				noticount.setNotiCount(followNewBoard.get(i).getMember_id());
 				sqlSessionTemplate.insert("noti.insert", map);//작성자를 팔로우한 회원의 알림테이블에 알림정보를 넣어준다.
 			}
 		}
