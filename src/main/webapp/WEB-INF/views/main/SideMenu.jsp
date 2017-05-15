@@ -4,8 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?var=1"></script>
 <script>
 $(document).ready(function(){
 	$("#notich").val("N");
@@ -128,5 +127,7 @@ display:none;
 </body>
 <form name="valueform">
 <input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+<c:set var="noti_id" value="${sessionScope.member_id}"/>
+<input type="hidden" id="noti_count" value="${sessionScope.noti_id}"/>
 </form>
 </html>

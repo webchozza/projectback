@@ -1,10 +1,11 @@
 package first.com.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import first.com.dao.NotiCountDAO;
@@ -12,50 +13,42 @@ import first.com.dao.NotiCountDAO;
 @Service
 @Resource(name="noticount")
 public class NotiCount implements NotiCountDAO{
+	
+	HttpSession session;
+	
+	int count;
+	
+	@Resource
+	private SqlSessionTemplate sqlSessionTemplate;
 		
-	private Map<Integer, Integer> NotiCount;//세션에 넣고 돌리다가 로그아웃시 칼럼에 넣고 로그인할떄 꺼내온다.
-
-	public int getNotiCount(int member_id) {//주기적으로 갱신을 할 때마다 새로운 알림이 몇개인지 뽑아오는 메소드(실시간으로 알림생성을 체크해서 메뉴에 띄워줌)
+	public int getNotiCount(int noti_count) {//주기적으로 갱신을 할 때마다 새로운 알림이 몇개인지 뽑아오는 메소드(실시간으로 알림생성을 체크해서 메뉴에 띄워줌)
 		
-		int count = 0;
-		
-		if(NotiCount != null && NotiCount.containsKey(member_id)){
-			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
-				if(entry.getKey() == member_id){
-					count  = entry.getValue();
-					break;
-				}
-			}
-		}
-			return count;
+		return noti_count;
 	}
 
-	public void setNotiCount(int member_id) {//새로운 알림이 생길때 카운트를 더해주는 메소드
-	
-		int count = 1;
-		
-		if(NotiCount != null && NotiCount.containsKey(member_id)){
-			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
-				if(entry.getKey() == member_id){
-					count = entry.getValue() + 1;
-					break;
-				}
-			}
-		}
-		
-		Map<Integer, Integer> notiCount = new HashMap<Integer, Integer>();
-		notiCount.put(member_id, count);
-		
-		NotiCount = notiCount;
+	public void setNotiCount(int member_id,  int noti_count) {//새로운 알림이 생길때 카운트를 더해주는 메소드
+
+		String id = String.valueOf(member_id);
+		System.out.println(id+"새로운 알림이다");
+		System.out.println(noti_count);
+		int a = noti_count+1;
+		session.setAttribute(id,a);
 	}
 	
 	public void initCount(int member_id){//알림목록을 열 때 메뉴에 보여주는 새로온 메시지 카운트를 초기화 시켜주는 메소드
-		if(NotiCount != null && NotiCount.containsKey(member_id)){
-			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
-				if(entry.getKey() == member_id){
-					NotiCount.remove(member_id);
-				}
-			}
+		
+		String id = String.valueOf(member_id);
+		session.removeAttribute(id);
+		
 		}
+
+	@Override
+	public int login_noti_count(int member_id) {
+		return sqlSessionTemplate.selectOne("noti.noti_count",  member_id);
+	}
+
+	@Override
+	public void logout_noti_count(Map<String, Object> map) {
+		sqlSessionTemplate.update("noti.insert_noti_count", map);
 	}
 }

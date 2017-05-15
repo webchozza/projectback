@@ -16,6 +16,14 @@
 	 SELECT member_id FROM follow WHERE follow_member_id = #{session_id}
 	 </select>
 	 
+	 <select id="noti_count" resultType="int" parameterType="int">
+	 SELECT NVL(member_noti_count, 0) FROM member WHERE member_id = #{member_id}
+	 </select>
+	 
+	 <insert id="insert_noti_count" parameterType="java.util.Map">
+	 update member set MEMBER_NOTI_COUNT = #{noti_count} WHERE member_id = #{member_id}
+	 </insert>
+	 
 	 <insert id="insert" parameterType="java.util.Map">
 	 INSERT INTO NOTIFICATION 
 	 ( NOTI_ID

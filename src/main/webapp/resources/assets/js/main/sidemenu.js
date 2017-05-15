@@ -1,13 +1,12 @@
 setInterval(function(){
-	var session_id = $("#session_id").val();
-	console.log(session_id);
+	var noti_count = $("#noti_count").val();
 	
 	if(session_id != null && session_id != ""){
 	$.ajax({
 		url: "/dokky/notiCount.do",
 		type: "post",
 		dataType: "json",
-		data: {session_id : session_id},
+		data: {noti_count : noti_count},
 		success: function(data){
 			if(data == 0){
 				$("#notiarea").html("");

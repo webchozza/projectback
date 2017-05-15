@@ -44,7 +44,8 @@ public class Alram {
 	
 	@RequestMapping(value="/notiCount.do")
 	@ResponseBody
-	public int notiCount(@RequestParam(value="session_id") int member_id){
-		return noticount.getNotiCount(member_id);
+	public int notiCount(@RequestParam(value="noti_count", defaultValue="0") int noti_count){
+		System.out.println(noti_count);
+		return noti_count;
 	}
 }

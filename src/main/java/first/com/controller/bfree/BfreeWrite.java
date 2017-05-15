@@ -34,7 +34,9 @@ public class BfreeWrite {
 	}
 
 	@RequestMapping(value="/bfreewrite")
-	public ModelAndView bfreeWrite(@ModelAttribute("BoardDTO")BoardDTO boardDTO, BindingResult result, HttpServletRequest request, HttpSession session) {
+	public ModelAndView bfreeWrite(@ModelAttribute("BoardDTO")BoardDTO boardDTO, 
+									BindingResult result, 
+									HttpServletRequest request, HttpSession session) {
 		
 		ModelAndView mav= new ModelAndView();
 		
@@ -46,6 +48,8 @@ public class BfreeWrite {
 		bfreeService.bfreeWrite(boardDTO);
 		
 		mav.addObject("boardDTO", boardDTO);
+		
+		noti.insertNewBoardNoti(boardDTO.getMember_id(), "/bfreedetail", 2);
 		
 		mav.setViewName("redirect:bfreelist.do");
 		

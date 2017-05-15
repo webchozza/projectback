@@ -1,9 +1,10 @@
 package first.com.controller.member;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,19 +21,21 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import first.com.dao.MemberDAO;
+import first.com.dao.NotiCountDAO;
 import first.com.model.MemberDTO;
 import first.com.oauth.bo.NaverLoginBO;
 
 @Controller
 public class Login {
 
-	private static final int String = 0;
-
 	@Resource
 	private MemberDAO memberService;
+	
+	@Resource 
+	NotiCountDAO noticount;
 
 	private NaverLoginBO naverLoginBO;
-
+	
 	@Autowired
 	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
 		this.naverLoginBO = naverLoginBO;
@@ -64,7 +67,9 @@ public class Login {
 			session.setAttribute("member_email", result.getMember_email());
 			session.setAttribute("member_name", result.getMember_name());
 			session.setAttribute("member_id", result.getMember_id());
-
+			
+			//eongoo//로그인할 때 새로운 알림 개수를 꺼내서 세션에 저장
+			session.setAttribute(String.valueOf(session.getAttribute("member_id")), noticount.login_noti_count((Integer)(session.getAttribute("member_id"))));
 			mav.setViewName("Main");
 
 			return mav;
@@ -78,14 +83,20 @@ public class Login {
 	@RequestMapping("/logout.do")
 	public ModelAndView logout(HttpServletResponse response,HttpServletRequest request, MemberDTO member)throws IOException{
 		HttpSession session = request.getSession(false);
-			System.out.println("로그아웃");
-			session.invalidate();
-			
-			memberService.logOut(member);
-			//저장한 세션 영역 삭제
 			
 		//새로운 객체 생성하여 기존에 객체에 저장한 값 delete
 		mav.addObject("member",new MemberDTO());
+		
+		//eongoo//로그아웃할 때 새로운 알림의 개수를 DB에 저장
+		/*Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", member.getMember_id());
+		map.put("noti_count", session.getAttribute(String.valueOf(member.getMember_id())));
+		noticount.logout_noti_count(map);
+		*/
+		System.out.println("로그아웃");
+		//저장한 세션 영역 삭제
+		session.invalidate();
+		memberService.logOut(member);
 		// MainForm으로 이동
 		mav.setViewName("Main");
 
