@@ -40,6 +40,11 @@
 						style="width: 300pt; height: 400px;" placeholder="내용을 적어주세요"
 						rows="6"></textarea>
 				</div>
+				<div class="6u 12u$(xsmall)" style="width: 300pt;">
+					<textarea name="board_tag" id="message"
+						style="width: 300pt;" placeholder="태그"
+						rows="1"></textarea>
+				</div>
 				<div class="12u$">
 					<ul class="actions" style="float: inherit;">
 						<input type="submit" style="width: 300pt;" value="글쓰기"

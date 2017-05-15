@@ -39,7 +39,9 @@ public class BfreeWrite {
 		ModelAndView mav= new ModelAndView();
 		
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
+		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
 		boardDTO.setBoard_content(content);
+		boardDTO.setBoard_tag(tag);
 		
 		bfreeService.bfreeWrite(boardDTO);
 		

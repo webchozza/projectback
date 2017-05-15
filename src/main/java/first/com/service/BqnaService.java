@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
+import first.com.controller.bqna.BqnaListDTO;
 import first.com.dao.BqnaDAO;
+import first.com.model.BcommentDTO;
 import first.com.model.BoardDTO;
 
 @Service
@@ -17,45 +19,38 @@ public class BqnaService implements BqnaDAO {
 	private SqlSessionTemplate SST;
 	
 	@Override
-	public List<BoardDTO> bqnaList() {
-		// qna 리스트
-		return SST.selectList("bqna.bqnaList");
+	public List<BoardDTO> bqnaList(BqnaListDTO bqnaListDTO) {// qna 리스트
+		return SST.selectList("bqna.bqnaList", bqnaListDTO);
 	}
 
 	@Override
-	public BoardDTO bqnaDetail(int id) {
-		// qna 상세보기
+	public BoardDTO bqnaDetail(int id) {// qna 상세보기
 		return SST.selectOne("bqna.bqnaDetail", id);
 	}
 
 	@Override
-	public String bqnaWriteForm() {
-		// TODO Auto-generated method stub
+	public String bqnaWriteForm() {//글쓰기폼
 		return null;
 	}
 
 	@Override
-	public int bqnaWrite(BoardDTO boardDTO) {
-		// qna 글쓰기
+	public int bqnaWrite(BoardDTO boardDTO) {//qna 글쓰기
 		return SST.insert("bqna.bqnaWrite", boardDTO);
 	}
 
 	@Override
-	public String bqnaModifyForm() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardDTO bqnaModifyForm(BoardDTO boardDTO) {//수정폼
+		return boardDTO;
 	}
 
 	@Override
-	public String bqnaModify() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bqnaModify(BoardDTO boardDTO) {//수정
+		return SST.update("bqna.bqnaModify", boardDTO);
 	}
 
 	@Override
-	public String bqnaDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bqnaDelete(int board_id) {//삭제
+		return SST.delete("bqna.bqnaDelete", board_id);
 	}
 
 	@Override
@@ -65,9 +60,8 @@ public class BqnaService implements BqnaDAO {
 	}
 
 	@Override
-	public String bCqnaWrite() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bCqnaWrite(BcommentDTO bcommentDTO) {// 코멘트쓰기
+		return SST.insert("bqna.bcqnaWrite", bcommentDTO);
 	}
 
 	@Override
@@ -98,6 +92,11 @@ public class BqnaService implements BqnaDAO {
 	public BoardDTO bqnaUpdateHit(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int bqnaLike(int board_id) {//추천
+		return SST.update("bqna.bqnaUpdateLike", board_id);
 	}
 
 }

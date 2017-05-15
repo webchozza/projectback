@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BfreeDAO;
@@ -30,7 +29,7 @@ public class BfreeList {
 	private BfreePaging page;
 	private String sort;
 	
-	private BfreeListVO bfreeListVO= new BfreeListVO(); 
+	private BfreeListDTO bfreeListVO= new BfreeListDTO(); 
 
 	@RequestMapping(value = "/bfreelist")
 	public ModelAndView bfreeList(HttpServletRequest request) throws Exception {
@@ -68,8 +67,8 @@ public class BfreeList {
 		bfreeListVO.setSearch(search);
 		boardDTO = bfreeService.bfreeList(bfreeListVO);
 		
-		
 		totalCount = boardDTO.size();
+		
 		page = new BfreePaging("bfreelist", currentPage, totalCount, blockCount, blockPage, search, n, sort);
 		pagingHtml = page.getPagingHtml().toString();
 		int lastCount = totalCount;
@@ -77,6 +76,7 @@ public class BfreeList {
 			lastCount = page.getEndCount() + 1;
 		
 		boardDTO = boardDTO.subList(page.getStartCount(), lastCount);
+		
 		mav.addObject("search", search);
 		mav.addObject("n", n);
 		mav.addObject("totalCount", totalCount);

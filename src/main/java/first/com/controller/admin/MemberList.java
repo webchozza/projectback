@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import first.com.common.AjaxPaging;
-import first.com.common.Paging;
+import first.com.common.Paging_tag;
 import first.com.dao.AdminDAO;
 import first.com.model.MemberDTO;
 
@@ -24,16 +24,16 @@ public class MemberList {
 	
 	private int startrow;
 	private int endrow;
-	private int totalCount; // ÃÑ °Ô½Ã¹°ÀÇ ¼ö
-	private int blockCount = 10; // ÇÑ ÆäÀÌÁöÀÇ °Ô½Ã¹°ÀÇ ¼ö
-	private int blockPage = 5; // ÇÑ È­¸é¿¡ º¸¿©ÁÙ ÆäÀÌÁö ¼ö
-	private String pagingHtml; // ÆäÀÌÂ¡À» ±¸ÇöÇÑ HTML
-	private AjaxPaging page; // ÆäÀÌÂ¡ Å¬·¡½º
+	private int totalCount; // ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½
+	private int blockCount = 10; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½
+	private int blockPage = 5; // ï¿½ï¿½ È­ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	private String pagingHtml; // ï¿½ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HTML
+	private AjaxPaging page; // ï¿½ï¿½ï¿½ï¿½Â¡ Å¬ï¿½ï¿½ï¿½ï¿½
 	private String path = "MemberList";//if (RequestMapping("/here.do")) => here = path
 	private String[] kind = { "member_email", "member_name" };
 	
 	
-	@RequestMapping("/MemberList.do")//ch= Á¢¼ÒÀÚ ÇÐÀÎ Ä®·³ °ª
+	@RequestMapping("/MemberList.do")//ch= ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ä®ï¿½ï¿½ ï¿½ï¿½
 	public String memberList(@RequestParam(value="search", defaultValue="") String search,
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
@@ -64,9 +64,9 @@ public class MemberList {
 		model.addAttribute("memberlist", list);
 		model.addAttribute("page", pagingHtml);
 		
-		model.addAttribute("n", n);//select¹®ÀÇ selected ¼Ó¼º ºÎ¿©¸¦ À§ÇÑ Á¶°Ç ±¸Çö¿¡ ÇÊ¿ä
+		model.addAttribute("n", n);//selectï¿½ï¿½ï¿½ï¿½ selected ï¿½Ó¼ï¿½ ï¿½Î¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 		
-		//ajax¸¦ ÀÌ¿ëÇÑ °Ë»öÀ» ±¸ÇöÇÏ±â À§ÇØ ³Ö¾î º¸³»ÁØ´Ù
+		//ajaxï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("search", search);

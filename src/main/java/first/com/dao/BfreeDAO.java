@@ -2,13 +2,13 @@ package first.com.dao;
 
 import java.util.List;
 
-import first.com.controller.bfree.BfreeListVO;
+import first.com.controller.bfree.BfreeListDTO;
 import first.com.model.BcommentDTO;
 import first.com.model.BoardDTO;
 
 public interface BfreeDAO {
 	
-	public List<BoardDTO> bfreeList(BfreeListVO bfreeListVO);
+	public List<BoardDTO> bfreeList(BfreeListDTO bfreeListVO);
 	
 	public BoardDTO bfreeDetail(int board_id);
 	

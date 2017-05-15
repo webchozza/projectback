@@ -30,7 +30,7 @@
 										</table>
 									</div>
 									<ul class="actions">
-										<li><a href="#" class="button">더 보기</a></li>
+										<li><a href="/dokky/bqnalist.do" class="button">더 보기</a></li>
 									</ul>
 								</article>
 

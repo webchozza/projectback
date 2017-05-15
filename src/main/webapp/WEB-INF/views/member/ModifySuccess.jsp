@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@page session="false"%> 
+<% HttpSession session = request.getSession(); 
+if (session!=null) 
+{ session.invalidate(); } %>
 <html>
 <head>
 <title>FindEmail</title>

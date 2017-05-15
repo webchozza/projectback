@@ -4,23 +4,30 @@ import java.util.Date;
 
 public class BoardDTO {
 	
-	private int board_id; //pk½ÃÄö½º
-	private int member_id; //È¸¿ø ½ÃÄö½º
-	private String board_title; //°Ô½Ã±Û Á¦¸ñ
-	private String board_content; //°Ô½Ã±Û ³»¿ë
-	private Date board_date; //°Ô½Ã±Û ÀÛ¼ºÀÏ
-	private String board_nickname; //È¸¿ø´Ğ³×ÀÓ
-	private int board_hit; //Á¶È¸¼ö
-	private int board_like; //ÁÁ¾Æ¿ä
-	private int board_bad; //½È¾î¿ä
-	private int board_comment_count; //ÄÚ¸àÆ® °¹¼ö
+	private int board_id; //pk
+	private int member_id; //ë©¤ë²„í…Œì´ë¸”pk
+	private String board_title; //ê¸€ì œëª©
+	private String board_content; //ê¸€ë‚´ìš©
+	private Date board_date; //ì‘ì„±ì¼
+	private String board_nickname; //ì‘ì„±ì ë‹‰ë„¤ì„
+	private int board_hit; //ì¡°íšŒìˆ˜
+	private int board_like; //ì¶”ì²œ
+	private int board_bad; //ë°˜ëŒ€
+	private int board_comment_count; //ì½”ë©˜íŠ¸ê°¯ìˆ˜
 	private String board_password; 
-	private int board_ip; //È¸¿ø ip
-	private int board_filecount; //ÆÄÀÏ°¹¼ö
-	private int bgroup_id;	//Ä«Å×°í¸® ±¸ºĞ ¹øÈ£
-	private String member_name; //È¸¿ø ÀÌ¸§
+	private int board_ip; //ì‘ì„±ì ì•„ì´í”¼
+	private int board_filecount; //ì²¨ë¶€í•œ íŒŒì¼ê°œìˆ˜
+	private int bgroup_id;	//ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸
+	private String member_name;
 	private String scrap_member_id;
-
+	private String board_tag; //íƒœê·¸
+	
+	public String getBoard_tag() {
+		return board_tag;
+	}
+	public void setBoard_tag(String board_tag) {
+		this.board_tag = board_tag;
+	}
 	public String getScrap_member_id() {
 		return scrap_member_id;
 	}

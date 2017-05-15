@@ -27,28 +27,40 @@ display:none;
 					</colgroup>
 					<thead>
 						<tr>
-							<td colspan="2"><a href="#">최신순</a> <a href="#">추천순</a> <a
-								href="#">댓글순</a> <a href="#">스크랩순</a> <a href="#">조회순</a></td>
-							<td colspan="2" align="right"><a href="#"
-								class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a></td>
+							<td colspan="2">
+							<a href="bqnalist.do?sort=">최신순</a> 
+							<a href="bqnalist.do?sort=like">추천순</a> 
+							<a href="bqnalist.do?sort=comment">댓글순</a>
+							<a href="#">스크랩순</a> 
+							<a href="bqnalist.do?sort=hit">조회순</a></td>
+							<td colspan="2" align="right">
+							<c:if test="${sessionScope.member_email ne null}">
+							<a href="bqnawriteform.do" class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a>
+						</c:if></td>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="list" items="${bqnalist}">
+						<c:url var="detailURL" value="bqnadetail.do">
+							<c:param name="board_id" value="${list.board_id}"/>
+							<c:param name="currentPage" value="${currentPage}"/>
+							<c:param name="seesion_id" value="${sessionScope.member_id}"/>
+						</c:url>
 						<tr>
-							<td><a href="bqnadetail.do?board_id=${list.board_id }&currentPage=${currentPage}">${list.board_title }</a></td>
-							<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp; <a
-								class="icon fa-eye">${list.board_hit }</a></td>
-							<td><a href="#">${list.board_nickname }</a></td>
-							<td><fmt:formatDate value="${list.board_date}" pattern="yyyy.MM.dd" /></td>
-						</tr>
+							<td><a href="${detailURL }">${list.board_title }</a></td>
+							<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
+								<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
+								<a class="icon fa-eye">${list.board_hit }</a></td>
+							<td><a href="/dokky/MemberPage.do?member_id=${list.member_id }&session_id=${sessionScope.member_id}">${list.board_nickname }</a></td>
+							<td><fmt:formatDate value="${list.board_date }" pattern="yyyy.MM.dd" /></td>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 			
 			<div class="paging" aling="center">${paingHtml}</div>
+			<br>
 			
 			<div class="row uniform" align="center">
             <form method="post" action="bqnalist.do">
