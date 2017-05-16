@@ -22,13 +22,16 @@
     board_comment_count, bgroup_id) b LEFT OUTER JOIN scrap a ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, 
     b.board_content, b.board_date, b.board_nickname, b.board_hit, b.board_like, b.board_comment_count, b.bgroup_id 
     <if test="search != null and search != ''">
-    , searchcount ORDER BY SEARCHCOUNT DESC 
+    , searchcount ORDER BY SEARCHCOUNT DESC)
     </if>
-	)<![CDATA[ WHERE rownum <= #{endrow} ORDER BY ${category} DESC) WHERE ]]> 
+    <if test="search == null || search == ''">
+    ORDER BY BOARD_DATE DESC)
+    </if> 
+	<![CDATA[WHERE rownum <= #{endrow} ) WHERE ]]> 
 	<if test="search != null and search != ''">
 	SEARCHCOUNT != 0 AND 
 	</if>
-	<![CDATA[r >= #{startrow} ]]>
+	<![CDATA[r >= #{startrow}]]>
 	</select>
 
 	<select id="allBoardCount" resultType="int" parameterType="java.util.Map">
