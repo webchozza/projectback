@@ -44,6 +44,26 @@ if(checkValue == -1){
 }
 }
 
+function recommendcheck(checkValue){
+	//추천하지 않은 글이면 클릭 가능
+	var strA = '<a href="bfreerecommend.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}&session_id=${sessionScope.member_id}" style="font-size: 30px" class="icon fa-thumbs-up"></a>';
+		strA += '<h2 style="color: #7f888f;">${bfreeDetail.board_like }</h2>';
+	//추천한 글이면 클릭 불가능
+	var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-thumbs-up"></div>';
+		strDiv += '<h2 style="color: #f56a6a;">${bfreeDetail.board_like }</h2>';
+		
+	var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-thumbs-up"></div>';
+		strDivNo += '<h2 style="color: #7f888f;">${bfreeDetail.board_like }</h2>';
+		
+	if(checkValue == -1){
+		$("#recommendbutton").html(strDivNo);
+	} else if(checkValue > 0){
+		$("#recommendbutton").html(strDiv);
+	} else {
+		$("#recommendbutton").html(strA);
+	}
+	}
+
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
 				|| frm.bcomment_content.value == null) {
@@ -96,6 +116,7 @@ if(checkValue == -1){
 
 	$(document).ready(function() {
 		scrapcheck("${scrapCheck}");
+		recommendcheck("${recommendCheck}");
 	});
 
 	$(document).ready(function() {
@@ -105,6 +126,9 @@ if(checkValue == -1){
 
 <style>
 .fa-bookmark {
+	color: #7f888f;
+}
+.fa-thumbs-up{
 	color: #7f888f;
 }
 </style>
@@ -124,8 +148,8 @@ if(checkValue == -1){
 						</colgroup>
 						<tbody>
 							<tr>
-								<td colspan="2"><strong><a
-										href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
+								<td colspan="2"><strong>
+									<a href="/dokky/MemberPage.do?member_id=${bfreeDetail.member_id }&session_id=${sessionScope.member_id}">${bfreeDetail.board_nickname }</a></strong>
 									<a href="javascript:gosubmit1_message()"
 									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
 											value="${bfreeDetail.board_date }" pattern="yyyy.MM.dd hh:mm" />
@@ -136,9 +160,7 @@ if(checkValue == -1){
 									<hr class="major" />
 									<p>${bfreeDetail.board_content }</p></td>
 								<td><center>
-										<a
-											href="bfreerecommend.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}"
-											style="font-size: 30px" class="icon fa-thumbs-up"><br>${bfreeDetail.board_like }</a><br>
+										<div id="recommendbutton"></div>
 										<div id="scrapbutton"></div>
 									</center>
 							</tr>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BfreeDAO;
+import first.com.dao.RecommendDAO;
 import first.com.dao.ScrapDAO;
 import first.com.model.BcommentDTO;
 import first.com.model.BoardDTO;
@@ -24,6 +25,9 @@ public class BfreeDetail {
 	
 	@Resource 
 	private ScrapDAO Scrap;
+	@Resource 
+	private RecommendDAO recommendSerivce;
+
 	
 	@RequestMapping("/bfreedetail")
 	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
@@ -48,9 +52,12 @@ public class BfreeDetail {
 		map.put("board_id", board_id);
 		if(session_id == -1){ 
 			mav.addObject("scrapCheck", "-1");
+			mav.addObject("recommendCheck", "-1");
 		} else {
 			mav.addObject("scrapCheck", Scrap.scrapCheck(map));
+			mav.addObject("recommendCheck", recommendSerivce.recommendCheck(map));
 		}
+		
 		/////
 		
 		return mav;
