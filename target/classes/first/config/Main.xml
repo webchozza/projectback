@@ -5,16 +5,33 @@
 
 <mapper namespace="main">
 
-	<select id="allSearchList" resultType="first.com.model.BoardDTO"
-		parameterType="java.util.Map">
-	<![CDATA[SELECT * FROM (SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, 
-	board_comment_count, bgroup_id, scrap_count,rownum r FROM (SELECT b.*, count(a.scrap_id) as scrap_count FROM 
-	(SELECT /*+index(board IDX_BOARD_DATE)*/ board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, board_comment_count, 
-	bgroup_id FROM board WHERE BOARD_TITLE like '%'||#{search}||'%' OR 
-	BOARD_CONTENT like '%'||#{search}||'%' OR BOARD_NICKNAME like '%'||#{search}||'%') b LEFT OUTER JOIN 
-	scrap a ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, b.board_content, 
-	b.board_date, b.board_nickname, b.board_hit, b.board_like, b.board_comment_count, b.bgroup_id ORDER BY ${category} DESC) 
-	WHERE rownum <= #{endrow} ) WHERE r >= #{startrow}]]>
+	<select id="allSearchList" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	SELECT * FROM (SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, 
+	board_comment_count, bgroup_id, scrap_count, 
+	<if test="search != null and search != ''">
+	searchcount, 
+	</if>
+	rownum r FROM (SELECT b.*, count(a.scrap_id) as scrap_count FROM 
+	(SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, board_comment_count, bgroup_id 
+	<if test="search != null and search != ''">
+	,SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,0)
+	+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,0)
+	+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,0)) searchcount
+	</if>
+    FROM board GROUP BY board_id, member_id, board_title, board_content, board_date, board_nickname, board_comment_count, board_hit, board_like, 
+    board_comment_count, bgroup_id) b LEFT OUTER JOIN scrap a ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, 
+    b.board_content, b.board_date, b.board_nickname, b.board_hit, b.board_like, b.board_comment_count, b.bgroup_id 
+    <if test="search != null and search != ''">
+    , searchcount ORDER BY SEARCHCOUNT DESC)
+    </if>
+    <if test="search == null || search == ''">
+    ORDER BY BOARD_DATE DESC)
+    </if> 
+	<![CDATA[WHERE rownum <= #{endrow} ) WHERE ]]> 
+	<if test="search != null and search != ''">
+	SEARCHCOUNT != 0 AND 
+	</if>
+	<![CDATA[r >= #{startrow}]]>
 	</select>
 
 	<select id="allBoardCount" resultType="int" parameterType="java.util.Map">
