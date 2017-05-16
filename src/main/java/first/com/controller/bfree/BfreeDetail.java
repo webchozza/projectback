@@ -26,10 +26,10 @@ public class BfreeDetail {
 	private ScrapDAO Scrap;
 	
 	@RequestMapping("/bfreedetail")
-	public ModelAndView bfreeDetail(@RequestParam(value="currentPage") int currentPage,
-			@RequestParam("board_id") int board_id,
+	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			@RequestParam(value="board_id") int board_id,
 			@RequestParam(value="session_id", defaultValue="-1") int session_id) {
-
+		System.out.println("????");
 		ModelAndView mav = new ModelAndView();
 		
 		

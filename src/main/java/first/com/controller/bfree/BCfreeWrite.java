@@ -40,7 +40,7 @@ public class BCfreeWrite {
 		bfreeService.bfreeUpdateCountco(bcommentDTO.getBoard_id());
 		mav.addObject("bcommentDTO", bcommentDTO);
 		
-		noti.insertCommentNoti(bcommentDTO.getBoard_id(), bcommentDTO.getMember_id(), "/bfreeDetail");
+		noti.insertCommentNoti(bcommentDTO.getBoard_id(), bcommentDTO.getMember_id(), "/bfreedetail");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board_id", bcommentDTO.getBoard_id());

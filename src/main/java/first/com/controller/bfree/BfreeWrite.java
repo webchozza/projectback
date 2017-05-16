@@ -45,6 +45,8 @@ public class BfreeWrite {
 		
 		bfreeService.bfreeWrite(boardDTO);
 		
+		noti.insertNewBoardNoti(boardDTO.getMember_id(), "/bfreedetail", 2);
+		
 		mav.addObject("boardDTO", boardDTO);
 		
 		mav.setViewName("redirect:bfreelist.do");

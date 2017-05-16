@@ -5,9 +5,45 @@
 <html>
 <head>
 <title>DOKKY</title>
-<script
-	src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
 <script type="text/javascript">
+function insertScrap(){
+	
+	var member_id = $("#session_id").val();
+	var board_id = $("#board_id").val(); 
+	
+	$.ajax({
+		url:"/dokky/ScrapInsert.do",
+		type: "get",
+		dataType: "json",
+		data: {board_id: board_id, member_id: member_id},
+		success: function(data){
+				scrapcheck(data);
+			}
+			//여기에 스크랩 버튼 클릭 안되게 하는 로직 처리
+			//팔로우처럼 체크값을 이용해 해당 글의 스크랩 버튼이 안눌리게 하는 함수를 작성하여 data를 인자로 넘긴다.(상세보기 컨트롤러에서도 체크값 넘겨야 함)
+	});
+}
+
+function scrapcheck(checkValue){
+//스크랩하지 않은 글이면 클릭 가능
+var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
+	strA += '<h2 style="color: #7f888f;">스크랩</h2>';
+//스크랩한 글이면 클릭 불가능
+var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
+	strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
+	
+var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-bookmark"></div>';
+	strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
+	
+if(checkValue == -1){
+	$("#scrapbutton").html(strDivNo);
+} else if(checkValue > 0){
+	$("#scrapbutton").html(strDiv);
+} else {
+	$("#scrapbutton").html(strA);
+}
+}
+
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
 				|| frm.bcomment_content.value == null) {
@@ -33,6 +69,29 @@
 		f.method = "post";
 		f.action = "/dokky/messagewriteform.do";
 		f.submit();
+	}
+	
+	function viewTags(str) {
+		var sep = str.split(",");
+		$("#tags").append("<i class='icon fa-tags'></i>");
+		for (i=0; i<sep.length; i++) {
+			if(i==(sep.length-1)){
+				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+			}else{
+				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>, ');
+			}
+		}
+	}
+	
+	function urlencode(str) {
+	    str = (str + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
 	}
 
 	$(document).ready(function() {
