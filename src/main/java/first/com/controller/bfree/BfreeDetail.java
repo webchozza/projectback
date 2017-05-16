@@ -29,9 +29,8 @@ public class BfreeDetail {
 	public ModelAndView bfreeDetail(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
 			@RequestParam(value="board_id") int board_id,
 			@RequestParam(value="session_id", defaultValue="-1") int session_id) {
-		System.out.println("????");
+
 		ModelAndView mav = new ModelAndView();
-		
 		
 		BoardDTO bfreeDetail = bfreeService.bfreeDetail(board_id);		
 		List<BcommentDTO> bcfreeList = bfreeService.bcfreeList(board_id);
