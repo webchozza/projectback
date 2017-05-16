@@ -9,6 +9,10 @@ public interface MessageDAO {
 	
 	public List<MessageDTO> getList(MessageDTO message);
 	
+	public List<MessageDTO> getSendList(MessageDTO message);
+	
+	public List<MessageDTO> getReceiveList(MessageDTO message);
+	
 	public List<MessageDTO> getSearchList(MessageDTO message);
 	
 	public void setDelete(MessageDTO message);

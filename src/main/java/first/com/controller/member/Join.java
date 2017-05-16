@@ -1,5 +1,6 @@
 package first.com.controller.member;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.CommandMap;
@@ -23,10 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.MemberDAO;
 import first.com.model.MemberDTO;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 @Controller
 public class Join {
@@ -73,9 +78,8 @@ public class Join {
 		}catch(Exception e){
 		}
 	}
-	@RequestMapping(value = "/sendemail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sendemail.do", method = RequestMethod.POST)
 	public String sendEmail(HttpServletRequest request,MemberDTO member){
-		
 		Properties props = new Properties();
 		props.setProperty("mail.transport.protocol", "smtp");
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -136,6 +140,43 @@ public class Join {
 		memberService.join(member);
 			mav.setViewName("Main");
 			return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/validateRecaptcha.do", method = RequestMethod.POST)
+	public String validateRecaptcha(@RequestParam Map<String, String> paramMap) {
+	     
+	    String check = "Y";
+	     
+	    ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+	    reCaptcha.setPrivateKey("6Ld2OCEUAAAAAJcUgRMDAbj208WOZCDYzJHkKBi8");//Secret key
+	 
+	    String host = paramMap.get("host");
+	    String challenge = paramMap.get("challenge");
+	    String res = paramMap.get("response");
+	     
+	    ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(host, challenge, res);
+	 
+	    if (reCaptchaResponse.isValid()) {
+	    
+	        check = "Y";
+	    } else {
+	     
+	        check = "N";
+	    }
+	     
+	    return check;
+	 
+	}
+	
+	@RequestMapping("/permit1.do")
+	public String permit1(){
+		return "permit1";
+	}
+ 
+	@RequestMapping("/permit2.do")
+	public String permit2(){
+		return "permit2";
 	}
 
 }

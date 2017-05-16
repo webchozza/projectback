@@ -1,7 +1,10 @@
 package first.com.controller.member;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -21,7 +24,7 @@ public class Modify {
 	
 	ModelAndView mav = new ModelAndView();
 	
-	@RequestMapping("checkmodify.do")
+	@RequestMapping("/checkmodify.do")
 	public ModelAndView checkModify(MemberDTO member) {
 		 System.out.println(member.getMember_email());
 		mav.addObject("member_email", member.getMember_email().toString());
@@ -29,7 +32,7 @@ public class Modify {
 		
 		return mav;
 	}
-	@RequestMapping("modifyform.do")
+	@RequestMapping("/modifyform.do")
 	public ModelAndView modifyMemberForm(MemberDTO member) {
 		
 		MemberDTO result = memberService.checkModify(member);
@@ -41,31 +44,22 @@ public class Modify {
 			mav.setViewName("MemberModifyForm");
 			return mav;
 	}
-	@RequestMapping("modifyMember.do")
-	public ModelAndView modifyMember(HttpServletRequest request,MemberDTO member) {
-		
-		HttpSession session = request.getSession(false);
-		
-		
+	@RequestMapping("/modifyMember.do")
+	public ModelAndView modifyMember(HttpServletResponse response,HttpServletRequest request,MemberDTO member)throws IOException  {
+
 		memberService.modifyMember(member);
 		mav.setViewName("ModifySuccess");
-		if(session!=null){
 			memberService.logOut(member);
-		}
+		
+		
 		return mav;
 	}
 	
-	@RequestMapping("deleteMember.do")
+	@RequestMapping("/deleteMember.do")
 	public ModelAndView deleteMember(HttpServletRequest request,MemberDTO member) {
 		
-		HttpSession session = request.getSession(false);
 		memberService.deleteMember(member);
 		mav.setViewName("DeleteSuccess");
-		if(session!=null){
-			memberService.logOut(member);
-			//������ ���� ���� ����
-			session.invalidate();
-		}
 		return mav;
 	}
 }

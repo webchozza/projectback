@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.tribes.MessageListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +26,22 @@ public class Message {
 		     String name_to = (String)session.getAttribute("member_name");
 		     message.setName_to(name_to);
 		     ModelAndView mav = new ModelAndView();
+		     List<MessageDTO> total = messageService.getList(message);
+				mav.addObject("totalList",total);
 		if(message.getSearch()==null){
+			if(message.getN()==0){
 		List<MessageDTO> result = messageService.getList(message);
+		mav.addObject("messageList", result);
+			}else if(message.getN()==1){
+				List<MessageDTO> result = messageService.getSendList(message);
+				mav.addObject("messageList", result);
+			}else if(message.getN()==2){
+				List<MessageDTO> result = messageService.getReceiveList(message);
+				mav.addObject("messageList", result);
+			}
 		List<MessageDTO> read = messageService.getReadList(message);
 		        mav.addObject("messageNotRead", read);
-				mav.addObject("messageList", result);
+				
 		}else{
 			List<MessageDTO> result = messageService.getSearchList(message);
 			List<MessageDTO> read = messageService.getReadList(message);
@@ -45,10 +57,13 @@ public class Message {
 
 			String name_to = message.getName_from();
 			String name_from = (String)session.getAttribute("member_name");
-		 	
 			ModelAndView mav = new ModelAndView();
+			if(message.getMessage_id()!=0){
+			MessageDTO result = messageService.getContent(message);
+                 mav.addObject("result",result);			
+			}
 		 	
-		
+			
 		 	mav.addObject("name_from", name_from);
 		 	mav.addObject("name_to",name_to);
 		 	mav.setViewName("MessageForm");

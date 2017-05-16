@@ -25,6 +25,20 @@ public class MessageService implements MessageDAO{
 	
 	
 	@Override
+	public List<MessageDTO> getSendList(MessageDTO message) {
+		
+		return sqlSession.selectList("message.getSend", message);
+	}
+
+
+	@Override
+	public List<MessageDTO> getReceiveList(MessageDTO message) {
+		
+		return sqlSession.selectList("message.getReceive", message);
+	}
+
+
+	@Override
 	public List<MessageDTO> getSearchList(MessageDTO message) {
 		
 		return sqlSession.selectList("message.getSearchList",message);

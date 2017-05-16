@@ -23,20 +23,23 @@ input[name=ss] {
 				<table>
 					<colgroup>
 						<col width="20%" />
-						<col width="30%" />
-						<col width="22%" />
+						<col width="20%" />
+						<col width="28%" />
 						<col width="10%" />
-						<col width="10%" />
+						<col width="15%" />
 					</colgroup>
 					<tbody>
-						전체쪽지 : ${fn:length(messageList)} | 읽은 않은 쪽지 : ${fn:length(messageNotRead)}
+						<a href="/dokky/massagelist.do">전체쪽지함</a>|<a href="/dokky/massagelist.do?n=1">보낸쪽지함</a>|<a href="/dokky/massagelist.do?n=2">받은쪽지함</a>
+						<br/>
+						전체쪽지 : ${fn:length(totalList)} | 읽은 않은 쪽지 : ${fn:length(messageNotRead)}
 						<c:forEach items="${messageList}" var="list">
 
 							<tr>
 								<td>${list.message_id}</td>
 								<td><a
 									href="/dokky/messagecontent.do?message_id=${list.message_id}">${list.message_subject}</a></td>
-								<td>${list.name_from}</td>
+								<td>보낸이&nbsp;<a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${list.name_from}</a> |&nbsp;&nbsp;받은이&nbsp;<a href="/dokky/MemberPage.do?member_id=${sessionScope.member_id}">${list.name_to}</a></td>
+								<td></td>
 								<td><fmt:formatDate value="${list.message_date}"
 										pattern="yyyy.MM.dd" /></td>
 								<td><a

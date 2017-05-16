@@ -38,7 +38,7 @@
 					<!--비밀번호 입력창  -->
 					<input type="hidden" name="member_email" value="${member_email}">
 					<div class="6u 12u$(xsmall)" style="float: inherit;">
-						<input type="text" style="width: 300pt;" name="member_pw" id="member_pw" value="" placeholder="Password" /> 
+						<input type="password" style="width: 300pt;" name="member_pw" id="member_pw" value="" placeholder="Password" /> 
 						<br />
 						<!--버튼 -->
 						<input type="button" value="다음" style="width: 300pt;"

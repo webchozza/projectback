@@ -11,17 +11,8 @@
 		<put-attribute name="header" value="/WEB-INF/views/main/Header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/views/main/SideMenu.jsp" />
 	</definition>
-
-	<definition name="ScrapList" extends="Main">
-		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
-	</definition>
-
-
-	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
-			스크랩 목록으로 이동 -->
-		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
-			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
-	</definition>
+	
+	
 
 	<!--LoginForm -->
 	<definition name="LoginForm" extends="Main">
@@ -75,6 +66,54 @@
 			value="/WEB-INF/views/member/ModifySuccess.jsp" />
 	</definition>
 
+	<definition name="empty" template="/WEB-INF/views/main/empty.jsp">
+        <put-attribute name="content" value=""/>  
+    </definition>
+	
+	<definition name="permit1" extends="empty">
+          <put-attribute name="content" value="/WEB-INF/views/member/permit1.jsp"></put-attribute>
+    </definition>
+    	
+    	<definition name="permit2" extends="empty">
+          <put-attribute name="content" value="/WEB-INF/views/member/permit2.jsp"></put-attribute>
+    </definition>
+    	
+	
+
+	<!--Message -->
+	<definition name="MessageList" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/message/MessageList.jsp" />
+	</definition>
+
+	<definition name="MessageContent" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/message/MessageContent.jsp" />
+	</definition>
+
+	<definition name="MessageForm" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/message/MessageForm.jsp" />
+	</definition>
+
+	<definition name="MessageSuccess" extends="Main">
+		<put-attribute name="body"
+			value="/WEB-INF/views/message/MessageSuccess.jsp" />
+	</definition>
+
+
+	<definition name="ScrapList" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" />
+	</definition>
+
+
+	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
+			스크랩 목록으로 이동 -->
+		<put-attribute name="body" value="/WEB-INF/views/scrap/ScrapList.jsp" /><!-- 
+			스크랩을 실시한 상세보기로 이동이 되게 구현하여야 함 -->
+	</definition>
+
+
 
 	<definition name="ScrapInsert" extends="Main"><!-- 자바스크립트가 동작하지 않는다면 
 			스크랩 목록으로 이동 -->
@@ -105,27 +144,6 @@
 	<definition name="AdminModifyForm" extends="Main">
 		<put-attribute name="body"
 			value="/WEB-INF/views/admin/AdminModifyForm.jsp" />
-	</definition>
-
-	<!--Message -->
-	<definition name="MessageList" extends="Main">
-		<put-attribute name="body"
-			value="/WEB-INF/views/message/MessageList.jsp" />
-	</definition>
-
-	<definition name="MessageContent" extends="Main">
-		<put-attribute name="body"
-			value="/WEB-INF/views/message/MessageContent.jsp" />
-	</definition>
-
-	<definition name="MessageForm" extends="Main">
-		<put-attribute name="body"
-			value="/WEB-INF/views/message/MessageForm.jsp" />
-	</definition>
-
-	<definition name="MessageSuccess" extends="Main">
-		<put-attribute name="body"
-			value="/WEB-INF/views/message/MessageSuccess.jsp" />
 	</definition>
 
 	<!-- 이밑으로자유게시판 -->

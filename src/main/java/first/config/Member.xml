@@ -64,4 +64,8 @@ UPDATE MEMBER SET
 MEMBER_DEL = 'N'
 WHERE MEMBER_EMAIL = #{member_email}
 </update>
+<select id="naverLogin" parameterType="String" resultType="first.com.model.MemberDTO">
+SELECT * FROM MEMBER 
+WHERE MEMBER_EMAIL = #{member_email}
+</select>
 </mapper>

@@ -3,7 +3,7 @@
 <%@page session="false"%> 
 <% HttpSession session = request.getSession(); 
 if (session!=null) 
-{ session.invalidate(); } %>
+{ session.invalidate(); } %>    
 <html>
 <head>
 <title>FindEmail</title>

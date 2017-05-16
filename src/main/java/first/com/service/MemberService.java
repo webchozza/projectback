@@ -114,9 +114,15 @@ public class MemberService implements MemberDAO {
 
 	@Override
 	public void modifyMember(MemberDTO member) {
-		System.out.println("¸â¹ö ÀÌ¸§"+member.getMember_name());
-		System.out.println("¸â¹ö ÀÌ¸§"+member.getMember_email());
+		
 		sqlSession.update("member.modifyMember", member);
+	}
+	
+
+	@Override
+	public MemberDTO naverLogin(String member) {
+		
+		return sqlSession.selectOne("member.naverLogin",member);
 	}
 
 	@Override

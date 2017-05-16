@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <title>WriteForm</title>
@@ -30,34 +31,65 @@
 	}
 </script>
 </head>
-<div id="wrapper" >
+<div id="wrapper">
 	<div id="main" align="center">
-		 <div class="inner">
+		<div class="inner">
 			<h3>MESSAGE</h3>
 			<form name="frm">
-			 <input type="hidden" id="name_from" name="name_from" value="${name_from}">
-			 <input type="hidden" id="name_to" name="name_to" value="${name_to}">
-				<div class="6u 12u$(xsmall)" style="width:300pt;">
-					<input type="text" name="message_subject" id="message_subject" value=""
-						style="width:300pt;" placeholder="제목" />
+				<input type="hidden" id="name_from" name="name_from"
+					value="${name_from}"> <input type="hidden" id="name_to"
+					name="name_to" value="${name_to}">
+				<div class="6u 12u$(xsmall)" style="width: 300pt;">
+					<input type="text" name="message_subject" id="message_subject"
+						value="" style="width: 300pt;" placeholder="제목" />
 				</div>
 				<!-- Break -->
-				<br />
-				<br />
+				<br /> <br />
 				<!-- Break -->
-				<div class="12u$">
-					<textarea name="message_content" id="message_content" style="width:300pt;height: 400px;"
-						placeholder="Enter your message" rows="6"></textarea>
-				</div>
+				<c:if test="${result ne null}">
+					<div class="12u$">
+						<table style="width: 300pt;" >
+							<tr>
+								<td>
+								<strong>보낸사람 : </strong> ${name_from}<br /> 
+								<strong>제목: </strong> ${result.message_subject}<br /> 
+								<strong>작성일  </strong>${result.message_date}<br /> 
+								<strong>내용 : </strong>${result.message_content}
+								</td>
+							</tr>
+						</table>
+						<textarea name="message_content" id="message_content"
+							style="width: 300pt; height: 400px;"
+							placeholder="Enter your message" rows="6"></textarea>
+					</div>
+				</c:if>
+				<c:if test="${result eq null}">
+					<div class="12u$">
+						<textarea name="message_content" id="message_content"
+							style="width: 300pt; height: 400px;"
+							placeholder="Enter your message" rows="6"></textarea>
+					</div>
+				</c:if>
 				<!-- Break -->
-				<div class="12u$">
-					<ul class="actions" style="float:inherit;">
-						<input  type="button" style="width:300pt;" value="글쓰기" class="button special" onclick="javascript:gosubmit1()">
-					</ul>
+				<c:if test="${result ne null}">
+					<div class="12u$">
+						<ul class="actions" style="float: inherit;">
+							<input type="button" style="width: 300pt;" value="전달하기"
+								class="button special" onclick="javascript:gosubmit1()">
+						</ul>
 
-				</div>
+					</div>
+				</c:if>
+				<c:if test="${result eq null}">
+					<div class="12u$">
+						<ul class="actions" style="float: inherit;">
+							<input type="button" style="width: 300pt;" value="글쓰기"
+								class="button special" onclick="javascript:gosubmit1()">
+						</ul>
+					</div>
+				</c:if>
 			</form>
-		 </div>
+		</div>
 	</div>
 </div>
 </html>

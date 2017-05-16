@@ -40,7 +40,7 @@ public interface MemberDAO {
 	
 	public String deleteMember();
 	
-	
+	public MemberDTO naverLogin(String member);
 	
 	public String alramList();
 	

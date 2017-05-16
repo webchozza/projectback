@@ -64,6 +64,9 @@ display:none;
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">
+			<center><a href="/dokky/main.do"><img src="/dokky/resources/images/logo3.png" width="140px"></a>
+				</center>
+				<br/>
 				<form method="post" action="/dokky/AllSearchList.do" style="width:85%;">
 					<input type="text" name="soundsearch" id="soundsearch" placeholder="Search All" />
 					<input type="submit" name="ss" id="soundsubmit"/>

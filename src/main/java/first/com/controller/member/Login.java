@@ -26,6 +26,8 @@ import first.com.oauth.bo.NaverLoginBO;
 @Controller
 public class Login {
 
+	private static final int String = 0;
+
 	@Resource
 	private MemberDAO memberService;
 
@@ -42,7 +44,7 @@ public class Login {
 	@RequestMapping("/loginform.do")
 	public ModelAndView loginForm(HttpSession session) {
 		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-		
+
 		return new ModelAndView("LoginForm", "url", naverAuthUrl);
 	}
 
@@ -71,19 +73,19 @@ public class Login {
 		return mav;
 	}
 
-	
 	// Logout
 	@RequestMapping("/logout.do")
-	public ModelAndView logout(HttpServletResponse response,HttpServletRequest request, MemberDTO member)throws IOException{
+	public ModelAndView logout(HttpServletResponse response, HttpServletRequest request, MemberDTO member)
+			throws IOException {
 		HttpSession session = request.getSession(false);
-			System.out.println("로그아웃");
-			session.invalidate();
-			
-			memberService.logOut(member);
-			//저장한 세션 영역 삭제
-			
-		//새로운 객체 생성하여 기존에 객체에 저장한 값 delete
-		mav.addObject("member",new MemberDTO());
+
+		session.invalidate();
+
+		memberService.logOut(member);
+		// 저장한 세션 영역 삭제
+
+		// 새로운 객체 생성하여 기존에 객체에 저장한 값 delete
+		mav.addObject("member", new MemberDTO());
 		// MainForm으로 이동
 		mav.setViewName("Main");
 
@@ -92,35 +94,39 @@ public class Login {
 
 	@RequestMapping("/callback.do")
 
-	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session,HttpServletRequest request)
-			throws IOException {
+	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session,
+			HttpServletRequest request) throws IOException, ParseException {
 		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		String apiResult = naverLoginBO.getUserProfile(oauthToken);
-						
-		JSONObject json = new JSONObject();
-		JSONParser parser = new JSONParser();
-		try {
-			JSONObject jsonObjAll = (JSONObject)parser.parse(apiResult);
-			String result = jsonObjAll.get("response").toString();
-			JSONObject jsonObj = (JSONObject)parser.parse(result);
-				String member_name	= jsonObj.get("nickname").toString();
-				String member_email = jsonObj.get("email").toString();
-				String member_id = jsonObj.get("id").toString();
-				
-				session = request.getSession();
-				session.setAttribute("member_email", member_email);
-				session.setAttribute("member_name", member_name);
-				session.setAttribute("member_id", member_id);
-				
-				
-				
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Main");
+
 		
+		JSONParser parser = new JSONParser();
+
+		JSONObject jsonObjAll = (JSONObject) parser.parse(apiResult);
+					System.out.println("jsonObjAll: "+jsonObjAll.toJSONString());
+		String result = jsonObjAll.get("response").toString();
+				
+		JSONObject jsonObj = (JSONObject) parser.parse(result);
+					System.out.println("jsonObj: "+jsonObj.toJSONString());
+		String member_name = jsonObj.get("nickname").toString();
+					
+		String member_email = jsonObj.get("email").toString();
+
+		ModelAndView mav = new ModelAndView();
+		MemberDTO member = memberService.naverLogin(member_email);
+		if(member!=null){
+			
+			session.setAttribute("member_id", member.getMember_id());
+			session.setAttribute("member_name", member.getMember_name());
+			session.setAttribute("member_email", member.getMember_email());
+			mav.setViewName("Main");
+			return mav; 
+		}
+		mav.addObject("member_email", member_email);
+		mav.addObject("member_name", member_name);
+		mav.setViewName("JoinForm");
 		return mav;
+
 	}
 
 }

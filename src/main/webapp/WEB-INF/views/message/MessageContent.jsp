@@ -15,6 +15,7 @@
 
 		var f = document.frm;
 		f.name_from.value;
+		f.message_id.value;
 		f.method = "post";
 		f.action = "/dokky/messagewriteform.do";
 		f.submit();
@@ -22,14 +23,15 @@
 </script>
 </head>
 <body>
-	<h4>MESSAGE</h4>
+	<h3>MESSAGE</h3>
 	<section id="banner">
 		<div class="content" align="center">
 			<div class="table-wrapper">
 				<div class="table-wrapper" style="float: inherit;">
 					<form name="frm">
 						<input type="hidden" name="name_from" id="name_from" value="${message.name_from}">
-						<table class="alt">
+						<input type="hidden" name="message_id" id="name_from" value="${message.message_id}">
+						<table class="alt" style="width:300pt;">
 							<colgroup>
 								<col width="100%" />
 								

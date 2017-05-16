@@ -5,9 +5,16 @@
 
 <select id="getList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
+WHERE NAME_TO = #{name_to} OR NAME_FROM = #{name_to} order by MESSAGE_DATE DESC
+</select>
+<select id="getSend" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
+WHERE NAME_FROM = #{name_to} order by MESSAGE_DATE DESC
+</select>
+<select id="getReceive" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+SELECT * FROM MESSAGE
 WHERE NAME_TO = #{name_to} order by MESSAGE_DATE DESC
 </select>
-
 <select id="getReadList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
 WHERE NAME_TO = #{name_to} AND MESSAGE_READ = 'N'
@@ -15,7 +22,8 @@ WHERE NAME_TO = #{name_to} AND MESSAGE_READ = 'N'
 
 <select id="getSearchList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
 SELECT * FROM MESSAGE
-WHERE NAME_TO = #{name_to} AND NAME_FROM LIKE '%'||#{search}||'%'  OR NAME_TO = #{name_to} AND MESSAGE_SUBJECT LIKE '%'||#{search}||'%'  order by MESSAGE_DATE DESC
+WHERE NAME_TO = #{name_to} AND NAME_FROM LIKE '%'||#{search}||'%'  OR NAME_TO = #{name_to} AND MESSAGE_SUBJECT LIKE '%'||#{search}||'%'  
+ OR NAME_FROM = #{name_to} AND  NAME_FROM  LIKE '%'||#{search}||'%'  OR NAME_FROM = #{name_to} AND MESSAGE_SUBJECT LIKE '%'||#{search}||'%' order by MESSAGE_DATE DESC
 </select>
 
 <select id="getOne" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
