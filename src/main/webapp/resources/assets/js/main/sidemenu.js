@@ -42,7 +42,7 @@ function notipop(){
 				var str = "<ul> \n";
 				var session_id = $("#session_id").val();
 				
-				$.each(data, function(key,value){
+				$.each(data, function(key,value){//
 					
 					var deletestr = "<a href='javascript:;' onclick='return notidelete("+value.noti_id+")'>";
 				    deletestr += "<img src=\"/dokky/resources/images/x.jpg\" style=\"width: 9px; height: 9px;\"/></a>";
@@ -52,10 +52,10 @@ function notipop(){
 					str += "</a>에 댓글이 등록되었습니다&nbsp;"+deletestr+"</li>\n"; 
 					} else if(value.noti_kinds == "follow_NewBoard") {
 					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id="+session_id+"'>"+value.sender_name;
-					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>글</a>을 작성했습니다&nbsp;"+deletestr+"</li>\n"; 
+					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id="+session_id+"'>글</a>을 작성했습니다&nbsp;"+deletestr+"</li>\n"; 
 					} else if(value.noti_kinds == "follow_comment"){
 					str += "<li><a href='/dokky/MemberPage.do?member_id="+value.sender_id+"&session_id="+session_id+"'>"+value.sender_name;
-					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id=${sessionScope.member_id}'>댓글</a>을 등록했습니다&nbsp;"+deletestr+"</li>\n";
+					str += "</a>님이 새로운 <a href='"+value.noti_url+"&session_id="+session_id+"'>댓글</a>을 등록했습니다&nbsp;"+deletestr+"</li>\n";
 					}
 				});
 				str += "</ul>";
