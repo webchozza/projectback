@@ -120,7 +120,7 @@ display:none;
 							<li><a href="#">구직</a></li>
 						</ul></li>
 					<li><a href="/dokky/bfreelist.do">자유게시판</a></li>
-					<li><a href="elements.html">오픈소스</a></li>
+					<li><a href="/dokky/bcodelist.do">오픈소스</a></li>
 				</ul>
 			</nav>
 		</div>

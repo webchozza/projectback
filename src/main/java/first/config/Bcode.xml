@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	 
+	 <mapper namespace="bcode">
+	   
+	   <!-- 1.오픈소스 게시판 리스트 -->
+	   <!-- 6.정렬 -->
+	   <!-- 9.검색 -->
+	   <select id="list" parameterType="java.util.Map" resultType="first.com.model.BoardDTO">
+	     SELECT * FROM BOARD WHERE BGROUP_ID = '1' AND BOARD_TITLE LIKE '%'||#{search}||'%'  
+	     ORDER BY
+	     <if test="lineup == 1">
+	     BOARD_DATE
+	     </if>
+	     <if test="lineup == 2">
+	     BOARD_COMMENT_COUNT
+	     </if>
+	     <if test="lineup == 3">
+	     BOARD_HIT
+	     </if>
+	     <if test="lineup == 4">
+	     BOARD_LIKE
+	     </if>
+	     DESC
+	   </select>
+	   
+	   <!-- 2.상세보기 -->
+	   <!-- 10.댓글 리스트-->
+	   <!-- 11.댓글 쓰기 -->
+	   <!-- 12.추천 및 스크랩 -->
+	   <select id="detail" parameterType="int" resultType="first.com.model.BoardDTO">
+	   SELECT * FROM BOARD WHERE BOARD_ID = #{board_id}
+	   </select>
+	   <select id="detailfile" parameterType="int" resultType="first.com.model.BfileDTO">
+	   SELECT * FROM BFILE WHERE BOARD_ID = #{board_id}
+	   </select>
+	   <select id="comment" parameterType="int" resultType="first.com.model.BcommentDTO">
+	   SELECT
+		bcomment_id,board_id,bgroup_id,bcomment_content,bcomment_date,bcomment_password,member_id,member_name
+		FROM (SELECT * FROM bcomment INNER JOIN member USING(member_id) WHERE board_id=#{board_id}) ORDER BY bcomment_id
+	   </select>
+	   <insert id="commentwrite" parameterType="first.com.model.BcommentDTO">
+	   INSERT INTO BCOMMENT(BCOMMENT_ID, BOARD_ID, BGROUP_ID, BCOMMENT_CONTENT,BCOMMENT_DATE, MEMBER_ID) VALUES(SEQ_COMMENT.NEXTVAL,#{board_id},1,#{bcomment_content},SYSDATE,#{member_id})
+	   </insert>
+	   
+	   <update id="increasementlike" parameterType="int">
+	   UPDATE BOARD 
+	   SET BOARD_LIKE=BOARD_LIKE + 1 
+	   WHERE BOARD_ID=#{like}
+	   </update>
+	   
+	   <!-- 2.1.상세보기 클릭시 조회수 증가 -->
+	   <update id="increamenthit" parameterType="int">
+	   UPDATE BOARD 
+	   SET BOARD_HIT=BOARD_HIT + 1 
+	   WHERE BOARD_ID=#{board_id}
+	   </update>
+
+	   <!-- 3.글쓰기  -->
+	   <!-- 7.파일 업로드 및 다운로드 -->
+	   <insert id="insert" parameterType="first.com.model.BoardDTO">
+	   <selectKey keyProperty="board_id" resultType="int" order="BEFORE">
+       SELECT SEQ_BOARD.NEXTVAL FROM DUAL
+       </selectKey>
+	   INSERT INTO BOARD(BOARD_ID,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,BOARD_DATE,BOARD_NICKNAME,BGROUP_ID) 
+	   VALUES(#{board_id},#{member_id},#{board_title},#{board_content},SYSDATE,#{board_nickname},#{bgroup_id})
+	   </insert>
+
+	   <!-- 4.수정하기 -->
+	   <select id="updateform" parameterType="int" resultType="first.com.model.BoardDTO">
+	   SELECT * FROM BOARD 
+	   WHERE BOARD_ID=#{board_id}
+	   </select> 
+	   <update id="update" parameterType="first.com.model.BoardDTO">
+	   UPDATE BOARD 
+	   SET BOARD_TITLE=#{board_title},BOARD_CONTENT=#{board_content} 
+	   WHERE BOARD_ID=#{board_id}
+	   </update>
+	   
+	   <!-- 5.정렬은 BcodeController에만 존재함 -->
+
+	   <!-- 6.삭제하기 -->
+	   <delete id="delete" parameterType="first.com.model.BoardDTO">
+	   </delete>
+	   
+	   <!-- 7.업로드 -->
+	   <insert id="upload" parameterType="first.com.model.BfileDTO">
+	   INSERT INTO BFILE(BOARD_ID,BFILE_ID,BFILE_DATE,BFILE_SIZE,BFILE_SRC)
+	   VALUES(#{board_id},SEQ_FILE.NEXTVAL,SYSDATE,#{bfile_size},#{bfile_src})
+	   </insert>
+	   
+	   <!-- 8.다운로드(BcodeController) -->
+	   
+       <!-- <select id="getSearchList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
+       SELECT * FROM MESSAGE
+       WHERE NAME_TO = #{name_to} AND NAME_FROM LIKE '%'||#{search}||'%'  order by MESSAGE_DATE DESC
+       </select> -->
+	   
+	 
+	 
+	 </mapper>

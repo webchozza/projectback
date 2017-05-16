@@ -9,9 +9,24 @@ public class BfileDTO {
 	private int board_id;
 	private int bgroup_id;
 	private Date bfile_date;
-	private int bfile_size;
+	private long bfile_size;
 	private int bfile_count;
+	private String bfile_src;
 	
+	
+	
+	public long getBfile_size() {
+		return bfile_size;
+	}
+	public void setBfile_size(long bfile_size) {
+		this.bfile_size = bfile_size;
+	}
+	public String getBfile_src() {
+		return bfile_src;
+	}
+	public void setBfile_src(String bfile_src) {
+		this.bfile_src = bfile_src;
+	}
 	public int getBfile_id() {
 		return bfile_id;
 	}
@@ -41,12 +56,6 @@ public class BfileDTO {
 	}
 	public void setBfile_date(Date bfile_date) {
 		this.bfile_date = bfile_date;
-	}
-	public int getBfile_size() {
-		return bfile_size;
-	}
-	public void setBfile_size(int bfile_size) {
-		this.bfile_size = bfile_size;
 	}
 	public int getBfile_count() {
 		return bfile_count;

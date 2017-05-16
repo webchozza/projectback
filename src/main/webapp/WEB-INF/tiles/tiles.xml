@@ -184,5 +184,21 @@
 	<definition name="TagList" extends="Main">
 		<put-attribute name="body" value="/WEB-INF/views/tag/TagList.jsp" />
 	</definition>
+	
+	<!-- 오픈소스게시판 -->
+	<!-- 1.오픈소스 게시판 리스트-->
+	<definition name="Clist" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/code/CodeList.jsp" />
+	</definition>
+	
+	<!-- 2.상세보기 -->
+	<definition name="Cdetail" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/code/CodeDetail.jsp" />
+	</definition>
+	
+	<!-- 3.글쓰기 -->
+	<definition name="Cwrite" extends="Main">
+		<put-attribute name="body" value="/WEB-INF/views/code/CodeWriteForm.jsp" />
+	</definition>
 
 </tiles-definitions>
