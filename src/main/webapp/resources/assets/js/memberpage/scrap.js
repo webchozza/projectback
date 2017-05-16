@@ -13,9 +13,9 @@ function paging(path, i, search, n) {
 
 function sch() {
 	var form = document.getElementById('searchform');
-	var path = '"'+$("#path").val()+'"';
-	var i = form.i.value;
+	var path = $("#path").val();
 	var member_id = $("#member_id").val();
+	var i = form.i.value;
 	var search = form.search.value;
 
 	$('#movearea').load(path, {
