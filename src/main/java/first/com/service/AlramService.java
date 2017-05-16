@@ -59,7 +59,7 @@ public class AlramService implements AlramDAO{
 			for(int i=0; i < followComment.size(); i++){
 				map.put("member_id", followComment.get(i).getMember_id());//댓글작성자를 팔로우한 회원의 아이디를 map객체에 세팅
 				map.put("noti_kinds", "follow_comment");//팔로우한 회원이 댓글을 작성했을 때
-				noticount.setNotiCount(followComment.get(i).getMember_id());//알림을 받는 회원의 member_id를 키로 새 알림 카운트를 맵객체에 저장한다
+				noticount.setNotiCount(followComment.get(i).getMember_id());//새 알림을 맵 객체에 저장한다.
 				sqlSessionTemplate.insert("noti.insert", map);//작성자를 팔로우한 회원의 알림테이블에 알림정보를 넣어준다.
 			}
 		}

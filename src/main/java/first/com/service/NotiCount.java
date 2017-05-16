@@ -13,24 +13,28 @@ import first.com.dao.NotiCountDAO;
 @Resource(name="noticount")
 public class NotiCount implements NotiCountDAO{
 		
-	private Map<Integer, Integer> NotiCount;//세션에 넣고 돌리다가 로그아웃시 칼럼에 넣고 로그인할떄 꺼내온다.
-
-	public int getNotiCount(int member_id) {//주기적으로 갱신을 할 때마다 새로운 알림이 몇개인지 뽑아오는 메소드(실시간으로 알림생성을 체크해서 메뉴에 띄워줌)
+	private Map<Integer, Integer> NotiCount;
+	
+	//맵 객체에서 확인하지 않은 알림이 있으면 가져온다.(ajax를 이용해서 주기적으로)
+	public int getNotiCount(int member_id) {
 		
 		int count = 0;
 		
 		if(NotiCount != null && NotiCount.containsKey(member_id)){
 			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
 				if(entry.getKey() == member_id){
+					System.out.println(NotiCount.get(member_id));
 					count  = entry.getValue();
+					System.out.println(count+"카운트");
 					break;
 				}
 			}
 		}
 			return count;
 	}
-
-	public void setNotiCount(int member_id) {//새로운 알림이 생길때 카운트를 더해주는 메소드
+	
+	//작성글에 댓글이 달릴 시, 팔로우한 회원이 글을 작성하거나 댓글을 작성할 때 새 알림을 맵 객체에 저장한다.
+	public void setNotiCount(int member_id) {
 	
 		int count = 1;
 		
@@ -49,7 +53,8 @@ public class NotiCount implements NotiCountDAO{
 		NotiCount = notiCount;
 	}
 	
-	public void initCount(int member_id){//알림목록을 열 때 메뉴에 보여주는 새로온 메시지 카운트를 초기화 시켜주는 메소드
+	//알림 목록을 펼치면 맵 객체에 저장된 해당 회원의 새 알림 개수를 초기화 한다.
+	public void initCount(int member_id){
 		if(NotiCount != null && NotiCount.containsKey(member_id)){
 			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
 				if(entry.getKey() == member_id){
@@ -59,3 +64,4 @@ public class NotiCount implements NotiCountDAO{
 		}
 	}
 }
+

@@ -26,8 +26,6 @@ import first.com.oauth.bo.NaverLoginBO;
 @Controller
 public class Login {
 
-	private static final int String = 0;
-
 	@Resource
 	private MemberDAO memberService;
 

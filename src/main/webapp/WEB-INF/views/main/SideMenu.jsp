@@ -28,10 +28,10 @@ setInterval(function(){
 }, 3000);
 
 function notipop(){
-	console.log("??");
+	
 	var ch = $("#notich").val();
 	var session_id = $("#session_id").val();
-	console.log("?????");
+	
 	if(ch == "N"){
 		$.ajax({
 			url: "/dokky/notilist.do",
