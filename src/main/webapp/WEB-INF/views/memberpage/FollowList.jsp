@@ -77,7 +77,7 @@ table {
 			<style>
 			div { position:relative; } 
 			#cm { position:absolute; } 
-			.hc { width:10%; left:0; right:0; margin-left:27%; margin-right:auto; }
+			.hc { width:10%; left:0; right:0; margin-left:27%; margin-right:73%; }
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->

@@ -42,12 +42,12 @@ public class AjaxPaging {
 			if(search.equals("")){
 					pagingHtml.append(
 							"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+"\"\""+","+n+")'>");
-					pagingHtml.append("[이전]");
+					pagingHtml.append("[PREV]");
 					pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
 						"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+search+","+n+")'>");
-				pagingHtml.append("[이전]");
+				pagingHtml.append("[PREV]");
 				pagingHtml.append("</a>");
 			}
 		}
@@ -82,12 +82,12 @@ public class AjaxPaging {
 			if(search.equals("")){
 			pagingHtml.append(
 					"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+"\"\""+","+n+")'>");
-			pagingHtml.append("[다음]");
+			pagingHtml.append("[NEXT]");
 			pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
 						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+search+","+n+")''>");
-				pagingHtml.append("[다음]");
+				pagingHtml.append("[NEXT]");
 				pagingHtml.append("</a>");
 			}
 		}

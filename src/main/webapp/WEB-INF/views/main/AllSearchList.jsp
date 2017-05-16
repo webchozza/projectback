@@ -81,7 +81,7 @@ border-bottom-color: #FFFFFF;
 			<style>
 			div { position:relative; } 
 			#cm { position:absolute; } 
-			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
+			.hc { width:20%; left:0; right:0; margin-left:50%; margin-right:50%; }
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
