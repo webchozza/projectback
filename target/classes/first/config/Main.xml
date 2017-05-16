@@ -14,9 +14,9 @@
 	rownum r FROM (SELECT b.*, count(a.scrap_id) as scrap_count FROM 
 	(SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, board_comment_count, bgroup_id 
 	<if test="search != null and search != ''">
-	,SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,0)
-	+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,0)
-	+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,0)) searchcount
+	,SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
+	+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
+	+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)) searchcount
 	</if>
     FROM board GROUP BY board_id, member_id, board_title, board_content, board_date, board_nickname, board_comment_count, board_hit, board_like, 
     board_comment_count, bgroup_id) b LEFT OUTER JOIN scrap a ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, 
