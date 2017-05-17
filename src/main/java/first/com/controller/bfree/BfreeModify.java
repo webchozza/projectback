@@ -21,13 +21,13 @@ public class BfreeModify {
 	@RequestMapping(value="/bfreemodifyform")
 	public ModelAndView bfreeModifyForm(int board_id, HttpServletRequest request) {
 		ModelAndView mav= new ModelAndView();
+
 		BoardDTO boardDTO= bfreeService.bfreeDetail(board_id);
-		
 		String content= boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
-		String tag= boardDTO.getBoard_tag().replaceAll(" ", "_");
+		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
+		tag = tag.replaceAll("Community,", "");
 		boardDTO.setBoard_content(content);
 		boardDTO.setBoard_tag(tag);
-		
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
 		mav.setViewName("FreeModifyForm");
@@ -41,7 +41,7 @@ public class BfreeModify {
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
 		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag(tag);
+		boardDTO.setBoard_tag("Community,"+tag);
 		
 		bfreeService.bfreeModify(boardDTO);
 		mav.setViewName("redirect:bfreedetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage"));

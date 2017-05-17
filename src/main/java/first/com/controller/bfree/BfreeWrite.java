@@ -41,7 +41,7 @@ public class BfreeWrite {
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
 		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag(tag);
+		boardDTO.setBoard_tag("Community,"+tag);
 		
 		bfreeService.bfreeWrite(boardDTO);
 		

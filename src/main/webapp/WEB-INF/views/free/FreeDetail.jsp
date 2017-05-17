@@ -216,7 +216,7 @@ function recommendcheck(checkValue){
 									</tr>
 								</form>
 							</c:if>
-							<c:if test="!${sessionScope.member_email ne null}">
+							<c:if test="${sessionScope.member_email eq null}">
 								<tr height="50px">
 									<td valign="middle" colspan="2"><center>
 											<a href="loginform.do">로그인</a>을 하시면 댓글을 등록할 수 있습니다.
@@ -239,7 +239,7 @@ function recommendcheck(checkValue){
 													class="button" onclick="return deleteconfirm()">삭제</a>
 											</c:if>
 										</c:if>
-										<a href='#' onclick='history.go(-1); return false;'
+										<a href="bfreelist.do?board_id=${bfreeDetail.board_id }&currentPage=${currentPage}" 
 											class="button special">목록</a>
 									</div>
 								</td>
