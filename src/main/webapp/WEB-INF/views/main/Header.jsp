@@ -39,7 +39,7 @@ display:none;
 		<button name="bb" id="btn-mic" class="off"></button>
 			<input type="hidden" id="micCheck" value="off"/>
 			<span id="soundInput"></span>
-			<a href="javascript:;" onclick="micOn()" id="micImg" class="icon fa-microphone-slash" style="width:50%; height:50%;">음성 검색</a>
+			<a href="javascript:;" onclick="micOn()" id="micImg" class="icon fa-microphone-slash" style="max-width:50%; height:50%; font-size:2em;">음성 검색</a>
 	</header>
 </body>
 </html>

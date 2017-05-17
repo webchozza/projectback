@@ -35,24 +35,22 @@ a.tag {
 			<div class="table-wrapper">
 				<table>
 					<colgroup>
-						<col width="58%" />
-						<col width="22%" />
-						<col width="10%" />
+						<col width="50%" />
+						<col width="25%" />
+						<col width="20%" />
 						<col width="10%" />
 					</colgroup>
 					<thead>
+					<c:if test="${sessionScope.member_email ne null}">
+								<a href="bfreewriteform.do" class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a>
+								</c:if>
 						<tr>
-							<td colspan="2"><a href="bfreelist.do?sort=">최신순</a> <a
+							<td colspan="6">
+							<a href="bfreelist.do?sort=">최신순</a> <a
 								href="bfreelist.do?sort=like">추천순</a> <a
 								href="bfreelist.do?sort=comment">댓글순</a> <a href="#">스크랩순</a> <a
-								href="bfreelist.do?sort=hit">조회순</a></td>
-							<td colspan="2" align="right"><c:if
-									test="${sessionScope.member_email ne null}">
-									<a href="bfreewriteform.do" class="button special"><i
-										class="icon fa-pencil"> 새 글 쓰기</i></a>
-								</c:if></td>
-
-
+								href="bfreelist.do?sort=hit">조회순</a>
+								</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -63,16 +61,16 @@ a.tag {
 								<c:param name="session_id" value="${sessionScope.member_id}" />
 							</c:url>
 							<tr>
-								<td><a href="${detailURL }" style="font-size: 12px">${list.board_title }</a>
+								<td scope="col"><a href="${detailURL }" style="font-size: 12px">${list.board_title }</a>
 
 								</td>
 
-								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
+								<td scope="col"><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-eye">${list.board_hit }</a></td>
-								<td><a
+								<td scope="col"><a
 									href="/dokky/MemberPage.do?member_id=${list.member_id }&session_id=${sessionScope.member_id}">${list.board_nickname }</a></td>
-								<td><fmt:formatDate value="${list.board_date }"
+								<td scope="col"><fmt:formatDate value="${list.board_date }"
 										pattern="yyyy.MM.dd" /></td>
 							</tr>
 						</c:forEach>
@@ -87,7 +85,7 @@ a.tag {
 				<form method="post" action="bfreelist.do">
 					<input type="hidden" name="sort" value="${sort}">
 
-					<div class="select-wrapper" style="float: left; width: 140px">
+					<div class="select-wrapper" style="float: left; max-width: 140px; min-width:80px;">
 						<select name="n" id="demo-category">
 							<option value="1">제목</option>
 							<option value="2">내용</option>
@@ -95,7 +93,7 @@ a.tag {
 						</select>
 					</div>
 
-					<div style="overflow: hidden;">
+					<div style="overflow: hidden; min-width:180px;">
 						<section id="search" class="alt">
 
 							<input type="text" name="search" id="search" placeholder="Search"

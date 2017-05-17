@@ -114,16 +114,16 @@ function gosubmit3(){
 				<form name="frm">
 				<!--이메일 비밀번호 입력창  -->
 				<div class="6u 12u$(xsmall)" style="float:inherit;">
-					<input type="text" style="width:300pt;" name="member_email" id="member_email" value="" placeholder="Email" />
+					<input type="text" style="width:90%;" name="member_email" id="member_email" value="" placeholder="Email" />
 					<br/>
-					<input type="password" style="width:300pt;" name="member_pw" id="member_pw" value="" placeholder="Password" />
+					<input type="password" style="width:90%;" name="member_pw" id="member_pw" value="" placeholder="Password" />
 			
 				<!--로그인 버튼 -->
 					<br/>
-					<input type="button" value="로그인" style="width:300pt;" class="button special" onclick="javascript:gosubmit1()">
+					<input type="button" value="로그인" style="width:90%;" class="button special" onclick="javascript:gosubmit1()">
 				<!--체크박스 -->
 				<br/>
-				<div class="6u 12u$(xsmall)" style="float:left">
+				<div class="6u 12u$(xsmall)" style="float:left; margin-top:1%;">
 					<input type="checkbox" id="rememberEmail" name="rememberEmail" >
 					<label for="rememberEmail">이메일 저장</label>
 				</div> 
@@ -133,7 +133,7 @@ function gosubmit3(){
 					<a href="javascript:gosubmit2()" class="pagination">회원가입</a> | <a href="javascript:gosubmit3()">비밀번호찾기</a>
 					<br/>
 					<br/>
-					 <a href="${url}"><img src="/dokky/resources/images/네이버 아이디로 로그인_완성형_Green.PNG" height="50" width="170"></a>
+					 <a href="${url}"><img src="/dokky/resources/images/네이버 아이디로 로그인_완성형_Green.PNG" height="auto" width="170"></a>
 				</div>		
 		   </div>
 			</form>

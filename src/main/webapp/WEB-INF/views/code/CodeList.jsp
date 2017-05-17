@@ -81,7 +81,7 @@ input[name=ss] {
 </head>
 <body>
 <div id="codearea">
-	<h4>오픈소스 게시판</h4>
+	<h4>Open Source</h4>
 
 	<!-- 바디 -->
 	<section id="banner">
@@ -99,16 +99,16 @@ input[name=ss] {
 
 					<!-- 최신순 댓글순 조회순 추천순 스크랩순 -->
 					<thead>
+					<c:if
+									test="${sessionScope.member_email ne null}">
+							  <a href="/dokky/bcodewrite.do" type="submit" class="button special"><i class="icon fa-pencil">글쓰기</i></a></c:if>
 						<tr>
-							<td colspan="2">
+							<td colspan="7">
 							<a href='javascript:;' onclick='codelist("1")'>최신순</a>
 							<a href='javascript:;' onclick='codelist("2")'>댓글순</a>
 							<a href='javascript:;' onclick='codelist("3")'>조회순</a> 
 							<a href='javascript:;' onclick='codelist("4")'>추천순</a>
 							<a href='javascript:;' onclick='codelist("5")'>스크랩순</a>
-							</td>
-							<td colspan="2" align="right">
-							  <a href="/dokky/bcodewrite.do" type="submit" class="button special"><i class="icon fa-pencil">글쓰기</i></a>
 							</td>
 						</tr>
 					</thead>
@@ -116,12 +116,12 @@ input[name=ss] {
 
 					<tbody>
 						<tr>
-							<td width="10%" align="center">번호</td>
-							<td width="10%" align="center">제목</td>
-							<td width="10%" align="center">글쓴이</td>
-							<td width="10%" align="center">날짜</td>
-							<td width="10%" align="center">조회</td>
-							<td width="10%" align="center">추천</td>
+							<td width="10%" align="center" style="min-width:60px;">번호</td>
+							<td width="15%" align="center" style="min-width:60px;">제목</td>
+							<td width="10%" align="center" style="min-width:60px;">글쓴이</td>
+							<td width="10%" align="center" style="min-width:60px;">날짜</td>
+							<td width="10%" align="center" style="min-width:60px;">조회</td>
+							<td width="10%" align="center" style="min-width:60px;">추천</td>
 						</tr>
 
 						<!-- 여기서부터 forEach var들어가야되 -->
@@ -184,10 +184,10 @@ input[name=ss] {
 			</div>
 			<!-- Search 박스 -->
 			<div align="center">
-				<section id="search" class="alt" style="width: 600px">
+				<section id="search" class="alt" style="min-width: 300px; max-width: 600px;">
 					<form method="post" action="/dokky/bcodelist.do">
 						<input type="text" name="search" id="search" placeholder="Search"
-							width="100px" /> <input type="submit" id="search" value="검색해" />
+							width="100px" /> <input type="submit" id="search" value="검색" />
 					</form>
 				</section>
 			</div>

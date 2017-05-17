@@ -266,7 +266,7 @@
 							<div id="message" style="color: #ff0000;"></div><br/>
 							<div class="box">
 							<strong>자동등록방지</strong>를 위해  보안절차를 거치고 있습니다.<br/>
-							<div id="recaptcha" ></div>
+							<div id="recaptcha" style="margin-left:-35%; width:50%; heigth:50%;"></div>
 							<input id="recaptchaCheck" type="button" class="button special" value="보안문자인증하기" >
 							</div>
 							<div>

@@ -34,14 +34,14 @@ border-bottom-color: #FFFFFF;
 			<div class="table-wrapper">
 				<table>
 					<colgroup>
-						<col width="58%" />
-						<col width="22%" />
-						<col width="10%" />
+						<col width="50%" />
+						<col width="25%" />
+						<col width="20%" />
 						<col width="10%" />
 					</colgroup>
 					<thead>
 						<tr>
-							<td colspan="2">
+							<td colspan="6">
 							<a href="javascript:;" onclick='category("all")'>전체&nbsp;</a>
 							<a href="javascript:;" onclick="category(0)">최신순</a> 
 							<a href="javascript:;" onclick="category(1)">추천순</a> 
@@ -53,19 +53,20 @@ border-bottom-color: #FFFFFF;
 					<tbody>
 					<c:forEach var="board" items="${allSearchList}">
 						<tr>
-							<td><a href="#" id="b">${board.board_title}</a></td>
-							<td><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
+							<td scope="col"><a href="javascript:a()" id="b">${board.board_title}</a></td>
+							<td scope="col"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-eye">${board.board_hit}</a></td>
-							<td><a href="/dokky/MemberPage.do?member_id=${board.member_id}&session_id=${sessionScope.member_id}" id="b">${board.board_nickname}</a></td>
-							<td><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
+							<td scope="col"><a href="/dokky/MemberPage.do?member_id=${board.member_id}&session_id=${sessionScope.member_id}" id="b">${board.board_nickname}</a></td>
+							<td scope="col"><fmt:formatDate value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 						</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
+			<div><p id="cm" class="hc vc" align="center">${page}</p></div>
 			<div align="center">
-				<section id="search" class="alt" style="width: 400px">
+				<section id="search" class="alt" style="min-width: 200px; max-width:400px;">
 					<form method="post" action="javascript:;" id="searchform">
 					<input type="hidden" name="i" id="i" value="${i}"/>
 						<input type="text" name="AllSearch" id="AllSearch" value="${AllSearch}" placeholder="Search All"
@@ -76,15 +77,6 @@ border-bottom-color: #FFFFFF;
 			</div>
 		</div>
 	</section>
-			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-			<div><p id="cm" class="hc vc">${page}</p></div>
-			<style>
-			div { position:relative; } 
-			#cm { position:absolute; } 
-			.hc { width:20%; left:0; right:0; margin-left:50%; margin-right:50%; }
-			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
-			</style>
-			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 </div>
 <br/><br/><br/>
 <form name="valueform">
