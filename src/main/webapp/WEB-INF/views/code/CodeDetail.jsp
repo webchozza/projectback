@@ -22,6 +22,66 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <script type="text/javascript">
+function insertScrap(){
+	
+	var member_id = $("#session_id").val();
+	var board_id = $("#board_id").val(); 
+	
+	$.ajax({
+		url:"/dokky/ScrapInsert.do",
+		type: "get",
+		dataType: "json",
+		data: {board_id: board_id, member_id: member_id},
+		success: function(data){
+				scrapcheck(data);
+			}
+			//여기에 스크랩 버튼 클릭 안되게 하는 로직 처리
+			//팔로우처럼 체크값을 이용해 해당 글의 스크랩 버튼이 안눌리게 하는 함수를 작성하여 data를 인자로 넘긴다.(상세보기 컨트롤러에서도 체크값 넘겨야 함)
+	});
+}
+
+function scrapcheck(checkValue){
+//스크랩하지 않은 글이면 클릭 가능
+var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
+	strA += '<h2 style="color: #7f888f;">스크랩</h2>';
+//스크랩한 글이면 클릭 불가능
+var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
+	strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
+	
+var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-bookmark"></div>';
+	strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
+	
+if(checkValue == -1){
+	$("#scrapbutton").html(strDivNo);
+} else if(checkValue > 0){
+	$("#scrapbutton").html(strDiv);
+} else {
+	$("#scrapbutton").html(strA);
+}
+}
+
+function recommendcheck(checkValue){
+	console.log(checkValue+"추천 체크");
+	//추천하지 않은 글이면 클릭 가능
+	var strA = '<a href="/dokky/bcodedetail.do?board_id=${detail.board_id}&currentPage=${currentPage}&member_id=${sessionScope.member_id}&board_like=${detail.board_id}" style="font-size: 30px" class="icon fa-thumbs-up"></a>';
+		strA += '<h2 style="color: #7f888f;">${detail.board_like}</h2>';
+	//추천한 글이면 클릭 불가능
+	var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-thumbs-up"></div>';
+		strDiv += '<h2 style="color: #f56a6a;">${detail.board_like}</h2>';
+		
+	var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-thumbs-up"></div>';
+		strDivNo += '<h2 style="color: #7f888f;">${detail.board_like}</h2>';
+		
+	if(checkValue == -1){
+		$("#recommendbutton").html(strDivNo);
+	} else if(checkValue > 0){
+		$("#recommendbutton").html(strDiv);
+	} else {
+		$("#recommendbutton").html(strA);
+	}
+	}
+
+
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
 				|| frm.bcomment_content.value == null) {
@@ -48,12 +108,47 @@
 		f.action = "/dokky/messagewriteform.do";
 		f.submit();
 	}
+	
+	function viewTags(str) {
+		var sep = str.split(",");
+		$("#tags").append("<i class='icon fa-tags'></i>");
+		for (i=0; i<sep.length; i++) {
+			if(i==(sep.length-1)){
+				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+			}else{
+				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>, ');
+			}
+		}
+	}
+	
+	function urlencode(str) {
+	    str = (str + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
+	}
 
 	$(document).ready(function() {
 		scrapcheck("${scrapCheck}");
+		recommendcheck("${recommendCheck}");
+	});
+
+	$(document).ready(function() {
+		viewTags("${board_tag}");
 	});
 </script>
-
+<style>
+.fa-bookmark {
+	color: #7f888f;
+}
+.fa-thumbs-up{
+	color: #7f888f;
+}
+</style>
 <body>
 	<h4>Open Source</h4>
 
@@ -93,8 +188,8 @@
 									</td>
 									
 									<td><center>
-											<a href="bcodedetail.do?board_id=${detail.board_id}&board_like=${detail.board_id}" style="font-size: 30px" class="icon fa-thumbs-up"><br>${detail.board_like}<!-- 여기에추천수 --></a><br>
-											<a href="#" style="font-size: 30px" class="icon fa-bookmark"><br>10<!-- 여기에스크랩수 --></a>
+											<div id="recommendbutton"></div>
+											<div id="scrapbutton"></div>
 										</center>
 								</tr>
 		
@@ -178,48 +273,9 @@
 			</div>
 		</div>
 	</section>
-	</div>
-	</div>
-
-	<!-- 슬라이드바 -->
-	<div id="sidebar">
-		<div class="inner">
-
-			<!-- 서치 -->
-			<section id="search" class="alt">
-				<form method="post" action="#">
-					<input type="text" name="query" id="query" placeholder="Search" />
-				</form>
-			</section>
-
-			<!-- 로그인 회원가입등 -->
-			<section id="icons">
-				<a href="#" class="icon fa-sign-in"> 로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="#" class="icon fa-user-plus"> 회원가입</a>
-				<!-- 					로그인했으면
-					<ul>
-						<a href="#" class="icon fa-sign-out">
-							로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
-						<a href="#" class="icon fa-bell">
-							알림</a>
-					</ul> -->
-			</section>
-
-			<!-- 메뉴 -->
-			<nav id="menu">
-				<ul>
-					<li><a href="index.html">메인</a></li>
-					<li><a href="generic.html">Q&A게시판</a></li>
-					<li><span class="opener">구인구직</span>
-						<ul>
-							<li><a href="#">구인</a></li>
-							<li><a href="#">구직</a></li>
-						</ul></li>
-					<li><a href="elements.html">자유게시판</a></li>
-					<li><a href="elements.html">오픈소스</a></li>
-				</ul>
-			</nav>
-		</div>
-	</div>
+	<form name="valueform">
+		<input type="hidden" id="board_id" value="${detail.board_id}" />
+		<input type="hidden" id="session_id" value="${sessionScope.member_id}" />
+	</form>
 </body>
 </html>

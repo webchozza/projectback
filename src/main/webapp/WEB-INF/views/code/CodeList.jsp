@@ -10,6 +10,29 @@
 <html>
 <head>
 <script>
+function viewTags(str) {
+	var sep = str.split(",");
+	$("#tags").append("<i class='icon fa-tags'></i>");
+	for (i=0; i<sep.length; i++) {
+		if(i==(sep.length-1)){
+			$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+		}else{
+			$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>, ');
+		}
+	}
+}
+
+function urlencode(str) {
+    str = (str + '').toString();
+    return encodeURIComponent(str)
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A')
+        .replace(/%20/g, '+');
+}
+
 function codelist(line1){
 	console.log("통신시작");
 	$("#codearea").load("/dokky/bcodelist.do",{line: line1, ap: "AjaxCode"},function(){
@@ -103,12 +126,16 @@ input[name=ss] {
 
 						<!-- 여기서부터 forEach var들어가야되 -->
 						<c:forEach var="board" items="${list}">
+						<c:url var="detailURL" value="bcodedetail.do">
+								<c:param name="board_id" value="${board.board_id}" />
+								<c:param name="member_id" value="${sessionScope.member_id}" />
+							</c:url>
 						 <c:if test="${board.board_id ne null}">
 							<tr>
 								<!-- 1 -->
 								<td width="10" align="center">${board.board_id}</td>
 								<!-- 2 -->
-								<td width="10" align="center"><a href="/dokky/bcodedetail.do?board_id=<c:out value="${board.board_id}"/>">${board.board_title}</a></td>
+								<td width="10" align="center"><a href="${detailURL}">${board.board_title}</a></td>
 								<!-- 3 -->
 								<td width="10" align="center"><a href="#">${board.board_nickname}</a></td>
 								<!-- 4 -->

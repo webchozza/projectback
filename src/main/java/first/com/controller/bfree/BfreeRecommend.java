@@ -32,7 +32,7 @@ public class BfreeRecommend {
 		
 		bfreeService.bfreeLike(board_id);
 		
-		//by eongoo
+		//by eongoo, recommend
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", session_id);
 		map.put("board_id", board_id);

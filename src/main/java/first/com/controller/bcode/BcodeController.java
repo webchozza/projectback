@@ -23,6 +23,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.common.Paging;
+import first.com.dao.AlramDAO;
+import first.com.dao.RecommendDAO;
+import first.com.dao.ScrapDAO;
 import first.com.model.BcommentDTO;
 import first.com.model.BfileDTO;
 import first.com.model.BoardDTO;
@@ -33,7 +36,16 @@ public class BcodeController {
 
 	@Resource
 	private BcodeService bcode;
-
+	
+	//by eongoo
+	@Resource 
+	private ScrapDAO Scrap;
+	@Resource 
+	private RecommendDAO recommendSerivce;
+	@Resource 
+	private AlramDAO noti;
+	//
+	
 	private int totalCount; // 珥� �닔
 	private int blockCount = 10; // �븳 �럹�씠吏��쓽 寃뚯떆臾쇱쓽 �닔
 	private int blockPage = 5; // �븳 �솕硫댁뿉 蹂댁뿬以� �럹�씠吏� �닔
@@ -93,33 +105,56 @@ public class BcodeController {
 	// 10.�뙎湲� 由ъ뒪�듃
 	// 10.1.�뙎湲� �벐湲�
 	@RequestMapping(value = "/bcodedetail.do")
-	public ModelAndView bcodeDetail(HttpServletRequest request,BoardDTO dTO,BfileDTO dTOFile,BcommentDTO dTOComment) throws Exception {
-	    int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
+	public ModelAndView bcodeDetail(HttpServletRequest request,BoardDTO dTO,BfileDTO dTOFile,BcommentDTO dTOComment,
+			@RequestParam(value="member_id", defaultValue="-1") int session_id) throws Exception {
+	   
+		int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
 	    
+		//insert like
         if(request.getParameter("board_like") != null){
-        	int like = (int)Integer.parseInt(request.getParameter("board_like"));
+        	//by eongoo, recommend
+    		Map<String, Object> map = new HashMap<String, Object>();
+    		map.put("member_id", session_id);
+    		map.put("board_id", board_id2);
+    		recommendSerivce.addRecommend(map);
+    		//
+        	int like = Integer.parseInt(request.getParameter("board_like"));
         	bcode.bcodeInreaselike(like);
         }
 
 		bcode.bcodeInreasehit(board_id2);
-		
+			
 
         BoardDTO detail = (BoardDTO)bcode.bcodeDetail(board_id2);
         BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
         List<BcommentDTO> detail3 = (List<BcommentDTO>) bcode.bcodeComment(board_id2);
         
-        
-        System.out.println(request.getParameter("board_like"));
-
-        
+        //insert comment
         if(request.getParameter("bcomment_content") != null){
         	  bcode.bcodeCommentinsert(dTOComment);
+        	  
+        	//by eongoo, comment noti
+      		noti.insertCommentNoti(board_id2, session_id, "/bcodedetail");
+      		//
         }
       
         ModelAndView Cdetail = new ModelAndView("Cdetail");
 		Cdetail.addObject("detail", detail);
 		Cdetail.addObject("detail2", detail2);
 		Cdetail.addObject("detail3", detail3);
+		
+		//add by eongoo
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("session_id", session_id);
+		map.put("board_id", board_id2);
+		if(session_id == -1){ 
+			Cdetail.addObject("scrapCheck", "-1");
+			Cdetail.addObject("recommendCheck", "-1");
+		} else {
+			Cdetail.addObject("scrapCheck", Scrap.scrapCheck(map));
+			Cdetail.addObject("recommendCheck", recommendSerivce.recommendCheck(map));
+		}
+		/////
 		
 		
 		return Cdetail;
@@ -140,6 +175,10 @@ public class BcodeController {
 			
 			BoardDTO updateform = (BoardDTO)bcode.bcodeUpdateform(update2);
 			Cwrite.addObject("updateform", updateform);
+			
+			//by eongoo, new board noti
+			noti.insertNewBoardNoti(Integer.parseInt(request.getParameter("member_id")), "/bcodedetail", 1);
+			//
 			
 			return Cwrite;
 		}else{

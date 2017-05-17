@@ -45,7 +45,9 @@ public class BfreeWrite {
 		
 		bfreeService.bfreeWrite(boardDTO);
 		
+		//by eongoo, new board noti
 		noti.insertNewBoardNoti(boardDTO.getMember_id(), "/bfreedetail", 2);
+		//
 		
 		mav.addObject("boardDTO", boardDTO);
 		
