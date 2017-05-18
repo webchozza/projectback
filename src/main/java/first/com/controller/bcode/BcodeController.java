@@ -83,7 +83,6 @@ public class BcodeController {
 		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
-
 		list = list.subList(page.getStartCount(), lastCount);
 		
 		if(ap == null || ap.equals("")){

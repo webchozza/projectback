@@ -1,27 +1,37 @@
 package first.com.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class BoardDTO {
 	
 	private int board_id; //pk
-	private int member_id; //멤버테이블pk
-	private String board_title; //글제목
-	private String board_content; //글내용
-	private Date board_date; //작성일
-	private String board_nickname; //작성자 닉네임
-	private int board_hit; //조회수
-	private int board_like; //추천
-	private int board_bad; //반대
-	private int board_comment_count; //코멘트갯수
+	private int member_id; //硫ㅻ쾭�뀒�씠釉봯k
+	private String board_title; //湲��젣紐�
+	private String board_content; //湲��궡�슜
+	private Date board_date; //�옉�꽦�씪
+	private String board_nickname; //�옉�꽦�옄 �땳�꽕�엫
+	private int board_hit; //議고쉶�닔
+	private int board_like; //異붿쿇
+	private int board_bad; //諛섎�
+	private int board_comment_count; //肄붾찘�듃媛��닔
 	private String board_password; 
-	private int board_ip; //작성자 아이피
-	private int board_filecount; //첨부한 파일개수
-	private int bgroup_id;	//카테고리 번호
+	private int board_ip; //�옉�꽦�옄 �븘�씠�뵾
+	private int board_filecount; //泥⑤��븳 �뙆�씪媛쒖닔
+	private int bgroup_id;	//移댄뀒怨좊━ 踰덊샇
 	private String member_name;
 	private String scrap_member_id;
-	private String board_tag; //태그
+	private String board_tag; //�깭洹�
+	private List board_tag_list;
 	
+	
+	
+	public List getBoard_tag_list() {
+		return board_tag_list;
+	}
+	public void setBoard_tag_list(List board_tag_list) {
+		this.board_tag_list = board_tag_list;
+	}
 	public String getBoard_tag() {
 		return board_tag;
 	}

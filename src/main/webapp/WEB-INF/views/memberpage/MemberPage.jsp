@@ -13,6 +13,14 @@
 }
 </style>
 <script>
+function gosubmit1_message() {
+
+	var f = document.note;
+	f.name_from.value;
+	f.method = "post";
+	f.action = "/dokky/messagewriteform.do";
+	f.submit();
+}
 //페이지가 로딩될 때 함수실행(팔로우한 사람인지 아닌지 구분하는 값을 인자로 넘겨줌)
 $(document).ready(function(){
 	followcheck("${followCheck}");
@@ -20,8 +28,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<h4>회원 정보</h4>
-	
+	<h4>회원 정보</h4><a href="javascript:gosubmit1_message()" class="icon fa-envelope">쪽지</a>
 	<span class="image fit"><h2><b>${followCount.member_name}</b></h2></span>
 	<div class="box alt">
 		<div class="row 50% uniform" style="background-color: #f5f6f7; width:60%; display: inline-block;">
@@ -41,7 +48,7 @@ $(document).ready(function(){
 		</div>
 		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-width:30%; max-height:30%;">
 		<div class="4u" style="width: 90%;">
-		<div id="me" style="height: 93px;"><span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
+		<div id="me" style="height: 105px;"><span id="plusFollow" class="image fit fa fa-user-plus" style="text-align: center; font-size: 25px; color: #f56a6a;">
 		<a href="javascript:;" onclick='followclick("add")'><h4 style="color: #f56a6a;">+팔로우</h4></a></span></div>
 		</div>
 		</div>
@@ -123,6 +130,10 @@ $(document).ready(function(){
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 	</div>
 			<br/><br/><br/>
+			<form name="note">
+		<input type="hidden" name="name_from" id="name_from"
+			value="${followCount.member_name}">
+	</form>
 <form name="valueform">
 <input type="hidden" id="member_id" value="${member_id}"/>
 <input type="hidden" id="path" value="${path}"/>

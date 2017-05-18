@@ -13,9 +13,9 @@
          frm.board_title.focus();
          return false;
       }
-      if (frm.board_content.value == "" || frm.board_content.value == null) {
+      if (document.frm.board_content.value == "" || document.frm.board_content.value == null || document.frm.board_content.value == "<p>&nbsp;</p>" ) {
          alert("글내용을 입력해주세요");
-         frm.board_content.focus();
+         $("#smarteditor").focus();
          return false;
       }
    }
@@ -66,7 +66,7 @@
                   style="width: 90%;" placeholder="제목" />
             </div>
             <div class="12u$" style="width:90%;">
-                <textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:10%; min-width:200px; height:400px;"></textarea>
+                <textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:100%; min-width:200px; height:400px;"></textarea>
             </div>
             <div class="6u 12u$(xsmall)" style="width: 90%;">
               <input type="text" name="board_tag" id="message"

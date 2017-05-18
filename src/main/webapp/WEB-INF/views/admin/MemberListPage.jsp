@@ -39,33 +39,33 @@ input[type="text"] {
 		<table>
 			<thead>
 				<tr>
-					<td width="15%" align="center"><b>이메일</b></td>
+					<td width="15%" align="center" style="margin-left:80%;"><b>이메일</b></td>
 					<td width="10%" align="center"><b>닉네임</b></td>
 					<td width="10%" align="center"><b>가입일</b></td>
-					<td width="10%" align="center"><b>등급</b></td>
 					<td width="10%" align="center"><b>관리</b></td>
-					<td width="10%" align="center"><b>접속</b></td>
+					<td width="10%" align="left"><b>접속</b></td>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="member" items="${memberlist}">
+				<c:if test="${member.member_ch ne 10}">
 					<tr>
 						<td align="center">${member.member_email}</td>
 						<td align="center">${member.member_name}</td>
 						<td align="center"><fmt:formatDate
 								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
-						<td align="center">여기에 등급</td>
 						<td align="center">
-						<a href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;
+						<a href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="/dokky/MemberDelete.do?member_id=${member.member_id}"
 							onclick="return deleteMember()">탈퇴</a></td>
 						<c:if test="${member.member_ch eq 0}">
-							<td align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
+							<td align="left"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 						<c:if test="${member.member_ch eq 1}">
-							<td align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
+							<td align="left"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</tbody>
 		</table>

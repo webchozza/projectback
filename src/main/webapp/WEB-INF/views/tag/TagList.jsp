@@ -8,7 +8,9 @@
 </head>
 <body>
 	<h4>[${tag }]로 태그된 글</h4>
-
+	<form>
+<input type="hidden" id="taglist" value="${taglist}">
+	</form>
 	<!-- 바디 -->
 	<section id="banner">
 		<div class="content">
@@ -31,7 +33,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="list" items="${taglist }">
+						<c:forEach var="list" items="${taglist}" varStatus="status">
+						<c:set var="btl_count" value="${status.index}"/>
 							<c:if test="${list.bgroup_id eq 1}"> <!-- qna -->
 								<c:url var="detailURL" value="/bqnadetail.do">
 									<c:param name="board_id" value="${list.board_id }" />
@@ -60,9 +63,13 @@
 									<c:param name="session_id" value="${sessionScope.member_id}" />
 								</c:url>
 							</c:if>
-							
 							<tr>
-								<td><a href="${detailURL }">${list.board_title }</a></td>
+								<td><a href="${detailURL }">${list.board_title }</a><div class='icon fa-tags'>
+								<c:forEach var="btl" items="${tagmap[btl_count]}" varStatus="sta">
+								<c:set var="btl_index" value="${sta.index}"/>
+								<a href="${btl_index}">${btl}</a>
+								</c:forEach>
+								</div></td>
 								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 									<a class="icon fa-eye">${list.board_hit }</a></td>

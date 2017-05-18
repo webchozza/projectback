@@ -47,7 +47,7 @@ function scrap(){
 	var i = form.i.value;
 	var search = form.search.value;
 	var member_id = $("#member_id").val();
-
+	
 	$('#movearea').load("/dokky/ScrapList.do", {
 		member_id : member_id,
 		currentPage : i,
