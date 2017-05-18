@@ -48,9 +48,14 @@ a.tag {
 							<td colspan="6">
 							<a href="bfreelist.do?sort=">최신순</a> <a
 								href="bfreelist.do?sort=like">추천순</a> <a
-								href="bfreelist.do?sort=comment">댓글순</a> <a href="#">스크랩순</a> <a
-								href="bfreelist.do?sort=hit">조회순</a>
-								</td>
+								href="bfreelist.do?sort=comment">댓글순</a> <a
+								href="bfreelist.do?sort=scrap">스크랩순</a> <a
+								href="bfreelist.do?sort=hit">조회순</a></td>
+							<td colspan="2" align="right"><c:if
+									test="${sessionScope.member_email ne null}">
+									<a href="bfreewriteform.do" class="button special"><i
+										class="icon fa-pencil"> 새 글 쓰기</i></a>
+								</c:if></td>
 						</tr>
 					</thead>
 					<tbody>

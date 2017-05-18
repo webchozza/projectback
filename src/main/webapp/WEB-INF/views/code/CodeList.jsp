@@ -137,7 +137,7 @@ input[name=ss] {
 								<!-- 2 -->
 								<td width="10" align="center"><a href="${detailURL}">${board.board_title}</a></td>
 								<!-- 3 -->
-								<td width="10" align="center"><a href="#">${board.board_nickname}</a></td>
+								<td width="10" align="center"><a href="/dokky/MemberPage.do?member_id=${list.member_id }&session_id=${sessionScope.member_id}">${board.board_nickname}</a></td>
 								<!-- 4 -->
 								<td width="10" align="center"><fmt:formatDate
 										value="${board.board_date}" pattern="yyyy.MM.dd" /></td>

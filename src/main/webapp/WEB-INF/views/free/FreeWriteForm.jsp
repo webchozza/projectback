@@ -61,8 +61,6 @@
             <input type="hidden" name="member_id"
                value="${sessionScope.member_id}"> <input type="hidden"
                name="board_nickname" value="${sessionScope.member_name}">
-
-
             <div class="6u 12u$(xsmall)" style="width:90%;">
                <input type="text" name="board_title" id="subject" value=""
                   style="width: 90%;" placeholder="제목" />

@@ -177,6 +177,8 @@ function recommendcheck(checkValue){
 						<tbody>
 							<tr>
 								<td colspan="2">댓글 ${bfreeDetail.board_comment_count }&nbsp;&nbsp;&nbsp;
+
+								
 							</tr>
 							<c:forEach var="clist" items="${bcfreeList }">
 								<tr>
@@ -198,31 +200,32 @@ function recommendcheck(checkValue){
 								</tr>
 							</c:forEach>
 
-
-							<c:if test="${sessionScope.member_email ne null}">
-								<form name="frm" action="bfreewritecomment.do"
-									onsubmit="return gosubmit1()">
-									<tr>
-										<td><textarea cols="20" rows="3" name="bcomment_content"
-												placeholder="댓글을 입력해주세요."></textarea></td>
-										<td valign="middle"><center>
-												<input type="hidden" name="member_id"
-													value="${sessionScope.member_id}"> <input
-													type="hidden" name="board_id"
-													value="${bfreeDetail.board_id}"><input
-													type="hidden" name=currentPage value="${currentPage}"><input
-													type="submit" value="작성" class="button special">
+							<c:choose>
+								<c:when test="${sessionScope.member_email ne null}">
+									<form name="frm" action="bfreewritecomment.do"
+										onsubmit="return gosubmit1()">
+										<tr>
+											<td><textarea cols="20" rows="3" name="bcomment_content"
+													placeholder="댓글을 입력해주세요."></textarea></td>
+											<td valign="middle"><center>
+													<input type="hidden" name="member_id"
+														value="${sessionScope.member_id}"> <input
+														type="hidden" name="board_id"
+														value="${bfreeDetail.board_id}"><input
+														type="hidden" name=currentPage value="${currentPage}"><input
+														type="submit" value="작성" class="button special">
+												</center></td>
+										</tr>
+								</form>
+								</c:when>
+								<c:otherwise>
+									<tr height="50px">
+										<td valign="middle" colspan="2"><center>
+												<a href="loginform.do">로그인</a>을 하시면 댓글을 등록할 수 있습니다.
 											</center></td>
 									</tr>
-								</form>
-							</c:if>
-							<c:if test="${sessionScope.member_email eq null}">
-								<tr height="50px">
-									<td valign="middle" colspan="2"><center>
-											<a href="loginform.do">로그인</a>을 하시면 댓글을 등록할 수 있습니다.
-										</center></td>
-								</tr>
-							</c:if>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 						<tfoot>
 							<tr>
