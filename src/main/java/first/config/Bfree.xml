@@ -6,24 +6,27 @@
 
 	<!-- 비프리 글목록 -->
 	<select id="bfreeList" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board WHERE bgroup_id = 2
-		<if test="n!=0">
-			 AND 
-			<if test="n==1">board_title</if>
-			<if test="n==2">board_content</if>
-			<if test="n==3">board_nickname</if>
+	SELECT * FROM (SELECT a.board_id, count(b.scrap_id) scrap_count 
+	FROM (select board_id from board WHERE bgroup_id = 2) a 
+	LEFT OUTER JOIN SCRAP b ON a.board_id = b.board_id GROUP BY a.board_id) c 
+	LEFT OUTER JOIN BOARD d ON c.board_id = d.board_id 
+	<if test="n!=0">
+			 WHERE 
+			<if test="n==1">d.board_title</if>
+			<if test="n==2">d.board_content</if>
+			<if test="n==3">d.board_nickname</if>
 			 LIKE '%'||#{search}||'%'
 		</if>
 		<if test="sort!=''">
-			 ORDER BY
-			<if test="sort == 'like'">board_like</if>
-			<if test="sort== 'comment'">board_comment_count</if>
-			<if test="sort== 'scrap'">board_hit</if><!-- ★수정필요 -->
-			<if test="sort== 'hit'">board_hit</if>
-			 DESC, board_id DESC
+			ORDER BY 
+			<if test="sort == 'like'">d.board_like DESC,</if>
+			<if test="sort== 'comment'">d.board_comment_count DESC,</if>
+			<if test="sort== 'scrap'">c.scrap_count DESC,</if>
+			<if test="sort== 'hit'">d.board_hit DESC,</if>
+			 d.board_id DESC
 		</if>
 		<if test="sort==''">
-		 ORDER BY board_id DESC
+		 ORDER BY d.board_id DESC
 		</if>
 	</select>
 
