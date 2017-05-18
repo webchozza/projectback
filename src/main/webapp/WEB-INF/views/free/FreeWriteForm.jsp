@@ -63,21 +63,20 @@
                name="board_nickname" value="${sessionScope.member_name}">
 
 
-            <div class="6u 12u$(xsmall)" style="width: 766px;">
+            <div class="6u 12u$(xsmall)" style="width:90%;">
                <input type="text" name="board_title" id="subject" value=""
-                  style="width: 766px;" placeholder="제목" />
+                  style="width: 90%;" placeholder="제목" />
             </div>
-            <div class="12u$" style="margin-left: 80px;">
-                <textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+            <div class="12u$" style="width:90%;">
+                <textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:10%; min-width:200px; height:400px;"></textarea>
             </div>
-            <div class="6u 12u$(xsmall)" style="width: 766px;">
-               <textarea name="board_tag" id="message"
-                  style="width: 766px;" placeholder="태그"
-                  rows="1"></textarea>
+            <div class="6u 12u$(xsmall)" style="width: 90%;">
+              <input type="text" name="board_tag" id="message"
+                  style="width: 90%;" placeholder="태그" />
             </div>
             <div class="12u$">
-               <ul class="actions" style="float: inherit;">
-                  <input type="submit" style="width: 300pt;" value="글쓰기"
+               <ul class="actions" style="float: inherit; width: 60%;">
+                  <input type="submit" style="width: 60%;" value="글쓰기"
                      class="button special" id="savebutton">
                </ul>
             </div>
