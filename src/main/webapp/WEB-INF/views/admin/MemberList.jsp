@@ -22,7 +22,7 @@ input[type="text"] {
 	outline: 0;
 	padding: 0 1em;
 	text-decoration: none;
-	width: 20%;
+	width: 100%;
 }
 
 .select-wrapper {
@@ -44,7 +44,7 @@ input[type="text"] {
 				<option value="1" <c:if test="${n eq 1}">selected</c:if>>닉네임</option>
 			</select>
 		</div>
-		<input type="text" id="searchvalue" name="search" value="${search}"/> <input type="button" value="검색" onclick="sch()"/>
+		<input type="text" id="searchvalue" name="search" value="${search}"  style="width:20%"/> <input type="button" value="검색" onclick="sch()"/>
 	</form>
 	
 		<a href="javascript:;" onclick='MemberCheck("on")'>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 

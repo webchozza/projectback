@@ -66,8 +66,7 @@
 							<tr>
 								<td><a href="${detailURL }">${list.board_title }</a><div class='icon fa-tags'>
 								<c:forEach var="btl" items="${tagmap[btl_count]}" varStatus="sta">
-								<c:set var="btl_index" value="${sta.index}"/>
-								<a href="${btl_index}">${btl}</a>
+								<a href="taglist.do">${btl}</a>
 								</c:forEach>
 								</div></td>
 								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;

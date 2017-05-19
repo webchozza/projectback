@@ -22,7 +22,7 @@ input[type="text"] {
 	outline: 0;
 	padding: 0 1em;
 	text-decoration: none;
-	width: 20%;
+	width: 100%;
 }
 
 .select-wrapper {
