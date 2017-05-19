@@ -66,9 +66,9 @@ public class ListTag {
 		tagDTO.setTag4(tag);
 		boardDTO = tagService.tagList(tagDTO);
 		
-		Map tagmap = new HashMap();
+		Map<Integer,List<String>> tagmap = new HashMap<Integer,List<String>>();
 		for(int i=0; i < boardDTO.size(); i++){
-			List board_tag_list = new ArrayList();
+			List<String> board_tag_list = new ArrayList<String>();
 			String[] part = boardDTO.get(i).getBoard_tag().replaceAll(",", " ").split(" ");
 				for(int j=0; j < part.length; j++){
 					board_tag_list.add(j, part[j]);

@@ -39,9 +39,27 @@ public class BfreeModify {
 		ModelAndView mav= new ModelAndView();
 
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
-		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
+		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
+		while (tag.contains(",,")) {
+			tag = tag.replaceAll(",,", ",");
+		}
+		if (tag.length() <2) {
+			tag = "";
+		} else {
+			if (tag.charAt(tag.length() - 1) == ',') {
+				tag=tag.substring(0, tag.length()-1);
+			}
+			if (tag.charAt(0) == ',') {
+				tag=tag.substring(1, tag.length());
+			}
+		}
+
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag("Community,"+tag);
+		if(tag=="")
+			boardDTO.setBoard_tag("Community");
+		else
+			boardDTO.setBoard_tag("Community," + tag);
+		
 		
 		bfreeService.bfreeModify(boardDTO);
 		mav.setViewName("redirect:bfreedetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage"));
