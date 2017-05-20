@@ -1,371 +1,68 @@
-/**
-	 * jQuery.ajax mid - CROSS DOMAIN AJAX 
-	 * ---
-	 * @author James Padolsey (http://james.padolsey.com)
-	 * @version 0.11
-	 * @updated 12-JAN-10
-	 * ---
-	 * Note: Read the README!
-	 * ---
-	 * @info http://james.padolsey.com/javascript/cross-domain-requests-with-jquery/
-	 */
-
-	jQuery.ajax = (function(_ajax){
-	    
-	    var protocol = location.protocol,
-	        hostname = location.hostname,
-	        exRegex = RegExp(protocol + '//' + hostname),
-	        YQL = 'http' + (/^https/.test(protocol)?'s':'') + '://query.yahooapis.com/v1/public/yql?callback=?',
-	        query = 'select * from html where url="{URL}" and xpath="*"';
-	    
-	    function isExternal(url) {
-	        return !exRegex.test(url) && /:\/\//.test(url);
-	    }
-	    
-	    return function(o) {
-	        
-	        var url = o.url;
-	        
-	        if ( /get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url) ) {
-	            
-	            // Manipulate options so that JSONP-x request is made to YQL
-	            
-	            o.url = YQL;
-	            o.dataType = 'json';
-	            
-	            o.data = {
-	                q: query.replace(
-	                    '{URL}',
-	                    url + (o.data ?
-	                        (/\?/.test(url) ? '&' : '?') + jQuery.param(o.data)
-	                    : '')
-	                ),
-	                format: 'xml'
-	            };
-	            
-	            // Since it's a JSONP request
-	            // complete === success
-	            if (!o.success && o.complete) {
-	                o.success = o.complete;
-	                delete o.complete;
-	            }
-	            
-	            o.success = (function(_success){
-	                return function(data) {
-	                    
-	                    if (_success) {
-	                        // Fake XHR callback.
-	                        _success.call(this, {
-	                            responseText: (data.results[0] || '')
-	                                // YQL screws with <script>s
-	                                // Get rid of them
-	                                .replace(/<script[^>]+?\/>|<script(.|\s)*?\/script>/gi, '')
-	                        }, 'success');
-	                    }
-	                    
-	                };
-	            })(o.success);
-	            
-	        }
-	        
-	        return _ajax.apply(this, arguments);
-	        
-	    };
-	    
-	})(jQuery.ajax);
+$(document).ready(function(){
 	
+	var count = 1;
+
+	var url1 = "http://api.openweathermap.org/data/2.5/weather?q=";
+	var url2 = "&APPID=4337d8683878691978c865a2c5127fe8";
 	
+	weather(url1+"Seoul"+url2);
 	
+	setInterval(function(){
+		if(count == 7){ count = 0; }
+		if(count == 0){ var region = "Seoul";  }
+		if(count == 1){ var region = "Incheon"; }
+		if(count == 2){ var region = "Busan";  }
+		if(count == 3){ var region = "Daejeon";  }
+		if(count == 4){ var region = "Daegu";  }
+		if(count == 5){ var region = "Ulsan; "}
+		if(count == 6){ var region = "Jeju; "}
+		count++;
+		console.log(region);
+		var url = url1+region+url2;
+		console.log(url);
+		weather(url);
+	},5000);
+});
+
+function weather(url){
+	$.ajax({
+		url: url,
+		dataType: "json",
+		success: function(data){
+			var name = data.name;
+			var temp_max = Math.round(data.main.temp_max - 273.15);
+			var temp_min = Math.round(data.main.temp_min - 273.15);
+			var humidity = data.main.humidity;
+			var str = weatherHtml(data.weather[0].main, name, temp_max, temp_min, humidity);
+			
+			$("#weather").html(str);
+		}
+		
+	});
+	}
 	
-		//기상청에서 rss파일을 xml로 파싱해서 날씨정보를 받아온다.
-		// 파라미터로 지역 값을 받은 후 처리하는 함수
-		function getQuerystring(key, default_) {
-			if (default_ == null)
-				default_ = "";
-			key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-			var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
-			var qs = regex.exec(window.location.href);
-			if (qs == null)
-				return default_;
-			else
-				return qs[1];
-		}
-
-		var xx = getQuerystring('xx');
-		var yy = getQuerystring('yy');
-
-		// 기본값은 서울/경기.
-		if (xx == '' && yy == '') {
-			xx = "59";
-			yy = "123";
-		}
-
-		function pass_go() {
-			var frm = document.frm;
-			if (frm.sel.value == "01") {
-				var xx = "59";
-				var yy = "123";
-			} // 서울/경기(경기 안양 기준)
-			if (frm.sel.value == "02") {
-				var xx = "75";
-				var yy = "115";
-			} // 충북(충북 충주 기준)
-			if (frm.sel.value == "03") {
-				var xx = "59";
-				var yy = "110";
-			} // 충남(충남 아산 기준)
-			if (frm.sel.value == "04") {
-				var xx = "105";
-				var yy = "94";
-			} // 경북(경북 포항 기준)
-			if (frm.sel.value == "05") {
-				var xx = "80";
-				var yy = "73";
-			} // 경남(경남 사천 기준)
-			if (frm.sel.value == "06") {
-				var xx = "67";
-				var yy = "80";
-			} // 전북(전북 남원 기준)
-			if (frm.sel.value == "07") {
-				var xx = "74";
-				var yy = "70";
-			} // 전남(전남 광양 기준)
-			if (frm.sel.value == "08") {
-				var xx = "72";
-				var yy = "133";
-			} // 강원(강원 춘천 기준)
-			if (frm.sel.value == "09") {
-				var xx = "53";
-				var yy = "38";
-			} // 제주(제주 제주 기준)
-			if (frm.sel.value == "10") {
-				var xx = "127";
-				var yy = "127";
-			} // 울릉(경북 울릉 기준)
-
-			frm.action = "Weather.action?xx=" + xx + "&yy=" + yy;
-			frm.submit();
-		}
-
-		document.write("<form name='frm' method='post'>");
-		document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name='sel'>");
-		if (xx == "59" && yy == "123") {
-			document.write("<option value='01' selected>서울/경기</option>");
-		} else {
-			document.write("<option value='01'>서울/경기</option>");
-		}
-		if (xx == "75" && yy == "115") {
-			document.write("<option value='02' selected>충청북도</option>");
-		} else {
-			document.write("<option value='02'>충청북도</option>");
-		}
-		if (xx == "59" && yy == "110") {
-			document.write("<option value='03' selected>충청남도</option>");
-		} else {
-			document.write("<option value='03'>충청남도</option>");
-		}
-		if (xx == "105" && yy == "94") {
-			document.write("<option value='04' selected>경상북도</option>");
-		} else {
-			document.write("<option value='04'>경상북도</option>");
-		}
-		if (xx == "80" && yy == "73") {
-			document.write("<option value='05' selected>경상남도</option>");
-		} else {
-			document.write("<option value='05'>경상남도</option>");
-		}
-		if (xx == "67" && yy == "80") {
-			document.write("<option value='06' selected>전라북도</option>");
-		} else {
-			document.write("<option value='06'>전라북도</option>");
-		}
-		if (xx == "74" && yy == "70") {
-			document.write("<option value='07' selected>전라남도</option>");
-		} else {
-			document.write("<option value='07'>전라남도</option>");
-		}
-		if (xx == "72" && yy == "133") {
-			document.write("<option value='08' selected>강원도</option>");
-		} else {
-			document.write("<option value='08'>강원도</option>");
-		}
-		if (xx == "53" && yy == "38") {
-			document.write("<option value='09' selected>제주도</option>");
-		} else {
-			document.write("<option value='09'>제주도</option>");
-		}
-		if (xx == "127" && yy == "127") {
-			document.write("<option value='10' selected>울릉도</option>");
-		} else {
-			document.write("<option value='10'>울릉도</option>");
-		}
-		document.write("</select>");
-		document
-				.write("&nbsp;<input type='submit' value='확인' onclick='pass_go()'>");
-		document.write("</form>");
-
+	function weatherHtml(main, name, temp_max, temp_min, humidity){
+		if(name == "Seoul"){ var n = "서울"; }
+		if(name == "Incheon"){ var n = "인천"; }
+		if(name == "Busan"){ var n = "부산"; }
+		if(name == "Daejeon"){ var n = "대전"; }
+		if(name == "Daegu"){ var n = "대구"; }
+		if(name == "Ulsan"){ var n = "울산"; }
+		if(name.indexOf("Cheju") != -1){ var n = "제주"; }
 		
-		
-		
-		$.ajax({
-			url:"http://www.kma.go.kr/wid/queryDFS.jsp?gridx=" + xx	+ "&gridy=" + yy + "",
-			type:'get',
-			dataType:"xml",
-		    success: function(data){
-		    	var myXml = data.responseText;
-		    	var xmlDoc = $.parseXML(myXml);
-		    	console.log(xmlDoc);
-		// 파라미터로 받은 지역값에 따라 기상청 지역예보를 가져옴.
-		var now = new Date();
-		var hour = now.getHours();
-		// 기상청 xml은 3시간 단위로 예보를 보여줌. 현재시간 기준으로 어떤 예보를 가져올 것인지 정함.
-		if (hour == 24 || hour == 0 || hour == 1 || hour == 2) {
-			var hourGubun = 3;
-		} else if (hour == 3 || hour == 4 || hour == 5) {
-			var hourGubun = 6;
-		} else if (hour == 6 || hour == 7 || hour == 8) {
-			var hourGubun = 9;
-		} else if (hour == 9 || hour == 10 || hour == 11) {
-			var hourGubun = 12;
-		} else if (hour == 12 || hour == 13 || hour == 14) {
-			var hourGubun = 15;
-		} else if (hour == 15 || hour == 16 || hour == 17) {
-			var hourGubun = 18;
-		} else if (hour == 18 || hour == 19 || hour == 20) {
-			var hourGubun = 21;
-		} else if (hour == 21 || hour == 22 || hour == 23) {
-			var hourGubun = 24;
+		if(main == "Haze"){
+			var main = '<img src="resources/images/Haze.jpg" style="width:65px;">';
+		}else if(main == "Clear"){
+			var main = '<img src="resources/images/Clear.jpg" style="width:65px;">';
+		}else if(main == "Clouds"){
+			var main = '<img src="resources/images/Clouds.jpg" style="width:65px;">';
+		}else if(main == "Rain"){
+			var main = '<img src="resources/images/Rain.jpg" style="width:65px;">';
 		}
-		
-		document.write("<table border-right:'none' border-left:'none' border-top:'none' border-bottom:'none' style='#bfbfbf solid; font-size:13px' cellpadding='5' width='250px'>");
-		
-		var x = xmlDoc.getElementsByTagName("data");
-		
-		document.write("<tr>");
-		
-		for (i = 0; i < x.length; i++) {
-			if (x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == hourGubun || x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun - 9) || x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun + 3)) {
-				document.write("<td align='center'>");
-				
-				console.log(x[i].getElementsByTagName("day")[0]);
-				if (x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "0" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun + 3)) {
-					document.write("오늘")
-				}
-				if (x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "1" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == hourGubun) {
-					document.write("내일")
 
-				}
-				if (x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "2" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun - 9)) {
-					document.write("모레")
-				}
+		var str = '<div style="display: inline-block;"><b style="font-size:25px;">&nbsp;'+n+'</b><br>'+main+'</div>'+'<div style="display: inline-block;"><img src="resources/images/Humidity.jpg" style="width:10px;"><b>  '+humidity+'</b><br>';
+		str += '<img src="resources/images/redthermometer.jpg" style="width:10px; height=3px;"><b> '+temp_max+'</b><br>';
+		str += '<img src="resources/images/bluethermometer.jpg" style="width:10px; height=3px;"><b> '+temp_min+'</b></div>';
 
-				document.write("</td>");
-			}
-		}
-		document.write("</tr>");
-		document.write("<tr>");
-		for (i = 0; i < x.length; i++) {
-			if (x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == hourGubun || x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun - 9) || x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun + 3)) {
-					console.log(x[i].getElementsByTagName("hour")[0]);
-
-				document.write("<td align='center'>");
-				console.log(x[i].getElementsByTagName("wfkor")[0]+"   "+"날씨");
-				if (x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "0" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun + 3)) {
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "맑음") {
-						document.write("<img src='/dokky/resources/images/sn.png' alt='맑음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 많음") {
-						document
-								.write("<img src='/dokky/resources/images/cb.png' alt='구름 많음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 조금") {
-						document
-								.write("<img src='/dokky/resources/images/cl.png' alt='구름 조금'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "흐리고 비"
-							|| x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "비") {
-						document
-								.write("<img src='/dokky/resources/images/hr.png' alt='흐리고 비'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "눈/비") {
-						document.write("<img src='/dokky/resources/images/sr.png' alt='눈/비'>")
-					}
-
-					document.write("<br>")
-					
-     				document.write("<font color='blue'>");
-					document.write(x[i].getElementsByTagName("tmn")[0].childNodes[0].nodeValue);
-					document.write("</font>/<font color='orange'>");
-					document.write(x[i].getElementsByTagName("tmx")[0].childNodes[0].nodeValue);
-					document.write("</font>");
-				} 
-				if(x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "1" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == hourGubun){
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "맑음") {
-						document.write("<img src='/dokky/resources/images/sn.png' alt='맑음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 많음") {
-						document
-								.write("<img src='/dokky/resources/images/cb.png' alt='구름 많음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 조금") {
-						document
-								.write("<img src='/dokky/resources/images/cl.png' alt='구름 조금'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "흐리고 비"
-							|| x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "비") {
-						document
-								.write("<img src='/dokky/resources/images/hr.png' alt='흐리고 비'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "눈/비") {
-						document.write("<img src='/dokky/resources/images/sr.png' alt='눈/비'>")
-					}
-
-					document.write("<br>")
-					
-					document.write("<font color='blue'>");
-					document.write(x[i].getElementsByTagName("tmn")[0].childNodes[0].nodeValue);
-					document.write("</font>/<font color='orange'>");
-					document.write(x[i].getElementsByTagName("tmx")[0].childNodes[0].nodeValue);
-					document.write("</font>");
-				}
-				if(x[i].getElementsByTagName("day")[0].childNodes[0].nodeValue == "2" && x[i].getElementsByTagName("hour")[0].childNodes[0].nodeValue == (hourGubun - 9)){
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "맑음") {
-						document.write("<img src='/dokky/resources/images/sn.png' alt='맑음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 많음") {
-						document
-								.write("<img src='/dokky/resources/images/cb.png' alt='구름 많음'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "구름 조금") {
-						document
-								.write("<img src='/dokky/resources/images/cl.png' alt='구름 조금'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "흐리고 비"
-							|| x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "비") {
-						document
-								.write("<img src='/dokky/resources/images/hr.png' alt='흐리고 비'>")
-					}
-					if (x[i].getElementsByTagName("wfkor")[0].childNodes[0].nodeValue == "눈/비") {
-						document.write("<img src='/dokky/resources/images/sr.png' alt='눈/비'>")
-					}
-
-					document.write("<br>")
-					
-					document.write("<font color='blue'>");
-					document.write(x[i].getElementsByTagName("tmn")[0].childNodes[0].nodeValue);
-					document.write("</font>/<font color='orange'>");
-					document.write(x[i].getElementsByTagName("tmx")[0].childNodes[0].nodeValue);
-					document.write("</font>");
-				}
-		document.write("</td>");
-				}
-			}
-		
-		document.write("</tr>");
-		document.write("</table>");
-		    },
-		    error: function(data){
-		    	console.log(data.status);
-		    	console.log(data.readyState);
-		    }
-		});
+		return str;
+	}

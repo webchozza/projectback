@@ -42,6 +42,7 @@ input[type="text"] {
 					<td width="15%" align="center" style="margin-left:80%;"><b>이메일</b></td>
 					<td width="10%" align="center"><b>닉네임</b></td>
 					<td width="10%" align="center"><b>가입일</b></td>
+					<td width="10%" align="center"><b>등급</b></td>
 					<td width="10%" align="center"><b>관리</b></td>
 					<td width="10%" align="left"><b>접속</b></td>
 				</tr>
@@ -54,6 +55,8 @@ input[type="text"] {
 						<td align="center">${member.member_name}</td>
 						<td align="center"><fmt:formatDate
 								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
+						<td align="center"><c:if test="${sessionScope.admin eq null}">회원</c:if> 
+						<c:if test="${sessionScope.admin ne null}">관리자</c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
 						<td align="center">
 						<a href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="/dokky/MemberDelete.do?member_id=${member.member_id}"
