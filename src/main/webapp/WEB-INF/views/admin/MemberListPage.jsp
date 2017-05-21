@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=4"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=3"></script>
 </head>
 <style>
 .select-wrapper {

@@ -1,5 +1,5 @@
 function MemberCheck(i,mobile){
-console.log(mobile);
+
 	stoploop();
 	
 	if(mobile == "web"){ var ap = "AjaxMemberWeb"; }

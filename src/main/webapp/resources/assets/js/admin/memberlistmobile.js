@@ -1,6 +1,5 @@
 function memberModifyForm(member_id){
 	
-	console.log(member_id);
 	$("#membermodifyarea").load("/dokky/AdminModifyForm.do", {member_id:member_id});
 }
 
