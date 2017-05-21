@@ -86,3 +86,12 @@ function notidelete(noti_id){
 		}
 	});
 }
+
+function movememberlist(){
+
+	if(window.innerWidth > 500){
+		location.href="/dokky/MemberList.do?ap=web";
+	}else if(window.innerWidth <= 500){
+		location.href="/dokky/MemberList.do?ap=mobile";
+	}
+}

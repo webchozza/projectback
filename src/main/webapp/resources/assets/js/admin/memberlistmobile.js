@@ -11,7 +11,7 @@ function deleteMember(member_id){
 	$.ajax({
 		url:"/dokky/MemberDelete.do",
 		type: "post",
-		data: { member_id: member_id, ap:"AjaxMemberWeb"},
+		data: { member_id: member_id, ap:"AjaxMemberListMobile"},
 		success: function(data){
 			$("#area").html(data);
 		}
@@ -27,7 +27,7 @@ function paging(path, i, search, n) {
 		currentPage : i,
 		search : search,
 		n : n,
-		ap : 'AjaxPaging'
+		ap : 'AjaxMemberListMobile'
 	});
 }
 
@@ -46,7 +46,7 @@ var loop = setTimeout(function(){
 		search: search, 
 		ch: ch,
 		n: n, 
-		ap: 'AjaxMemberWeb'
+		ap: 'AjaxMemberListMobile'
 		});
 	setTimeout(loop, 1000);
 }, 1000);

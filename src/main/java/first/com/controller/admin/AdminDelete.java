@@ -1,6 +1,7 @@
 package first.com.controller.admin;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,12 @@ public class AdminDelete {
 	private AdminDAO admin;
 	
 	@RequestMapping("/MemberDelete.do")
-	public ModelAndView adminDelete(MemberDTO member) {
+	public ModelAndView adminDelete(MemberDTO member,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		
 		admin.memberDelete(member);
 
-		mv.setViewName("redirect:/MemberList.do?ap=AjaxMemberDelete");
+		mv.setViewName("forward:/MemberList.do");
 		
 		return mv;
 	}

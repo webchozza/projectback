@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlist.js?v=12"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlist.js?v=4"></script>
 </head>
 <style>
 input[type="text"] {
@@ -39,25 +39,27 @@ input[type="text"] {
 	
 	<form id="searchform" method="post">
 	<input type="hidden" name="i" id="i" value="${i}"/>
-		<div class="select-wrapper">
+		<div class="select-wrapper" style="min-width:100px; width:10%; display:inline-block;">
 			<select name="n" id="demo-category">
 				<option value="0" <c:if test="${n eq 0}">selected</c:if>>이메일</option>
 				<option value="1" <c:if test="${n eq 1}">selected</c:if>>닉네임</option>
 			</select>
 		</div>
-		<input type="text" id="searchvalue" name="search" value="${search}"  style="width:20%"/> 
+		<div style="display:inline-block; min-width:180px; max-width:30%">
+		<input type="text" id="searchvalue" name="search" value="${search}" placeholder="Search"/> 
+		</div>
 	</form>
 	
-		<a href="javascript:;" onclick='MemberCheck("on")'>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
-			<a href="javascript:;" onclick='MemberCheck("out")'>미접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
-			<a href="javascript:;" onclick='MemberCheck("all")'>전체 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+		<a href="javascript:;" style="color:#825BBF;" onclick='MemberCheck("on","${ap}")'>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
+			<a href="javascript:;" style="color:#825BBF;" onclick='MemberCheck("out","${ap}")'>미접속 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a> 
+			<a href="javascript:;" style="color:#825BBF;" onclick='MemberCheck("all","${ap}")'>전체 회원&nbsp;&nbsp;|&nbsp;&nbsp;</a>
 	<div id="area">
 	</div>
 </div>
 <form id="valueform">
-	<input type="hidden" name="ch" id="ch" value="${ch}"/>
 	<input type="hidden" name="i" id="i" value="${i}"/>
 	<input type="hidden" id="member_id" value="${member_id}"/>
+	<input type="hidden" name="ch" id="ch"/>
 	<input type="hidden" id="path" value="${path}"/>
 	<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
 </form>

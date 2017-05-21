@@ -46,12 +46,20 @@ $(document).ready(function(){
 				<span class="image fit" style="text-align: center; font-size: 30px;">${followCount.follower_count}</span>
 			</div>
 		</div>
-		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-height:30%; position:relative; left:15px; ">
+		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-height:30%; position:relative; left:10px; ">
 		<div class="4u" style="width: 90%; height: 117px;">
 		<div id="me"><span id="plusFollow" class="image fit fa fa-user-plus" style="width:110px; text-align: left; font-size: 25px; color: #f56a6a;"></span></div>
 		</div>
 		</div>
 	</div>
+	<hr style="width: 70%; align: left;">
+						<div><section id="searchsection" class="alt" style="max-width:300px; min-width:230px;">
+					<form action="javascript:;" method="post" id="searchform" >
+					<input type="hidden" name="i" id="i" value="${i}"/>
+						<input type="text" name="search" id="search" placeholder="Search" />
+							<input type="submit" name="ss" onclick="sch()"/>
+					</form>
+				</section></div>
 	<div id="movearea">
 	</div>
 			<form name="note">

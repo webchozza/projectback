@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=1"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=2"></script>
 <script>
 
 $(document).ready(function(){
@@ -104,7 +104,7 @@ display:none;
 					
 					<c:if test="${sessionScope.member_email eq 'admin@'}">
 					<br/>
-					<a href="/dokky/MemberList.do" class="icon fa-cogs">관리자 페이지</a>
+					<a href="javascript:;" onclick="movememberlist()" class="icon fa-cogs">관리자 페이지</a>
 					</c:if>
 					
 				</ul>

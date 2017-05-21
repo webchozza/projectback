@@ -1,31 +1,54 @@
-function MemberCheck(i){
-
+function MemberCheck(i,mobile){
+console.log(mobile);
 	stoploop();
 	
+	if(mobile == "web"){ var ap = "AjaxMemberWeb"; }
+	else if(mobile == "mobile"){ var ap = "AjaxMemberListMobile"; }
+	
 	if(i == 'all'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange'});
+		$("#ch").val("");
+		$('#area').load('/dokky/MemberList.do', {ap:ap});
 	}
 	if(i == 'on'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:1});
+		$("#ch").val("1");
+		$('#area').load('/dokky/MemberList.do', {ap:ap, ch:1});
 	}
 	if(i == 'out'){
-		$('#area').load('/dokky/MemberList.do', {ap:'AjaxArrange', ch:0});
+		$("#ch").val("0");
+		$('#area').load('/dokky/MemberList.do', {ap:ap, ch:0});
 	}
 }
 
-//멤버리스트 화면 로딩시 한번만 동작함(이후엔 #area영역에 호출된 MemberListPage의 setTimeout함수가 동작함)
 $(document).ready(function(){
 
+	if(window.innerWidth > 500){
+		pageload(1);
+	}else if(window.innerWidth <= 500){
+		pageload(0);
+	}
+});
+
+
+function pageload(pagewidth){
 	var form = document.getElementById('searchform');
 	var path = $("#path").val();
 	var i = form.i.value;
 	var search = form.search.value;
 	var n = $("#demo-category").val();
 	
-	$("#area").load(path,{
-		currentPage: i, 
-		search: search, 
-		n: n, 
-		ap: 'AjaxMemberCheck'
-		});
-});
+	if(pagewidth == 0){
+		$("#area").load(path,{
+			currentPage: i, 
+			search: search, 
+			n: n, 
+			ap: 'AjaxMemberListMobile'
+			});
+	}else if(pagewidth == 1){
+		$("#area").load(path,{
+			currentPage: i, 
+			search: search, 
+			n: n, 
+			ap: 'AjaxMemberListWeb'
+			});
+	}
+}

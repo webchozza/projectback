@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=4"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistmobile.js?v=3"></script>
 </head>
 <style>
 .select-wrapper {
@@ -18,42 +18,31 @@
 </style>
 <body>
 	<div class="table-wrapper">
-		<table>
-			<thead>
-				<tr>
-					<td align="center" ><b>이메일</b></td>
-					<td align="center"><b>닉네임</b></td>
-					<td align="center"><b>가입일</b></td>
-					<td align="center"><b>등급</b></td>
-					<td align="center"><b>관리</b></td>
-					<td align="center"><b>접속</b></td>
-				</tr>
-			</thead>
-			<tbody>
 				<c:forEach var="member" items="${memberlist}">
 				<c:if test="${member.member_admin ne 2}">
-					<tr>
-						<td width="30%" align="center">${member.member_email}</td>
-						<td width="10%" align="center">${member.member_name}</td>
-						<td width="10%" align="center"><fmt:formatDate
-								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
-						<td width="10%" align="center"><c:if test="${member.member_admin eq 0}">회원</c:if> 
-						<c:if test="${member.member_admin eq 1}">관리자</c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
-						<td width="10%" align="center">
-						<a href="javascript:;" onclick='memberModifyForm("${member.member_id}")'>수정</a>&nbsp;&nbsp;
-							<a href="javascript:;"
-							onclick='return deleteMember("${member.member_id}")'>탈퇴</a></td>
+				<div style="border: 1px solid #F6CECE; max-width:33%; min-width:290px; display:inline-block; margin:5px; ">
+				<span style="border-right: 1px solid gold; color:#f56a6a;">이메일</span>
+				<b>${member.member_email}</b><br>
+				<span style="border-right: 1px solid gold; color:#f56a6a;">닉네임</span>
+				<b>${member.member_name}</b><br>
+				<span style="border-right: 1px solid gold; color:#f56a6a;">가입일</span>
+				<b><fmt:formatDate value="${member.member_date}" pattern="yyyy.MM.dd" /></b><br>
+				<span style="border-right: 1px solid gold; color:#f56a6a;">&nbsp;&nbsp;&nbsp;등급</span>
+				<c:if test="${member.member_admin eq 0}"><b>회원</b></c:if>
+				<c:if test="${member.member_admin eq 1}"><b>관리자</b></c:if><br>
+				<span style="border-right: 1px solid gold; color:#f56a6a;">&nbsp;&nbsp;&nbsp;관리</span>
+				<a href="javascript:;" onclick='memberModifyForm("${member.member_id}")'><b>수정</b></a>&nbsp;&nbsp;|
+				<a href="javascript:;" onclick='return deleteMember("${member.member_id}")'><b>탈퇴</b></a><br>
+				<span style="border-right: 1px solid gold; color:#f56a6a;">&nbsp;&nbsp;&nbsp;접속</span>
 						<c:if test="${member.member_ch eq 0}">
 							<td width="7%" align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 						<c:if test="${member.member_ch eq 1}">
 							<td width="7%" align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
-					</tr>
+				</div>
 					</c:if>
 				</c:forEach>
-			</tbody>
-		</table>
 	</div>
 	
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->

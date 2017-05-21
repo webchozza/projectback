@@ -25,7 +25,7 @@ public class MemberList {
 	private int startrow;
 	private int endrow;
 	private int totalCount; 
-	private int blockCount = 10;
+	private int blockCount = 9;
 	private int blockPage = 5; 
 	private String pagingHtml;
 	private AjaxPaging page;
@@ -43,7 +43,7 @@ public class MemberList {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		startrow = ((currentPage-1) * 10) + 1;
+		startrow = ((currentPage-1) * blockCount) + 1;
 		endrow = (startrow + blockCount) - 1;
 		
 		map.put("startrow", startrow);
@@ -70,11 +70,13 @@ public class MemberList {
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("search", search);
-		
-		if(ap != null){
-			return "admin/MemberListPage";//at Ajax request
+
+		if(ap != null && ap.equals("AjaxMemberListMobile")){ model.addAttribute("ap","mobile"); return "admin/MemberListMobile";
+		}else if(ap.equals("web")){ model.addAttribute("ap","web"); return "MemberList"; 
+		}else if(ap.equals("mobile")){ model.addAttribute("ap","mobile"); return "MemberList"; 
+		}else if(ap != null){ model.addAttribute("ap","web"); return "admin/MemberListPage";//at Ajax request
 		}
-		
+	
 		return "MemberList";
 	}
 }

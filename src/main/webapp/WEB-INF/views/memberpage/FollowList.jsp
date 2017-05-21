@@ -48,19 +48,7 @@ table {
 	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3 style="color: #f56a6a;">팔로우</h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYFOLLOWCOUNT}</div>
 	</c:if>
-			<hr style="width: 70%; align: left;">
 				<table>
-					<thead>
-						<tr>
-						<td><section id="search" class="alt" style="width: 400px">
-					<form action="javascript:;" method="post" id="searchform" >
-					<input type="hidden" name="i" id="i" value="${i}"/>
-						<input type="text" name="search" id="search" placeholder="Search" width="100px" />
-							<input type="submit" name="ss" onclick="sch()"/>
-					</form>
-				</section></td>
-						</tr>
-					</thead>
 					<tbody>
 					<c:forEach var="follow" items="${list}">
 					<tr>
