@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
 <html>
 <head>
-<title>JoinForm</title>
+<title>회원 정보 수정</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <!--비밀번호 확인  -->
@@ -70,21 +70,22 @@ text-align:left;
 		<div id="main" align="center"> 
 		<div class="inner">
 <!-- Join Form -->
-					
-	<h3>회원가입</h3>
+					<br>
+	<h3>회원 정보 수정</h3>
+	<br>
 		<form name="frm" action="/dokky/MemberModify.do" method="post" onsubmit="">
 				<div class="6u 12u$(xsmall)" style="text-align:left;">			
 				<input type="hidden" name="member_id" id="member_id" value="${member.member_id}"/>
 			
 					<input type="text"  name="member_name" id="member_name" value="${member.member_name }" placeholder="닉네임"/>
-					<br/>
+					<br>
+					<br>
 				    <div>&nbsp;&nbsp;&nbsp;${member.member_email}</div>
-					<br/>
+					<br>
 					<input type="password" style="width:500;" name="member_password" id="member_password" value="" placeholder="비밀번호" />
-					<br/>
+					<br>
 					<input type="password" style="width:500;" name="chpass" id="chpass" value="" placeholder="비밀번호 확인" />
-					<font name="check" size="2" style="float:left" color="pink"></font>
-					<br/>
+					<br>
 					<ul class="actions">
 						<input type="submit" value="수정" class="button special">
 						<input type="button" value="취소" class="button special" onclick="javascript:gosubmit2()">

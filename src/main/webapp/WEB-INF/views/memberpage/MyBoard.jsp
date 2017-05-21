@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/myboard.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/myboard.js?v=2"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -28,19 +28,19 @@ border-bottom-color: #FFFFFF;
 			<!-- 바디 -->
 	<div class="table-wrapper">
 	<c:if test="${myCount eq null}">
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" id="a" onclick="follow()">팔로우</a></h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" id="a" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">0</div>
 	</c:if>
 	<c:if test="${myCount ne null}">
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="boardarea"><h3 style="color: #f56a6a;">게시물</h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYBOARDCOUNT}</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="scrap()">스크랩</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYSCRAPCOUNT}</div>
-	<div style="max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
+	<div style="min-width:50px; max-width: 15%; text-align:center; display: inline-block;" id="scraparea"><h3><a href="javascript:;" onclick="follow()">팔로우</a></h3></div>
 	<div style="width: 10%; text-align:left; display: inline-block;">${myCount.MYFOLLOWCOUNT}</div>
 	</c:if>
 			<hr style="width: 70%; align: left;">
@@ -75,7 +75,7 @@ border-bottom-color: #FFFFFF;
 						<c:url var="detailurl" value="#"/><!-- 오픈소스 -->
 					</c:if>
 					<tr>
-							<td width="30%"><a href="detailurl" id="b">${board.board_title}</a></td>
+							<td width="30%"><a href="${detailurl}" id="b">${board.board_title}</a></td>
 							<td width="10%"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; <a
 								class="icon fa-eye">${board.board_hit}</a></td>
@@ -102,10 +102,5 @@ border-bottom-color: #FFFFFF;
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
 			</div>
 			<br/><br/><br/>
-<form name="valueform">
-<input type="hidden" id="member_id" value="${member_id}"/>
-<input type="hidden" id="path" value="${path}"/>
-<input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
-</form>
 </body>
 </html>

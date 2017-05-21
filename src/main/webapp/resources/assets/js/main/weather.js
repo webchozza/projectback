@@ -60,9 +60,9 @@ function weather(url){
 			var main = '<img src="resources/images/Rain.jpg" style="width:65px;">';
 		}
 
-		var str = '<div style="display: inline-block;"><b style="font-size:25px;">&nbsp;'+n+'</b><br>'+main+'</div>'+'<div style="display: inline-block;"><img src="resources/images/Humidity.jpg" style="width:10px;"><b>  '+humidity+'</b><br>';
-		str += '<img src="resources/images/redthermometer.jpg" style="width:10px; height=3px;"><b> '+temp_max+'</b><br>';
-		str += '<img src="resources/images/bluethermometer.jpg" style="width:10px; height=3px;"><b> '+temp_min+'</b></div>';
+		var str = '<div style="display: inline-block;"><b style="font-size:25px;">&nbsp;'+n+'</b><br>'+main+'</div>'+'<div style="display: inline-block;"><img src="resources/images/Humidity.jpg" style="width:10px;"><b>  '+humidity+'</b>%<br>';
+		str += '<img src="resources/images/redthermometer.jpg" style="width:10px; height=3px;"><b> '+temp_max+'</b>℃<br>';
+		str += '<img src="resources/images/bluethermometer.jpg" style="width:10px; height=3px;"><b> '+temp_min+'</b>℃</div>';
 
 		return str;
 	}

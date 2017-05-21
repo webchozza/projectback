@@ -1,3 +1,24 @@
+function memberModifyForm(member_id){
+	
+	console.log(member_id);
+	$("#membermodifyarea").load("/dokky/AdminModifyForm.do", {member_id:member_id});
+}
+
+function deleteMember(member_id){
+	
+	if(confirm("해당 회원을 탈퇴 처리하시겠습니까?") == false){ return false; }
+	
+	$.ajax({
+		url:"/dokky/MemberDelete.do",
+		type: "post",
+		data: { member_id: member_id},
+		success: function(data){
+			$("#area").html(data);
+		}
+		
+	});
+}
+
 function paging(path, i, search, n) {
 	
 	stoploop();
@@ -28,10 +49,9 @@ var loop = setTimeout(function(){
 		n: n, 
 		ap: 'AjaxMemberCheck'
 		});
-	setTimeout(loop, 300);
-}, 300);
+	setTimeout(loop, 1000);
+}, 1000);
 
 function stoploop(){
-	console.log("루프 멈춘다아아");
 	clearTimeout(loop);
 }

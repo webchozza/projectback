@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=10"></script>
 </head>
 <style>
 input[type="text"] {
@@ -34,38 +34,37 @@ input[type="text"] {
 
 </style>
 <body>
-<div id="area">
 	<div class="table-wrapper">
 		<table>
 			<thead>
 				<tr>
-					<td width="15%" align="center" style="margin-left:80%;"><b>이메일</b></td>
+					<td width="20%" align="center" style="margin-left:80%;"><b>이메일</b></td>
 					<td width="10%" align="center"><b>닉네임</b></td>
 					<td width="10%" align="center"><b>가입일</b></td>
 					<td width="10%" align="center"><b>등급</b></td>
 					<td width="10%" align="center"><b>관리</b></td>
-					<td width="10%" align="left"><b>접속</b></td>
+					<td width="7%" align="center"><b>접속</b></td>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="member" items="${memberlist}">
-				<c:if test="${member.member_ch ne 10}">
+				<c:if test="${member.member_admin ne 2}">
 					<tr>
 						<td align="center">${member.member_email}</td>
 						<td align="center">${member.member_name}</td>
 						<td align="center"><fmt:formatDate
 								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
-						<td align="center"><c:if test="${sessionScope.admin eq null}">회원</c:if> 
-						<c:if test="${sessionScope.admin ne null}">관리자</c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
+						<td align="center"><c:if test="${member.member_admin eq 0}">회원</c:if> 
+						<c:if test="${member.member_admin eq 1}">관리자</c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
 						<td align="center">
-						<a href="/dokky/AdminModifyForm.do?id=${member.member_id}">수정</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="/dokky/MemberDelete.do?member_id=${member.member_id}"
-							onclick="return deleteMember()">탈퇴</a></td>
+						<a href="javascript:;" onclick='memberModifyForm("${member.member_id}")'>수정</a>&nbsp;&nbsp;&nbsp;
+							<a href="javascript:;"
+							onclick='return deleteMember("${member.member_id}")'>탈퇴</a></td>
 						<c:if test="${member.member_ch eq 0}">
-							<td align="left"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
+							<td align="center"><img src="/dokky/resources/images/chu.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 						<c:if test="${member.member_ch eq 1}">
-							<td align="left"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
+							<td align="center"><img src="/dokky/resources/images/ch.jpg" style="width: 25px; height: 22px;"></td>
 						</c:if>
 					</tr>
 					</c:if>
@@ -83,11 +82,6 @@ input[type="text"] {
 			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
 			</style>
 			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-			</div>
 			<br/><br/><br/>
 </body>
-<form id="valueform">
-	<input type="hidden" name="ch" id="ch" value="${ch}"/>
-	<input type="hidden" name="i" id="i" value="${i}"/>
-</form>
 </html>

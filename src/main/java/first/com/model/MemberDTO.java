@@ -12,8 +12,15 @@ public class MemberDTO {
 	private int member_ch;//현재 접속자 확인 칼럼
 	private String member_photo;
 	private Date member_date;
+	private int member_admin;
 	
 	
+	public int getMember_admin() {
+		return member_admin;
+	}
+	public void setMember_admin(int member_admin) {
+		this.member_admin = member_admin;
+	}
 	public int getMember_id() {
 		return member_id;
 	}

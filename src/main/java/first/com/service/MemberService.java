@@ -16,12 +16,6 @@ public class MemberService implements MemberDAO {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public String loginForm() {
-		
-		return null;
-	}
-
-	@Override
 	public MemberDTO login(MemberDTO member){
 		
 		return sqlSession.selectOne("member.loginCheck",member);
@@ -40,14 +34,6 @@ public class MemberService implements MemberDAO {
 	}
 
 	@Override
-	public String findForm() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
-	@Override
 	public MemberDTO findPw(MemberDTO member) {
 		return sqlSession.selectOne("member.findPw", member);
 	}
@@ -60,11 +46,6 @@ public class MemberService implements MemberDAO {
 		
 	}
 
-	@Override
-	public String joinForm() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 		
 	@Override
 	public boolean checkName(MemberDTO member) {
@@ -99,18 +80,6 @@ public class MemberService implements MemberDAO {
 		
 	}
 
-	@Override
-	public String email() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
-	@Override
-	public MemberDTO modifyMemberForm(MemberDTO member) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void modifyMember(MemberDTO member) {
@@ -123,42 +92,6 @@ public class MemberService implements MemberDAO {
 	public MemberDTO naverLogin(String member) {
 		
 		return sqlSession.selectOne("member.naverLogin",member);
-	}
-
-	@Override
-	public String deleteMemberForm() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteMember() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String alramList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteAlram() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String scrapList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteScrap() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

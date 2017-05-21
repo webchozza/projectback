@@ -24,16 +24,16 @@ public class MemberList {
 	
 	private int startrow;
 	private int endrow;
-	private int totalCount; // �� �Խù��� ��
-	private int blockCount = 10; // �� �������� �Խù��� ��
-	private int blockPage = 5; // �� ȭ�鿡 ������ ������ ��
-	private String pagingHtml; // ����¡�� ������ HTML
-	private AjaxPaging page; // ����¡ Ŭ����
+	private int totalCount; 
+	private int blockCount = 10;
+	private int blockPage = 5; 
+	private String pagingHtml;
+	private AjaxPaging page;
 	private String path = "MemberList";//if (RequestMapping("/here.do")) => here = path
 	private String[] kind = { "member_email", "member_name" };
 	
 	
-	@RequestMapping("/MemberList.do")//ch= ������ ���� Į�� ��
+	@RequestMapping("/MemberList.do")//parameter "ch" = Current Users CheckValue
 	public String memberList(@RequestParam(value="search", defaultValue="") String search,
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
@@ -44,12 +44,13 @@ public class MemberList {
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		startrow = ((currentPage-1) * 10) + 1;
-		endrow = (startrow + blockCount) -1;
+		endrow = (startrow + blockCount) - 1;
 		
 		map.put("startrow", startrow);
 		map.put("endrow", endrow);
 		map.put("search", search.trim());
 		map.put("n", kind[n]);
+		
 		if(ch != null && !ch.equals("")){ map.put("ch", ch);
 		model.addAttribute("ch", ch);
 		}
@@ -64,9 +65,8 @@ public class MemberList {
 		model.addAttribute("memberlist", list);
 		model.addAttribute("page", pagingHtml);
 		
-		model.addAttribute("n", n);//select���� selected �Ӽ� �ο��� ���� ���� ������ �ʿ�
+		model.addAttribute("n", n);
 		
-		//ajax�� �̿��� �˻��� �����ϱ� ���� �־� �����ش�
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("search", search);
@@ -74,7 +74,6 @@ public class MemberList {
 		if(ap != null){
 			return "admin/MemberListPage";//at Ajax request
 		}
-		
 		
 		return "MemberList";
 	}

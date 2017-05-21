@@ -20,8 +20,8 @@ public class AdminDelete {
 		ModelAndView mv = new ModelAndView();
 		
 		admin.memberDelete(member);
-		
-		mv.setViewName("redirect:/dokky/MemberList.do");
+
+		mv.setViewName("redirect:/MemberList.do?ap=AjaxMemberDelete");
 		
 		return mv;
 	}

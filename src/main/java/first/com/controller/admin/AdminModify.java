@@ -22,7 +22,7 @@ public class AdminModify {
 	
 	//(관리자) 회원 정보 수정 폼 이동
 	@RequestMapping("/AdminModifyForm.do")
-	public String adminModifyForm(@RequestParam(value="id") int member_id, Model model){
+	public String adminModifyForm(@RequestParam(value="member_id") int member_id, Model model){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -32,7 +32,7 @@ public class AdminModify {
 		
 		model.addAttribute("member", member);
 		
-		return "AdminModifyForm";
+		return "admin/AdminModifyForm";
 	}
 	
 	//(관리자) 회원 정보 수정 처리
