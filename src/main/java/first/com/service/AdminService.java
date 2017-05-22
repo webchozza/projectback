@@ -45,5 +45,10 @@ public class AdminService implements AdminDAO{
 	public int memberCount(Map<String, Object> map) {
 		return sqlSessionTemplate.selectOne("admin.memberCount", map);
 	}
+	
+	@Override
+	public void member_admin(Map<String, Object> map){
+		sqlSessionTemplate.selectOne("admin.member_admin", map);
+	}
 
 }

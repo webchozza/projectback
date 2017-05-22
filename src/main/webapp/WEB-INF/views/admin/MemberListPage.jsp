@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=3"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistpage.js?v=4"></script>
 </head>
 <style>
 .select-wrapper {
@@ -37,8 +37,9 @@
 						<td width="10%" align="center">${member.member_name}</td>
 						<td width="10%" align="center"><fmt:formatDate
 								value="${member.member_date}" pattern="yyyy.MM.dd" /></td>
-						<td width="10%" align="center"><c:if test="${member.member_admin eq 0}">회원</c:if> 
-						<c:if test="${member.member_admin eq 1}">관리자</c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
+						<td width="10%" align="center" id="member_admin">
+						<c:if test="${member.member_admin eq 0}"><a href="javascript:;" onclick='return admin("1","${member.member_id}")'>회원</a></c:if> 
+						<c:if test="${member.member_admin eq 1}"><a href="javascript:;" onclick='admin("0","${member.member_id}")'>관리자</a></c:if></td><!-- 멤버칼럼에 관리자 체크 하는 로직하나 만들자 -->
 						<td width="10%" align="center">
 						<a href="javascript:;" onclick='memberModifyForm("${member.member_id}")'>수정</a>&nbsp;&nbsp;
 							<a href="javascript:;"

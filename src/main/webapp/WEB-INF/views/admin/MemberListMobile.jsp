@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistmobile.js?v=2"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlistmobile.js?v=3"></script>
 </head>
 <style>
 .select-wrapper {
@@ -20,7 +20,7 @@
 	<div class="table-wrapper">
 				<c:forEach var="member" items="${memberlist}">
 				<c:if test="${member.member_admin ne 2}">
-				<div style="border: 1px solid #F6CECE; max-width:33%; min-width:290px; display:inline-block; margin:5px; ">
+				<div style="border: 1px solid #3d4449; max-width:33%; min-width:290px; display:inline-block; margin:5px; ">
 				<span style="border-right: 1px solid gold; color:#f56a6a;">이메일</span>
 				<b>${member.member_email}</b><br>
 				<span style="border-right: 1px solid gold; color:#f56a6a;">닉네임</span>

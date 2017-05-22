@@ -53,3 +53,29 @@ var loop = setTimeout(function(){
 function stoploop(){
 	clearTimeout(loop);
 }
+
+function admin(member_admin, member_id){
+	
+	if(member_admin == 1){
+	if(confirm("관리자로 하시겠습니까?") == false){
+		return false;
+	}}else if(confirm("회원으로 하시겠습니까?") == false){
+		return false;
+	}
+	
+	$.ajax({
+		url:"/dokky/AdminUpdate.do",
+		type: "post",
+		dataType: "json",
+		data: {member_admin: member_admin, member_id: member_id},
+		success: function(data){
+			if(member_admin==0){
+				$("#member_admin").html("회원");
+			}else if(member_admin==1){
+				$("#member_admin").html("관리자");
+			}
+		}
+		
+	});
+	
+}

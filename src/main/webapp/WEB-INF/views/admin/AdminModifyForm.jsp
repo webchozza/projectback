@@ -52,10 +52,11 @@
 }
 	
 function gosubmit2(){
-	var f = document.frm;
-	f.method = "post";
-	f.action = "/dokky/MemberList.do";
-	f.submit();
+	if(window.innerWidth > 500){
+		location.href="/dokky/MemberList.do?ap=web";
+	}else if(window.innerWidth <= 500){
+		location.href="/dokky/MemberList.do?ap=mobile";
+	}
 }
 </script>
 <style>
@@ -80,7 +81,7 @@ text-align:left;
 					<input type="text"  name="member_name" id="member_name" value="${member.member_name }" placeholder="닉네임"/>
 					<br>
 					<br>
-				    <div>&nbsp;&nbsp;&nbsp;${member.member_email}</div>
+				    <div>&nbsp;&nbsp;&nbsp;<b style="font-size:17px;">${member.member_email}</b></div>
 					<br>
 					<input type="password" style="width:500;" name="member_password" id="member_password" value="" placeholder="비밀번호" />
 					<br>

@@ -55,5 +55,9 @@
 	<update id="updateCh" parameterType="int">
 	UPDATE member SET member_ch = 0 WHERE member_id = #{member_id}
 	</update>
+	
+	<update id="member_admin" parameterType="java.util.Map">
+	UPDATE member SET member_admin = #{member_admin} WHERE member_id = #{member_id}
+	</update>
 
 </mapper>
