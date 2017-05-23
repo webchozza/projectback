@@ -5,6 +5,20 @@
 <html>
 <head>
 <title>DOKKY</title>
+
+<style type="text/css">
+.tagcode {
+	background: rgba(230, 235, 237, 0.25);
+	border-radius: 0.375em;
+	border: solid 1px rgba(210, 215, 217, 0.75);
+	font-family: Malgun Gothic;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+	color: #7f888f;
+	
+}
+</style>
 </head>
 <body>
 	<h4>[${tag }]로 태그된 글</h4>
@@ -66,7 +80,7 @@
 							<tr>
 								<td><a href="${detailURL }">${list.board_title }</a><div class='icon fa-tags'>
 								<c:forEach var="btl" items="${tagmap[btl_count]}" varStatus="sta">
-								<a href="taglist.do">${btl}</a>
+								<a href="taglist.do?tag=${btl }&sort=" class="tagcode">${btl}</a>
 								</c:forEach>
 								</div></td>
 								<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;

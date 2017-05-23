@@ -46,11 +46,11 @@ a.tag {
 								</c:if>
 						<tr>
 							<td colspan="6">
-							<a href="bfreelist.do?sort=">최신순</a> <a
-								href="bfreelist.do?sort=like">추천순</a> <a
-								href="bfreelist.do?sort=comment">댓글순</a> <a
-								href="bfreelist.do?sort=scrap">스크랩순</a> <a
-								href="bfreelist.do?sort=hit">조회순</a></td>
+							<a href="bfreelist.do?sort=&search=${search }&n=${n}">최신순</a> <a
+								href="bfreelist.do?sort=like&search=${search }&n=${n}">추천순</a> <a
+								href="bfreelist.do?sort=comment&search=${search }&n=${n}">댓글순</a> <a
+								href="bfreelist.do?sort=scrap&search=${search }&n=${n}">스크랩순</a> <a
+								href="bfreelist.do?sort=hit&search=${search }&n=${n}">조회순</a></td>
 								</td>
 						</tr>
 					</thead>

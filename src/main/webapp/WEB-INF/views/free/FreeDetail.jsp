@@ -96,9 +96,9 @@ function recommendcheck(checkValue){
 		$("#tags").append("<i class='icon fa-tags'></i>");
 		for (i=0; i<sep.length; i++) {
 			if(i==(sep.length-1)){
-				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
 			}else{
-				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
 			}
 		}
 	}
@@ -130,6 +130,18 @@ function recommendcheck(checkValue){
 }
 .fa-thumbs-up{
 	color: #7f888f;
+}
+
+.tagcode {
+	background: rgba(230, 235, 237, 0.25);
+	border-radius: 0.375em;
+	border: solid 1px rgba(210, 215, 217, 0.75);
+	font-family: Malgun Gothic;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+	color: #7f888f;
+	
 }
 </style>
 
