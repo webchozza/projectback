@@ -78,9 +78,6 @@ input[name=ss] {
 							<a href='javascript:;' onclick='codelist("4")'>추천순</a>
 							<a href='javascript:;' onclick='codelist("5")'>스크랩순</a>
 							</td>
-							<td colspan="2" align="right">
-							  <a href="/dokky/bcodewrite.do" type="submit" class="button special"><i class="icon fa-pencil">글쓰기</i></a>
-							</td>
 						</tr>
 					</thead>
 					<!-- 최신순 댓글순 조회순 추천순 스크랩순 끝 -->
@@ -125,9 +122,6 @@ input[name=ss] {
 					<!-- 여기까지 forEach -->
 				</table>
 			</div>
-			<br>
-  			 <div class="paging" align="center">${pagingHtml}</div>
- 			  <br>
 			<!-- Search 박스 -->
 			<div align="center">
 				<section id="search" class="alt" style="min-width: 300px; max-width: 600px;">
@@ -137,6 +131,7 @@ input[name=ss] {
 					</form>
 				</section>
 			</div>
+			<!--  -->
 		</div>
 	</section>
 			</div>

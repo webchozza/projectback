@@ -5,7 +5,7 @@
 <title>WriteForm</title>
 <link rel="stylesheet" href="assets/css/main.css" />
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/editor2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
    function gosubmit1() {
       if (frm.board_title.value == "" || frm.board_title.value == null) {
@@ -27,7 +27,7 @@
        nhn.husky.EZCreator.createInIFrame({
            oAppRef: editor_object,
            elPlaceHolder: "smarteditor",
-           sSkinURI: "${pageContext.request.contextPath}/resources/editor2/SmartEditor2Skin.html",
+           sSkinURI: "${pageContext.request.contextPath}/resources/editor/SmartEditor2Skin.html",
            htParams : {
                // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
                bUseToolbar : true,            

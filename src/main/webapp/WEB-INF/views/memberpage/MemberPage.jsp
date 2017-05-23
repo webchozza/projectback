@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/memberpage.js?v=4"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/memberpage.js?v=3"></script>
 <title>회원 정보 보기</title>
 <style>
 #b{
@@ -40,8 +40,10 @@ $(document).ready(function(){
 			</div>
 			<!-- Break -->
 			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center; font-size: 30px;">${followCount.following_count}</span>
 			</div>
 			<div class="4u" style="width: 50%;">
+				<span class="image fit" style="text-align: center; font-size: 30px;">${followCount.follower_count}</span>
 			</div>
 		</div>
 		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-height:30%; position:relative; left:10px; ">
@@ -60,6 +62,10 @@ $(document).ready(function(){
 				</section></div>
 	<div id="movearea">
 	</div>
+			<form name="note">
+		<input type="hidden" name="name_from" id="name_from"
+			value="${followCount.member_name}">
+	</form>
 <form name="valueform" id="valueform">
 <input type="hidden" id="member_id" value="${member_id}"/>
 <input type="hidden" name="i" id="i" value="${i}"/>
