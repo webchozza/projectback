@@ -2,13 +2,16 @@ package first.com.controller.bcode;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -218,32 +220,31 @@ public class BcodeController {
 	}
 
 	@RequestMapping(value="/bcodedownload.do")
-	public void bcodeFiledown(HttpServletRequest request,HttpServletResponse response,BfileDTO dTOfile) throws Exception{
-		
-		int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
-		
-		BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
-		String orgname = detail2.getBfile_src();
-		
-		response.setContentType("application/octet-stream");
-		
-		orgname=new String(orgname.getBytes("UTF-8"),"iso-8859-1");
-		
-		response.setHeader("Content-Disposition","attachment; filename=\""+orgname+"\"");
-		
-		OutputStream os = response.getOutputStream();
-		
-		
-		String path = "C:\\upload";
-		FileInputStream fis = new FileInputStream(path+File.separator+orgname);
-		
-		int n = 0;
-		byte[] b = new byte[512];
-		while((n=fis.read(b)) != -1){
-			os.write(b,0,n);
-		}
-		fis.close();
-		os.close();
+	 public void bcodeFiledown(HttpServletRequest request,HttpServletResponse response,BfileDTO dTOfile) throws Exception{
+	  
+	  int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
+	  
+	  BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
+	  String orgname = detail2.getBfile_src();
+	  
+	  response.setContentType("application/octet-stream");
+	  
+	  orgname=new String(orgname.getBytes("UTF-8"),"iso-8859-1");
+	  
+	  response.setHeader("Content-Disposition","attachment; filename=\""+orgname+"\"");
+	  
+	  OutputStream os = response.getOutputStream();
+	  
+	  String path = "C:\\Users\\Administrator\\Desktop\\upload";
+	  FileInputStream fis = new FileInputStream(path+File.separator+orgname);
+	  
+	  int n = 0;
+	  byte[] b = new byte[512];
+	  while((n=fis.read(b)) != -1){
+	   os.write(b,0,n);
+	  }
+	  fis.close();
+	  os.close();
 	}
 	
 	@RequestMapping(value="/bcodedelete.do") 
@@ -256,7 +257,6 @@ public class BcodeController {
 	}
 	
 	
-	// �뀓�뒪�듃 �뿉�뵒�꽣 �뾽濡쒕뱶
 	@RequestMapping(value = "/file_uploader_html5.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String multiplePhotoUpload(HttpServletRequest request) {

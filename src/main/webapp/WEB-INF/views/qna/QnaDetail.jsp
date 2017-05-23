@@ -5,9 +5,67 @@
 <html>
 <head>
 <title>DOKKY</title>
-<script
-	src="${pageContext.request.contextPath}/resources/assets/js/free/freedetail.js"></script>
 <script type="text/javascript">
+function insertScrap(){
+	
+	var member_id = $("#session_id").val();
+	var board_id = $("#board_id").val(); 
+	
+	$.ajax({
+		url:"/dokky/ScrapInsert.do",
+		type: "get",
+		dataType: "json",
+		data: {board_id: board_id, member_id: member_id},
+		success: function(data){
+				scrapcheck(data);
+			}
+			//여기에 스크랩 버튼 클릭 안되게 하는 로직 처리
+			//팔로우처럼 체크값을 이용해 해당 글의 스크랩 버튼이 안눌리게 하는 함수를 작성하여 data를 인자로 넘긴다.(상세보기 컨트롤러에서도 체크값 넘겨야 함)
+	});
+}
+
+function scrapcheck(checkValue){
+	console.log(checkValue);
+//스크랩하지 않은 글이면 클릭 가능
+var strA = '<a href="javascript:;" style="font-size: 30px" class="icon fa-bookmark" onclick="insertScrap()"></a>';
+	strA += '<h2 style="color: #7f888f;">스크랩</h2>';
+//스크랩한 글이면 클릭 불가능
+var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-bookmark"></div>';
+	strDiv += '<h2 style="color: #f56a6a;">스크랩</h2>';
+	
+var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-bookmark"></div>';
+	strDivNo += '<h2 style="color: #7f888f;">스크랩</h2>';
+	
+if(checkValue == -1){
+	$("#scrapbutton").html(strDivNo);
+} else if(checkValue > 0){
+	$("#scrapbutton").html(strDiv);
+} else {
+	$("#scrapbutton").html(strA);
+}
+}
+
+function recommendcheck(checkValue){
+	console.log(checkValue);
+	//추천하지 않은 글이면 클릭 가능
+	var strA = '<a href="bqnarecommend.do?board_id=${detail.board_id }&currentPage=${currentPage}&session_id=${sessionScope.member_id}" style="font-size: 30px; color:#7f888f;" class="icon fa-thumbs-up"></a>';
+		strA += '<h2 style="color: #7f888f;">${detail.board_like }</h2>';
+	//추천한 글이면 클릭 불가능
+	var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-thumbs-up"></div>';
+		strDiv += '<h2 style="color: #f56a6a;">${detail.board_like }</h2>';
+		
+	var strDivNo = '<div style="font-size: 30px; color: #7f888f;" class="icon fa-thumbs-up"></div>';
+		strDivNo += '<h2 style="color: #7f888f;">${detail.board_like }</h2>';
+		
+	if(checkValue == -1){
+		$("#recommendbutton").html(strDivNo);
+	} else if(checkValue > 0){
+		$("#recommendbutton").html(strDiv);
+	} else {
+		$("#recommendbutton").html(strA);
+	}
+	}
+	
 	function gosubmit1() {
 		if (frm.bcomment_content.value == ""
 				|| frm.bcomment_content.value == null) {
@@ -37,11 +95,9 @@
 
 	$(document).ready(function() {
 		scrapcheck("${scrapCheck}");
+		recommendcheck("${recommendCheck}");
 	});
 
-	$(document).ready(function() {
-		viewTags("${board_tag}");
-	});
 </script>
 
 <style>
@@ -77,9 +133,7 @@
 									<hr class="major" />
 									<p>${detail.board_content }</p></td>
 								<td><center>
-										<a
-											href="bqnarecommend.do?board_id=${detail.board_id }&currentPage=${currentPage}"
-											style="font-size: 30px" class="icon fa-thumbs-up"><br>${detail.board_like }</a><br>
+										<div id="recommendbutton"></div>
 										<div id="scrapbutton"></div>
 									</center>
 							</tr>

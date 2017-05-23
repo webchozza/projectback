@@ -57,7 +57,6 @@ public class BfreeDetail {
 			mav.addObject("scrapCheck", Scrap.scrapCheck(map));
 			mav.addObject("recommendCheck", recommendSerivce.recommendCheck(map));
 		}
-		
 		/////
 		
 		return mav;
