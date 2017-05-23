@@ -23,14 +23,19 @@ public class BfreeModify {
 		ModelAndView mav= new ModelAndView();
 
 		BoardDTO boardDTO= bfreeService.bfreeDetail(board_id);
+		
 		String content= boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
 		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
+		
 		tag = tag.replaceAll("Community,", "");
+		
 		boardDTO.setBoard_content(content);
 		boardDTO.setBoard_tag(tag);
+		
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
 		mav.setViewName("FreeModifyForm");
+		
 		return mav;
 	}
 	
@@ -55,7 +60,7 @@ public class BfreeModify {
 		}
 
 		boardDTO.setBoard_content(content);
-		if(tag=="")
+		if(tag==""||tag.equals("Community"))
 			boardDTO.setBoard_tag("Community");
 		else
 			boardDTO.setBoard_tag("Community," + tag);
@@ -65,5 +70,6 @@ public class BfreeModify {
 		mav.setViewName("redirect:bfreedetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage"));
 		return mav;
 	}
+
 
 }

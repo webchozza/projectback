@@ -9,23 +9,6 @@
 <%@ page isELIgnored="false"%>
 <html>
 <head>
-<script>
-//함수를 호출할 때 return을 붙이고 function에서 return false를 주면 이벤트가 끊김(즉 서브밋일 떄 주면 서브밋이 중단됨)
-/* function filecheck(event){
-	var filecheck = $("#filea").val();
-	var f = document.frm;
-	
-	if(filecheck==""){
-		event.preventdefault();
-		f.method = "post";
-		f.action = "/dokky/bcodeinsert.do";
-		f.submit();//이렇게해서 만약에 값이 안넘어가면 f.board_id = f.board_id; 이런식으로 값설정하고 넘긴다.
-		//오킹!
-		
-		
-	}
-} */
-</script>
 <title>WriteForm</title>
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -33,15 +16,44 @@
 <link rel="stylesheet" href="assets/css/main.css" />
 
 </head>
+<script>
+$(function(){
+    //전역변수
+    var obj = [];              
+    //스마트에디터 프레임생성
+    nhn.husky.EZCreator.createInIFrame({
+        oAppRef: obj,
+        elPlaceHolder: "smarteditor",
+        sSkinURI: "./resources/editor/SmartEditor2Skin.html",
+        htParams : {
+            // 툴바 사용 여부
+            bUseToolbar : true,            
+            // 입력창 크기 조절바 사용 여부
+            bUseVerticalResizer : true,    
+            // 모드 탭(Editor | HTML | TEXT) 사용 여부
+            bUseModeChanger : true,
+        }
+    });
+    //전송버튼
+    $("#bcodeinsert").click(function(){
+        //id가 smarteditor인 textarea에 에디터에서 대입
+        obj.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+        //폼 submit
+        $("#frm").submit();
+    });
+});
+</script>
 <body>
 	<div id="wrapper">
 		<div id="main" align="center">
 			<div class="inner">
 				<h3>Open Source</h3>
 				<form name="frm" action="/dokky/bcodeinsert.do" method="post" enctype="multipart/form-data">
+				  
 				   <c:if test="${updateform.board_id ne null}">
 				     <input type="hidden" name="board_id" id="board_id" value="${updateform.board_id}">
 				   </c:if>
+    				
     				<input type="hidden" id="member_id" name="member_id" value="${sessionScope.member_id}">
 				       <input type="hidden" id="board_nickname" name="board_nickname" value="${sessionScope.member_name}">
 
@@ -49,12 +61,20 @@
 					<input type="hidden" name="bgroup_id" id="bgroup_id" value="1" />
 					<!-- BOARD_TITLE -->
 					<div class="6u 12u$(xsmall)" style="width: 400pt;">
-						<input type="text" name="board_title" id="board_title" value="" style="width: 400pt;" placeholder="[글제목] <c:out value="${updateform.board_title}"/>" />
+						<input type="text" name="board_title" id="board_title" value="${updateform.board_title}" style="width: 400pt;" placeholder="[글제목] <c:out value="${updateform.board_title}"/>" />
 					</div>
 					<br />
+					
+					<c:if test="${updateform.board_id ne null}">
+					 <div class="6u 12u$(xsmall)" style="width: 400pt;">
+					 <strong><font style="color:#f56a6a">업로드 파일 : ${file.bfile_src}<a href="/dokky/bcodeuploaddelete.do?uploaddelete_id=<c:out value="${updateform.board_id}"/>" class="button special small">삭제</a></font> <!-- 여기에 업로드파일 --></strong>
+					</div>
+					</c:if>
+					<br />
+					
 					<!-- BOARD_CONTENT -->
 					<div class="12u$">
-						<textarea name="board_content" id="board_content" style="width: 500pt; height: 400px;" placeholder="[메시지] <c:out value="${updateform.board_content}"/> " rows="6"></textarea>
+						<textarea name="board_content" id="board_content" style="width: 500pt; height: 400px;" placeholder="[메시지] <c:out value="${updateform.board_content}"/> " rows="6">${updateform.board_content}</textarea>
 					</div>
 					<!-- Break -->
 					<div class="12u$">
@@ -68,17 +88,4 @@
 		</div>
 	</div>
 </body>
-<!-- CATEGORY -->
-<br />
-<!--         <div class="12u$">
-					<div class="select-wrapper">
-						<select name="category" style="width:400pt;" id="category">
-							<option value="">- Category -</option>
-							<option value="1">JAVA</option>
-							<option value="2">SQL</option>
-							<option value="3">AJAX</option>
-							<option value="4">ETC</option>
-						</select>
-					</div>
-				</div> -->
 </html>

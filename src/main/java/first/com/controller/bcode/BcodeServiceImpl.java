@@ -19,12 +19,10 @@ public class BcodeServiceImpl implements BcodeService {
 	@Resource
 	private AbstractDAO bcodedao;
 
-	// 1.�삤�뵂�냼�뒪 寃뚯떆�뙋 由ъ뒪�듃(硫붿씤�뿉�꽌 �겢由��븷 寃쎌슦)
 	@Override
 	public List<BoardDTO> bcodeList(Map map) throws Exception{
 		return bcodedao.list(map);
 	}
-	// 2.�긽�꽭蹂닿린
 	@Override
 	public BoardDTO bcodeDetail(int board_id) throws Exception{
 		return bcodedao.detail(board_id);
@@ -33,61 +31,56 @@ public class BcodeServiceImpl implements BcodeService {
 	public BfileDTO bcodeDetailfile(int board_id) throws Exception{
 		return bcodedao.detailfile(board_id);
 	}
-	// 2.1.�긽�꽭蹂닿린 �겢由��떆 議고쉶�닔 利앷�
 	@Override
 	public void bcodeInreasehit(int increase) throws Exception{
 		bcodedao.increamenthit(increase);
 	}
-	// 3.湲��벐湲�(�옉�꽦�셿猷�)
 	@Override
 	public void bcodeInsert(BoardDTO dTO) throws Exception{
 		bcodedao.insert(dTO);
 	}
 	
-	// 4.�닔�젙(�뤌)
 	@Override
 	public BoardDTO bcodeUpdateform(int update2) throws Exception{
 		return bcodedao.updateform(update2);
 	}
-	// 4.1�닔�젙(�옉�꽦�셿猷�)
 	@Override
 	public void bcodeUpdate(BoardDTO dTO) throws Exception{
 		bcodedao.update(dTO);
 	}
 	
-	// 5.�젙�젹�� BcodeController�뿉留� 議댁옱�븿
-	
-	// 6.�궘�젣�븯湲�
-
-	// 7.�뾽濡쒕뱶
 	@Override
 	public void bcodeUpload(BfileDTO dTO) throws Exception{
 		bcodedao.upload(dTO);
 	}
 	
-	// 8.�떎�슫濡쒕뱶
-	
-	// 9.寃��깋
 	@Override
 	public List<BoardDTO> bcodeSearch(Map map) throws Exception{
 		return bcodedao.search(map);
 	}
 	
-	// 10.�뙎湲� 由ъ뒪�듃
 	@Override
 	public List<BcommentDTO> bcodeComment(int board_id) throws Exception{
 		return bcodedao.comment(board_id);
 	}
 	
-	// 11.�뙎湲� �벐湲�
 	@Override
 	public void bcodeCommentinsert(BcommentDTO dTO) throws Exception{
 		bcodedao.commentinsert(dTO);
 	}
 	
-	// 12.異붿쿇 諛� �뒪�겕�옪
 	@Override
 	public void bcodeInreaselike(int like) throws Exception{
 		bcodedao.increamentlike(like);
+	}
+	
+	@Override
+	public void bcodeDelete(int delete) throws Exception{
+		bcodedao.delete(delete);
+	}
+	
+	@Override
+	public void bcodeUploaddelete(int uploaddelete) throws Exception{
+		bcodedao.uploaddelete(uploaddelete);
 	}
 }

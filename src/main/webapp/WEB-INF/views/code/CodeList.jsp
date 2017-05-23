@@ -39,38 +39,6 @@ function codelist(line1){
 		console.log("통신 성공"); });
 	}
 	
-/* 	function example(){
-		var line1 = $("#line").val(); */
-		
-	/* $.ajax({
-		url:"/dokky/bcodelist.do",
-		type:"post",
-		dataType:"json"
-		data: {line: line1, ap:"AjaxCode"},
-		success: function(data,textStatus, jqXhr)}//data=응답받은 결과의 데이터, textStatus 상태코드, jqXhr xmlhttrequest객체에 jQuery
-			//통신 성공했을 때 내용 실행
-			var str = "<div class=\"red\">"+data.~~~/+"</div>";
-			
-			$("#codearea").html(str);
-		},
-		error: function(data,a,xhr){
-			//통신 실패했을 때 실행
-		}
-	}); */
-	
-/* 	location.href="";//페이지 이동
-	
-	var form = document.eongoo;
-	form.session_id.value = form.session_id.value;
-	form.email.value = ~~~;
-	form.method = "post";
-	form.action = "".
-	form.submit();
-	
-	<form name="eongoo">
-	<input type="hidden" name="session_id" value="${sessionScope.member_id}"/>
-	<input type="text" name="email"/>
-	</form> */
 </script>
 <title>DOKKY</title>
 <style>
@@ -143,40 +111,12 @@ input[name=ss] {
 										value="${board.board_date}" pattern="yyyy.MM.dd" /></td>
 								<!-- 5 -->
 								<td width="10" align="center">${board.board_hit}
-								<!-- <a class="icon fa-comment">3</a>&nbsp;&nbsp;&nbsp;
-								<a class="icon fa-thumbs-up">10</a>&nbsp;&nbsp;&nbsp; 
-								<a class="icon fa-eye">10</a> -->
 								</td>
 								<!-- 6 -->
 								<td width="10" align="center">${board.board_like}</td>
 							</tr>
 							</c:if>
 						</c:forEach>
-						
-						<%-- <c:forEach var="searchlist" items="${searchlist}">
-						 <c:if test="${searchlist.board_id ne null}">
-							<tr>
-								<!-- 1 -->
-								<td width="10" align="center">${searchlist.board_id}</td>
-								<!-- 2 -->
-								<td width="10" align="center"><a href="/dokky/bcodedetail.do?board_id=<c:out value="${searchlist.board_id}"/>">${searchlist.board_title}</a></td>
-								<!-- 3 -->
-								<td width="10" align="center"><a href="#">${searchlist.board_nickname}</a></td>
-								<!-- 4 -->
-								<td width="10" align="center"><fmt:formatDate
-										value="${searchlist.board_date}" pattern="yyyy.MM.dd" /></td>
-								<!-- 5 -->
-								<td width="10" align="center">${searchlist.board_hit}
-								<!-- <a class="icon fa-comment">3</a>&nbsp;&nbsp;&nbsp;
-								<a class="icon fa-thumbs-up">10</a>&nbsp;&nbsp;&nbsp; 
-								<a class="icon fa-eye">10</a> -->
-								</td>
-								<!-- 6 -->
-								<td width="10" align="center">추천</td>
-							</tr>
-							</c:if>
-						</c:forEach> --%>
-
 					</tbody>
 
 					<!-- 여기까지 forEach -->
@@ -194,17 +134,6 @@ input[name=ss] {
 			<!--  -->
 		</div>
 	</section>
-	<%-- 	
-	        <!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-			<div><p id="cm" class="hc vc">${page}</p></div>
-			<style>
-			div { position:relative; } 
-			#cm { position:absolute; } 
-			.hc { width:10%; left:0; right:0; margin-left:50%; margin-right:auto; }
-			.vc { height:3%; top: 0; bottom:0; margin-top:auto; margin-bottom:auto; }
-			</style>
-			<!--ㅡㅡㅡㅡㅡ paging ㅡㅡㅡㅡㅡ-->
-			</div> --%>
 			</div>
 </body>
 </html>

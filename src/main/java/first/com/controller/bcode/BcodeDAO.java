@@ -59,8 +59,6 @@ public class BcodeDAO implements AbstractDAO {
 		sqlSession.update("bcode.update", dTO); 
 	}
 
-	// 5.�젙�젹�� BcodeController�뿉留� 議댁옱�븿
-	
 	// 6.�궘�젣
 	@Override 
 	public void delete(BoardDTO dTO) throws Exception{
@@ -94,6 +92,14 @@ public class BcodeDAO implements AbstractDAO {
 	@Override
 	public void increamentlike(int like) throws Exception{
 		sqlSession.update("bcode.increasementlike", like);
+	}
+	
+	public void delete(int delete) throws Exception{
+		sqlSession.delete("bcode.delete", delete);
+	}
+	// 14.�뾽濡쒕뱶 �뙆�씪 �궘�젣
+	public void uploaddelete(int uploaddelete) throws Exception{
+		sqlSession.delete("bcode.uploaddelete", uploaddelete);
 	}
 
 }

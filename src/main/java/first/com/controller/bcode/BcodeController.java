@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,20 +47,17 @@ public class BcodeController {
 	private AlramDAO noti;
 	//
 	
-	private int totalCount; // 珥� �닔
-	private int blockCount = 10; // �븳 �럹�씠吏��쓽 寃뚯떆臾쇱쓽 �닔
-	private int blockPage = 5; // �븳 �솕硫댁뿉 蹂댁뿬以� �럹�씠吏� �닔
-	private String pagingHtml; // �럹�씠吏뺤쓣 援ы쁽�븳 HTML
-	private Paging page; // �럹�씠吏� �겢�옒�뒪
+	private int totalCount;
+	private int blockCount = 10;
+	private int blockPage = 5;
+	private String pagingHtml;
+	private Paging page;
 	private String path = "bcodelist";// if (RequestMapping("/here.do")) => here
 										// = path
 	private String[] kind = { "JAVA", "SPRING", "SQL" };
 
 	ModelAndView Clist;
 	
-	// 1.�삤�뵂 �냼�뒪 寃뚯떆�뙋 由ъ뒪�듃 
-	// 6.�젙�젹
-	// 9.寃��깋
 	@RequestMapping(value = "/bcodelist.do")
 	public ModelAndView bcodeList(@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "n", defaultValue = "0") int n,
@@ -99,17 +97,12 @@ public class BcodeController {
 		return Clist;
 	}
 
-	// 2.�긽�꽭蹂닿린
-	// 2.1 議고쉶�닔 利앷�
-	// 10.�뙎湲� 由ъ뒪�듃
-	// 10.1.�뙎湲� �벐湲�
 	@RequestMapping(value = "/bcodedetail.do")
 	public ModelAndView bcodeDetail(HttpServletRequest request,BoardDTO dTO,BfileDTO dTOFile,BcommentDTO dTOComment,
 			@RequestParam(value="member_id", defaultValue="-1") int session_id) throws Exception {
 	   
 		int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
 	    
-		//insert like
         if(request.getParameter("board_like") != null){
         	//by eongoo, recommend
     		Map<String, Object> map = new HashMap<String, Object>();
@@ -159,8 +152,6 @@ public class BcodeController {
 		return Cdetail;
 	}
 
-	// 3.湲��벐湲�(�뤌)
-	// 4.�닔�젙(�뤌)
 	@RequestMapping(value="/bcodewrite.do")
 	public ModelAndView bcodeWrite(HttpServletRequest request,@ModelAttribute BoardDTO dTO) throws Exception {
 		
@@ -173,7 +164,9 @@ public class BcodeController {
 			int update2 = Integer.parseInt(update);
 			
 			BoardDTO updateform = (BoardDTO)bcode.bcodeUpdateform(update2);
+			BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(update2);
 			Cwrite.addObject("updateform", updateform);
+			Cwrite.addObject("file", detail2);
 			
 			//by eongoo, new board noti
 			noti.insertNewBoardNoti(Integer.parseInt(request.getParameter("member_id")), "/bcodedetail", 1);
@@ -192,7 +185,18 @@ public class BcodeController {
 		
 		if(request.getParameter("board_id") != null){
 			bcode.bcodeUpdate(dTO);
+			if(request.getFile("file").getSize() != 0){
+				File file = new File("C:\\Users\\Administrator\\Desktop\\upload/"+request.getFile("file").getOriginalFilename());
+				request.getFile("file").transferTo(file);
+				dTOFile.setBoard_id(dTO.getBoard_id());
+				dTOFile.setBfile_size(request.getFile("file").getSize());
+				dTOFile.setBfile_src(request.getFile("file").getOriginalFilename());
+				
+				bcode.bcodeUpload(dTOFile);
+			}
+			
 			return new ModelAndView("redirect:/bcodelist.do");
+		
 		}else if(request.getFile("file").getSize()!= 0){
 			bcode.bcodeInsert(dTO);
 			
@@ -242,18 +246,57 @@ public class BcodeController {
 		os.close();
 	}
 	
-	/*
+	@RequestMapping(value="/bcodedelete.do") 
+	public ModelAndView bcodeDelete(HttpServletRequest request) throws Exception{
+		
+		int delete = (int)Integer.parseInt(request.getParameter("board_id"));
+		bcode.bcodeDelete(delete);
+		
+		return new ModelAndView("redirect:/bcodelist.do");
+	}
+	
+	
+	// �뀓�뒪�듃 �뿉�뵒�꽣 �뾽濡쒕뱶
+	@RequestMapping(value = "/file_uploader_html5.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String multiplePhotoUpload(HttpServletRequest request) {
 
-	 * //�궘�젣�븯湲�
-	 * 
-	 * @RequestMapping(value="/bcodeDelete.do") public ModelAndView
-	 * bcodeDelete(BoardDTO dTO) throws Exception{
-	 * bcodeService.bcodeDelete(dTO);
-	 * 
-	 * ModelAndView Cdelete = new ModelAndView();
-	 * Cdelete.setViewName("redirect:/bcodelist.do");
-	 * 
-	 * return Cdelete; }
-	 */
+		StringBuffer sb = new StringBuffer();
+		try {
+
+			String oldName = request.getHeader("file-name");
+
+			String filePath = "C:/Users/Administrator/Desktop/Bang/dokky/src/main/webapp/resources/photoUpload/";
+			String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis()))
+					.append(UUID.randomUUID().toString()).append(oldName.substring(oldName.lastIndexOf(".")))
+					.toString();
+			InputStream is = request.getInputStream();
+			OutputStream os = new FileOutputStream(filePath + saveName);
+			int numRead;
+			byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+			while ((numRead = is.read(b, 0, b.length)) != -1) {
+				os.write(b, 0, numRead);
+			}
+			os.flush();
+			os.close();
+
+			sb = new StringBuffer();
+			sb.append("&bNewLine=true").append("&sFileName=").append(oldName).append("&sFileURL=")
+					.append("C:/Users/Administrator/Desktop/Bang/dokky/src/main/webapp/resources/photoUpload/").append(saveName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
+	
+	@RequestMapping(value="/bcodeuploaddelete.do")
+	public String bcodeUploaddelete(HttpServletRequest request) throws Exception{
+		
+		int uploaddelete = Integer.parseInt(request.getParameter("uploaddelete_id"));
+		bcode.bcodeUploaddelete(uploaddelete);
+		
+		return "redirect:/bcodewrite.do?board_id="+request.getParameter("uploaddelete_id"); 
+		
+	}
 
 }

@@ -14,6 +14,7 @@ public interface AbstractDAO {
 	public List<BoardDTO> list(Map map) throws Exception;
 
 	public BoardDTO detail(int board_id) throws Exception;
+	
 	public BfileDTO detailfile(int board_id) throws Exception;
 	
 	public void increamenthit(int increase) throws Exception;
@@ -36,4 +37,11 @@ public interface AbstractDAO {
 	
 	public void increamentlike(int like) throws Exception;
 	
+	public void delete(int delete) throws Exception;
+	
+	public void uploaddelete(int uploaddelete) throws Exception;
+	
 }
+
+
+

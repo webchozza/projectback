@@ -171,7 +171,7 @@ function recommendcheck(checkValue){
 									<i><fmt:formatDate value="${detail.board_date}" pattern="yyyy.MM.dd" /><!-- 여기에 작성일 --></i></td>
 								</tr>
 								<tr>
-								    <td colspan="2"><strong><a href="/dokky/bcodedownload.do?board_id=<c:out value="${detail2.board_id}"/>">${detail2.bfile_src}<!-- 여기에 업로드파일 --></a></strong>
+								    <td colspan="2">첨부 파일 :&nbsp;&nbsp;<strong><a href="/dokky/bcodedownload.do?board_id=<c:out value="${detail2.board_id}"/>">${detail2.bfile_src}<!-- 여기에 업로드파일 --></a></strong>
 								</tr>
 								
 								<tr>
@@ -182,8 +182,6 @@ function recommendcheck(checkValue){
 									<!-- 여기에 글내용 -->
 									<p>${detail.board_content}</p>
 									<div align="right">
-									    <a href="/dokky/bcodewrite.do?board_id=<c:out value="${detail.board_id}"/>">수정</a>
-										<a href="#" class="button small">삭제</a>
 									</div>
 									</td>
 									

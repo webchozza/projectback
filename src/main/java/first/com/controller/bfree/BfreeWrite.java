@@ -56,7 +56,7 @@ public class BfreeWrite {
 		}
 
 		boardDTO.setBoard_content(content);
-		if(tag=="")
+		if(tag==""||tag.equals("Community"))
 			boardDTO.setBoard_tag("Community");
 		else
 			boardDTO.setBoard_tag("Community," + tag);

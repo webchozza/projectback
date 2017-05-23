@@ -37,11 +37,13 @@
 	   </select>
 	   <select id="comment" parameterType="int" resultType="first.com.model.BcommentDTO">
 	   SELECT
-		bcomment_id,board_id,bgroup_id,bcomment_content,bcomment_date,bcomment_password,member_id,member_name
-		FROM (SELECT * FROM bcomment INNER JOIN member USING(member_id) WHERE board_id=#{board_id}) ORDER BY bcomment_id
+		BCOMMENT_ID,BOARD_ID,BGROUP_ID,BCOMMENT_CONTENT,BCOMMENT_DATE,BCOMMENT_PASSWORD,MEMBER_ID,MEMBER_NAME
+		FROM (SELECT * FROM BCOMMENT INNER JOIN MEMBER USING(MEMBER_ID) WHERE BOARD_ID=#{board_id}) 
+		ORDER BY BCOMMENT_ID
 	   </select>
 	   <insert id="commentwrite" parameterType="first.com.model.BcommentDTO">
-	   INSERT INTO BCOMMENT(BCOMMENT_ID, BOARD_ID, BGROUP_ID, BCOMMENT_CONTENT,BCOMMENT_DATE, MEMBER_ID) VALUES(SEQ_COMMENT.NEXTVAL,#{board_id},1,#{bcomment_content},SYSDATE,#{member_id})
+	   INSERT INTO BCOMMENT(BCOMMENT_ID, BOARD_ID, BGROUP_ID, BCOMMENT_CONTENT,BCOMMENT_DATE, MEMBER_ID) 
+	   VALUES(SEQ_COMMENT.NEXTVAL,#{board_id},1,#{bcomment_content},SYSDATE,#{member_id})
 	   </insert>
 	   
 	   <update id="increasementlike" parameterType="int">
@@ -81,7 +83,9 @@
 	   <!-- 5.정렬은 BcodeController에만 존재함 -->
 
 	   <!-- 6.삭제하기 -->
-	   <delete id="delete" parameterType="first.com.model.BoardDTO">
+	   <delete id="delete" parameterType="int">
+	   DELETE FROM board WHERE 
+	   board_id=#{board_id}
 	   </delete>
 	   
 	   <!-- 7.업로드 -->
@@ -92,11 +96,10 @@
 	   
 	   <!-- 8.다운로드(BcodeController) -->
 	   
-       <!-- <select id="getSearchList" parameterType="first.com.model.MessageDTO"  resultType="first.com.model.MessageDTO">
-       SELECT * FROM MESSAGE
-       WHERE NAME_TO = #{name_to} AND NAME_FROM LIKE '%'||#{search}||'%'  order by MESSAGE_DATE DESC
-       </select> -->
-	   
-	 
+	   <!-- 6.삭제하기 -->
+	   <delete id="uploaddelete" parameterType="int">
+	   DELETE FROM BFILE WHERE 
+	   board_id=#{board_id}
+	   </delete>
 	 
 	 </mapper>
