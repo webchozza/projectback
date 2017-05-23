@@ -57,7 +57,6 @@
       <div class="inner">
          <h3>Community</h3>
          <form name="frm" action="bfreewrite.do" onsubmit="return gosubmit1()">
-
             <input type="hidden" name="member_id"
                value="${sessionScope.member_id}"> <input type="hidden"
                name="board_nickname" value="${sessionScope.member_name}">

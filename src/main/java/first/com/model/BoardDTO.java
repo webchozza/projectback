@@ -5,24 +5,25 @@ import java.util.List;
 
 public class BoardDTO {
 	
-	private int board_id; //pk
-	private int member_id; //硫ㅻ쾭�뀒�씠釉봯k
-	private String board_title; //湲��젣紐�
-	private String board_content; //湲��궡�슜
-	private Date board_date; //�옉�꽦�씪
-	private String board_nickname; //�옉�꽦�옄 �땳�꽕�엫
-	private int board_hit; //議고쉶�닔
-	private int board_like; //異붿쿇
-	private int board_bad; //諛섎�
-	private int board_comment_count; //肄붾찘�듃媛��닔
+	private int board_id;
+	private int member_id; 
+	private String board_title; 
+	private String board_content;
+	private Date board_date; 
+	private String board_nickname; 
+	private int board_hit; 
+	private int board_like; 
+	private int board_bad; 
+	private int board_comment_count; 
 	private String board_password; 
-	private int board_ip; //�옉�꽦�옄 �븘�씠�뵾
-	private int board_filecount; //泥⑤��븳 �뙆�씪媛쒖닔
-	private int bgroup_id;	//移댄뀒怨좊━ 踰덊샇
+	private int board_ip; 
+	private int board_filecount;
+	private int bgroup_id;	
 	private String member_name;
 	private String scrap_member_id;
-	private String board_tag; //�깭洹�
+	private String board_tag;
 	private List board_tag_list;
+	private int answerCheckNum;
 	
 	
 	
@@ -31,6 +32,12 @@ public class BoardDTO {
 	}
 	public void setBoard_tag_list(List board_tag_list) {
 		this.board_tag_list = board_tag_list;
+	}
+	public int getAnswerCheckNum() {
+		return answerCheckNum;
+	}
+	public void setAnswerCheckNum(int answerCheckNum) {
+		this.answerCheckNum = answerCheckNum;
 	}
 	public String getBoard_tag() {
 		return board_tag;

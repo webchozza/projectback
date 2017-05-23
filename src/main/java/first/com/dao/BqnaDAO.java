@@ -1,6 +1,7 @@
 package first.com.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import first.com.controller.bqna.BqnaListDTO;
 import first.com.model.BcommentDTO;
@@ -32,9 +33,19 @@ public interface BqnaDAO {
 	
 	public List<BoardDTO> bqnaSearch2(String search);
 	
+	public List<BcommentDTO> bcqnaList(int board_id);
+	
 	public int bCqnaWrite(BcommentDTO bcommentDTO);
 	
-	public String bCqnaDelete();
+	public int bCqnaDelete(int bcomment_id);
 	
-	public BoardDTO bqnaUpdateHit(int board_id);
+	public int bqnaUpdateHit(int board_id);
+	
+	public int bqnaUpdateCountco(int board_id);
+	
+	public void answerChoice(Map map);
+	
+	public int bqnaAnswerCheck(int board_id);
+
+	public int bqnaAnswerDelete(int bcomment_id);
 }

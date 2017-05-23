@@ -6,14 +6,24 @@
 
 	<!-- qna 리스트 -->
 	<select id="bqnaList" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board WHERE bgroup_id = 4
-		<if test="n!=0">
+	SELECT * FROM(SELECT c.board_id, c.member_id, c.board_title,c.board_content,
+	c.board_date,c.board_nickname,c.board_hit,c.board_like,c.board_bad,
+	c.board_comment_count,c.board_password,c.board_ip,c.board_filecount,
+	c.bgroup_id,c.board_num,c.board_tag,
+	NVL(count(d.bcomment_id), 0) as answerCheckNum FROM(SELECT a.*,b.bcomment_id FROM(SELECT * 
+	FROM board WHERE bgroup_id = 4 
+	<if test="n!=0">
 			AND
 			<if test="n==1">board_title</if>
 			<if test="n==2">board_content</if>
 			<if test="n==3">board_nickname</if>
 			LIKE '%'||#{search}||'%'
-		</if>
+	</if>
+	) a LEFT OUTER JOIN bcomment b ON a.board_id = b.board_id) c LEFT OUTER JOIN answer d ON c.bcomment_id = d.bcomment_id 
+	GROUP BY c.board_id, c.member_id, c.board_title,c.board_content,
+	c.board_date,c.board_nickname,c.board_hit,c.board_like,c.board_bad,
+	c.board_comment_count,c.board_password,c.board_ip,c.board_filecount,
+	c.bgroup_id,c.board_num,c.board_tag) 
 		<if test="sort!=''">
 			ORDER BY
 			<if test="sort== 'like'">board_like</if>
@@ -40,38 +50,18 @@
 		0, 4, #{board_tag})
 	</insert>
 
-	<!-- 제목검색 -->
-	<select id="bqnaSearchTitle" resultType="first.com.model.BoardDTO"
-		parameterType="String">
-		SELECT * FROM board
-		WHERE board_title like #{search} AND
-		bgroup_id=4
-		ORDER BY board_id DESC
-	</select>
-
-	<!-- 내용검색 -->
-	<select id="bqnaSearchContent" resultType="first.com.model.BoardDTO"
-		parameterType="String">
-		SELECT * FROM board
-		WHERE board_content like #{search}
-		AND
-		bgroup_id=4
-		ORDER BY board_id DESC
-	</select>
-
-	<!-- 작성자검색 -->
-	<select id="bqnaSearchMember" resultType="first.com.model.BoardDTO"
-		parameterType="String">
-		SELECT * FROM board
-		WHERE board_nickname like #{search}
-		AND
-		bgroup_id=4
-		ORDER BY board_id DESC
-	</select>
+	<!-- 댓글수업데이트 -->
+	<update id="bqnaUpdateCountco" parameterType="Integer">
+		UPDATE board
+		SET
+		board_comment_count = (SELECT count(*) FROM bcomment WHERE board_id =
+		#{board_id})
+		WHERE board_id= #{board_id}
+	</update>
 
 	<!-- 상세보기 -->
 	<select id="bqnaDetail" resultType="first.com.model.BoardDTO"
-		parameterType="int">
+		parameterType="Integer">
 		SELECT * FROM board
 		WHERE board_id = #{board_id}
 	</select>
@@ -102,6 +92,7 @@
 		board_id=#{board_id}
 	</update>
 
+	<!-- 좋아요 -->
 	<update id="bqnaUpdateLike" parameterType="Integer">
 		UPDATE board
 		SET
@@ -109,5 +100,48 @@
 		WHERE
 		board_id= #{board_id}
 	</update>
+
+	<!-- 댓글목록 -->
+	<select id="bcqnaList" resultType="first.com.model.BcommentDTO">
+		SELECT a.*,b.bcomment_id as answer FROM(SELECT
+		bcomment_id,board_id,bgroup_id,bcomment_content,bcomment_date,bcomment_password,member_id,member_name
+		FROM (SELECT * FROM bcomment INNER JOIN member USING(member_id) WHERE
+		board_id=#{board_id}) ORDER BY bcomment_id) a left outer join ANSWER b on a.board_id=b.board_id
+	</select>
+
+	<!-- 댓글쓰기 -->
+	<insert id="bcqnaWrite" parameterType="first.com.model.BcommentDTO">
+		INSERT INTO
+		bcomment(bcomment_id, board_id, bgroup_id, bcomment_content,
+		bcomment_date, member_id)
+		VALUES(seq_comment.NEXTVAL, #{board_id}, 4,
+		#{bcomment_content}, SYSDATE, #{member_id})
+	</insert>
+
+	<!-- 댓글삭제 -->
+	<delete id="bcqnaDelete" parameterType="first.com.model.BcommentDTO">
+		DELETE bcomment
+		WHERE
+		bcomment_id=#{bcomment_id}
+	</delete>
+	
+	<!-- 답변채택 -->
+	<insert id="bqnaAnswerChoice" parameterType="java.util.Map">
+		INSERT INTO
+		answer values (seq_answer.nextval, #{member_id}, #{bcomment_id}, #{board_id})
+	</insert>
+	
+	<!-- 답변채택글확인 -->
+	<select id="bqnaAnswerCheck" parameterType="int" resultType="int">
+		select NVL(count(b.bcomment_id),0) 
+		FROM (Select * FROM bcomment WHERE board_id = #{board_id}) a 
+		INNER JOIN answer b ON a.bcomment_id = b.bcomment_id
+	</select>
+	
+	<!-- 답변채택취소 -->
+	<delete id="bqnaAnswerDelete" parameterType="integer">
+		DELETE answer
+		WHERE bcomment_id=#{bcomment_id}
+	</delete>
 
 </mapper>

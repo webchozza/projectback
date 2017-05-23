@@ -20,19 +20,19 @@ display:none;
 			<div class="table-wrapper">
 				<table>
 					<colgroup>
-						<col width="58%" />
-						<col width="22%" />
+						<col width="65%" />
+						<col width="15%" />
 						<col width="10%" />
 						<col width="10%" />
 					</colgroup>
 					<thead>
 						<tr>
 							<td colspan="2">
-							<a href="bqnalist.do?sort=">최신순</a> 
-							<a href="bqnalist.do?sort=like">추천순</a> 
-							<a href="bqnalist.do?sort=comment">댓글순</a>
-							<a href="#">스크랩순</a> 
-							<a href="bqnalist.do?sort=hit">조회순</a></td>
+							<a href="bqnalist.do?sort=&search=${search }&n=${n}" style="color: #000000; font-weight:bold">최신순</a> 
+							<a href="bqnalist.do?sort=like&search=${search }&n=${n}"style="color: #000000; font-weight:bold">추천순</a> 
+							<a href="bqnalist.do?sort=comment&search=${search }&n=${n}"style="color: #000000; font-weight:bold">댓글순</a>
+							<a href="#"style="color: #000000; font-weight:bold">스크랩순</a> 
+							<a href="bqnalist.do?sort=hit&search=${search }&n=${n}"style="color: #000000; font-weight:bold">조회순</a></td>
 							<td colspan="2" align="right">
 							<c:if test="${sessionScope.member_email ne null}">
 							<a href="bqnawriteform.do" class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a>
@@ -47,9 +47,11 @@ display:none;
 							<c:param name="seesion_id" value="${sessionScope.member_id}"/>
 						</c:url>
 						<tr>
-							<td><a href="${detailURL }">${list.board_title }</a></td>
-							<td><a class="icon fa-comment">${list.board_comment_count }</a>&nbsp;&nbsp;&nbsp;
-								<a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
+							<td>
+							<a href="${detailURL }">${list.board_title }</a>&nbsp;<a class="icon fa-commenting-o" style="color: #7f888f">&nbsp;${list.board_comment_count }</a>				<c:if test="${list.answerCheckNum gt 0}">
+							[답변채택완료]<a class="icon fa-check-circle" style="font-size: 18px; color: #FF6C6C"  ></a>
+							</c:if></td>
+							<td><a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 								<a class="icon fa-eye">${list.board_hit }</a></td>
 							<td><a href="/dokky/MemberPage.do?member_id=${list.member_id }&session_id=${sessionScope.member_id}">${list.board_nickname }</a></td>
 							<td><fmt:formatDate value="${list.board_date }" pattern="yyyy.MM.dd" /></td>
@@ -59,28 +61,31 @@ display:none;
 				</table>
 			</div>
 			
-			<div class="paging" aling="center">${paingHtml}</div>
+			<div class="paging" align="center">${pagingHtml}</div>
 			<br>
 			
 			<div class="row uniform" align="center">
-            <form method="post" action="bqnalist.do">
-            <div class="select-wrapper" style="width: 200px; display: inherit;"
-               align="center">
-               <select name="n" id="demo-category">
-                  <option value="1">제목</option>
-                  <option value="2">내용</option>
-                  <option value="3">작성자</option>
-               </select>
-            </div>
-            <section id="search" class="alt"
-               style="width: 200px; display: inherit;">
-               
-                  <input type="text" name="search" id="search" placeholder="Search"
-                     width="100px"  /> <input type="submit" name="ss" />
-               
-            </section>
-            </form>
-         </div>
+				<form method="post" action="bqnalist.do">
+					<input type="hidden" name="sort" value="${sort}">
+
+					<div class="select-wrapper" style="float: left; width: 140px">
+						<select name="n" id="demo-category">
+							<option value="1">제목</option>
+							<option value="2">내용</option>
+							<option value="3">작성자</option>
+						</select>
+					</div>
+
+					<div style="overflow: hidden;">
+						<section id="search" class="alt">
+
+							<input type="text" name="search" id="search" placeholder="Search"
+								width="250px" /> <input type="submit" name="ss" />
+
+						</section>
+					</div>
+				</form>
+			</div>
 		</div>
 	</section>
 

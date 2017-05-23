@@ -12,7 +12,14 @@ public class BcommentDTO {
 	private int bcomment_password;
 	private int member_id;
 	private String member_name;
+	private int answer;
 	
+	public int getAnswer() {
+		return answer;
+	}
+	public void setAnswer(int answer) {
+		this.answer = answer;
+	}
 	public String getMember_name() {
 		return member_name;
 	}

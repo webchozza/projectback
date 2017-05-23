@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import first.com.common.BfreePaging;
+import first.com.controller.bfree.BfreePaging;
 import first.com.dao.BqnaDAO;
 import first.com.model.BoardDTO;
 
@@ -67,7 +67,7 @@ public class BqnaList {
 		bqnaListVO.setN(n);
 		bqnaListVO.setSearch(search);
 		boardDTO = bqnaService.bqnaList(bqnaListVO);
-
+		
 		
 		totalCount = boardDTO.size();
 		page = new BfreePaging("bqnalist", currentPage, totalCount, blockCount, blockPage, search, n, sort);

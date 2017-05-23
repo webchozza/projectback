@@ -13,18 +13,17 @@ import org.springframework.web.servlet.ModelAndView;
 import first.com.dao.BqnaDAO;
 
 @Controller
-public class BCqnaDelete {
+public class BqnaAnswerDelete {
 	
 	@Resource
 	private BqnaDAO bqnaService;
-
-	@RequestMapping("bqnadeletecomment")
-	public ModelAndView bCqnaDelete(HttpServletRequest request) {
+	
+	@RequestMapping("AnswerCancel")
+	public ModelAndView AnswerCancel(HttpServletRequest request){
 		
 		ModelAndView mav = new ModelAndView();
 		int bcomment_id = Integer.parseInt(request.getParameter("bcomment_id"));
-		bqnaService.bCqnaDelete(bcomment_id);
-		bqnaService.bqnaUpdateCountco(Integer.parseInt(request.getParameter("board_id")));
+		bqnaService.bqnaAnswerDelete(bcomment_id);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board_id", request.getParameter("board_id"));
