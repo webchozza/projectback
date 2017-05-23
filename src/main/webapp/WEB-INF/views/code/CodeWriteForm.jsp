@@ -74,7 +74,7 @@ $(function(){
 					
 					<!-- BOARD_CONTENT -->
 					<div class="12u$">
-						<textarea name="board_content" id="board_content" style="width: 500pt; height: 400px;" placeholder="[메시지] <c:out value="${updateform.board_content}"/> " rows="6">${updateform.board_content}</textarea>
+						<textarea name="board_content" id="smarteditor" value="${updateform.board_content}" style="width: 500pt; height: 400px;" placeholder="[메시지] <c:out value="${updateform.board_content}"/> " rows="6">${updateform.board_content}</textarea>
 					</div>
 					<!-- Break -->
 					<div class="12u$">

@@ -41,25 +41,26 @@ public class BcodeController {
 	private BcodeService bcode;
 	
 	//by eongoo
-	@Resource 
-	private ScrapDAO Scrap;
-	@Resource 
-	private RecommendDAO recommendSerivce;
-	@Resource 
-	private AlramDAO noti;
-	//
+		@Resource 
+		private ScrapDAO Scrap;
+		@Resource 
+		private RecommendDAO recommendSerivce;
+		@Resource 
+		private AlramDAO noti;
+		// 
 	
-	private int totalCount;
-	private int blockCount = 10;
-	private int blockPage = 5;
-	private String pagingHtml;
-	private Paging page;
-	private String path = "bcodelist";// if (RequestMapping("/here.do")) => here
-										// = path
+	private int totalCount; // 珥� �닔
+	private int blockCount = 10; // �븳 �럹�씠吏��쓽 寃뚯떆臾쇱쓽 �닔
+	private int blockPage = 5; // �븳 �솕硫댁뿉 蹂댁뿬以� �럹�씠吏� �닔
+	private String pagingHtml; // �럹�씠吏뺤쓣 援ы쁽�븳 HTML
+	private Paging page; // �럹�씠吏� �겢�옒�뒪
 	private String[] kind = { "JAVA", "SPRING", "SQL" };
 
 	ModelAndView Clist;
 	
+	// 1.�삤�뵂 �냼�뒪 寃뚯떆�뙋 由ъ뒪�듃 
+	// 6.�젙�젹
+	// 9.寃��깋
 	@RequestMapping(value = "/bcodelist.do")
 	public ModelAndView bcodeList(@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "n", defaultValue = "0") int n,
@@ -76,13 +77,14 @@ public class BcodeController {
 
 		totalCount = list.size();
 
-		page = new Paging(path, currentPage, totalCount, blockCount, blockPage, search, n);
+		page = new Paging("bcodelist", currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 
 		int lastCount = totalCount;
 		if (page.getEndCount() < totalCount) {
 			lastCount = page.getEndCount() + 1;
 		}
+
 		list = list.subList(page.getStartCount(), lastCount);
 		
 		if(ap == null || ap.equals("")){
@@ -93,19 +95,23 @@ public class BcodeController {
 		
 		Clist.addObject("list", list);
 
-		Clist.addObject("page", pagingHtml);
+		Clist.addObject("pagingHtml", pagingHtml);
 		Clist.addObject("n", n);
 
 		return Clist;
 	}
 
+	// 2.�긽�꽭蹂닿린
+	// 2.1 議고쉶�닔 利앷�
+	// 10.�뙎湲� 由ъ뒪�듃
+	// 10.1.�뙎湲� �벐湲�
 	@RequestMapping(value = "/bcodedetail.do")
 	public ModelAndView bcodeDetail(HttpServletRequest request,BoardDTO dTO,BfileDTO dTOFile,BcommentDTO dTOComment,
-			@RequestParam(value="member_id", defaultValue="-1") int session_id) throws Exception {
-	   
+			@RequestParam(value="session_id", defaultValue="-1") int session_id) throws Exception {
+	    
 		int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
 	    
-        if(request.getParameter("board_like") != null){
+	    if(request.getParameter("board_like") != null){
         	//by eongoo, recommend
     		Map<String, Object> map = new HashMap<String, Object>();
     		map.put("member_id", session_id);
@@ -115,14 +121,13 @@ public class BcodeController {
         	int like = Integer.parseInt(request.getParameter("board_like"));
         	bcode.bcodeInreaselike(like);
         }
-
-		bcode.bcodeInreasehit(board_id2);
-			
-
+	    
+        bcode.bcodeInreasehit(board_id2);
+		
         BoardDTO detail = (BoardDTO)bcode.bcodeDetail(board_id2);
         BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
         List<BcommentDTO> detail3 = (List<BcommentDTO>) bcode.bcodeComment(board_id2);
-        
+                
         //insert comment
         if(request.getParameter("bcomment_content") != null){
         	  bcode.bcodeCommentinsert(dTOComment);
@@ -131,29 +136,31 @@ public class BcodeController {
       		noti.insertCommentNoti(board_id2, session_id, "/bcodedetail");
       		//
         }
-      
+        
         ModelAndView Cdetail = new ModelAndView("Cdetail");
-		Cdetail.addObject("detail", detail);
+        
+        	//add by eongoo
+      		Map<String, Object> map = new HashMap<String, Object>();
+      		map.put("session_id", session_id);
+      		map.put("board_id", board_id2);
+      		if(session_id == -1){ 
+      			Cdetail.addObject("scrapCheck", "-1");
+      			Cdetail.addObject("recommendCheck", "-1");
+      		} else {
+      			Cdetail.addObject("scrapCheck", Scrap.scrapCheck(map));
+      			Cdetail.addObject("recommendCheck", recommendSerivce.recommendCheck(map));
+      		}
+      		/////
+		
+        Cdetail.addObject("detail", detail);
 		Cdetail.addObject("detail2", detail2);
 		Cdetail.addObject("detail3", detail3);
-		
-		//add by eongoo
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("session_id", session_id);
-		map.put("board_id", board_id2);
-		if(session_id == -1){ 
-			Cdetail.addObject("scrapCheck", "-1");
-			Cdetail.addObject("recommendCheck", "-1");
-		} else {
-			Cdetail.addObject("scrapCheck", Scrap.scrapCheck(map));
-			Cdetail.addObject("recommendCheck", recommendSerivce.recommendCheck(map));
-		}
-		/////
-		
 		
 		return Cdetail;
 	}
 
+	// 3.湲��벐湲�(�뤌)
+	// 4.�닔�젙(�뤌)
 	@RequestMapping(value="/bcodewrite.do")
 	public ModelAndView bcodeWrite(HttpServletRequest request,@ModelAttribute BoardDTO dTO) throws Exception {
 		
@@ -170,21 +177,17 @@ public class BcodeController {
 			Cwrite.addObject("updateform", updateform);
 			Cwrite.addObject("file", detail2);
 			
-			//by eongoo, new board noti
-			noti.insertNewBoardNoti(Integer.parseInt(request.getParameter("member_id")), "/bcodedetail", 1);
-			//
-			
 			return Cwrite;
 		}else{
 			return Cwrite;
 		}
+}
 
-	}
-
-	
+	// 3.1湲��벐湲�(�옉�꽦�셿猷�)
+	// 4.1�닔�젙(�옉�꽦�셿猷�)
+	// 7.�뾽濡쒕뱶
 	@RequestMapping(value="/bcodeinsert.do")
 	public ModelAndView bcodeInsert(MultipartHttpServletRequest request,@ModelAttribute BoardDTO dTO,@ModelAttribute BfileDTO dTOFile) throws Exception {// 洹몃읆 �뿬湲곗꽑  member_id�옉 bgroup_id 2媛� �뱾�뼱�샂
-		
 		if(request.getParameter("board_id") != null){
 			bcode.bcodeUpdate(dTO);
 			if(request.getFile("file").getSize() != 0){
@@ -196,20 +199,19 @@ public class BcodeController {
 				
 				bcode.bcodeUpload(dTOFile);
 			}
-			
+	
 			return new ModelAndView("redirect:/bcodelist.do");
-		
+			
 		}else if(request.getFile("file").getSize()!= 0){
 			bcode.bcodeInsert(dTO);
 			
-			File file = new File("C:\\upload/"+request.getFile("file").getOriginalFilename());
+			File file = new File("C:\\Users\\Administrator\\Desktop\\upload/"+request.getFile("file").getOriginalFilename());
 			request.getFile("file").transferTo(file);
 			dTOFile.setBoard_id(dTO.getBoard_id());
 			dTOFile.setBfile_size(request.getFile("file").getSize());
 			dTOFile.setBfile_src(request.getFile("file").getOriginalFilename());
 			
 			bcode.bcodeUpload(dTOFile);
-			
 			
 			return new ModelAndView("redirect:/bcodelist.do");
 		}else{
@@ -218,35 +220,37 @@ public class BcodeController {
 		}
 
 	}
-
+	// 8.�떎�슫濡쒕뱶
 	@RequestMapping(value="/bcodedownload.do")
-	 public void bcodeFiledown(HttpServletRequest request,HttpServletResponse response,BfileDTO dTOfile) throws Exception{
-	  
-	  int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
-	  
-	  BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
-	  String orgname = detail2.getBfile_src();
-	  
-	  response.setContentType("application/octet-stream");
-	  
-	  orgname=new String(orgname.getBytes("UTF-8"),"iso-8859-1");
-	  
-	  response.setHeader("Content-Disposition","attachment; filename=\""+orgname+"\"");
-	  
-	  OutputStream os = response.getOutputStream();
-	  
-	  String path = "C:\\Users\\Administrator\\Desktop\\upload";
-	  FileInputStream fis = new FileInputStream(path+File.separator+orgname);
-	  
-	  int n = 0;
-	  byte[] b = new byte[512];
-	  while((n=fis.read(b)) != -1){
-	   os.write(b,0,n);
-	  }
-	  fis.close();
-	  os.close();
+	public void bcodeFiledown(HttpServletRequest request,HttpServletResponse response,BfileDTO dTOfile) throws Exception{
+		
+		int board_id2 = (int)Integer.parseInt(request.getParameter("board_id"));
+		
+		BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(board_id2);
+		String orgname = detail2.getBfile_src();
+		
+		response.setContentType("application/octet-stream");
+		
+		orgname=new String(orgname.getBytes("UTF-8"),"iso-8859-1");
+		
+		response.setHeader("Content-Disposition","attachment; filename=\""+orgname+"\"");
+		
+		OutputStream os = response.getOutputStream();
+		
+		
+		String path = "C:\\Users\\Administrator\\Desktop\\upload";
+		FileInputStream fis = new FileInputStream(path+File.separator+orgname);
+		
+		int n = 0;
+		byte[] b = new byte[512];
+		while((n=fis.read(b)) != -1){
+			os.write(b,0,n);
+		}
+		fis.close();
+		os.close();
 	}
 	
+	// 13.�궘�젣�븯湲�
 	@RequestMapping(value="/bcodedelete.do") 
 	public ModelAndView bcodeDelete(HttpServletRequest request) throws Exception{
 		
@@ -257,15 +261,16 @@ public class BcodeController {
 	}
 	
 	
+	// �뀓�뒪�듃 �뿉�뵒�꽣 �뾽濡쒕뱶
 	@RequestMapping(value = "/file_uploader_html5.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String multiplePhotoUpload(HttpServletRequest request) {
-
+		// �뙆�씪�젙蹂�
 		StringBuffer sb = new StringBuffer();
 		try {
-
+			// �뙆�씪紐낆쓣 諛쏅뒗�떎 - �씪諛� �썝蹂명뙆�씪紐�
 			String oldName = request.getHeader("file-name");
-
+			// �뙆�씪 湲곕낯寃쎈줈 _ �긽�꽭寃쎈줈
 			String filePath = "C:/Users/Administrator/Desktop/Bang/dokky/src/main/webapp/resources/photoUpload/";
 			String saveName = sb.append(new SimpleDateFormat("yyyyMMddHHmmss").format(System.currentTimeMillis()))
 					.append(UUID.randomUUID().toString()).append(oldName.substring(oldName.lastIndexOf(".")))
@@ -279,7 +284,7 @@ public class BcodeController {
 			}
 			os.flush();
 			os.close();
-
+			// �젙蹂� 異쒕젰
 			sb = new StringBuffer();
 			sb.append("&bNewLine=true").append("&sFileName=").append(oldName).append("&sFileURL=")
 					.append("C:/Users/Administrator/Desktop/Bang/dokky/src/main/webapp/resources/photoUpload/").append(saveName);
@@ -289,11 +294,14 @@ public class BcodeController {
 		return sb.toString();
 	}
 	
+	// 14.�뾽濡쒕뱶 �뙆�씪 �궘�젣
 	@RequestMapping(value="/bcodeuploaddelete.do")
 	public String bcodeUploaddelete(HttpServletRequest request) throws Exception{
 		
 		int uploaddelete = Integer.parseInt(request.getParameter("uploaddelete_id"));
 		bcode.bcodeUploaddelete(uploaddelete);
+		
+		/*"forward:/bcodewrite.do";*/
 		
 		return "redirect:/bcodewrite.do?board_id="+request.getParameter("uploaddelete_id"); 
 		

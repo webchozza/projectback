@@ -56,11 +56,14 @@ border-bottom-color: #FFFFFF;
 		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
 						</c:url>
 					</c:if>
-					<c:if test="${board.bgroup_id eq 3 || board.bgroup_id eq 4}">
+					<c:if test="${board.bgroup_id eq 3}">
 						<c:url var="detailurl" value="#"/><!-- 구인구직 -->
 					</c:if>
-					<c:if test="${board.bgroup_id eq 5}">
-						<c:url var="detailurl" value="#"/><!-- 오픈소스 -->
+					<c:if test="${board.bgroup_id eq 4}">
+						<c:url var="detailurl" value="/bqnadetail.do"/><!-- 오픈소스 -->
+							<c:param name="board_id" value="${board.board_id}"/>
+							<c:param name="currentPage" value="1"/>
+							<c:param name="session_id" value="${sessionScope.member_id}"/>
 					</c:if>
 					<tr>
 							<td width="30%"><a href="${detailurl}" id="b">${board.board_title}</a></td>

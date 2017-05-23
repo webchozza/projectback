@@ -15,11 +15,8 @@
 <title>DOKKY</title>
 <meta charset="utf-8" />
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <script type="text/javascript">
 function insertScrap(){
@@ -176,7 +173,7 @@ function recommendcheck(checkValue){
 								
 								<tr>
 									<!-- 여기에 글제목 -->
-									<td><h2>${detail.board_title }</h2>
+									<td><h3>제목 :&nbsp;&nbsp;${detail.board_title }</h3>
 										<hr class="major" /> 
 									
 									<!-- 여기에 글내용 -->
@@ -253,10 +250,9 @@ function recommendcheck(checkValue){
 									<div align="right">
 										<c:if test="${sessionScope.member_email ne null}">
 											<c:if test="${sessionScope.member_id==detail.member_id }">
-												<a href="bcodedetail.do?board_id=${detail.board_id }&currentPage=${currentPage}"
+												<a href="bcodewrite.do?board_id=${detail.board_id }"
 													class="button">수정</a>
-												<a href="bfreedelete.do?board_id=${detail.board_id }&currentPage=${currentPage}"
-													class="button" onclick="return deleteconfirm()">삭제</a>
+										<a href="/dokky/bcodedelete.do?board_id=<c:out value="${detail.board_id}"/>" onclick="return deleteconfirm()" class="button">삭제</a>
 											</c:if>
 										</c:if>
 										<a href="bcodelist.do?currentPage=${currentPage }" class="button special">목록</a>

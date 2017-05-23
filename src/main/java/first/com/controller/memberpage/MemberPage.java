@@ -45,7 +45,7 @@ public class MemberPage {
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							 @RequestParam(value="ap", required=false) String ap,
 							 Model model){
-		
+
 		startrow = ((currentPage-1) * blockCount)+1;
 		endrow = (startrow + blockCount)-1;
 
@@ -87,7 +87,6 @@ public class MemberPage {
 		} else if(session_id != 0){ 
 			model.addAttribute("followCheck", followCheck);
 		}
-		
 		if(ap != null){
 			return "memberpage/MyBoard";//at Ajax request
 		}
