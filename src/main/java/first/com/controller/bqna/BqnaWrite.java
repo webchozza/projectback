@@ -43,11 +43,6 @@ public class BqnaWrite {
 		
 		bqnaService.bqnaWrite(boardDTO);
 		
-		// by eongoo, new board noti
-		noti.insertNewBoardNoti(boardDTO.getMember_id(), "/bqnadetail", 4);
-		//
-
-		
 		mav.addObject("boardDTO", boardDTO);
 		
 		mav.setViewName("redirect:bqnalist.do");

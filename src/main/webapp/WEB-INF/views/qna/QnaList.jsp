@@ -44,7 +44,7 @@ display:none;
 						<c:url var="detailURL" value="bqnadetail.do">
 							<c:param name="board_id" value="${list.board_id}"/>
 							<c:param name="currentPage" value="${currentPage}"/>
-							<c:param name="session_id" value="${sessionScope.member_id}"/>
+							<c:param name="seesion_id" value="${sessionScope.member_id}"/>
 						</c:url>
 						<tr>
 							<td>

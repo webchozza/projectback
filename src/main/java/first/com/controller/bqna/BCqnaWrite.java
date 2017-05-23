@@ -38,9 +38,7 @@ public class BCqnaWrite {
 		bqnaService.bqnaUpdateCountco(bcommentDTO.getBoard_id());
 		mav.addObject("bcommentDTO", bcommentDTO);
 		
-		//by eongoo, comment noti
 		noti.insertCommentNoti(bcommentDTO.getBoard_id(), bcommentDTO.getMember_id(), "/bqnaDetail");
-		//
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board_id", bcommentDTO.getBoard_id());

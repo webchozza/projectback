@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/first/com/common/Paging_tag.java=UTF-8
 encoding//src/main/java/first/com/controller/bcode/BcodeController.java=UTF-8
+encoding//src/main/java/first/com/controller/bcode/BcodeController2.java=UTF-8
 encoding//src/main/java/first/com/controller/bcode/BcodeDAO2.java=UTF-8
 encoding//src/main/java/first/com/controller/bcode/BcodeServiceImpl2.java=UTF-8
 encoding//src/main/java/first/com/model/BoardDTO.java=UTF-8
