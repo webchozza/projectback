@@ -21,7 +21,15 @@ public class BoardDTO {
 	private String member_name;
 	private String scrap_member_id;
 	private String board_tag; //태그
+	private int answerCheckNum;
 	
+	
+	public int getAnswerCheckNum() {
+		return answerCheckNum;
+	}
+	public void setAnswerCheckNum(int answerCheckNum) {
+		this.answerCheckNum = answerCheckNum;
+	}
 	public String getBoard_tag() {
 		return board_tag;
 	}

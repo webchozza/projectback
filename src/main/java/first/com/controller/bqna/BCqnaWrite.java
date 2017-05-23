@@ -35,7 +35,7 @@ public class BCqnaWrite {
 		bcommentDTO.setBcomment_content(content);
 		
 		bqnaService.bCqnaWrite(bcommentDTO);
-		bqnaService.bqnaUpdateHit(bcommentDTO.getBoard_id());
+		bqnaService.bqnaUpdateCountco(bcommentDTO.getBoard_id());
 		mav.addObject("bcommentDTO", bcommentDTO);
 		
 		noti.insertCommentNoti(bcommentDTO.getBoard_id(), bcommentDTO.getMember_id(), "/bqnaDetail");

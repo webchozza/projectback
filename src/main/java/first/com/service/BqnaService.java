@@ -1,6 +1,7 @@
 package first.com.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -58,16 +59,20 @@ public class BqnaService implements BqnaDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<BcommentDTO> bcqnaList(int board_id) {//댓글리스트
+		return SST.selectList("bqna.bcqnaList", board_id);
+	}
 
 	@Override
-	public int bCqnaWrite(BcommentDTO bcommentDTO) {// 코멘트쓰기
+	public int bCqnaWrite(BcommentDTO bcommentDTO) {//댓글쓰기
 		return SST.insert("bqna.bcqnaWrite", bcommentDTO);
 	}
 
 	@Override
-	public String bCqnaDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public int bCqnaDelete(int board_id) {//댓글삭제
+		return SST.delete("bqna.bcqnaDelete", board_id);
 	}
 
 	@Override
@@ -89,9 +94,8 @@ public class BqnaService implements BqnaDAO {
 	}
 
 	@Override
-	public BoardDTO bqnaUpdateHit(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int bqnaUpdateHit(int board_id) {//조회수
+		return SST.update("bqna.bqnaUpdateHit", board_id);
 	}
 
 	@Override
@@ -99,4 +103,23 @@ public class BqnaService implements BqnaDAO {
 		return SST.update("bqna.bqnaUpdateLike", board_id);
 	}
 
+	@Override
+	public int bqnaUpdateCountco(int board_id) {//댓글수 업데이트
+		return SST.update("bqna.bqnaUpdateCountco", board_id);
+	}
+	
+	@Override
+	public void answerChoice(Map map){//답변채택
+		SST.insert("bqna.bqnaAnswerChoice", map);
+	}
+	
+	@Override
+	public int bqnaAnswerCheck(int board_id){
+		return SST.selectOne("bqna.bqnaAnswerCheck", board_id);
+	}
+
+	@Override
+	public int bqnaAnswerDelete(int bcomment_id){
+		return SST.delete("bqna.bqnaAnswerDelete", bcomment_id);
+	}
 }
