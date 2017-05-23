@@ -31,7 +31,7 @@ display:none;
 							<a href="bqnalist.do?sort=&search=${search }&n=${n}" style="color: #000000; font-weight:bold">최신순</a> 
 							<a href="bqnalist.do?sort=like&search=${search }&n=${n}"style="color: #000000; font-weight:bold">추천순</a> 
 							<a href="bqnalist.do?sort=comment&search=${search }&n=${n}"style="color: #000000; font-weight:bold">댓글순</a>
-							<a href="#"style="color: #000000; font-weight:bold">스크랩순</a> 
+							<a href="bqnalist.do?sort=comment&search=${search }&n=${n}"style="color: #000000; font-weight:bold">스크랩순</a> 
 							<a href="bqnalist.do?sort=hit&search=${search }&n=${n}"style="color: #000000; font-weight:bold">조회순</a></td>
 							<td colspan="2" align="right">
 							<c:if test="${sessionScope.member_email ne null}">

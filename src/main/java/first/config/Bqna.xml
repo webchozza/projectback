@@ -6,10 +6,10 @@
 
 	<!-- qna 리스트 -->
 	<select id="bqnaList" resultType="first.com.model.BoardDTO">
-	SELECT * FROM(SELECT c.board_id, c.member_id, c.board_title,c.board_content,
+	SELECT e.*, count(f.scrap_id) scrap_count FROM (SELECT c.board_id, c.member_id, c.board_title,c.board_content,
 	c.board_date,c.board_nickname,c.board_hit,c.board_like,c.board_bad,
 	c.board_comment_count,c.board_password,c.board_ip,c.board_filecount,
-	c.bgroup_id,c.board_num,c.board_tag,
+	c.bgroup_id,c.board_tag,
 	NVL(count(d.bcomment_id), 0) as answerCheckNum FROM(SELECT a.*,b.bcomment_id FROM(SELECT * 
 	FROM board WHERE bgroup_id = 4 
 	<if test="n!=0">
@@ -23,17 +23,21 @@
 	GROUP BY c.board_id, c.member_id, c.board_title,c.board_content,
 	c.board_date,c.board_nickname,c.board_hit,c.board_like,c.board_bad,
 	c.board_comment_count,c.board_password,c.board_ip,c.board_filecount,
-	c.bgroup_id,c.board_num,c.board_tag) 
-		<if test="sort!=''">
+	c.bgroup_id,c.board_tag) e LEFT OUTER JOIN scrap f ON e.board_id = f.board_id
+	GROUP BY e.board_id, e.member_id, e.board_title,e.board_content,
+	e.board_date,e.board_nickname,e.board_hit,e.board_like,e.board_bad,
+	e.board_comment_count,e.board_password,e.board_ip,e.board_filecount,
+	e.bgroup_id,e.board_tag,e.answerCheckNum 
+			<if test="sort!=''">
 			ORDER BY
-			<if test="sort== 'like'">board_like</if>
-			<if test="sort== 'comment'">board_comment_count</if>
-			<if test="sort== 'scrap'">board_hit</if><!-- ★수정필요 -->
-			<if test="sort== 'hit'">board_hit</if>
-			DESC, board_id DESC
+			<if test="sort== 'like'">e.board_like</if>
+			<if test="sort== 'comment'">e.board_comment_count</if>
+			<if test="sort== 'scrap'">scrap_count</if><!-- ★수정필요 -->
+			<if test="sort== 'hit'">e.board_hit</if>
+			DESC, e.board_id DESC
 		</if>
 		<if test="sort==''">
-			ORDER BY board_id DESC
+			ORDER BY e.board_id DESC
 		</if>
 	</select>
 
