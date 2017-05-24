@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BqnaDAO;
@@ -19,7 +20,7 @@ public class BCqnaDelete {
 	private BqnaDAO bqnaService;
 
 	@RequestMapping("bqnadeletecomment")
-	public ModelAndView bCqnaDelete(HttpServletRequest request) {
+	public ModelAndView bCqnaDelete(HttpServletRequest request,@RequestParam("session_id") int session_id) {
 		
 		ModelAndView mav = new ModelAndView();
 		int bcomment_id = Integer.parseInt(request.getParameter("bcomment_id"));
@@ -32,7 +33,7 @@ public class BCqnaDelete {
 		map.put("session_id", request.getParameter("session_id"));
 		
 		mav.addAllObjects(map);
-		mav.setViewName("redirect:bqnadetail.do");
+		mav.setViewName("redirect:bqnadetail.do?session_id="+session_id);
 
 		return mav;
 	}

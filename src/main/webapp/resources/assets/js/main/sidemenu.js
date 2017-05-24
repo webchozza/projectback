@@ -44,7 +44,7 @@ function notipop(){
 				
 				$.each(data, function(key,value){//
 					
-					var deletestr = "<a href='javascript:;' onclick='return notidelete("+value.noti_id+")'>";
+					var deletestr = "<a href='javascript:;' onclick='notidelete("+value.noti_id+")'>";
 				    deletestr += "<img src=\"/dokky/resources/images/x.jpg\" style=\"width: 9px; height: 9px;\"/></a>";
 						
 					if(value.noti_kinds == "comment"){
@@ -73,8 +73,6 @@ function notipop(){
 }
 
 function notidelete(noti_id){
-	
-	if(!confirm("알림을 삭제하시겠습니까?")){ return false; }
 	
 	$.ajax({
 		url:"/dokky/notiDelete.do",

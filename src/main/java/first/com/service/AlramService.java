@@ -82,7 +82,7 @@ public class AlramService implements AlramDAO{
 
 		List<FollowDTO> followNewBoard = sqlSessionTemplate.selectList("noti.follower_member_id", session_id);
 		
-		path = "/dokky"+path+".do?"+board.getBoard_id();
+		path = "/dokky"+path+".do?board_id="+board.getBoard_id();
 		
 		map.put("board_title", board.getBoard_title());//게시글 제목
 		map.put("board_url", path);//게시글 주소

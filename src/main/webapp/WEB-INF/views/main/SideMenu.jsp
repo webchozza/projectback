@@ -4,11 +4,29 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=3"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=5"></script>
 <script>
 
 $(document).ready(function(){
 	$("#notich").val("N");
+	
+	var session_id = $("#session_id").val();
+	
+	$.ajax({
+		url: "/dokky/notiCount.do",
+		type: "post",
+		dataType: "json",
+		data: {session_id : session_id},
+		success: function(data){
+			if(data == 0){
+				$("#notiarea").html("");
+			}else{
+			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
+			$("#notiarea").html("");
+			$("#notiarea").html(str);
+			}
+		}
+	});
 });
 
 </script>

@@ -74,6 +74,7 @@
 					<ul class="actions" style="float: inherit;">
 						<input type="hidden" name="currentPage" value="${currentPage }">
 						<input type="hidden" name="board_id" value="${boardDTO.board_id}">
+						<input type="hidden" name="session_id" value="${sessionScope.member_id}">
 						<input type="submit" style="width: 300pt;" value="수정"
 							class="button special" id="savebutton">
 					</ul>

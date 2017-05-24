@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BfreeDAO;
@@ -19,7 +20,7 @@ public class BCfreeDelete {
 	private BfreeDAO bfreeService;
 	
 	@RequestMapping("/bfreedeletecomment")
-	public ModelAndView bCfreeDelete(HttpServletRequest request) {
+	public ModelAndView bCfreeDelete(HttpServletRequest request,@RequestParam("session_id") int session_id) {
 		
 		ModelAndView mav= new ModelAndView();
 		int bcomment_id= Integer.parseInt(request.getParameter("bcomment_id"));
@@ -32,7 +33,7 @@ public class BCfreeDelete {
 		map.put("session_id", request.getParameter("session_id"));
 		
 		mav.addAllObjects(map);
-		mav.setViewName("redirect:bfreedetail.do");
+		mav.setViewName("redirect:bfreedetail.do?session_id="+session_id);
 
 		return mav;
 	}

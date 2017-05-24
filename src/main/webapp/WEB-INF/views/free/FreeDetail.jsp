@@ -202,7 +202,7 @@ function recommendcheck(checkValue){
 											<c:if test="${sessionScope.member_id==clist.member_id}">
 
 												<a
-													href="bfreedeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bfreeDetail.board_id}&currentPage=${currentPage}"
+													href="bfreedeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bfreeDetail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}"
 													class="icon fa-trash"
 													style="font-size: 14px; color: #7f888f"
 													onclick="return deleteconfirm()"></a>
@@ -226,6 +226,7 @@ function recommendcheck(checkValue){
 														value="${bfreeDetail.board_id}"><input
 														type="hidden" name=currentPage value="${currentPage}"><input
 														type="submit" value="작성" class="button special">
+														<input type="hidden" name="session_id" value="${sessionScope.member_id}">
 												</center></td>
 										</tr>
 								</form>

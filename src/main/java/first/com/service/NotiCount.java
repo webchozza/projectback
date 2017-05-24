@@ -23,9 +23,7 @@ public class NotiCount implements NotiCountDAO{
 		if(NotiCount != null && NotiCount.containsKey(member_id)){
 			for(Map.Entry<Integer, Integer> entry : this.NotiCount.entrySet()){
 				if(entry.getKey() == member_id){
-					System.out.println(NotiCount.get(member_id));
 					count  = entry.getValue();
-					System.out.println(count+"Ä«¿îÆ®");
 					break;
 				}
 			}

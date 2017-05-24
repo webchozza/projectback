@@ -101,5 +101,9 @@
 	   DELETE FROM BFILE WHERE 
 	   board_id=#{board_id}
 	   </delete>
+	   
+	   <delete id="delco" parameterType="int">
+	   DELETE FROM bcomment WHERE bcomment_id = #{bcomment_id}
+	   </delete>
 	 
 	 </mapper>

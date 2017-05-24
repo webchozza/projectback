@@ -14,12 +14,9 @@
 <head>
 <title>DOKKY</title>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+
 </head>
 <script type="text/javascript">
 function insertScrap(){
@@ -61,9 +58,8 @@ if(checkValue == -1){
 }
 
 function recommendcheck(checkValue){
-	console.log(checkValue+"추천 체크");
 	//추천하지 않은 글이면 클릭 가능
-	var strA = '<a href="/dokky/bcodedetail.do?board_id=${detail.board_id}&currentPage=${currentPage}&member_id=${sessionScope.member_id}&board_like=${detail.board_id}" style="font-size: 30px" class="icon fa-thumbs-up"></a>';
+	var strA = '<a href="/dokky/bcodedetail.do?board_id=${detail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}&board_like=${detail.board_id}" style="font-size: 30px" class="icon fa-thumbs-up"></a>';
 		strA += '<h2 style="color: #7f888f;">${detail.board_like}</h2>';
 	//추천한 글이면 클릭 불가능
 	var strDiv = '<div style="font-size: 30px; color: #f56a6a;" class="icon fa-thumbs-up"></div>';
@@ -92,11 +88,7 @@ function recommendcheck(checkValue){
 	}
 
 	function deleteconfirm() {
-		var del
-		del = confirm("정말 삭제하시겠습니까?")
-		if (del == true) {
-			return true;
-		} else {
+		if (confirm("정말 삭제하시겠습니까?") == false) {
 			return false;
 		}
 	}
@@ -165,32 +157,38 @@ function recommendcheck(checkValue){
 						<tbody>
 						
 								<tr>
-									<td colspan="2"><strong><a href="/dokky/MemberPage.do?member_id=${detail.member_id }&session_id=${sessionScope.member_id}">${detail.board_nickname }</a></strong>
-									<a href="javascript:gosubmit1_message()" class="icon fa-envelope">쪽지</a>
-									<br>
-									<i><fmt:formatDate value="${detail.board_date}" pattern="yyyy.MM.dd" /><!-- 여기에 작성일 --></i></td>
+								<td colspan="2">작성자 :&nbsp;&nbsp;<strong><a href="/dokky/MemberPage.do?member_id=${detail.member_id }&session_id=${sessionScope.member_id}">${detail.board_nickname }</a></strong>
+								<a href="javascript:gosubmit1_message()" class="icon fa-envelope">쪽지</a>
+								<br>
+								작성일 :&nbsp;&nbsp;<fmt:formatDate value="${detail.board_date}" pattern="yyyy.MM.dd" /><!-- 여기에 작성일 --></td>
 								</tr>
 								<tr>
-								    <td colspan="2">첨부 파일 :&nbsp;&nbsp;<strong><a href="/dokky/bcodedownload.do?board_id=<c:out value="${detail2.board_id}"/>">${detail2.bfile_src}<!-- 여기에 업로드파일 --></a></strong>
+								<td colspan="2">첨부 파일 :&nbsp;&nbsp;<strong><a href="/dokky/bcodedownload.do?board_id=<c:out value="${detail2.board_id}"/>">${detail2.bfile_src}<!-- 여기에 업로드파일 --></a></strong>
 								</tr>
 								
+								  
+								    
+								    
 								<tr>
 									<!-- 여기에 글제목 -->
-									<td><h2>${detail.board_title }</h2>
+									<td><h3>제목 :&nbsp;&nbsp;${detail.board_title }</h3>
 										<hr class="major" /> 
-									
+
 									<!-- 여기에 글내용 -->
 									<p>${detail.board_content}</p>
 									<div align="right">
+									   
 									</div>
 									</td>
+									
 									
 									<td><center>
 											<div id="recommendbutton"></div>
 											<div id="scrapbutton"></div>
 										</center>
 								</tr>
-		
+								
+								
 							</tbody>
 
 					</table>
@@ -211,7 +209,7 @@ function recommendcheck(checkValue){
 										<c:if test="${sessionScope.member_email ne null}">
 											<c:if test="${sessionScope.member_id==detail.member_id}">
 
-												<a href="bcodedetail.do?bcomment_id=${detail3.bcomment_id }&board_id=${detail.board_id}&currentPage=${currentPage}"
+												<a href="/dokky/bcodedeletecomment.do?board_id=${detail3.board_id}&session_id=${sessionScope.member_id}&bcomment_id=${detail3.bcomment_id}"
 													class="icon fa-trash"
 													style="font-size: 14px; color: #7f888f"
 													onclick="return deleteconfirm()"></a>
@@ -235,6 +233,7 @@ function recommendcheck(checkValue){
 													value="${detail.board_id}"><input
 													type="hidden" name=currentPage value="${currentPage}"><input
 													type="submit" value="작성" class="button special">
+													<input type="hidden" name="session_id" value="${sessionScope.member_id}">
 											</center></td>
 									</tr>
 								</form>
@@ -253,10 +252,9 @@ function recommendcheck(checkValue){
 									<div align="right">
 										<c:if test="${sessionScope.member_email ne null}">
 											<c:if test="${sessionScope.member_id==detail.member_id }">
-												<a href="bcodedetail.do?board_id=${detail.board_id }&currentPage=${currentPage}"
+												<a href="bcodewrite.do?board_id=${detail.board_id }"
 													class="button">수정</a>
-												<a href="bfreedelete.do?board_id=${detail.board_id }&currentPage=${currentPage}"
-													class="button" onclick="return deleteconfirm()">삭제</a>
+										<a href="/dokky/bcodedelete.do?board_id=<c:out value="${detail.board_id}"/>&session_id=${sessionScope.member_id}" onclick="return deleteconfirm()" class="button">삭제</a>
 											</c:if>
 										</c:if>
 										<a href="bcodelist.do?currentPage=${currentPage }" class="button special">목록</a>

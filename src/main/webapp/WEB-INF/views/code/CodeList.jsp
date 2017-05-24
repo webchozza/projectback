@@ -55,6 +55,7 @@ input[name=ss] {
 	<section id="banner">
 		<div class="content">
 			<div class="table-wrapper">
+							  <a href="/dokky/bcodewrite.do" type="submit" class="button special"><i class="icon fa-pencil">글쓰기</i></a>
 				<table>
 					<colgroup>
 						<col width="15%" />
@@ -67,9 +68,6 @@ input[name=ss] {
 
 					<!-- 최신순 댓글순 조회순 추천순 스크랩순 -->
 					<thead>
-					<c:if
-									test="${sessionScope.member_email ne null}">
-							  <a href="/dokky/bcodewrite.do" type="submit" class="button special"><i class="icon fa-pencil">글쓰기</i></a></c:if>
 						<tr>
 							<td colspan="7">
 							<a href='javascript:;' onclick='codelist("1")'>최신순</a>
@@ -96,7 +94,7 @@ input[name=ss] {
 						<c:forEach var="board" items="${list}">
 						<c:url var="detailURL" value="bcodedetail.do">
 								<c:param name="board_id" value="${board.board_id}" />
-								<c:param name="member_id" value="${sessionScope.member_id}" />
+								<c:param name="session_id" value="${sessionScope.member_id}" />
 							</c:url>
 						 <c:if test="${board.board_id ne null}">
 							<tr>
@@ -117,11 +115,16 @@ input[name=ss] {
 							</tr>
 							</c:if>
 						</c:forEach>
+
+
 					</tbody>
 
 					<!-- 여기까지 forEach -->
 				</table>
 			</div>
+			<br>
+			<div class="paging" align="center">${pagingHtml}</div>
+			<br>
 			<!-- Search 박스 -->
 			<div align="center">
 				<section id="search" class="alt" style="min-width: 300px; max-width: 600px;">
@@ -131,9 +134,9 @@ input[name=ss] {
 					</form>
 				</section>
 			</div>
-			<!--  -->
+		
 		</div>
 	</section>
-			</div>
+</div>
 </body>
 </html>

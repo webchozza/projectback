@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.AlramDAO;
@@ -30,7 +31,7 @@ public class BCfreeWrite {
 
 	@RequestMapping(value = "/bfreewritecomment")
 	public ModelAndView bCfreeWrite(@ModelAttribute("BcommentDTO") BcommentDTO bcommentDTO, BindingResult result,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request, HttpSession session,@RequestParam("session_id") int session_id) {
 		ModelAndView mav = new ModelAndView();
 		
 		String content= bcommentDTO.getBcomment_content().replaceAll("\r\n", "<br />");
@@ -50,7 +51,7 @@ public class BCfreeWrite {
 		map.put("session_id", bcommentDTO.getMember_id());
 
 		mav.addAllObjects(map);
-		mav.setViewName("redirect:bfreedetail.do");
+		mav.setViewName("redirect:bfreedetail.do?session_id="+session_id);
 
 		
 		return mav;

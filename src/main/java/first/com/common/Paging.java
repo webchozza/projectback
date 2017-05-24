@@ -38,7 +38,7 @@ public class Paging {
 		if (currentPage > blockPage) {
 			pagingHtml.append(
 					"<a href='" + path + ".do?currentPage=" + (startPage - 1) + "&search=" + search + "&n=" + n + "'>");
-			pagingHtml.append("[이전]");
+			pagingHtml.append("[PREV]");
 			pagingHtml.append("</a>");
 		}
 
@@ -63,7 +63,7 @@ public class Paging {
 		if (totalPage - startPage >= blockPage) {
 			pagingHtml.append(
 					"<a href='" + path + ".do?currentPage=" + (endPage + 1) + "&search=" + search + "&n=" + n + "'>");
-			pagingHtml.append("[다음]");
+			pagingHtml.append("[NEXT]");
 			pagingHtml.append("</a>");
 		}
 	}
