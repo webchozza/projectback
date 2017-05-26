@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BqnaDAO;
+import first.com.dao.TagDAO;
 import first.com.model.BoardDTO;
 
 @Controller
@@ -16,6 +17,8 @@ public class BqnaModify {
 
 	@Resource
 	private BqnaDAO bqnaService;
+	@Resource
+	private TagDAO tagService;
 	
 	@RequestMapping(value="/bqnamodifyform")
 	public ModelAndView bqnaModifyForm(int board_id, HttpServletRequest request){
@@ -24,6 +27,7 @@ public class BqnaModify {
 		
 		String board_content = boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
 		boardDTO.setBoard_content(board_content);
+		boardDTO.setBoard_tag(tagService.modifyFormView(boardDTO.getBoard_tag(), 4));//bgroup_id=4
 		
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
@@ -37,9 +41,8 @@ public class BqnaModify {
 		ModelAndView mav = new ModelAndView();
 
 		String content = boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
-		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
-		boardDTO.setBoard_tag(tag);
 		boardDTO.setBoard_content(content);
+		boardDTO.setBoard_tag(tagService.insertTag(boardDTO.getBoard_tag(), 4));//bgroup_id=4
 		
 		bqnaService.bqnaModify(boardDTO);
 		mav.setViewName("redirect:bqnadetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage")+"&session_id="+session_id);

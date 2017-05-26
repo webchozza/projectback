@@ -120,7 +120,7 @@ function recommendcheck(checkValue){
 	});
 
 	$(document).ready(function() {
-		viewTags("${board_tag}");
+		viewTags("${bfreeDetail.board_tag}");
 	});
 </script>
 

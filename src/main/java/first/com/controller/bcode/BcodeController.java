@@ -30,6 +30,7 @@ import first.com.common.Paging;
 import first.com.dao.AlramDAO;
 import first.com.dao.RecommendDAO;
 import first.com.dao.ScrapDAO;
+import first.com.dao.TagDAO;
 import first.com.model.BcommentDTO;
 import first.com.model.BfileDTO;
 import first.com.model.BoardDTO;
@@ -49,6 +50,9 @@ public class BcodeController {
 	@Resource 
 	private AlramDAO noti;
 	// 
+
+	@Resource
+	private TagDAO tagService;	//by jinjoo
 	
 	private int totalCount; // 珥� �닔
 	private int blockCount = 10; // �븳 �럹�씠吏��쓽 寃뚯떆臾쇱쓽 �닔
@@ -171,7 +175,9 @@ public class BcodeController {
 			String update = request.getParameter("board_id").trim();
 			int update2 = Integer.parseInt(update);
 			
-			BoardDTO updateform = (BoardDTO)bcode.bcodeUpdateform(update2);
+			BoardDTO updateform = (BoardDTO)bcode.bcodeUpdateform(update2);			
+			updateform.setBoard_tag(tagService.modifyFormView(updateform.getBoard_tag(), 1));//bgroup_id=1
+			
 			BfileDTO detail2 = (BfileDTO)bcode.bcodeDetailfile(update2);
 			Cwrite.addObject("updateform", updateform);
 			Cwrite.addObject("file", detail2);
@@ -190,6 +196,7 @@ public class BcodeController {
 			throws Exception {// 洹몃읆 �뿬湲곗꽑  member_id�옉 bgroup_id 2媛� �뱾�뼱�샂
 		Date date = new Date();
 		if(request.getParameter("board_id") != null){
+			dTO.setBoard_tag(tagService.insertTag(dTO.getBoard_tag(), 1));//bgroup_id=1
 			bcode.bcodeUpdate(dTO);
 			if(request.getFile("file").getSize() != 0){
 				File file = new File("C:\\workspace\\dokky\\src\\main\\webapp\\resources\\upload/"+request.getFile("file").getOriginalFilename()+date.getTime());
@@ -205,6 +212,7 @@ public class BcodeController {
 			return new ModelAndView("redirect:/bcodelist.do");
 			
 		}else if(request.getFile("file").getSize()!= 0){
+			dTO.setBoard_tag(tagService.insertTag(dTO.getBoard_tag(), 1));//bgroup_id=1
 			bcode.bcodeInsert(dTO);
 			
 			File file = new File("C:\\workspace\\dokky\\src\\main\\webapp\\resources\\upload/"+request.getFile("file").getOriginalFilename()+date.getTime());
@@ -225,6 +233,7 @@ public class BcodeController {
 			// by eongoo, new board noti
 			noti.insertNewBoardNoti(Integer.parseInt(request.getParameter("member_id")), "/bcodedetail", 1);
 			//
+			dTO.setBoard_tag(tagService.insertTag(dTO.getBoard_tag(), 1));//bgroup_id=1
 			bcode.bcodeInsert(dTO);
 			return new ModelAndView("redirect:/bcodelist.do");
 		}
