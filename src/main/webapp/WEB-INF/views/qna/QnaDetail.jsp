@@ -331,7 +331,6 @@ function recommendcheck(checkValue){
 							</tr>
 						</tfoot>
 					</table>
-					r
 				</div>
 
 			</div>
