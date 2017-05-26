@@ -97,12 +97,51 @@ function recommendcheck(checkValue){
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
 	});
+	
+	function viewTags(str) {
+		var sep = str.split(",");
+		$("#tags").append("<i class='icon fa-tags'></i>");
+		for (i=0; i<sep.length; i++) {
+			if(i==(sep.length-1)){
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+			}else{
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
+			}
+		}
+	}
+	
+	function urlencode(str) {
+	    str = (str + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
+	}
+
+	$(document).ready(function() {
+		viewTags("${board_tag}");
+	});
 
 </script>
 
 <style>
 .fa-bookmark {
 	color: #7f888f;
+}
+
+.tagcode {
+	background: rgba(230, 235, 237, 0.25);
+	border-radius: 0.375em;
+	border: solid 1px rgba(210, 215, 217, 0.75);
+	font-family: Malgun Gothic;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+	color: #7f888f;
+	
 }
 </style>
 
@@ -151,9 +190,9 @@ function recommendcheck(checkValue){
 							<c:if test="${answercomment ne null}">
 								<tr>
 									<td
-										style="border-color: #3162C7; font-size: 20px; border-width: medium;"
+										style="border-color: #00B700; font-size: 20px; border-width: medium;"
 										colspan="2">
-										<div style="float: left">
+										<div style="float: left; width:70%;">
 											<strong><a
 												href="MemberPage.do?member_id=${answercomment.member_id }">${answercomment.member_name }</a></strong>
 											<i><fmt:formatDate
@@ -174,14 +213,23 @@ function recommendcheck(checkValue){
 											<p>${answercomment.bcomment_content }</p>
 
 										</div>
-										<div style="overflow: hidden" align="right">
+										<div style="overflow: hidden; width:30%;" align="center">
 											<a
 												href="AnswerCancel.do?bcomment_id=${answercomment.bcomment_id}&board_id=${detail.board_id}&currentPage=${currentPage}"
 												class="icon fa-check-circle"
-												style="font-size: 50px; color: #3162C7"></a>&nbsp;&nbsp; <br>
-											<font color="#3162C7" style="font-weight: bold;">질문자
-												채택</font>
+												style="font-size: 50px; color: #00B700"></a>&nbsp;&nbsp; <br>
+											<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" 
+											onclick='return answerdelete("${answercomment.bcomment_id}","${detail.board_id}","${currentPage}")'>
 										</div>
+										<script>
+										function answerdelete(bcomment_id,board_id,currentPage){
+											if(confirm("답변을 취소하시겠습니까?")==false){
+												return false;
+											}
+											
+											location.href="AnswerCancel.do?bcomment_id="+bcomment_id+"&board_id="+board_id+"&currentPage="+currentPage;
+										}
+										</script>
 									</td>
 								</tr>
 							</c:if>
@@ -222,10 +270,10 @@ function recommendcheck(checkValue){
 													test="${answerCheck eq -1 and detail.member_id eq sessionScope.member_id }">
 													<c:if test="${detail.member_id ne clist.member_id }">
 													<input type="button" value="답변채택" class="button special"
-														onclick="return answerconfirm()" />
+														onclick='return answerconfirm("${clist.bcomment_id}")' />
 												</c:if></c:if>
 											</div><script>
-												function answerconfirm() {
+												function answerconfirm(bcomment_id) {
 													var board_id = document
 															.getElementById("board_id").value;
 													var session_id = $(
@@ -235,7 +283,7 @@ function recommendcheck(checkValue){
 													if (confirm("해당 댓글을 답변으로 채택하시겠습니까?") == false) {
 														return false;
 													}
-													location.href = "/dokky/AnswerChoice.do?bcomment_id="+ ${clist.bcomment_id}+"&member_id=" + session_id+ "&board_id="+ board_id;
+													location.href = "/dokky/AnswerChoice.do?bcomment_id="+ bcomment_id+"&member_id=" + session_id+ "&board_id="+ board_id;
 												}
 											</script>
 										</td>

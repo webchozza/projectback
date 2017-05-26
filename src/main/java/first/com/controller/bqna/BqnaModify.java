@@ -25,6 +25,11 @@ public class BqnaModify {
 		String board_content = boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
 		boardDTO.setBoard_content(board_content);
 		
+		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
+		tag = tag.replaceAll("Q&A,", "");
+		tag = tag.replaceAll("Q&A", "");
+		boardDTO.setBoard_tag(tag);
+		
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
 		mav.setViewName("QnaModifyForm");
@@ -37,9 +42,29 @@ public class BqnaModify {
 		ModelAndView mav = new ModelAndView();
 
 		String content = boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
-		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
-		boardDTO.setBoard_tag(tag);
 		boardDTO.setBoard_content(content);
+		
+		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
+		while (tag.contains(",,")) {
+			tag = tag.replaceAll(",,", ",");
+		}
+		if (tag==null|| tag.trim().isEmpty()||tag.trim().equals(",")) {
+			tag = "";
+		} else {
+			if (tag.charAt(tag.length() - 1) == ',') {
+				tag=tag.substring(0, tag.length()-1);
+			}
+			if (tag.charAt(0) == ',') {
+				tag=tag.substring(1, tag.length());
+			}
+		}
+
+
+		System.out.println(tag);
+		if(tag==""||tag.equals("Q&A"))
+			boardDTO.setBoard_tag("Q&A");
+		else
+			boardDTO.setBoard_tag("Q&A," + tag);
 		
 		bqnaService.bqnaModify(boardDTO);
 		mav.setViewName("redirect:bqnadetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage")+"&session_id="+session_id);
