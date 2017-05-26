@@ -1,6 +1,5 @@
 package first.com.controller.main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +47,16 @@ public class AllSearch {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startrow", startrow);
 		map.put("endrow", endrow);
-		map.put("search", search);
+		map.put("search", search.trim());
 		map.put("category", category[n]);
 
 		List<BoardDTO> list = mainSearch.allSearch(map);
+		
+		//추천 검색어 함 뽑아보자
+		for(BoardDTO iter : list){
+			System.out.println(iter.getSearchcount());
+		}
+		//
 		
 		totalCount = mainSearch.allBordCount(map);
 		
