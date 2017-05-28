@@ -30,19 +30,22 @@ public class RecommendService implements RecommendDAO {
 		return sqlSessionTemplate.selectOne("recommend.check", map);
 	}
 
+	
 	//recommend board
 	@Override
 	public List<Map<String, Object>> recommendList(Map<String, Object> map) {
 
-		List<Map<String, Object>> alllist = sqlSessionTemplate.selectList("recommend.alllist");
+		//유사도 값을 담을 리스트 생성
 		List<Map<String, Object>> countlist = new ArrayList<Map<String, Object>>();
+		//추천 및 스크랩 테이블에 존재하는 회원들의 id값을 꺼내온다.
+		List<Map<String, Object>> alllist = sqlSessionTemplate.selectList("recommend.alllist");
 
 		int num = 0;
-		//두개를 비교해서 member_id는 다르고 board_id가 똑같은 개수를 골라내서 개수가 가장 많은 애들을 찾는다aa
 		for(int i=0;i<alllist.size();i++){
 			for(Map.Entry<String, Object> entry : alllist.get(i).entrySet()){
 				if(!String.valueOf(entry.getValue()).equals(String.valueOf(map.get("member_id")))){
 					map.put("compare_member_id", entry.getValue());
+					//위에서 꺼내온 id(접소중인 회원의 id는 제외)를 이용해 접속 중인 회원과의 (추천 및 스크랩 기준으로)취향을 비교하여 유사도를 구한다.
 					Map<String, Object> compare = sqlSessionTemplate.selectOne("recommend.similarity",map);
 					countlist.add(num, compare);
 					num++;
@@ -50,9 +53,11 @@ public class RecommendService implements RecommendDAO {
 				}
 			}
 		
+		//추천 글을 담을 리스트 객체 생성
 		List<Map<String, Object>> recommend_list = new ArrayList<Map<String, Object>>();
+		//유사도가 가장 높은 회원에게서 추천 게시글을 뽑아오면 반복문 종료
 		while(recommend_list.isEmpty()){
-			if(countlist.isEmpty()){ return recommend_list; }
+			if(countlist.isEmpty()){ return recommend_list; }//만약 더이상 유사도가 다른 회원이 존재하지 않는다면 빈 리스트 반환
 			
 			Map<String, Object> compare = new HashMap<String, Object>();
 			
@@ -75,12 +80,15 @@ public class RecommendService implements RecommendDAO {
 			}
 		//현재 회원의 추천 및 스크랩을 비교하여 취향이 가장 유사한 사람 (현재회원이 추천이나 스크랩안한 목록을 보여준다)
 			map.put("compare_member_id", compare.get("MEMBER_ID"));
-		//bgroup_id도 꺼내와야 함. scrap테이블에서도 갯수를 구해야함. 만약 유사도가 완전히 동일한 때는 그 다음 유사도를 가진 회원에게서 추천목록이 뽑히도록 로직 수정 요망
-		//게시글 제목도 꺼내와야 한다!
+
+			//코사인 유사도가 1에 가장 가까운 회원에게서 추천 글을 뽑아온다.
 			recommend_list = sqlSessionTemplate.selectList("recommend.recommendlist",map);
+			//만약 코사인 유사도값이 1이라면(추천, 스크랩한 게시글이 완전히 동일하다면(recommend_list에 담기는 정보가 없다.) 리스트에서 해당 유사도의 회원은 제거
+			//즉, 다음 반복시 2번째로 높은 유사도를 가진 회원에게서 추천 글을 가져오기 위해서.
 			if(recommend_list.isEmpty()){ countlist.remove(del); }
 		}
-		//ajax 작성할 때 list가 null이 아닐 때 << 조건문 꼭 작성
+
+		//뽑아온 추천 게시글 목록 혹은 (유사도가 전부 1이라면) 빈 리스트 객체 반환
 		return recommend_list;
 	}
 }

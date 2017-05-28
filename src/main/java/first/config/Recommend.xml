@@ -12,38 +12,43 @@
 	 SELECT count(recommend_id) FROM recommend WHERE member_id = #{session_id} and board_id = #{board_id}
 	 </select>
 	 
+	  <!-- 게시글 추천용 비교할 리스트 -->
+	 <select id="alllist" resultType="java.util.Map">
+	 SELECT DISTINCT member_id FROM recommend
+	 UNION
+     SELECT DISTINCT member_id FROM scrap
+	 </select>
 	 
 	 <!-- 접속 회원이 추천, 스크랩한 글 목록 -->
 	 <select id="similarity" resultType="java.util.Map" parameterType="java.util.Map">
-	 SELECT ROUND(sum(my_v*you_v)/(SQRT(sum(power(my_v,2)))*SQRT(sum(power(you_v,2)))),5) as similarity, ${compare_member_id} as member_id
-	FROM (SELECT NVL(c.vector,0) as my_v, NVL(d.vector,0) as you_v 
-	FROM (SELECT a.board_id, DECODE(rownum,rownum,1) as vector 
-	FROM (SELECT board_id FROM recommend where member_id = ${member_id}) a
-	INNER JOIN (SELECT board_id,member_id FROM recommend WHERE member_id = ${compare_member_id}) b ON a.board_id = b.board_id
-    UNION 
-     (SELECT board_id, decode(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = ${member_id}
-    MINUS
-     SELECT board_id FROM recommend WHERE member_id = ${compare_member_id}))) c 
-    FULL OUTER JOIN (SELECT a.board_id, decode(rownum,rownum,1) as vector 
-    FROM (SELECT board_id FROM recommend WHERE member_id = ${member_id}) a
-	INNER JOIN (SELECT board_id,member_id FROM recommend WHERE member_id = ${compare_member_id}) b ON a.board_id = b.board_id
-    UNION 
-     (SELECT board_id, decode(rownum,rownum,2) as vector 
-    FROM (SELECT board_id FROM recommend WHERE member_id = ${compare_member_id}
-    MINUS
-    SELECT board_id FROM recommend WHERE member_id = ${member_id}))) d ON c.board_id = d.board_id) group by ${compare_member_id}
-	 </select>
-	 
-	 <!-- 게시글 추천용 비교할 리스트 -->
-	 <select id="alllist" resultType="java.util.Map">
-	 select distinct member_id from recommend
+	  SELECT ROUND(SUM(my_v*you_v)/(SQRT(SUM(power(my_v,2)))*SQRT(SUM(power(you_v,2)))),5) as similarity, #{compare_member_id} as member_id FROM
+   (SELECT NVL(a.vector,0) as my_v, NVL(b.vector,0) as you_v FROM 
+     ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{member_id}) 
+       UNION ALL   
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{member_id})) 
+       UNION ALL
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{member_id})) a
+   FULL OUTER JOIN
+     ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{compare_member_id}) 
+       UNION ALL   
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{compare_member_id})) 
+       UNION ALL
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{compare_member_id})) b 
+   ON a.board_id = b.board_id)
+     GROUP BY #{compare_member_id}
 	 </select>
 	 
 	 <select id="recommendlist" resultType="java.util.Map" parameterType="java.util.Map">
-	  SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id}) a 
-	 INNER JOIN board b ON a.board_id = b.board_id
-	 MINUS
-	  SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id}) a 
-	 INNER JOIN board b ON a.board_id = b.board_id
+	 ((SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id)
+	   MINUS
+	 (SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id))
+   UNION
+      ((SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM scrap WHERE member_id = #{compare_member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id)
+	   MINUS
+	 (SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id))
 	 </select>
 	 </mapper>
