@@ -40,8 +40,10 @@
 	 </select>
 	 
 	 <select id="recommendlist" resultType="java.util.Map" parameterType="java.util.Map">
-	 SELECT board_id FROM recommend WHERE member_id = #{compare_member_id}
+	  SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id
 	 MINUS
-	 SELECT board_id FROM recommend WHERE member_id = #{member_id}
+	  SELECT b.board_id,b.board_title,b.bgroup_id FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id
 	 </select>
 	 </mapper>
