@@ -6,8 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,9 +26,13 @@ public class Recommend {
 		recommendService.addRecommend(map);
 	}
 	
+	/*@RequestMapping(value="/RecommendList.do", method=RequestMethod.GET)
+	public String Main(){
+		return "redirect:main.do";
+	}*/
 	
 	//recommend board controller
-	@RequestMapping("/RecommendList.do")
+	@RequestMapping(value="/RecommendList.do")
 	@ResponseBody
 	public List<HashMap<String, Object>> RecommendList(@RequestParam("session_id") int member_id){
 		
