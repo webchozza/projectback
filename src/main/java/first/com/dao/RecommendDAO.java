@@ -1,9 +1,8 @@
 package first.com.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import first.com.model.ScrapDTO;
 
 public interface RecommendDAO {
 	
@@ -11,6 +10,6 @@ public interface RecommendDAO {
 
 	public int recommendCheck(Map<String, Object> map);
 	
-	public List<Map<String, Object>> recommendList(Map<String, Object> map);
+	public List<HashMap<String, Object>> recommendList(Map<String, Object> map);
 	
 }

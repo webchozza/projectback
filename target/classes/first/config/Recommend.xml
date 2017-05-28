@@ -20,8 +20,8 @@
 	 </select>
 	 
 	 <!-- 접속 회원이 추천, 스크랩한 글 목록 -->
-	 <select id="similarity" resultType="java.util.Map" parameterType="java.util.Map">
-	  SELECT ROUND(SUM(my_v*you_v)/(SQRT(SUM(power(my_v,2)))*SQRT(SUM(power(you_v,2)))),5) as similarity, #{compare_member_id} as member_id FROM
+	 <select id="similarity" resultType="java.util.HashMap" parameterType="java.util.Map">
+	   SELECT ROUND(DECODE(sum(my_v*you_v),0,NULL,sum(my_v*you_v))/DECODE((SQRT(sum(power(my_v,2)))*SQRT(sum(power(you_v,2)))),0,NULL,(SQRT(sum(power(my_v,2)))*SQRT(sum(power(you_v,2))))),5) as similarity, #{compare_member_id} as member_id FROM
    (SELECT NVL(a.vector,0) as my_v, NVL(b.vector,0) as you_v FROM 
      ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{member_id}) 
        UNION ALL   

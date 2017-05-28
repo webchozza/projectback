@@ -28,12 +28,12 @@ public class Recommend {
 	//recommend board controller
 	@RequestMapping("/RecommendList.do")
 	@ResponseBody
-	public List<Map<String, Object>> RecommendList(@RequestParam("session_id") int member_id){
+	public List<HashMap<String, Object>> RecommendList(@RequestParam("session_id") int member_id){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", member_id);
 		
-		List<Map<String, Object>> recommend_list =  recommendService.recommendList(map);
+		List<HashMap<String, Object>> recommend_list =  recommendService.recommendList(map);
 		
 		System.out.println(recommend_list);
 		//ajax 작성할 때 list가 null이 아닐 때 << 조건문 꼭 작성
