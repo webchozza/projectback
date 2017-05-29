@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	 
-	 <mapper namespace="recommend">
+<mapper namespace="recommend">
 	 
 	 <!-- 추천할 때 추천 관계 테이블에 정보 입력 -->
 	 <insert id="insert" parameterType="java.util.Map">
@@ -128,4 +128,34 @@
 	 <![CDATA[ORDER BY board_like DESC) WHERE rownum <= 6 ]]>
 	 </select>
 	 
-	 </mapper>
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 상세보기 중인 글과 유사도가 높은 글 목록을 가져온다. ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	 <select id="selectboard" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	 SELECT board_title, board_nickname, board_content FROM board WHERE board_id = #{board_id}
+	 </select>
+	 
+	 <select id="similarboard" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 	<when test="similarboardlist.size != 0">
+	 	SELECT b.board_id, b.board_title, b.bgroup_id FROM (SELECT similarity, board_id, rownum FROM (SELECT similarity, board_id FROM (
+	 		<foreach collection="similarboardlist" item="list" separator="UNION" index="i" open=" " close=" ">
+	 		(
+	 			<foreach collection="similarboardlist" item="comparelist" separator="UNION" open=" " close=" ">
+	 			SELECT ROUND(DECODE((#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+
+	 			(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}),0,NULL,(#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+
+	 			(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}))/
+				DECODE(SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
+				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
+				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2))),5) as similarity, #{list.BOARD_ID} as board_id FROM DUAL
+	 		</foreach>
+	 		) 
+	 		</foreach>
+		<![CDATA[ )WHERE similarity != 1 AND similarity is NOT NULL ORDER BY similarity DESC) WHERE rownum <= 6]]>) a 
+		INNER JOIN board b ON a.board_id = b.board_id ORDER BY a.similarity DESC
+	 	</when>
+	 </choose>
+	 </select>
+	 
+</mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import first.com.dao.RecommendDAO;
+import kr.co.shineware.nlp.komoran.core.analyzer.Komoran;
 
 @Controller
 public class Recommend {
@@ -30,7 +31,7 @@ public class Recommend {
 		return "redirect:main.do";
 	}*/
 	
-	//recommend board controller
+	//로그인시 유저와 취향이 비슷한 유저의 추천 및 스크랩 목록을 보여준다(접속 회원이 추천 및 스크랩하지 않은 글에 한해서)
 	@RequestMapping(value="/RecommendList.do")
 	@ResponseBody
 	public List<HashMap<String, Object>> RecommendList(@RequestParam("session_id") int member_id){
@@ -46,7 +47,7 @@ public class Recommend {
 	}
 	
 	
-	
+	//검색 시 검색어와 유사도가 높은 글목록을 보여준다.
 	@RequestMapping("/se.do")
 	@ResponseBody
 	public List<HashMap<String, Object>> Search(@RequestParam("search") String search){
@@ -75,5 +76,19 @@ public class Recommend {
 		List<HashMap<String, Object>> searchlist = recommendService.recommendSearch(searchtokenlist);
 		
 		return searchlist;
+	}
+	
+	
+	//상세보기에서 해당 글과 유사도가 높은 글목록을 보여준다.
+	@RequestMapping("/SimilarBoard.do")
+	@ResponseBody
+	public List<HashMap<String, Object>> SimilarBoard(@RequestParam("board_id") int board_id){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board_id", board_id);
+		
+		List<HashMap<String, Object>> SimilarList = recommendService.SimilarBoard(map);
+
+		return SimilarList;
 	}
 }

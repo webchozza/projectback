@@ -11,6 +11,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import first.com.dao.RecommendDAO;
+import first.com.model.BoardDTO;
+import kr.co.shineware.nlp.komoran.core.analyzer.Komoran;
+import kr.co.shineware.util.common.model.Pair;
 
 @Service
 @Resource(name="recommendSerivce")
@@ -116,11 +119,11 @@ public class RecommendService implements RecommendDAO {
 		List<HashMap<String, Object>> recommendlist = new ArrayList<HashMap<String, Object>>();
 
 		map.put("searchlist", searchlist);
-		System.out.println(searchlist);
+
 		if(!searchlist.isEmpty()){
 		comparelist = sqlSessionTemplate.selectList("recommend.similaritysearch", map);
 		}
-		System.out.println(comparelist);
+
 		if(comparelist.isEmpty()){
 			recommendlist = sqlSessionTemplate.selectList("recommend.basiclist", map);
 		}else if(!comparelist.isEmpty()){
@@ -130,5 +133,45 @@ public class RecommendService implements RecommendDAO {
 
 		return recommendlist;
 	}
-	
+
+	@Override
+	public List<HashMap<String, Object>> SimilarBoard(Map<String, Object> map) {
+		
+		BoardDTO board = sqlSessionTemplate.selectOne("recommend.selectboard",map);
+
+		//형태소 분석기 객체 생성
+		Komoran komoran = new Komoran("C:\\komoran\\models-full");
+		//유사도 계산에 사용할 벡터값을 저장할 리스트
+		List<HashMap<String, Object>> similarlist = new ArrayList<HashMap<String, Object>>();
+		//유사도 계산 후 유사도 높은 순으로 6개의 게시글 정보를 담을 리스트
+		List<HashMap<String, Object>> similarboardlist = new ArrayList<HashMap<String, Object>>();
+
+		String str = board.getBoard_content()+board.getBoard_title()+board.getBoard_nickname();
+
+		List<List<Pair<String, String>>> result = komoran.analyzeWithoutSpace(str);
+		List<String> list = new ArrayList<String>();
+		int num = 0;
+		for(List<Pair<String, String>> repeat : result ){
+			for(int i=0; i<repeat.size();i++){
+				if(repeat.get(i).getSecond().equals("MAG")||repeat.get(i).getSecond().equals("NNG")
+						||repeat.get(i).getSecond().equals("NNP")){
+					list.add(num, repeat.get(i).getFirst());
+					num++;
+				}
+			}
+		}
+		//추출한 형태소를 리스트형태로 맵객체에 저장
+		map.put("search_list", list);
+		//형태소를 포함하는 게시글의 유사도 측정에 사용할 벡터값을 구한다
+		if(!list.isEmpty()){
+			similarlist = sqlSessionTemplate.selectList("recommend.recommendsearch",map);
+		}
+		
+		if(!similarlist.isEmpty()){
+		map.put("similarboardlist", similarlist);
+			similarboardlist = sqlSessionTemplate.selectList("recommend.similarboard", map);
+		}
+		
+		return similarboardlist;
+	}
 }
