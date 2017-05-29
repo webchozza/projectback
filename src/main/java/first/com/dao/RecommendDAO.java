@@ -12,4 +12,7 @@ public interface RecommendDAO {
 	
 	public List<HashMap<String, Object>> recommendList(Map<String, Object> map);
 	
+	public List<HashMap<String, Object>> recommendSearch(List<String> list);
+	
+	
 }

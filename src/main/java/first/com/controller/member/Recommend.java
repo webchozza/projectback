@@ -1,15 +1,14 @@
 package first.com.controller.member;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,5 +43,38 @@ public class Recommend {
 		System.out.println(recommend_list);
 		//ajax 작성할 때 list가 null이 아닐 때 << 조건문 꼭 작성
 		return recommend_list;
+	}
+	
+	
+	
+	@RequestMapping("/se.do")
+	@ResponseBody
+	public List<HashMap<String, Object>> Search(@RequestParam("search") String search){
+		
+		List<String> searchtokenlist = new ArrayList<String>();
+		
+		//true면 검색어에 공백 포함, false면 검색어에 공백 미포함
+		boolean check = false;
+		//만약 검색어가 공백 기준으로 여러개라면 나눠서 따로 저장한다.
+		for(int i=0; i<search.length(); i++){
+			//검색어에 공백이 있다면
+			if(search.charAt(i) == ' '){
+				String[] searchsplit = search.split("\\s");
+				for(int k=0;k<searchsplit.length;k++){
+					searchtokenlist.add(k, searchsplit[k].trim());
+				}
+				check = true;
+				break;
+			}
+		}
+		//검색어에 공백이 없다면
+		if(check == false){
+			searchtokenlist.add(0, search);
+		}
+		
+	    System.out.println(searchtokenlist);
+		List<HashMap<String, Object>> searchlist = recommendService.recommendSearch(searchtokenlist);
+		
+		return searchlist;
 	}
 }

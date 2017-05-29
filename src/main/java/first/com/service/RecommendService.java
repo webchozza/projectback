@@ -88,10 +88,10 @@ public class RecommendService implements RecommendDAO {
 					del = i;
 				}
 			}
-			System.out.println(similarity+"??");
+
 			//현재 회원의 추천 및 스크랩을 비교하여 취향이 가장 유사한 사람 (현재회원이 추천이나 스크랩안한 목록을 보여준다)
 			map.put("compare_member_id", compare.get("MEMBER_ID"));
-			System.out.println(compare);
+
 			//코사인 유사도가 1에 가장 가까운 회원에게서 추천 글을 뽑아온다.
 			recommend_list = sqlSessionTemplate.selectList("recommend.recommendlist",map);
 
@@ -103,4 +103,21 @@ public class RecommendService implements RecommendDAO {
 		//뽑아온 추천 게시글 목록 혹은 (유사도가 전부 1이라면) 빈 리스트 객체 반환
 		return recommend_list;
 	}
+
+	//검색시 검색어를 기준으로 유사도가 높은 추천 글 가져오기
+	@Override
+	public List<HashMap<String, Object>> recommendSearch(List<String> list) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search_list", list);
+		
+		List<HashMap<String, Object>> searchlist = sqlSessionTemplate.selectList("recommend.recommendsearch",map);
+		System.out.println(searchlist);
+		
+		//searchlist에 담긴 게시글들의 유사도를 구한다.
+		
+		
+		return searchlist;
+	}
+	
 }

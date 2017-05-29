@@ -14,6 +14,8 @@
 	 SELECT count(recommend_id) FROM recommend WHERE member_id = #{session_id} and board_id = #{board_id}
 	 </select>
 	 
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 로그인 시 취향이 비슷한 게시글 추천 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
 	  <!-- 추천 및 스크랩 테이블에 있는 회원 목록 불러오기 -->
 	 <select id="alllist" resultType="java.util.Map">
 	 SELECT DISTINCT member_id FROM recommend
@@ -54,4 +56,18 @@
 	 (SELECT board_id,board_title,bgroup_id,board_hit,rownum FROM (SELECT a.board_id,b.board_title,b.bgroup_id,b.board_hit FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id}) a 
 	 INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_hit DESC) WHERE rownum <= 3)) ORDER BY board_hit DESC]]>
 	 </select>
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ검색시 글 추천 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	 <!-- 검색어를 공백으로 구분하여 각 구분자가 포함된 게시글의 번호를 가져온다 -->
+	 <select id="recommendsearch" resultType="java.util.Map" parameterType="java.util.Map">
+	 SELECT board_id FROM board WHERE
+	 	<choose>
+		 	<when test="search_list.size != 0">
+		 		<foreach collection="search_list" item="search" separator="OR">
+	 				board_title like '%'||#{search}||'%' OR board_content like '%'||#{search}||'%' OR board_nickname like '%'||#{search}||'%'
+	 			</foreach>
+	 		</when>
+	 	</choose>
+	 </select>
+	 
 	 </mapper>
