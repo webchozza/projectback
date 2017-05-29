@@ -1,5 +1,6 @@
 package first.com.controller.main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,19 +42,41 @@ public class AllSearch {
 
 		if(AllSearch != null){ search = AllSearch; }
 
+		/////
+		List<String> searchtokenlist = new ArrayList<String>();
+		//true면 검색어에 공백 포함, false면 검색어에 공백 미포함
+		boolean check = false;
+		//만약 검색어가 공백 기준으로 여러개라면 나눠서 따로 저장한다.
+		for(int i=0; i<search.length(); i++){
+			//검색어에 공백이 있다면
+			if(search.charAt(i) == ' '){
+				String[] searchsplit = search.split("\\s");
+				for(int k=0;k<searchsplit.length;k++){
+					searchtokenlist.add(k, searchsplit[k].trim());
+				}
+				check = true;
+				break;
+			}
+		}
+		//검색어에 공백이 없다면
+		if(check == false){
+			searchtokenlist.add(0, search);
+		}
+		//////
+
 		startrow = ((currentPage-1) * blockCount)+1;
 		endrow = (startrow + blockCount)-1;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("startrow", startrow);
 		map.put("endrow", endrow);
-		map.put("search", search.trim());
+		map.put("searchlist",searchtokenlist);
 		map.put("category", category[n]);
 
 		List<BoardDTO> list = mainSearch.allSearch(map);
-		
+
 		totalCount = mainSearch.allBordCount(map);
-		
+
 		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
 		pagingHtml = page.getPagingHtml().toString();
 		
@@ -66,7 +89,7 @@ public class AllSearch {
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("AllSearch", search);
-		
+
 		if(ap != null){
 			return "main/AllSearchList";//at Ajax request
 		}
