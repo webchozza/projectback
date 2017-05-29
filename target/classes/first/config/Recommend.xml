@@ -87,22 +87,19 @@
 	 <select id="similaritysearch" resultType="java.util.Map" parameterType="java.util.Map">
 	 <choose>
 	 	<when test="searchlist.size != 0">
-	 SELECT similarity, board_id, rownum FROM (SELECT similarity, board_id FROM (
-	 		<foreach collection="searchlist" item="list" separator="UNION" index="i" open=" " close=" ">
-	 		(
+	 SELECT similarity, board_id, rownum FROM (SELECT similarity, board_id FROM ((
 	 			<foreach collection="searchlist" item="comparelist" separator="UNION" open=" " close=" ">
-	 			SELECT ROUND(DECODE((#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+
-	 			(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}),0,NULL,(#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+
-	 			(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}))/
-				DECODE(SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
-				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
-				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
-				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
-				power(#{comparelist.VECTOR_NAME},2))),5) as similarity, #{list.BOARD_ID} as board_id FROM DUAL
+	 			SELECT ROUND(DECODE((1*#{comparelist.VECTOR_TITLE})+(1*#{comparelist.VECTOR_CONTENT})+
+	 			(1*#{comparelist.VECTOR_NAME}),0,NULL,(1*#{comparelist.VECTOR_TITLE})+
+	 			(1*#{comparelist.VECTOR_CONTENT})+(1*#{comparelist.VECTOR_NAME}))/
+				DECODE(SQRT(power(1,2)+power(1,2)+
+				power(1,2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(1,2)+power(1,2)+
+				power(1,2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2))),6) as similarity, #{comparelist.BOARD_ID} as board_id FROM DUAL
 	 		</foreach>
-	 		) 
-	 		</foreach>
-	 <![CDATA[ )WHERE similarity != 1 AND similarity is NOT NULL ORDER BY similarity DESC) WHERE rownum <= 6]]>
+	 		 
+	 <![CDATA[ ))WHERE similarity != 1 AND similarity is NOT NULL ORDER BY similarity DESC) WHERE rownum <= 6]]>
 	 	</when>
 	 </choose>
 	 </select>

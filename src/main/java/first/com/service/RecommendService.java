@@ -53,11 +53,10 @@ public class RecommendService implements RecommendDAO {
 						countlist.add(num, compare);
 						num++;
 					}
-					System.out.println(compare);
-					}
 				}
 			}
-		System.out.println(countlist);
+		}
+
 		//추천 글을 담을 리스트 객체 생성
 		List<HashMap<String, Object>> recommend_list = new ArrayList<HashMap<String, Object>>();
 		
@@ -82,9 +81,7 @@ public class RecommendService implements RecommendDAO {
 					}
 				}else if(similarity == 0){ 
 					similarity = Double.parseDouble(String.valueOf(countlist.get(i).get("SIMILARITY"))); 
-					System.out.println(similarity+"접속한 회원과 ");
 					compare = countlist.get(i);
-					System.out.println(compare+"콤페어");
 					del = i;
 				}
 			}
@@ -119,11 +116,11 @@ public class RecommendService implements RecommendDAO {
 		List<HashMap<String, Object>> recommendlist = new ArrayList<HashMap<String, Object>>();
 
 		map.put("searchlist", searchlist);
-		
+		System.out.println(searchlist);
 		if(!searchlist.isEmpty()){
 		comparelist = sqlSessionTemplate.selectList("recommend.similaritysearch", map);
 		}
-		
+		System.out.println(comparelist);
 		if(comparelist.isEmpty()){
 			recommendlist = sqlSessionTemplate.selectList("recommend.basiclist", map);
 		}else if(!comparelist.isEmpty()){
