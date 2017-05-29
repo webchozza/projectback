@@ -72,7 +72,6 @@ public class Recommend {
 			searchtokenlist.add(0, search);
 		}
 		
-	    System.out.println(searchtokenlist);
 		List<HashMap<String, Object>> searchlist = recommendService.recommendSearch(searchtokenlist);
 		
 		return searchlist;

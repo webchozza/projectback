@@ -58,16 +58,62 @@
 	 </select>
 	 
 	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ검색시 글 추천 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
-	 <!-- 검색어를 공백으로 구분하여 각 구분자가 포함된 게시글의 번호를 가져온다 -->
+	 <!-- 검색어를 공백으로 구분하여 각 구분자가 포함된 게시글의 빈도수를 벡터값으로 가져온다 -->
 	 <select id="recommendsearch" resultType="java.util.Map" parameterType="java.util.Map">
-	 SELECT board_id FROM board WHERE
+	 SELECT distinct board_id, 
 	 	<choose>
 		 	<when test="search_list.size != 0">
-		 		<foreach collection="search_list" item="search" separator="OR">
-	 				board_title like '%'||#{search}||'%' OR board_content like '%'||#{search}||'%' OR board_nickname like '%'||#{search}||'%'
+		 		<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_title) -  length(replace(board_title,#{search},'')),0)
+	 			</foreach>
+	 			as vector_title,
+	 			<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_content) -  length(replace(board_content,#{search},'')),0)
+	 			</foreach>
+	 			as vector_content,
+	 			<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_nickname) -  length(replace(board_nickname,#{search},'')),0)
+	 			</foreach>
+	 			as vector_name FROM board WHERE 
+			 	<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
+	 	 			 board_content like '%'||#{search}||'%' or board_title like '%'||#{search}||'%' or board_nickname like '%'||#{search}||'%'
 	 			</foreach>
 	 		</when>
 	 	</choose>
 	 </select>
+	 
+	 <select id="similaritysearch" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 	<when test="similaritylist.size != 0">
+	 SELECT board_id, similarity, rownum FROM (SELECT board_id, similarity FROM
+	 		<foreach collection="similaritylist" item="list" separator="UNION" index="i" open=" " close=" ">
+	 		(
+	 			<foreach collection="comparesimilaritylist" item="comparelist" separator="UNION" open=" " close=" ">
+	 			SELECT #{list.board_id} as board_id, ROUND(DECODE((#{list.vector_title}*#{comparelist.vector_title})+(#{list.vector_content}*#{comparelist.vector_content})+
+	 			(#{list.vector_name}*#{comparelist.vector_name}),0,NULL,(#{list.vector_title}*#{comparelist.vector_title})+
+	 			(#{list.vector_content}*#{comparelist.vector_content})+(#{list.vector_name}*#{comparelist.vector_name}))/
+				DECODE(SQRT(power(#{list.vector_title},2)+power(#{list.vector_content},2)+
+				power(#{list.vector_name},2))*SQRT(power(#{comparelist.vector_title},2)+power(#{comparelist.vector_content},2)+
+				power(#{comparelist.vector_name},2)),0,NULL,SQRT(power(#{list.vector_title},2)+power(#{list.vector_content},2)+
+				power(#{list.vector_name},2))*SQRT(power(#{comparelist.vector_title},2)+power(#{comparelist.vector_content},2)+
+				power(#{comparelist.vector_name},2))),5) as similarity FROM DUAL
+	 		</foreach>
+	 		)
+	 		</foreach>
+	 <![CDATA[ORDER BY similarity DESC) WHERE rownum <= 6]]>
+	 	</when>
+	 </choose>
+	 </select>
+	 
+	 <select id="recosearchboard" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 <when test="recosearchboard.size != 0">
+	 <foreach collection="recosearchboard" item="list" separator="UNION ALL" open=" " close=" ">
+	  SELECT board_id, board_title, bgroup_id FROM board WHERE board_id = ${list.BOARD_ID}
+	 </foreach>
+	 </when>
+	 </choose>
+	 </select>
+	 
 	 
 	 </mapper>
