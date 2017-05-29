@@ -45,6 +45,7 @@ public class AjaxPaging {
 					pagingHtml.append("[PREV]");
 					pagingHtml.append("</a>");
 			} else {
+				search= '"'+search+'"';
 				pagingHtml.append(
 						"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+search+","+n+")'>");
 				pagingHtml.append("[PREV]");
@@ -68,6 +69,7 @@ public class AjaxPaging {
 					pagingHtml.append("</a>");
 					
 				} else{
+					search= '"'+search+'"';
 				pagingHtml.append(
 						"&nbsp;<a href='javascript:;' onclick='paging("+path+","+i+","+search+","+n+")'>");
 				pagingHtml.append(i);
@@ -85,8 +87,9 @@ public class AjaxPaging {
 			pagingHtml.append("[NEXT]");
 			pagingHtml.append("</a>");
 			} else {
+				search= '"'+search+'"';
 				pagingHtml.append(
-						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+search+","+n+")''>");
+						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+",'"+search+"',"+n+")''>");
 				pagingHtml.append("[NEXT]");
 				pagingHtml.append("</a>");
 			}

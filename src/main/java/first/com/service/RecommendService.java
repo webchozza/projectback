@@ -110,46 +110,27 @@ public class RecommendService implements RecommendDAO {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search_list", list);
-		
+
+		//검색어를 가진 각 게시글의 빈도수를 벤터로 구해 담을 리스트
 		List<HashMap<String, Object>> searchlist = sqlSessionTemplate.selectList("recommend.recommendsearch",map);
-		System.out.println(searchlist);
+		//각 게시글을 비교하여 유사도가 높은 순으로 board_id 6개를 저장할 리스트
+		List<HashMap<String, Object>> comparelist = new ArrayList<HashMap<String, Object>>();
+		//위 리스트의 board_id로 뷰에서 보여줄 정보들을 꺼내와 담을 리스트
+		List<HashMap<String, Object>> recommendlist = new ArrayList<HashMap<String, Object>>();
+
+		map.put("searchlist", searchlist);
 		
-		
-		List similaritylist = new ArrayList();
-		Map<String ,Object> putmap = null;
-		for(int i=0;i<searchlist.size();i++){
-			putmap = new HashMap<String, Object>();
-			putmap.put("board_id", searchlist.get(i).get("BOARD_ID"));
-			putmap.put("vector_name",searchlist.get(i).get("VECTOR_NAME"));
-			putmap.put("vector_title", searchlist.get(i).get("VECTOR_TITLE"));
-			putmap.put("vector_content", searchlist.get(i).get("VECTOR_CONTENT"));
-			similaritylist.add(i, putmap);
+		if(!searchlist.isEmpty()){
+		comparelist = sqlSessionTemplate.selectList("recommend.similaritysearch", map);
 		}
-		map.put("similaritylist", similaritylist);
 		
-		List similaritylist2 = new ArrayList();
-		Map<String ,Object> compare_putmap = null;
-		for(int i=0;i<searchlist.size();i++){
-			compare_putmap = new HashMap<String, Object>();
-			if(i==(searchlist.size()-1)){
-				compare_putmap.put("vector_name",searchlist.get(0).get("VECTOR_NAME"));
-				compare_putmap.put("vector_title", searchlist.get(0).get("VECTOR_TITLE"));
-				compare_putmap.put("vector_content", searchlist.get(0).get("VECTOR_CONTENT"));
-			}else{
-			compare_putmap.put("vector_name",searchlist.get(i+1).get("VECTOR_NAME"));
-			compare_putmap.put("vector_title", searchlist.get(i+1).get("VECTOR_TITLE"));
-			compare_putmap.put("vector_content", searchlist.get(i+1).get("VECTOR_CONTENT"));
-			}
-			similaritylist2.add(i, compare_putmap);
+		if(comparelist.isEmpty()){
+			recommendlist = sqlSessionTemplate.selectList("recommend.basiclist", map);
+		}else if(!comparelist.isEmpty()){
+			map.put("recosearchboard", comparelist);
+			recommendlist = sqlSessionTemplate.selectList("recommend.recosearchboard", map);
 		}
-		map.put("comparesimilaritylist", similaritylist2);
-		
-		List<HashMap<String, Object>> comparelist = sqlSessionTemplate.selectList("recommend.similaritysearch", map);
-		System.out.println(comparelist);
-		
-		map.put("recosearchboard", comparelist);
-		List<HashMap<String, Object>> recommendlist = sqlSessionTemplate.selectList("recommend.recosearchboard", map);
-	System.out.println(recommendlist);
+
 		return recommendlist;
 	}
 	

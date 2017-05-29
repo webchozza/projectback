@@ -52,12 +52,6 @@ public class AllSearch {
 
 		List<BoardDTO> list = mainSearch.allSearch(map);
 		
-		//추천 검색어 함 뽑아보자
-		for(BoardDTO iter : list){
-			System.out.println(iter.getSearchcount());
-		}
-		//
-		
 		totalCount = mainSearch.allBordCount(map);
 		
 		page = new AjaxPaging(path, currentPage, totalCount, blockCount, blockPage, search, n);
@@ -76,7 +70,6 @@ public class AllSearch {
 		if(ap != null){
 			return "main/AllSearchList";//at Ajax request
 		}
-		
 		
 		return "AllSearchList";
 	}
