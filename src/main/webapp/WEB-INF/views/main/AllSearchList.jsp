@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/allsearchlist.js"></script>
+<script src="resources/assets/js/main/allsearchlist.js"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
