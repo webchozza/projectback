@@ -65,8 +65,8 @@
 	   <selectKey keyProperty="board_id" resultType="int" order="BEFORE">
        SELECT SEQ_BOARD.NEXTVAL FROM DUAL
        </selectKey>
-	   INSERT INTO BOARD(BOARD_ID,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,BOARD_DATE,BOARD_NICKNAME,BGROUP_ID) 
-	   VALUES(#{board_id},#{member_id},#{board_title},#{board_content},SYSDATE,#{board_nickname},#{bgroup_id})
+	   INSERT INTO BOARD(BOARD_ID,MEMBER_ID,BOARD_TITLE,BOARD_CONTENT,BOARD_DATE,BOARD_NICKNAME,BGROUP_ID,BOARD_TAG) 
+	   VALUES(#{board_id},#{member_id},#{board_title},#{board_content},SYSDATE,#{board_nickname},#{bgroup_id},#{board_tag})
 	   </insert>
 
 	   <!-- 4.수정하기 -->
@@ -76,7 +76,7 @@
 	   </select> 
 	   <update id="update" parameterType="first.com.model.BoardDTO">
 	   UPDATE BOARD 
-	   SET BOARD_TITLE=#{board_title},BOARD_CONTENT=#{board_content} 
+	   SET BOARD_TITLE=#{board_title},BOARD_CONTENT=#{board_content},BOARD_TAG=#{board_tag}
 	   WHERE BOARD_ID=#{board_id}
 	   </update>
 	   

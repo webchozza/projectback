@@ -27,7 +27,7 @@ function insertScrap(){
 	$.ajax({
 		url:"/dokky/ScrapInsert.do",
 		type: "get",
-		dataType: "json",
+		dataType: "json",	
 		data: {board_id: board_id, member_id: member_id},
 		success: function(data){
 				scrapcheck(data);
@@ -106,9 +106,9 @@ function recommendcheck(checkValue){
 		$("#tags").append("<i class='icon fa-tags'></i>");
 		for (i=0; i<sep.length; i++) {
 			if(i==(sep.length-1)){
-				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
 			}else{
-				$("#tags").append('<a href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>, ');
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
 			}
 		}
 	}
@@ -125,12 +125,42 @@ function recommendcheck(checkValue){
 	}
 
 	$(document).ready(function() {
+		//eongoo
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
-	});
-
-	$(document).ready(function() {
+		//jj
 		viewTags("${board_tag}");
+		
+		//eongoo
+		var board_id = $("#board_id").val();
+		var session_id = $("#session_id").val();
+		
+		$.ajax({
+			url: "/dokky/SimilarBoard.do",
+			type: "post",
+			dataType: "json",
+			data: {board_id : board_id},
+			success: function(data){
+				if(data!=null){
+				var str = '';
+				$.each(data,function(index, value){
+					if(value.BGROUP_ID == "1"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "2"){
+						var path = '/dokky/bfreedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "3"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "4"){
+						var path = '/dokky/bqnadetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}
+					
+					str += '<b><a href="'+path+'" style="color:#504747; padding-right:20px; color:#597D9C;">'+value.BOARD_TITLE+'</a></b>';
+				});
+				$("#recodetail").html('<b style="font-size:15px; color:#398ECF;">비슷한 글을 찾으시나요?</b>');
+				$("#recodetaila").html(str);
+			}
+			}
+		});
 	});
 </script>
 <style>
@@ -139,6 +169,18 @@ function recommendcheck(checkValue){
 }
 .fa-thumbs-up{
 	color: #7f888f;
+}
+
+.tagcode {
+	background: rgba(230, 235, 237, 0.25);
+	border-radius: 0.375em;
+	border: solid 1px rgba(210, 215, 217, 0.75);
+	font-family: Malgun Gothic;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+	color: #7f888f;
+	
 }
 </style>
 <body>
@@ -187,12 +229,18 @@ function recommendcheck(checkValue){
 											<div id="scrapbutton"></div>
 										</center>
 								</tr>
+								<tr>
+									<td colspan="2"><div id="tags"></div></td>
+								</tr>
 								
 								
 							</tbody>
 
 					</table>
-
+					<span id="recodetail" style="display:inline-block; position:relative; bottom:15px; left:10px;">
+					<img src="resources/images/blueloading.gif" style="width:200px; height:100px;">
+					</span><br>
+					<span id="recodetaila" style="display:inline-block; position:relative; bottom:15px; left:10px; max-width:1000px; min-width:200px;"></span>
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />
@@ -207,8 +255,7 @@ function recommendcheck(checkValue){
 									<td colspan="2"><strong><a href="MemberPage.do?member_id=${detail3.member_id }">${detail3.member_name}</a></strong>
 										<i><fmt:formatDate value="${detail3.bcomment_date }" pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp; 
 										<c:if test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id==detail.member_id}">
-
+											<c:if test="${sessionScope.member_id eq detail3.member_id}">
 												<a href="/dokky/bcodedeletecomment.do?board_id=${detail3.board_id}&session_id=${sessionScope.member_id}&bcomment_id=${detail3.bcomment_id}"
 													class="icon fa-trash"
 													style="font-size: 14px; color: #7f888f"

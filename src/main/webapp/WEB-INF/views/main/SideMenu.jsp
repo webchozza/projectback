@@ -4,29 +4,76 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=5"></script>
+<script src="/resources/assets/js/main/sidemenu.js?v=3"></script>
 <script>
 
 $(document).ready(function(){
+	
+	if(window.innerWidth > 500){
+		$(".inner").css('height', '1000px');
+	}else if(window.innerWidth <= 500){
+		$(".inner").css('height', '');
+	}
+	
 	$("#notich").val("N");
 	
 	var session_id = $("#session_id").val();
 	
-	$.ajax({
-		url: "/dokky/notiCount.do",
-		type: "post",
-		dataType: "json",
-		data: {session_id : session_id},
-		success: function(data){
-			if(data == 0){
+	if(session_id != null && session_id != ""){
+		$("#recotitle").html('<img src="resources/images/loading.gif" style="width:200px; height:200px;">');
+		
+		$.ajax({
+			url: "/dokky/notiCount.do",
+			type: "post",
+			dataType: "json",
+			data: {session_id : session_id},
+			success: function(data){
+				if(data == 0){
+					$("#notiarea").html("");
+				}else{
+				var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
 				$("#notiarea").html("");
-			}else{
-			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
-			$("#notiarea").html("");
-			$("#notiarea").html(str);
+				$("#notiarea").html(str);
+				}
 			}
+		});
+		$.ajax({
+			url: "/dokky/RecommendList.do",
+			type: "post",
+			dataType: "json",
+			data: {session_id : session_id},
+			success: function(data){
+				if(data!=null){
+					var strdiv = '';
+				$.each(data,function(index, value){
+					if(value.BGROUP_ID == "1"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "2"){
+						var path = '/dokky/bfreedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "3"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "4"){
+						var path = '/dokky/bqnadetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}
+					
+					strdiv += '<img src="resources/images/dot.jpg" style="width:10px; height:10px;">';
+					strdiv += '<a href="'+path+'" style="padding:2px; color:#504747;">'+value.BOARD_TITLE+'</a><br>';
+					});
+					$("#recotitle").html("");
+					$("#recotitle").html('회원님이 관심가질만한 글');
+					$("#recodiv").html(strdiv);
+				}
+				}
+		});
 		}
-	});
+});
+
+$(window).resize(function(){
+	if(window.innerWidth > 500){
+		$(".inner").css('height', '1000px');
+	}else if(window.innerWidth <= 500){
+		$(".inner").css('height', '');
+	}
 });
 
 </script>
@@ -74,11 +121,10 @@ display:none;
 
 
 </style>
-
 </head>
 <body>
 	<!-- 사이드바 -->
-	<div id="sidebar">
+	<div id="sidebar" style="height:2000px;">
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">
@@ -144,8 +190,17 @@ display:none;
 					<li><a href="/dokky/bcodelist.do">오픈소스</a></li>
 				</ul>
 			</nav>
+				<div class="mini-posts">
+					<article>
+					<b><p id="recotitle" style="position:relative; bottom:35px; color:#398ECF; font-size:15px;">
+					</p></b>
+					</article>
+					<div id="recodiv" style="position:relative; bottom:60px;">
+					</div>
+				</div>
 		</div>
 	</div>
+	
 </body>
 <form name="valueform">
 <input type="hidden" id="session_id" value="${sessionScope.member_id}"/>

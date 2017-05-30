@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.AlramDAO;
 import first.com.dao.BqnaDAO;
+import first.com.dao.TagDAO;
 import first.com.model.BoardDTO;
 
 @Controller
@@ -22,6 +23,9 @@ public class BqnaWrite {
 	
 	@Resource
 	private AlramDAO noti;
+	
+	@Resource
+	private TagDAO tagService;
 	
 	@RequestMapping(value="/bqnawriteform")
 	public ModelAndView bqnaWriteForm(HttpServletRequest request) {
@@ -38,6 +42,7 @@ public class BqnaWrite {
 		
 		String content = boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
 		boardDTO.setBoard_content(content);
+		boardDTO.setBoard_tag(tagService.insertTag(boardDTO.getBoard_tag(), 4));//bgroup_id=4
 		
 		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
 		while (tag.contains(",,")) {

@@ -2,14 +2,160 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	 
-	 <mapper namespace="recommend">
+<mapper namespace="recommend">
 	 
+	 <!-- 추천할 때 추천 관계 테이블에 정보 입력 -->
 	 <insert id="insert" parameterType="java.util.Map">
 	 INSERT INTO RECOMMEND VALUES (SEQ_RECOMMEND.NEXTVAL, #{member_id}, #{board_id})
 	 </insert> 
 	 
+	 <!-- 추천한 글인지 확인하기 -->
 	 <select id="check" resultType="int" parameterType="java.util.Map">
 	 SELECT count(recommend_id) FROM recommend WHERE member_id = #{session_id} and board_id = #{board_id}
 	 </select>
 	 
-	 </mapper>
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 로그인 시 취향이 비슷한 게시글 추천 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	  <!-- 추천 및 스크랩 테이블에 있는 회원 목록 불러오기 -->
+	 <select id="alllist" resultType="java.util.Map">
+	 SELECT DISTINCT member_id FROM recommend
+	 UNION
+     SELECT DISTINCT member_id FROM scrap
+	 </select>
+	 
+	 <!-- 추천 및 스크랩 테이블에 있는 회원과 접속중인 회원과의 코사인 유사도 구하기 -->
+	 <select id="similarity" resultType="java.util.HashMap" parameterType="java.util.Map">
+	   SELECT ROUND(DECODE(sum(my_v*you_v),0,NULL,sum(my_v*you_v))/DECODE((SQRT(sum(power(my_v,2)))*SQRT(sum(power(you_v,2)))),0,NULL,(SQRT(sum(power(my_v,2)))*SQRT(sum(power(you_v,2))))),5) as similarity, #{compare_member_id} as member_id FROM
+   (SELECT NVL(a.vector,0) as my_v, NVL(b.vector,0) as you_v FROM 
+     ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{member_id}) 
+       UNION ALL   
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{member_id})) 
+       UNION ALL
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{member_id})) a
+   FULL OUTER JOIN
+     ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{compare_member_id}) 
+       UNION ALL   
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{compare_member_id})) 
+       UNION ALL
+     SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{compare_member_id})) b 
+   ON a.board_id = b.board_id)
+     GROUP BY #{compare_member_id}
+	 </select>
+	 
+	 <!-- 추천 글 가져오기(조회높은 순) -->
+	 <select id="recommendlist" resultType="java.util.Map" parameterType="java.util.Map">
+	 <![CDATA[((SELECT board_id,board_title,bgroup_id,board_hit,rownum FROM (SELECT a.board_id,b.board_title,b.bgroup_id,b.board_hit FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_hit DESC) WHERE rownum <= 3)
+	   MINUS
+	 (SELECT board_id,board_title,bgroup_id,board_hit,rownum FROM (SELECT a.board_id,b.board_title,b.bgroup_id,b.board_hit FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_hit DESC) WHERE rownum <= 3))
+   UNION
+  ((SELECT board_id,board_title,bgroup_id,board_hit,rownum FROM (SELECT a.board_id,b.board_title,b.bgroup_id,b.board_hit FROM (SELECT board_id FROM scrap WHERE member_id = #{compare_member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_hit DESC) WHERE rownum <= 3)
+	   MINUS
+	 (SELECT board_id,board_title,bgroup_id,board_hit,rownum FROM (SELECT a.board_id,b.board_title,b.bgroup_id,b.board_hit FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id}) a 
+	 INNER JOIN board b ON a.board_id = b.board_id ORDER BY b.board_hit DESC) WHERE rownum <= 3)) ORDER BY board_hit DESC]]>
+	 </select>
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ검색시 글 추천 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	 <!-- 검색어를 공백으로 구분하여 각 구분자가 포함된 게시글의 빈도수를 벡터값으로 가져온다 -->
+	 <select id="recommendsearch" resultType="java.util.Map" parameterType="java.util.Map">
+	 SELECT board_id, vector_title, vector_content, vector_name FROM (SELECT distinct board_id, 
+	 	<choose>
+		 	<when test="search_list.size != 0">
+		 		<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_title) -  length(replace(board_title,#{search},'')),0)
+	 			</foreach>
+	 			as vector_title,
+	 			<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_content) -  length(replace(board_content,#{search},'')),0)
+	 			</foreach>
+	 			as vector_content,
+	 			<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_nickname) -  length(replace(board_nickname,#{search},'')),0)
+	 			</foreach>
+	 			as vector_name FROM board WHERE 
+			 	<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
+	 	 			 board_content like '%'||#{search}||'%' or board_title like '%'||#{search}||'%' or board_nickname like '%'||#{search}||'%' 
+	 			</foreach>
+	 	 			) WHERE vector_title != 0 OR vector_content != 0 OR vector_name != 0 
+	 		</when>
+	 	</choose>
+	 </select>
+	 
+	 <!-- 검색어의 빈도값으로 각 게시글 사이의 유사도를 구한다. -->
+	 <select id="similaritysearch" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 	<when test="searchlist.size != 0">
+	 SELECT similarity, board_id, rownum FROM (SELECT similarity, board_id FROM ((
+	 			<foreach collection="searchlist" item="comparelist" separator="UNION" open=" " close=" ">
+	 			SELECT ROUND(DECODE((1*#{comparelist.VECTOR_TITLE})+(1*#{comparelist.VECTOR_CONTENT})+
+	 			(1*#{comparelist.VECTOR_NAME}),0,NULL,(1*#{comparelist.VECTOR_TITLE})+
+	 			(1*#{comparelist.VECTOR_CONTENT})+(1*#{comparelist.VECTOR_NAME}))/
+				DECODE(SQRT(power(1,2)+power(1,2)+
+				power(1,2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(1,2)+power(1,2)+
+				power(1,2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2))),6) as similarity, #{comparelist.BOARD_ID} as board_id FROM DUAL
+	 		</foreach>
+	 		 
+	 <![CDATA[ ))WHERE similarity != 1 AND similarity is NOT NULL ORDER BY similarity DESC) WHERE rownum <= 5]]>
+	 	</when>
+	 </choose>
+	 </select>
+	 
+	 <!-- 유사도가 높은 순으로 최대 5개의 글을 가져온다 -->
+	 <select id="recosearchboard" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 <when test="recosearchboard.size != 0">
+	 <foreach collection="recosearchboard" item="list" separator="UNION ALL" open=" " close=" ">
+	  SELECT board_id, board_title, bgroup_id FROM board WHERE board_id = ${list.BOARD_ID}
+	 </foreach>
+	 </when>
+	 </choose>
+	 </select>
+	 
+	 <!-- 유사도가 전부 1이거나 Null이라면 해당 검색 게시글의 추천순으로 최대 5개를 가져온다. -->
+	 <select id="basiclist" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+		 	<when test="search_list.size != 0">
+				 SELECT board_id, board_title, bgroup_id, rownum FROM (SELECT board_id, board_title, bgroup_id FROM board WHERE
+		 		<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
+	 		 	 board_content like '%'||#{search}||'%' or board_title like '%'||#{search}||'%' or board_nickname like '%'||#{search}||'%'
+				 </foreach>
+			 </when>
+	 </choose>
+	 <![CDATA[ORDER BY board_like DESC) WHERE rownum <= 5 ]]>
+	 </select>
+	 
+	 
+	 <!--ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 상세보기 중인 글과 유사도가 높은 글 목록을 가져온다. ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ-->
+	 <select id="selectboard" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
+	 SELECT board_title, board_nickname, board_content FROM board WHERE board_id = #{board_id}
+	 </select>
+	 
+	 <select id="similarboard" resultType="java.util.Map" parameterType="java.util.Map">
+	 <choose>
+	 	<when test="similarboardlist.size != 0">
+	 	SELECT b.board_id, b.board_title, b.bgroup_id FROM (SELECT similarity, board_id, rownum FROM (SELECT similarity, board_id FROM (
+	 		<foreach collection="similarboardlist" item="list" separator="UNION" index="i" open=" " close=" ">
+	 		(
+	 			<foreach collection="similarboardlist" item="comparelist" separator="UNION" open=" " close=" ">
+	 			SELECT ROUND(DECODE((#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+
+	 			(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}),0,NULL,(#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+
+	 			(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}))/
+				DECODE(SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
+				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
+				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
+				power(#{comparelist.VECTOR_NAME},2))),5) as similarity, #{list.BOARD_ID} as board_id FROM DUAL
+	 		</foreach>
+	 		) 
+	 		</foreach>
+		<![CDATA[ )WHERE similarity != 1 AND similarity is NOT NULL ORDER BY similarity DESC) WHERE rownum <= 5]]>) a 
+		INNER JOIN board b ON a.board_id = b.board_id ORDER BY a.similarity DESC
+	 	</when>
+	 </choose>
+	 </select>
+	 
+</mapper>

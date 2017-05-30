@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import first.com.dao.BfreeDAO;
+import first.com.dao.TagDAO;
 import first.com.model.BoardDTO;
+
 
 @Controller
 public class BfreeModify {
 	
 	@Resource
 	private BfreeDAO bfreeService;
+	@Resource
+	private TagDAO tagService;
 
 	@RequestMapping(value="/bfreemodifyform")
 	public ModelAndView bfreeModifyForm(int board_id, HttpServletRequest request) {
@@ -24,13 +28,8 @@ public class BfreeModify {
 		BoardDTO boardDTO= bfreeService.bfreeDetail(board_id);
 		
 		String content= boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
-		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
-		
-		tag = tag.replaceAll("Community,", "");
-		
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag(tag);
-		
+		boardDTO.setBoard_tag(tagService.modifyFormView(boardDTO.getBoard_tag(), 2));//bgroup_id=2
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
 		mav.setViewName("FreeModifyForm");
@@ -43,27 +42,8 @@ public class BfreeModify {
 		ModelAndView mav= new ModelAndView();
 
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
-		String tag = boardDTO.getBoard_tag().replaceAll(" ", "");
-		while (tag.contains(",,")) {
-			tag = tag.replaceAll(",,", ",");
-		}
-		if (tag.length() <2) {
-			tag = "";
-		} else {
-			if (tag.charAt(tag.length() - 1) == ',') {
-				tag=tag.substring(0, tag.length()-1);
-			}
-			if (tag.charAt(0) == ',') {
-				tag=tag.substring(1, tag.length());
-			}
-		}
-
 		boardDTO.setBoard_content(content);
-		if(tag==""||tag.equals("Community"))
-			boardDTO.setBoard_tag("Community");
-		else
-			boardDTO.setBoard_tag("Community," + tag);
-		
+		boardDTO.setBoard_tag(tagService.insertTag(boardDTO.getBoard_tag(), 2));//bgroup_id=2
 		
 		bfreeService.bfreeModify(boardDTO);
 		mav.setViewName("redirect:bfreedetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage")+"&session_id="+session_id);
