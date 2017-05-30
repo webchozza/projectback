@@ -4,7 +4,18 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+  <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+<meta property="og:url"           content="http://localhost:8080/dokky/bqnadetail.do?board_id=?&currentPage=?&session_id=?" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Your Website Title" />
+<meta property="og:description"   content="Your description" />
+<meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>DOKKY</title>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 function insertScrap(){
 	
@@ -126,6 +137,22 @@ function recommendcheck(checkValue){
 	});
 
 </script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('YOUR APP KEY');
+        // 카카오 로그인 버튼을 생성합니다.
+        Kakao.Auth.createLoginButton({
+          container: '#kakao-login-btn',
+          success: function(authObj) {
+            alert(JSON.stringify(authObj));
+          },
+          fail: function(err) {
+             alert(JSON.stringify(err));
+          }
+        });
+      //]]>
+    </script>
 
 <style>
 .fa-bookmark {
@@ -147,6 +174,15 @@ function recommendcheck(checkValue){
 
 </head>
 <body>
+  <!-- Load Facebook SDK for JavaScript -->
+ <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.9";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<h4>Community</h4>
 	<!-- 바디 -->
 	<section id="banner">
@@ -163,10 +199,11 @@ function recommendcheck(checkValue){
 								<td colspan="2"><strong><a
 										href="/dokky/MemberPage.do?member_id=${detail.member_id }&session_id=${sessionScope.member_id}">${detail.board_nickname }</a></strong>
 									<a href="javascript:gosubmit1_message()"
-									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
-											value="${detail.board_date }" pattern="yyyy.MM.dd hh:mm" />
+									class="icon fa-envelope">쪽지</a> <br>   
+									<i><fmt:formatDate value="${detail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>
 							</tr>
+							
 							<tr>
 								<td><h2>${detail.board_title }</h2>
 									<hr class="major" />
@@ -174,7 +211,10 @@ function recommendcheck(checkValue){
 								<td><center>
 										<div id="recommendbutton"></div>
 										<div id="scrapbutton"></div>
-									</center>
+										<div class="fb-share-button" data-href="http://www.facebook.com" data-layout="button" data-size="large" data-mobile-iframe="true">
+										<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.naver.com%2F&amp;src=sdkpreparse">공유하기</a></div><br><br>
+										<a id="kakao-link-btn" href="javascript:;"><img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+								</center></td>
 							</tr>
 							<tr>
 								<td colspan="2"><div id="tags"></div>
@@ -192,7 +232,7 @@ function recommendcheck(checkValue){
 									<td
 										style="border-color: #00B700; font-size: 20px; border-width: medium;"
 										colspan="2">
-										<div style="float: left; width:70%;">
+										<div style="float: left; width:80%;">
 											<strong><a
 												href="MemberPage.do?member_id=${answercomment.member_id }">${answercomment.member_name }</a></strong>
 											<i><fmt:formatDate
@@ -213,7 +253,7 @@ function recommendcheck(checkValue){
 											<p>${answercomment.bcomment_content }</p>
 
 										</div>
-										<div style="overflow: hidden; width:30%;" align="center">
+										<div style="overflow: hidden; width:20%;" align="center">&nbsp;&nbsp;
 											<a
 												href="AnswerCancel.do?bcomment_id=${answercomment.bcomment_id}&board_id=${detail.board_id}&currentPage=${currentPage}"
 												class="icon fa-check-circle"
@@ -226,7 +266,6 @@ function recommendcheck(checkValue){
 											if(confirm("답변을 취소하시겠습니까?")==false){
 												return false;
 											}
-											
 											location.href="AnswerCancel.do?bcomment_id="+bcomment_id+"&board_id="+board_id+"&currentPage="+currentPage;
 										}
 										</script>

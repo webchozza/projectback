@@ -54,7 +54,6 @@ public class BqnaWrite {
 			}
 		}
 
-		System.out.println(tag);
 		if(tag==""||tag.equals("Q&A"))
 			boardDTO.setBoard_tag("Q&A");
 		else

@@ -147,5 +147,9 @@
 		DELETE answer
 		WHERE bcomment_id=#{bcomment_id}
 	</delete>
-
+	
+	<!-- 중복 답글 금지 -->
+ 	<select id="answerconfirmcheck" resultType="int" parameterType="java.util.Map">
+ 	SELECT count(bcomment_id) FROM ANSWER WHERE board_id = #{board_id}
+ 	</select>
 </mapper>

@@ -48,8 +48,9 @@ display:none;
 						</c:url>
 						<tr>
 							<td>
-							<a href="${detailURL }">${list.board_title }</a>&nbsp;<a class="icon fa-commenting-o" style="color: #7f888f">&nbsp;${list.board_comment_count }</a>				<c:if test="${list.answerCheckNum gt 0}">
-							[답변채택완료]<a class="icon fa-check-circle" style="font-size: 18px; color: #FF6C6C"  ></a>
+							<a href="${detailURL }">${list.board_title }</a>&nbsp;<a class="icon fa-commenting-o" style="color: #7f888f">&nbsp;${list.board_comment_count }</a>				
+							<c:if test="${list.answerCheckNum gt 0}"><font color="#00B700">[답변채택완료]</font>
+							<a class="icon fa-check-circle" style="font-size: 18px; color: #FF6C6C"></a>
 							</c:if></td>
 							<td><a class="icon fa-thumbs-up">${list.board_like }</a>&nbsp;&nbsp;&nbsp;
 								<a class="icon fa-eye">${list.board_hit }</a></td>

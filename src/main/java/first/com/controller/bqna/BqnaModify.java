@@ -27,7 +27,9 @@ public class BqnaModify {
 		
 		String tag= boardDTO.getBoard_tag().replaceAll(" ", "");
 		tag = tag.replaceAll("Q&A,", "");
-		tag = tag.replaceAll("Q&A", "");
+		if (tag.equals("Q&A")) {
+			tag="";
+		}
 		boardDTO.setBoard_tag(tag);
 		
 		mav.addObject("currentPage", request.getParameter("currentPage"));
@@ -59,8 +61,6 @@ public class BqnaModify {
 			}
 		}
 
-
-		System.out.println(tag);
 		if(tag==""||tag.equals("Q&A"))
 			boardDTO.setBoard_tag("Q&A");
 		else

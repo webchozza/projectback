@@ -1,5 +1,6 @@
 package first.com.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -110,7 +111,10 @@ public class BqnaService implements BqnaDAO {
 	
 	@Override
 	public void answerChoice(Map map){//답변채택
+		int check = SST.selectOne("bqna.answerconfirmcheck", map);
+		if(check==0){
 		SST.insert("bqna.bqnaAnswerChoice", map);
+		}
 	}
 	
 	@Override
