@@ -1,14 +1,14 @@
 function paging(path, i, search, n) {
 	$('#area').load(path, {
 		currentPage : i,
-		search : search,
+		AllSearch : search,
 		n : n,
 		ap : 'AjaxPaging'
 	});
 }
 
 function sch() {
-	var form = document.getElementById('searchform');
+	var form = document.getElementById("searchform");
 	var path = $("#path").val();
 	var i = form.i.value;
 	var AllSearch = form.AllSearch.value;
@@ -21,7 +21,7 @@ function sch() {
 }
 
 function category(n){
-	var form = document.getElementById('searchform');
+	var form = document.getElementById("searchform");
 	var path = $("#path").val();
 	var i = form.i.value;
 	if(n=="all"){

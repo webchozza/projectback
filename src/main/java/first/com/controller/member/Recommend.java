@@ -41,14 +41,13 @@ public class Recommend {
 		
 		List<HashMap<String, Object>> recommend_list =  recommendService.recommendList(map);
 		
-		System.out.println(recommend_list);
 		//ajax 작성할 때 list가 null이 아닐 때 << 조건문 꼭 작성
 		return recommend_list;
 	}
 	
 	
 	//검색 시 검색어와 유사도가 높은 글목록을 보여준다.
-	@RequestMapping("/se.do")
+	@RequestMapping("/RecommendSearch.do")
 	@ResponseBody
 	public List<HashMap<String, Object>> Search(@RequestParam("search") String search){
 		

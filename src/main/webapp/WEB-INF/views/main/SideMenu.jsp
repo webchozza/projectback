@@ -4,29 +4,64 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/sidemenu.js?v=5"></script>
+<script src="/resources/assets/js/main/sidemenu.js?v=5"></script>
 <script>
 
 $(document).ready(function(){
+	
+	if(window.innerWidth > 500){
+		$(".inner").css('height', '1000px');
+	}else if(window.innerWidth <= 500){
+		$(".inner").css('height', '');
+	}
+	
 	$("#notich").val("N");
 	
 	var session_id = $("#session_id").val();
 	
-	$.ajax({
-		url: "/dokky/notiCount.do",
-		type: "post",
-		dataType: "json",
-		data: {session_id : session_id},
-		success: function(data){
-			if(data == 0){
+	if(session_id != null && session_id != ""){
+		$.ajax({
+			url: "/dokky/notiCount.do",
+			type: "post",
+			dataType: "json",
+			data: {session_id : session_id},
+			success: function(data){
+				if(data == 0){
+					$("#notiarea").html("");
+				}else{
+				var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
 				$("#notiarea").html("");
-			}else{
-			var str = '<span class="fa fa-plus" style="color: #f56a6a;">&nbsp;'+data+'</span>';
-			$("#notiarea").html("");
-			$("#notiarea").html(str);
+				$("#notiarea").html(str);
+				}
 			}
+		});
+		
+		$.ajax({
+			url: "/dokky/RecommendList.do",
+			type: "post",
+			dataType: "json",
+			data: {session_id : session_id},
+			success: function(data){
+				if(data!=null){
+					var strdiv = '';
+				$.each(data,function(index, value){
+					strdiv += '<img src="resources/images/dot.jpg" style="width:10px; height:10px;">';
+					strdiv += '<a href="javascript:;" style="padding:2px; color:#504747;">'+value.BOARD_TITLE+'</a><br>';
+					});
+					$("#recotitle").html('회원님이 관심가질만한 글');
+					$("#recodiv").html(strdiv);
+				}
+				}
+		});
 		}
-	});
+});
+
+$(window).resize(function(){
+	if(window.innerWidth > 500){
+		$(".inner").css('height', '1000px');
+	}else if(window.innerWidth <= 500){
+		$(".inner").css('height', '');
+	}
 });
 
 </script>
@@ -74,7 +109,6 @@ display:none;
 
 
 </style>
-
 </head>
 <body>
 	<!-- 사이드바 -->
@@ -144,8 +178,16 @@ display:none;
 					<li><a href="/dokky/bcodelist.do">오픈소스</a></li>
 				</ul>
 			</nav>
+				<div class="mini-posts">
+					<article>
+					<b><p id="recotitle" style="position:relative; bottom:35px; color:#398ECF; font-size:15px;"></p></b>
+					</article>
+					<div id="recodiv" style="position:relative; bottom:60px;">
+					</div>
+				</div>
 		</div>
 	</div>
+	
 </body>
 <form name="valueform">
 <input type="hidden" id="session_id" value="${sessionScope.member_id}"/>

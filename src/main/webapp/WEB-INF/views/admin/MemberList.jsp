@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>회원 관리</title>
-<script src="${pageContext.request.contextPath}/resources/assets/js/admin/memberlist.js?v=2"></script>
+<script src="resources/assets/js/admin/memberlist.js?v=2"></script>
 </head>
 <style>
 input[type="text"] {
