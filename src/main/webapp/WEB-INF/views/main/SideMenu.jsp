@@ -20,6 +20,8 @@ $(document).ready(function(){
 	var session_id = $("#session_id").val();
 	
 	if(session_id != null && session_id != ""){
+		$("#recotitle").html('<img src="resources/images/loading.gif" style="width:200px; height:200px;">');
+		
 		$.ajax({
 			url: "/dokky/notiCount.do",
 			type: "post",
@@ -35,7 +37,6 @@ $(document).ready(function(){
 				}
 			}
 		});
-		
 		$.ajax({
 			url: "/dokky/RecommendList.do",
 			type: "post",
@@ -45,9 +46,20 @@ $(document).ready(function(){
 				if(data!=null){
 					var strdiv = '';
 				$.each(data,function(index, value){
+					if(value.BGROUP_ID == "1"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "2"){
+						var path = '/dokky/bfreedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "3"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "4"){
+						var path = '/dokky/bqnadetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}
+					
 					strdiv += '<img src="resources/images/dot.jpg" style="width:10px; height:10px;">';
-					strdiv += '<a href="javascript:;" style="padding:2px; color:#504747;">'+value.BOARD_TITLE+'</a><br>';
+					strdiv += '<a href="'+path+'" style="padding:2px; color:#504747;">'+value.BOARD_TITLE+'</a><br>';
 					});
+					$("#recotitle").html("");
 					$("#recotitle").html('회원님이 관심가질만한 글');
 					$("#recodiv").html(strdiv);
 				}
@@ -112,7 +124,7 @@ display:none;
 </head>
 <body>
 	<!-- 사이드바 -->
-	<div id="sidebar">
+	<div id="sidebar" style="height:2000px;">
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">
@@ -180,7 +192,8 @@ display:none;
 			</nav>
 				<div class="mini-posts">
 					<article>
-					<b><p id="recotitle" style="position:relative; bottom:35px; color:#398ECF; font-size:15px;"></p></b>
+					<b><p id="recotitle" style="position:relative; bottom:35px; color:#398ECF; font-size:15px;">
+					</p></b>
 					</article>
 					<div id="recodiv" style="position:relative; bottom:60px;">
 					</div>

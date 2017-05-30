@@ -166,7 +166,7 @@ public class RecommendService implements RecommendDAO {
 		if(!list.isEmpty()){
 			similarlist = sqlSessionTemplate.selectList("recommend.recommendsearch",map);
 		}
-		
+
 		if(!similarlist.isEmpty()){
 		map.put("similarboardlist", similarlist);
 			similarboardlist = sqlSessionTemplate.selectList("recommend.similarboard", map);
