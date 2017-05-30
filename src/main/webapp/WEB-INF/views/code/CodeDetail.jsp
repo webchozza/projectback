@@ -125,12 +125,42 @@ function recommendcheck(checkValue){
 	}
 
 	$(document).ready(function() {
+		//eongoo
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
-	});
-
-	$(document).ready(function() {
-		viewTags("${detail.board_tag}");
+		//jj
+		viewTags("${board_tag}");
+		
+		//eongoo
+		var board_id = $("#board_id").val();
+		var session_id = $("#session_id").val();
+		
+		$.ajax({
+			url: "/dokky/SimilarBoard.do",
+			type: "post",
+			dataType: "json",
+			data: {board_id : board_id},
+			success: function(data){
+				if(data!=null){
+				var str = '';
+				$.each(data,function(index, value){
+					if(value.BGROUP_ID == "1"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "2"){
+						var path = '/dokky/bfreedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "3"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "4"){
+						var path = '/dokky/bqnadetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}
+					
+					str += '<b><a href="'+path+'" style="color:#504747; padding-right:20px; color:#597D9C;">'+value.BOARD_TITLE+'</a></b>';
+				});
+				$("#recodetail").html('<b style="font-size:15px; color:#398ECF;">비슷한 글을 찾으시나요?</b>');
+				$("#recodetaila").html(str);
+			}
+			}
+		});
 	});
 </script>
 <style>
@@ -207,7 +237,10 @@ function recommendcheck(checkValue){
 							</tbody>
 
 					</table>
-
+					<span id="recodetail" style="display:inline-block; position:relative; bottom:15px; left:10px;">
+					<img src="resources/images/blueloading.gif" style="width:200px; height:100px;">
+					</span><br>
+					<span id="recodetaila" style="display:inline-block; position:relative; bottom:15px; left:10px; max-width:1000px; min-width:200px;"></span>
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />
@@ -222,8 +255,7 @@ function recommendcheck(checkValue){
 									<td colspan="2"><strong><a href="MemberPage.do?member_id=${detail3.member_id }">${detail3.member_name}</a></strong>
 										<i><fmt:formatDate value="${detail3.bcomment_date }" pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp; 
 										<c:if test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id==detail.member_id}">
-
+											<c:if test="${sessionScope.member_id eq detail3.member_id}">
 												<a href="/dokky/bcodedeletecomment.do?board_id=${detail3.board_id}&session_id=${sessionScope.member_id}&bcomment_id=${detail3.bcomment_id}"
 													class="icon fa-trash"
 													style="font-size: 14px; color: #7f888f"

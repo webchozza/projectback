@@ -23,6 +23,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		if(member_email==null){ 
 			if(request.getRequestURI().contains("writeform.do")||
 			 request.getRequestURI().contains("memberlist.do")||
+			 request.getRequestURI().contains("recommand.do")||
 			 request.getRequestURI().contains("recommand.do")){
 				response.sendRedirect("/dokky/loginform.do");
 				return false;

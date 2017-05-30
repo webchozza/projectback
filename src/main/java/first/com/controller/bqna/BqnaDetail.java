@@ -60,7 +60,7 @@ public class BqnaDetail {
 		mav.addObject("detail", bqnaDetail);
 		mav.addObject("bcqnaList", bcqnaList);
 		mav.setViewName("QnaDetail");
-
+			
 		//add by eongoo
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("session_id", session_id);

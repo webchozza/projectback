@@ -8,54 +8,70 @@
 	<select id="allSearchList" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
 	SELECT * FROM (SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, 
 	board_comment_count, bgroup_id, scrap_count, 
-	<if test="search != null and search != ''">
-	searchcount, 
-	</if>
+	<choose>
+		<when test="searchlist.size != 0 and searchlist[0] != ''">
+		searchcount, 
+		</when>
+	</choose>
 	rownum r FROM (SELECT b.*, count(a.scrap_id) as scrap_count FROM 
 	(SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, board_comment_count, bgroup_id 
-	<if test="search != null and search != ''">
-	,SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
-	+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
-	+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)) searchcount
-	</if>
+	<choose>
+		<when test="searchlist.size != 0 and searchlist[0] != ''">
+			,(
+			<foreach collection="searchlist" item="search" separator="+">
+			(SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
+			+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
+			+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)))
+			</foreach>
+	 	)as searchcount
+		</when>
+	</choose>
     FROM board GROUP BY board_id, member_id, board_title, board_content, board_date, board_nickname, board_comment_count, board_hit, board_like, 
-    board_comment_count, bgroup_id) b LEFT OUTER JOIN scrap a ON a.board_id = b.board_id GROUP BY b.board_id, b.member_id, b.board_title, 
+    board_comment_count, bgroup_id) b LEFT OUTER JOIN scrap a ON a.board_id = b.board_id 
+    GROUP BY b.board_id, b.member_id, b.board_title, 
     b.board_content, b.board_date, b.board_nickname, b.board_hit, b.board_like, b.board_comment_count, b.bgroup_id 
-    <if test="search != null and search != ''">
-    , searchcount ORDER BY SEARCHCOUNT DESC 
-    </if>
-	)<![CDATA[ WHERE rownum <= #{endrow} ORDER BY ${category} DESC) WHERE ]]> 
-	<if test="search != null and search != ''">
-	SEARCHCOUNT != 0 AND 
-	</if>
+    <choose>
+		<when test="searchlist.size != 0 and searchlist[0] != ''">
+	    , searchcount 
+	    </when>
+	</choose>
+	ORDER BY
+	<choose>
+		<when test="searchlist.size != 0 and searchlist[0] != ''">
+	    searchcount DESC, 
+	    </when>
+	</choose>
+	${category} DESC)<![CDATA[ WHERE rownum <= #{endrow}) WHERE ]]> 
+	<choose>
+		<when test="searchlist.size != 0 and searchlist[0] != ''">
+		searchcount != 0 AND 
+		</when>
+	</choose>
 	<![CDATA[r >= #{startrow} ]]>
 	</select>
 
+	<!-- 페이징에 사용할 totalcount 구하기 -->
 	<select id="allBoardCount" resultType="int" parameterType="java.util.Map">
-		SELECT COUNT(board_id) FROM board WHERE BOARD_TITLE like
-		'%'||#{search}||'%' OR
-		BOARD_CONTENT like '%'||#{search}||'%' OR
-		BOARD_NICKNAME like '%'||#{search}||'%'
+		SELECT COUNT(board_id) FROM (SELECT board_id
+		<choose>
+			<when test="searchlist.size != 0 and searchlist[0] != ''">
+			,(
+				<foreach collection="searchlist" item="search" separator="+">
+				(SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
+			+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
+			+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)))
+				</foreach>
+			)as searchcount 
+			</when>
+		</choose>
+		FROM board GROUP BY board_id) 
+		<choose>
+			<when test="searchlist.size != 0 and searchlist[0] != ''">
+			WHERE searchcount != 0
+			</when>
+		</choose>
 	</select>
 
-	<!-- 태그검색 ver2 -->
-<!-- 	<select id="allSearchTag" resultType="first.com.model.BoardDTO">
-		SELECT * FROM board WHERE 
-		board_tag LIKE #{tag} OR
-		board_tag LIKE #{tag2}||'%' OR
-		board_tag LIKE '%'||#{tag3} OR
-		board_tag LIKE '%'||#{tag4}||'%' 
-		ORDER BY
-		<if test="sort!=''">
-			<if test="sort == 'like'">board_like</if>
-			<if test="sort== 'comment'">board_comment_count</if>
-			<if test="sort== 'scrap'">board_hit</if>
-			<if test="sort== 'hit'">board_hit</if>
-			DESC,
-		</if>
-		board_id DESC
-	</select> -->
-	
 	<!-- 태그검색 ver3 -->
 	<select id="allSearchTag" resultType="first.com.model.BoardDTO">
 	SELECT * FROM (SELECT a.board_id, count(b.scrap_id) scrap_count 

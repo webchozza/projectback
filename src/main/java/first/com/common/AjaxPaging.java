@@ -46,7 +46,7 @@ public class AjaxPaging {
 					pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
-						"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+search+","+n+")'>");
+						"<a href='javascript:;' onclick='paging("+path+","+(startPage - 1)+","+'"'+search+'"'+","+n+")'>");
 				pagingHtml.append("[PREV]");
 				pagingHtml.append("</a>");
 			}
@@ -69,7 +69,7 @@ public class AjaxPaging {
 					
 				} else{
 				pagingHtml.append(
-						"&nbsp;<a href='javascript:;' onclick='paging("+path+","+i+","+search+","+n+")'>");
+						"&nbsp;<a href='javascript:;' onclick='paging("+path+","+i+","+'"'+search+'"'+","+n+")'>");
 				pagingHtml.append(i);
 				pagingHtml.append("</a>");
 				}
@@ -86,7 +86,7 @@ public class AjaxPaging {
 			pagingHtml.append("</a>");
 			} else {
 				pagingHtml.append(
-						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+search+","+n+")''>");
+						"<a href='javascript:;' onclick='paging("+path+","+(endPage + 1)+","+'"'+search+'"'+","+n+")''>");
 				pagingHtml.append("[NEXT]");
 				pagingHtml.append("</a>");
 			}

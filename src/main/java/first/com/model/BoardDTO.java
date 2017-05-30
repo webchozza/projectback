@@ -24,9 +24,15 @@ public class BoardDTO {
 	private String board_tag;
 	private List board_tag_list;
 	private int answerCheckNum;
+	private int searchcount;
 	
 	
-	
+	public int getSearchcount() {
+		return searchcount;
+	}
+	public void setSearchcount(int searchcount) {
+		this.searchcount = searchcount;
+	}
 	public List getBoard_tag_list() {
 		return board_tag_list;
 	}

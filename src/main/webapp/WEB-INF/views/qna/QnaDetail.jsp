@@ -4,7 +4,18 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+  <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+<meta property="og:url"           content="http://localhost:8080/dokky/bqnadetail.do?board_id=?&currentPage=?&session_id=?" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Your Website Title" />
+<meta property="og:description"   content="Your description" />
+<meta property="og:image"         content="http://www.your-domain.com/path/image.jpg" />
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>DOKKY</title>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 function insertScrap(){
 	
@@ -117,15 +128,86 @@ function recommendcheck(checkValue){
 	}
 
 	$(document).ready(function() {
+		//eongoo
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
-	});
-	
-	$(document).ready(function() {
+		//jj
 		viewTags("${board_tag}");
+		
+		//eongoo
+		var board_id = $("#board_id").val();
+		var session_id = $("#session_id").val();
+		
+		$.ajax({
+			url: "/dokky/SimilarBoard.do",
+			type: "post",
+			dataType: "json",
+			data: {board_id : board_id},
+			success: function(data){
+				if(data!=null){
+				var str = '';
+				$.each(data,function(index, value){
+					if(value.BGROUP_ID == "1"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "2"){
+						var path = '/dokky/bfreedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "3"){
+						var path = '/dokky/bcodedetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}else if(value.BGROUP_ID == "4"){
+						var path = '/dokky/bqnadetail.do?board_id='+value.BOARD_ID+'&currentPage=1&session_id='+session_id;
+					}
+					
+					str += '<b><a href="'+path+'" style="color:#504747; padding-right:20px; color:#597D9C;">'+value.BOARD_TITLE+'</a></b>';
+				});
+				$("#recodetail").html('<b style="font-size:15px; color:#398ECF;">비슷한 글을 찾으시나요?</b>');
+				$("#recodetaila").html(str);
+			}
+			}
+		});
 	});
 
+	
+	function viewTags(str) {
+		var sep = str.split(",");
+		$("#tags").append("<i class='icon fa-tags'></i>");
+		for (i=0; i<sep.length; i++) {
+			if(i==(sep.length-1)){
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+			}else{
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
+			}
+		}
+	}
+	
+	function urlencode(str) {
+	    str = (str + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
+	}
+
+
 </script>
+    <script type='text/javascript'>
+      //<![CDATA[
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('YOUR APP KEY');
+        // 카카오 로그인 버튼을 생성합니다.
+        Kakao.Auth.createLoginButton({
+          container: '#kakao-login-btn',
+          success: function(authObj) {
+            alert(JSON.stringify(authObj));
+          },
+          fail: function(err) {
+             alert(JSON.stringify(err));
+          }
+        });
+      //]]>
+    </script>
 
 <style>
 .fa-bookmark {
@@ -147,6 +229,15 @@ function recommendcheck(checkValue){
 
 </head>
 <body>
+  <!-- Load Facebook SDK for JavaScript -->
+ <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.9";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<h4>Community</h4>
 	<!-- 바디 -->
 	<section id="banner">
@@ -163,10 +254,11 @@ function recommendcheck(checkValue){
 								<td colspan="2"><strong><a
 										href="/dokky/MemberPage.do?member_id=${detail.member_id }&session_id=${sessionScope.member_id}">${detail.board_nickname }</a></strong>
 									<a href="javascript:gosubmit1_message()"
-									class="icon fa-envelope">쪽지</a> <br> <i><fmt:formatDate
-											value="${detail.board_date }" pattern="yyyy.MM.dd hh:mm" />
+									class="icon fa-envelope">쪽지</a> <br>   
+									<i><fmt:formatDate value="${detail.board_date }" pattern="yyyy.MM.dd hh:mm" />
 								</i></td>
 							</tr>
+							
 							<tr>
 								<td><h2>${detail.board_title }</h2>
 									<hr class="major" />
@@ -174,13 +266,20 @@ function recommendcheck(checkValue){
 								<td><center>
 										<div id="recommendbutton"></div>
 										<div id="scrapbutton"></div>
-									</center>
+										<div class="fb-share-button" data-href="http://www.facebook.com" data-layout="button" data-size="large" data-mobile-iframe="true">
+										<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.naver.com%2F&amp;src=sdkpreparse">공유하기</a></div><br><br>
+										<a id="kakao-link-btn" href="javascript:;"><img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+								</center></td>
 							</tr>
 							<tr>
 								<td colspan="2"><div id="tags"></div>
 							</tr>
 						</tbody>
 					</table>
+					<span id="recodetail" style="display:inline-block; position:relative; bottom:15px; left:10px;">
+					<img src="resources/images/blueloading.gif" style="width:200px; height:100px;">
+					</span><br>
+					<span id="recodetaila" style="display:inline-block; position:relative; bottom:15px; left:10px; max-width:1000px; min-width:200px;"></span>
 					<table class="alt">
 						<colgroup>
 							<col width="85%" />
@@ -190,9 +289,9 @@ function recommendcheck(checkValue){
 							<c:if test="${answercomment ne null}">
 								<tr>
 									<td
-										style="border-color: #3162C7; font-size: 20px; border-width: medium;"
+										style="border-color: #00B700; font-size: 20px; border-width: medium;"
 										colspan="2">
-										<div style="float: left">
+										<div style="float: left; width:80%;">
 											<strong><a
 												href="MemberPage.do?member_id=${answercomment.member_id }">${answercomment.member_name }</a></strong>
 											<i><fmt:formatDate
@@ -213,14 +312,22 @@ function recommendcheck(checkValue){
 											<p>${answercomment.bcomment_content }</p>
 
 										</div>
-										<div style="overflow: hidden" align="right">
+										<div style="overflow: hidden; width:20%;" align="center">&nbsp;&nbsp;
 											<a
 												href="AnswerCancel.do?bcomment_id=${answercomment.bcomment_id}&board_id=${detail.board_id}&currentPage=${currentPage}"
 												class="icon fa-check-circle"
-												style="font-size: 50px; color: #3162C7"></a>&nbsp;&nbsp; <br>
-											<font color="#3162C7" style="font-weight: bold;">질문자
-												채택</font>
+												style="font-size: 50px; color: #00B700"></a>&nbsp;&nbsp; <br>
+											<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" 
+											onclick='return answerdelete("${answercomment.bcomment_id}","${detail.board_id}","${currentPage}")'>
 										</div>
+										<script>
+										function answerdelete(bcomment_id,board_id,currentPage){
+											if(confirm("답변을 취소하시겠습니까?")==false){
+												return false;
+											}
+											location.href="AnswerCancel.do?bcomment_id="+bcomment_id+"&board_id="+board_id+"&currentPage="+currentPage;
+										}
+										</script>
 									</td>
 								</tr>
 							</c:if>
@@ -261,10 +368,10 @@ function recommendcheck(checkValue){
 													test="${answerCheck eq -1 and detail.member_id eq sessionScope.member_id }">
 													<c:if test="${detail.member_id ne clist.member_id }">
 													<input type="button" value="답변채택" class="button special"
-														onclick="return answerconfirm()" />
+														onclick='return answerconfirm("${clist.bcomment_id}")' />
 												</c:if></c:if>
 											</div><script>
-												function answerconfirm() {
+												function answerconfirm(bcomment_id) {
 													var board_id = document
 															.getElementById("board_id").value;
 													var session_id = $(
@@ -274,7 +381,7 @@ function recommendcheck(checkValue){
 													if (confirm("해당 댓글을 답변으로 채택하시겠습니까?") == false) {
 														return false;
 													}
-													location.href = "/dokky/AnswerChoice.do?bcomment_id="+ ${clist.bcomment_id}+"&member_id=" + session_id+ "&board_id="+ board_id;
+													location.href = "/dokky/AnswerChoice.do?bcomment_id="+ bcomment_id+"&member_id=" + session_id+ "&board_id="+ board_id;
 												}
 											</script>
 										</td>
@@ -331,7 +438,6 @@ function recommendcheck(checkValue){
 							</tr>
 						</tfoot>
 					</table>
-					r
 				</div>
 
 			</div>
@@ -343,8 +449,8 @@ function recommendcheck(checkValue){
 	</form>
 
 	<form name="valueform">
-		<input type="hidden" id="board_id" value="${detail.board_id}" /> <input
-			type="hidden" id="session_id" value="${sessionScope.member_id}" />
+		<input type="hidden" id="board_id" value="${detail.board_id}" /> 
+		<input type="hidden" id="session_id" value="${sessionScope.member_id}" />
 	</form>
 </body>
 </html>

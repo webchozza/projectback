@@ -46,8 +46,12 @@ border-bottom-color: #FFFFFF;
 				<table>
 					<tbody>
 					<c:forEach var="board" items="${list}">
-					<c:if test="${board.bgroup_id eq 1}">
-						<c:url var="detailurl" value="#"/><!-- qna -->
+					<c:if test="${board.bgroup_id eq 1}"><!-- qna -->
+						<c:url var="detailurl" value="/bcodedetail.do">
+							<c:param name="board_id" value="${board.board_id }"/>
+							<c:param name="currentPage" value="1"/>
+		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
+						</c:url>
 					</c:if>
 					<c:if test="${board.bgroup_id eq 2}">
 						<c:url var="detailurl" value="/bfreedetail.do">

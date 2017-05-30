@@ -20,6 +20,33 @@ setInterval(function(){
 	}
 }, 3000);
 
+setInterval(function(){
+	var session_id = $("#session_id").val();
+	
+	if(session_id != null && session_id != ""){
+	$.ajax({
+		url: "/dokky/RecommendList.do",
+		type: "post",
+		dataType: "json",
+		data: {session_id : session_id},
+		success: function(data){
+			if(data!=null){
+				var str = '<b><p style="position:relative; bottom:35px; color:#398ECF; font-size:15px;">회원님이 관심가질만한 글</p></b>';
+				    str+= '<div style="position:relative; bottom:60px;">';
+			$.each(data,function(index, value){
+				
+				console.log(value);
+				str += '<img src="resources/images/dot.jpg" style="width:10px; height:10px;">';
+				str += '<a href="" style="padding:2px; color:#504747;">'+value.BOARD_TITLE+'</a><br>';
+				});
+				str += '</div>';
+				$("#loginreco").html(str);
+			}
+			}
+	});
+	}
+}, 600000);
+
 function notipop(){
 	
 	var ch = $("#notich").val();
