@@ -92,10 +92,37 @@ function recommendcheck(checkValue){
 		f.action = "/dokky/messagewriteform.do";
 		f.submit();
 	}
+	
+	function viewTags(str) {
+		var sep = str.split(",");
+		$("#tags").append("<i class='icon fa-tags'></i>");
+		for (i=0; i<sep.length; i++) {
+			if(i==(sep.length-1)){
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>');
+			}else{
+				$("#tags").append('<a class="tagcode" href=taglist.do?tag='+urlencode(sep[i])+'&sort=>'+sep[i]+'</a>&nbsp; ');
+			}
+		}
+	}
+	
+	function urlencode(str) {
+	    str = (str + '').toString();
+	    return encodeURIComponent(str)
+	        .replace(/!/g, '%21')
+	        .replace(/'/g, '%27')
+	        .replace(/\(/g, '%28')
+	        .replace(/\)/g, '%29')
+	        .replace(/\*/g, '%2A')
+	        .replace(/%20/g, '+');
+	}
 
 	$(document).ready(function() {
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
+	});
+	
+	$(document).ready(function() {
+		viewTags("${board_tag}");
 	});
 
 </script>
@@ -103,6 +130,18 @@ function recommendcheck(checkValue){
 <style>
 .fa-bookmark {
 	color: #7f888f;
+}
+
+.tagcode {
+	background: rgba(230, 235, 237, 0.25);
+	border-radius: 0.375em;
+	border: solid 1px rgba(210, 215, 217, 0.75);
+	font-family: Malgun Gothic;
+	font-size: 0.9em;
+	margin: 0 0.25em;
+	padding: 0.25em 0.65em;
+	color: #7f888f;
+	
 }
 </style>
 

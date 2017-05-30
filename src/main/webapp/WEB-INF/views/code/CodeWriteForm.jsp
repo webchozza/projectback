@@ -83,6 +83,11 @@
 						<textarea name="board_content" id="smarteditor" value="${updateform.board_content}" style="width: 500pt; height: 400px;" placeholder="[메시지] <c:out value="${updateform.board_content}"/> " rows="6">${updateform.board_content}</textarea>
 					</div>
 					
+					<!-- TAG -->
+					 <div class="6u 12u$(xsmall)" style="width: 400pt;">
+					 	<input type="text" name="board_tag" id="message" style="width: 90%" placeholder="[태그]" value="${updateform.board_tag}">
+					 </div>
+					
 					<!-- FILE -->
 					<div class="12u$">
 					  <input type="file" name="file" id="file" style="width:300pt;">

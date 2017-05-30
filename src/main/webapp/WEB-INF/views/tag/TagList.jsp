@@ -49,8 +49,8 @@
 					<tbody>
 						<c:forEach var="list" items="${taglist}" varStatus="status">
 						<c:set var="btl_count" value="${status.index}"/>
-							<c:if test="${list.bgroup_id eq 1}"> <!-- qna -->
-								<c:url var="detailURL" value="/bqnadetail.do">
+							<c:if test="${list.bgroup_id eq 1}"> <!-- 오픈소스 -->
+								<c:url var="detailURL" value="/bcodelist.do">
 									<c:param name="board_id" value="${list.board_id }" />
 									<c:param name="currentPage" value="1" />
 									<c:param name="session_id" value="${sessionScope.member_id}" />
@@ -63,15 +63,15 @@
 									<c:param name="session_id" value="${sessionScope.member_id}" />
 								</c:url>
 							</c:if>
-							<c:if test="${list.bgroup_id eq 3||board.bgroup_id eq 4}"> <!-- 구인구직 -->
-								<c:url var="detailURL" value="/bfreedetail.do">
+							<c:if test="${list.bgroup_id eq 3}"> <!-- 구인구직 -->
+								<c:url var="detailURL" value="/bjobdetail.do">
 									<c:param name="board_id" value="${list.board_id }" />
 									<c:param name="currentPage" value="1" />
 									<c:param name="session_id" value="${sessionScope.member_id}" />
 								</c:url>
 							</c:if>
-							<c:if test="${list.bgroup_id eq 5}"> <!-- 오픈소스 -->
-								<c:url var="detailURL" value="/bfreedetail.do">
+							<c:if test="${list.bgroup_id eq 4}"> <!-- Q&A -->
+								<c:url var="detailURL" value="/bqnadetail.do">
 									<c:param name="board_id" value="${list.board_id }" />
 									<c:param name="currentPage" value="1" />
 									<c:param name="session_id" value="${sessionScope.member_id}" />
