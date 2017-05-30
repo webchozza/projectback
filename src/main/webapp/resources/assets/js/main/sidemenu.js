@@ -45,7 +45,7 @@ setInterval(function(){
 			}
 	});
 	}
-}, 5000);
+}, 600000);
 
 function notipop(){
 	

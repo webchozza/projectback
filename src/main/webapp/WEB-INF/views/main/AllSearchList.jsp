@@ -23,10 +23,52 @@ border-bottom-color: #FFFFFF;
   text-decoration:none !important
 }
 </style>
+<script>
+setInterval(function(){
+	var search = $("#AllSearch").val();
+	
+	$.ajax({
+		url: "/dokky/RecommendSearch.do",
+		type: "post",
+		dataType: "json",
+		data: {search : search},
+		success: function(data){
+			var str = '';
+			$.each(data,function(index, value){
+				str += '<a href="javascipt:;" style="color:#504747;">'+value.BOARD_TITLE+'</a>,&nbsp;&nbsp;&nbsp;';
+			});
+			$("#recospan").html('혹시 이 글을 찾으시나요?');
+			$("#recosearch").html(str);
+		}
+	});
+}, 600000);
+
+$(document).ready(function(){
+	var search = $("#AllSearch").val();
+	
+	$.ajax({
+		url: "/dokky/RecommendSearch.do",
+		type: "post",
+		dataType: "json",
+		data: {search : search},
+		success: function(data){
+			var str = '';
+			$.each(data,function(index, value){
+				str += '<b><a href="javascipt:;" style="color:#504747; padding-right:20px; color:#597D9C;">'+value.BOARD_TITLE+'</a></b>';
+			});
+			$("#recospan").html('<b style="font-size:15px; color:#398ECF;">혹시 이 글을 찾으시나요?</b>');
+			$("#recosearch").html(str);
+		}
+	});
+});
+</script>
 </head>
 <body>
 <div id="area">
 	<h4>Search All</h4>
+	
+	<span id="recospan" style="display:inline-block; position:relative; top:40px;"></span>&nbsp;&nbsp;
+	<div id="recosearch" style="display:inline-block; position:relative; top:40px;"></div>
 
 	<!-- 바디 -->
 	<section id="banner">

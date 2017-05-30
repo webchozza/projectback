@@ -49,7 +49,7 @@ public class Recommend {
 	//검색 시 검색어와 유사도가 높은 글목록을 보여준다.
 	@RequestMapping("/RecommendSearch.do")
 	@ResponseBody
-	public List<HashMap<String, Object>> Search(@RequestParam("search") String search){
+	public List<HashMap<String, Object>> Search(@RequestParam(value="search", defaultValue="") String search){
 		
 		List<String> searchtokenlist = new ArrayList<String>();
 		
