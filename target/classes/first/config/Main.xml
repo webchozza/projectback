@@ -5,6 +5,18 @@
 
 <mapper namespace="main">
 
+	<select id="oslist" resultType="java.util.Map">
+	<![CDATA[SELECT board_title, board_nickname, board_id, bgroup_id os_bid , board_date FROM (SELECT board_title,board_nickname,board_id,bgroup_id,board_date FROM board WHERE bgroup_id = 1 ORDER BY board_date DESC) WHERE rownum <= 5]]>
+	</select>
+	
+	<select id="colist" resultType="java.util.Map">
+	<![CDATA[SELECT board_title, board_nickname, board_id, bgroup_id os_bid , board_date FROM (SELECT board_title,board_nickname,board_id,bgroup_id,board_date FROM board WHERE bgroup_id = 2 ORDER BY board_date DESC) WHERE rownum <= 13]]>
+	</select>
+	
+	<select id="qnlist" resultType="java.util.Map">
+	<![CDATA[SELECT board_title, board_nickname, board_id, bgroup_id os_bid , board_date FROM (SELECT board_title,board_nickname,board_id,bgroup_id,board_date FROM board WHERE bgroup_id = 4 ORDER BY board_date DESC) WHERE rownum <= 5]]>
+	</select>
+
 	<select id="allSearchList" resultType="first.com.model.BoardDTO" parameterType="java.util.Map">
 	SELECT * FROM (SELECT board_id, member_id, board_title, board_content, board_date, board_nickname, board_hit, board_like, 
 	board_comment_count, bgroup_id, scrap_count, 

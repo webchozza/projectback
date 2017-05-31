@@ -1,5 +1,6 @@
 package first.com.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +19,23 @@ public class MainService implements MainDAO{
 	@Resource
 	private SqlSessionTemplate sqlSessionTemplate;
 
+
 	@Override
-	public String main() {
-		return null;
+	public Map<String, List<Map<String, Object>>> main() {
+		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
+		
+		List<Map<String, Object>> oslist = sqlSessionTemplate.selectList("main.oslist");
+		List<Map<String, Object>> colist = sqlSessionTemplate.selectList("main.colist");
+		List<Map<String, Object>> qnlist = sqlSessionTemplate.selectList("main.qnlist");
+		
+		map.put("oslist", oslist);
+		map.put("colist", colist);
+		map.put("qnlist", qnlist);
+		
+		return map;
 	}
 
+	@Override
 	public int allBordCount(Map<String, Object> map) {
 		return sqlSessionTemplate.selectOne("main.allBoardCount", map);
 	}

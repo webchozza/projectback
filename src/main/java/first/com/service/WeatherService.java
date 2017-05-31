@@ -14,6 +14,7 @@ public class WeatherService implements WeatherDAO {
 
 	@Override
 	public void addCount(int count) {
+		weathercount.remove("weathercount");
 		weathercount.put("weathercount", count);
 	}
 

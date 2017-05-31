@@ -179,7 +179,7 @@ display:none;
 			<!-- 메뉴 -->
 			<nav id="menu">
 				<ul>
-					<li><a href="index.html">메인</a></li>
+					<li><a href="/dokky/main.do">메인</a></li>
 					<li><a href="/dokky/bqnalist.do">Q&A게시판</a></li>
 					<li><span class="opener">구인구직</span>
 						<ul>

@@ -78,9 +78,8 @@ $(document).ready(function(){
 <body>
 <div id="area">
 	<h4>Search All</h4>
-	
 	<span id="recospan" style="display:inline-block; position:relative; top:40px;">
-	<img src="resources/images/loading.gif" style="width:200px; height:200px; position:relative; bottom:15px;">
+	<img src="resources/images/loading.gif" style="width:200px; height:100px; position:relative; bottom:15px;">
 	</span>&nbsp;&nbsp;
 	<div id="recosearch" style="display:inline-block; position:relative; top:40px;"></div>
 
