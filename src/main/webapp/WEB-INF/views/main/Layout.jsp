@@ -7,7 +7,7 @@
 <title>DOKKY</title>
 <jsp:include page="/WEB-INF/views/main/Src.jsp" />
 </head>
-<body>
+<body unload="a()">
 	<div id="wrapper">
 		<div id="main">
 			<div class="inner">

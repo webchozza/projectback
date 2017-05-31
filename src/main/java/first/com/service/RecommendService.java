@@ -153,8 +153,9 @@ public class RecommendService implements RecommendDAO {
 		int num = 0;
 		for(List<Pair<String, String>> repeat : result ){
 			for(int i=0; i<repeat.size();i++){
+				System.out.println(repeat.get(i));
 				if(repeat.get(i).getSecond().equals("MAG")||repeat.get(i).getSecond().equals("NNG")
-						||repeat.get(i).getSecond().equals("NNP")){
+						||repeat.get(i).getSecond().equals("NNP")||repeat.get(i).getSecond().equals("SL")){
 					list.add(num, repeat.get(i).getFirst());
 					num++;
 				}
@@ -164,14 +165,14 @@ public class RecommendService implements RecommendDAO {
 		map.put("search_list", list);
 		//형태소를 포함하는 게시글의 유사도 측정에 사용할 벡터값을 구한다
 		if(!list.isEmpty()){
-			similarlist = sqlSessionTemplate.selectList("recommend.recommendsearch",map);
+			similarlist = sqlSessionTemplate.selectList("recommend.recommendview",map);
 		}
 
 		if(!similarlist.isEmpty()){
 		map.put("similarboardlist", similarlist);
 			similarboardlist = sqlSessionTemplate.selectList("recommend.similarboard", map);
 		}
-		
+
 		return similarboardlist;
 	}
 }

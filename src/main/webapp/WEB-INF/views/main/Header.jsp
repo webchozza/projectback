@@ -4,8 +4,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="/dokky/resources/assets/css/main.css" />
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/header.js?v=1"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/js/main/weather.js?v=1"></script>
+<script src="resources/assets/js/main/header.js?v=1"></script>
+<script src="resources/assets/js/main/weather.js?v=3"></script>
 <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
 <title>Header</title>
 <style>

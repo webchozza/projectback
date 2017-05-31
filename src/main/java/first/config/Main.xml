@@ -19,9 +19,9 @@
 		<when test="searchlist.size != 0 and searchlist[0] != ''">
 			,(
 			<foreach collection="searchlist" item="search" separator="+">
-			(SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
-			+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
-			+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)))
+			(SUM(NVL((length(BOARD_TITLE) - length(replace(UPPER(BOARD_TITLE),UPPER(#{search}),''))) ,1)
+			+NVL((length(BOARD_CONTENT) - length(replace(UPPER(BOARD_CONTENT),UPPER(#{search}),''))) ,1)
+			+NVL((length(BOARD_NICKNAME) - length(replace(UPPER(BOARD_NICKNAME),UPPER(#{search}),''))) ,1)))
 			</foreach>
 	 	)as searchcount
 		</when>
@@ -57,9 +57,9 @@
 			<when test="searchlist.size != 0 and searchlist[0] != ''">
 			,(
 				<foreach collection="searchlist" item="search" separator="+">
-				(SUM(NVL((length(BOARD_TITLE) - length(replace(BOARD_TITLE,#{search},''))) ,1)
-			+NVL((length(BOARD_CONTENT) - length(replace(BOARD_CONTENT,#{search},''))) ,1)
-			+NVL((length(BOARD_NICKNAME) - length(replace(BOARD_NICKNAME,#{search},''))) ,1)))
+				(SUM(NVL((length(BOARD_TITLE) - length(replace(UPPER(BOARD_TITLE),UPPER(#{search}),''))) ,1)
+			+NVL((length(BOARD_CONTENT) - length(replace(UPPER(BOARD_CONTENT),UPPER(#{search}),''))) ,1)
+			+NVL((length(BOARD_NICKNAME) - length(replace(UPPER(BOARD_NICKNAME),UPPER(#{search}),''))) ,1)))
 				</foreach>
 			)as searchcount 
 			</when>

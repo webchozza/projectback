@@ -30,13 +30,13 @@
      ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{member_id}) 
        UNION ALL   
      SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{member_id})) 
-       UNION ALL
+       UNION
      SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{member_id})) a
    FULL OUTER JOIN
      ((SELECT board_id, DECODE(rownum,rownum,2) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} INTERSECT SELECT board_id FROM scrap WHERE member_id = #{compare_member_id}) 
        UNION ALL   
      SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM recommend WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM scrap WHERE member_id = #{compare_member_id})) 
-       UNION ALL
+       UNION
      SELECT board_id, DECODE(rownum,rownum,1) as vector FROM (SELECT board_id FROM scrap WHERE member_id = #{compare_member_id} MINUS SELECT board_id FROM recommend WHERE member_id = #{compare_member_id})) b 
    ON a.board_id = b.board_id)
      GROUP BY #{compare_member_id}
@@ -64,19 +64,19 @@
 	 	<choose>
 		 	<when test="search_list.size != 0">
 		 		<foreach collection="search_list" item="search" separator="+">
-	 				NVL(length(board_title) -  length(replace(board_title,#{search},'')),0)
+	 				NVL(length(board_title) -  length(replace(UPPER(board_title),UPPER(#{search}),'')),0)
 	 			</foreach>
 	 			as vector_title,
 	 			<foreach collection="search_list" item="search" separator="+">
-	 				NVL(length(board_content) -  length(replace(board_content,#{search},'')),0)
+	 				NVL(length(board_content) -  length(replace(UPPER(board_content),UPPER(#{search}),'')),0)
 	 			</foreach>
 	 			as vector_content,
 	 			<foreach collection="search_list" item="search" separator="+">
-	 				NVL(length(board_nickname) -  length(replace(board_nickname,#{search},'')),0)
+	 				NVL(length(board_nickname) -  length(replace(UPPER(board_nickname),UPPER(#{search}),'')),0)
 	 			</foreach>
 	 			as vector_name FROM board WHERE 
 			 	<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
-	 	 			 board_content like '%'||#{search}||'%' or board_title like '%'||#{search}||'%' or board_nickname like '%'||#{search}||'%' 
+	 	 			 UPPER(board_content) like UPPER('%'||#{search}||'%') or UPPER(board_title) like UPPER('%'||#{search}||'%') or UPPER(board_nickname) like UPPER('%'||#{search}||'%') 
 	 			</foreach>
 	 	 			) WHERE vector_title != 0 OR vector_content != 0 OR vector_name != 0 
 	 		</when>
@@ -121,7 +121,7 @@
 		 	<when test="search_list.size != 0">
 				 SELECT board_id, board_title, bgroup_id, rownum FROM (SELECT board_id, board_title, bgroup_id FROM board WHERE
 		 		<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
-	 		 	 board_content like '%'||#{search}||'%' or board_title like '%'||#{search}||'%' or board_nickname like '%'||#{search}||'%'
+	 		 	 UPPER(board_content) like UPPER('%'||#{search}||'%') or UPPER(board_title) like UPPER('%'||#{search}||'%') or UPPER(board_nickname) like UPPER('%'||#{search}||'%')
 				 </foreach>
 			 </when>
 	 </choose>
@@ -141,14 +141,13 @@
 	 		<foreach collection="similarboardlist" item="list" separator="UNION" index="i" open=" " close=" ">
 	 		(
 	 			<foreach collection="similarboardlist" item="comparelist" separator="UNION" open=" " close=" ">
-	 			SELECT ROUND(DECODE((#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+
-	 			(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}),0,NULL,(#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+
-	 			(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})+(#{list.VECTOR_NAME}*#{comparelist.VECTOR_NAME}))/
-				DECODE(SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
-				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
-				power(#{comparelist.VECTOR_NAME},2)),0,NULL,SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2)+
-				power(#{list.VECTOR_NAME},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+power(#{comparelist.VECTOR_CONTENT},2)+
-				power(#{comparelist.VECTOR_NAME},2))),5) as similarity, #{list.BOARD_ID} as board_id FROM DUAL
+	 			SELECT ROUND(DECODE((#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT})
+	 			,0,NULL,(#{list.VECTOR_TITLE}*#{comparelist.VECTOR_TITLE})+
+	 			(#{list.VECTOR_CONTENT}*#{comparelist.VECTOR_CONTENT}))/
+				DECODE(SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+
+				power(#{comparelist.VECTOR_CONTENT},2))
+				,0,NULL,SQRT(power(#{list.VECTOR_TITLE},2)+power(#{list.VECTOR_CONTENT},2))*SQRT(power(#{comparelist.VECTOR_TITLE},2)+
+				power(#{comparelist.VECTOR_CONTENT},2))),5) as similarity, #{list.BOARD_ID} as board_id FROM DUAL
 	 		</foreach>
 	 		) 
 	 		</foreach>
@@ -156,6 +155,26 @@
 		INNER JOIN board b ON a.board_id = b.board_id ORDER BY a.similarity DESC
 	 	</when>
 	 </choose>
+	 </select>
+	 
+	 <select id="recommendview" resultType="java.util.Map" parameterType="java.util.Map">
+	 SELECT board_id, vector_title, vector_content FROM (SELECT board_id, vector_title, vector_content FROM (SELECT distinct board_id, 
+	 	<choose>
+		 	<when test="search_list.size != 0">
+		 		<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_title) -  length(replace(UPPER(board_title),UPPER(#{search}),'')),0)
+	 			</foreach>
+	 			as vector_title,
+	 			<foreach collection="search_list" item="search" separator="+">
+	 				NVL(length(board_content) -  length(replace(UPPER(board_content),UPPER(#{search}),'')),0)
+	 			</foreach>
+	 			as vector_content FROM board WHERE 
+			 	<foreach collection="search_list" item="search" separator="OR" open=" " close=" ">
+	 	 			 UPPER(board_content) like UPPER('%'||#{search}||'%') or UPPER(board_title) like UPPER('%'||#{search}||'%')
+	 			</foreach>
+	 	 			) WHERE vector_title != 0 OR vector_content != 0 ) WHERE board_id != #{board_id}
+	 		</when>
+	 	</choose>
 	 </select>
 	 
 </mapper>
