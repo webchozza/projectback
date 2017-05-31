@@ -1,10 +1,13 @@
 package first.com.controller.memberpage;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,13 +41,13 @@ public class MemberPage {
 	
 	//회원정보 화면 게시물 목록
 	@RequestMapping("/MemberPage.do")
-	public String followMain(@RequestParam(value="member_id") int member_id, 
+	public String followMain(@RequestParam(value="member_id", defaultValue="-1") int member_id, 
 							 @RequestParam(value="session_id", defaultValue="0") int session_id, 
 							 @RequestParam(value="n", defaultValue="0") int n,
 							 @RequestParam(value="search", required=false, defaultValue="") String search,
 							 @RequestParam(value="currentPage", defaultValue="1") int currentPage,
 							 @RequestParam(value="ap", required=false) String ap,
-							 Model model){
+							 Model model) throws IOException{
 		
 		startrow = ((currentPage-1) * blockCount)+1;
 		endrow = (startrow + blockCount)-1;

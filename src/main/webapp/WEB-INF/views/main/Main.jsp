@@ -25,13 +25,13 @@
 										</c:url>
 									<tr>
 										<td><a href="${detailurl}" style="color:#505052;">${colist.BOARD_TITLE}</a></td>
-										<td><a href="${detailurl}">${colist.BOARD_NICKNAME}</a></td>
+										<td><a href="/dokky/MemberPage.do?member_id=${colist.MEMBER_ID}&session_id=${sessionScope.member_id}">${colist.BOARD_NICKNAME}</a></td>
 									</tr>
 								</c:forEach>
 							</table>
 						</div>
 						<ul class="actions">
-							<li><a href="/dokky/bqnalist.do" class="button">더 보기</a></li>
+							<li><a href="/dokky/bfreelist.do" class="button">더 보기</a></li>
 						</ul>
 					</article>
 
@@ -48,13 +48,13 @@
 										</c:url>
 									<tr>
 										<td><a href="${detailurl}" style="color:#505052;">${qnlist.BOARD_TITLE}</a></td>
-										<td><a href="${detailurl}">${qnlist.BOARD_NICKNAME}</a></td>
+										<td><a href="/dokky/MemberPage.do?member_id=${qnlist.MEMBER_ID}&session_id=${sessionScope.member_id}">${qnlist.BOARD_NICKNAME}</a></td>
 									</tr>
 								</c:forEach>
 							</table>
 						</div>
 						<ul class="actions">
-							<li><a href="#" class="button">더 보기</a></li>
+							<li><a href="/dokky/bqnalist.do" class="button">더 보기</a></li>
 						</ul>
 						<h3>OpenSource</h3>
 						<div class="table-wrapper" style="height: 275px;">
@@ -67,13 +67,13 @@
 										</c:url>
 									<tr>
 										<td><a href="${detailurl}" style="color:#505052;">${oslist.BOARD_TITLE}</a></td>
-										<td><a href="${detailurl}">${oslist.BOARD_NICKNAME}</a></td>
+										<td><a href="/dokky/MemberPage.do?member_id=${oslist.MEMBER_ID}&session_id=${sessionScope.member_id}">${oslist.BOARD_NICKNAME}</a></td>
 									</tr>
 								</c:forEach>
 							</table>
 						</div>
 						<ul class="actions">
-							<li><a href="#" class="button">더 보기</a></li>
+							<li><a href="/dokky/bcodelist.do" class="button">더 보기</a></li>
 						</ul>
 					</article>
 
