@@ -66,7 +66,7 @@
 						style="width: 300pt;" placeholder="제목" />
 				</div>
 				<div class="12u$">
-					<textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;" placeholder="내용을 입력하세요."></textarea>
+					<textarea name="board_content" id="smarteditor" rows="10" cols="100" style="width:50%; height:412px;" placeholder="내용을 입력하세요."></textarea>
 				</div>
 				<div class="6u 12u$(xsmall)" style="width: 300pt;">
 					<textarea name="board_tag" id="message"

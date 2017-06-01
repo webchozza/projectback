@@ -27,16 +27,18 @@ display:none;
 					</colgroup>
 					<thead>
 						<tr>
-							<span colspan="2">
+							<div style="display:inline-block;">
 							<a href="bqnalist.do?sort=&search=${search }&n=${n}" style="color: #000000; font-weight:bold">최신순</a> 
 							<a href="bqnalist.do?sort=like&search=${search }&n=${n}"style="color: #000000; font-weight:bold">추천순</a> 
 							<a href="bqnalist.do?sort=comment&search=${search }&n=${n}"style="color: #000000; font-weight:bold">댓글순</a>
 							<a href="bqnalist.do?sort=comment&search=${search }&n=${n}"style="color: #000000; font-weight:bold">스크랩순</a> 
-							<a href="bqnalist.do?sort=hit&search=${search }&n=${n}"style="color: #000000; font-weight:bold">조회순</a></span>
-							<td colspan="2" align="right">
+							<a href="bqnalist.do?sort=hit&search=${search }&n=${n}"style="color: #000000; font-weight:bold">조회순</a>
+							</div>
 							<c:if test="${sessionScope.member_email ne null}">
+							<div style="display:inline-block; position:relative; left:670px;">
 							<a href="bqnawriteform.do" class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a>
-						</c:if></td>
+							</div>
+						</c:if>
 						</tr>
 					</thead>
 					<tbody>
