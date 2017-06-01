@@ -229,12 +229,13 @@ public class BcodeController {
 			
 			return new ModelAndView("redirect:/bcodelist.do");
 		}else{
-			
+			dTO.setBoard_tag(tagService.insertTag(dTO.getBoard_tag(), 1));//bgroup_id=1
+			bcode.bcodeInsert(dTO);
+
 			// by eongoo, new board noti
 			noti.insertNewBoardNoti(Integer.parseInt(request.getParameter("member_id")), "/bcodedetail", 1);
 			//
-			dTO.setBoard_tag(tagService.insertTag(dTO.getBoard_tag(), 1));//bgroup_id=1
-			bcode.bcodeInsert(dTO);
+			
 			return new ModelAndView("redirect:/bcodelist.do");
 		}
 

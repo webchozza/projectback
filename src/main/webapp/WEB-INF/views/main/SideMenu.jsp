@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="/resources/assets/js/main/sidemenu.js?v=3"></script>
+<script src="resources/assets/js/main/sidemenu.js?v=6"></script>
 <script>
 
 $(document).ready(function(){
