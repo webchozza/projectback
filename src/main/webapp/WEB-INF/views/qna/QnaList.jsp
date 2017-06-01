@@ -35,7 +35,7 @@ display:none;
 							<a href="bqnalist.do?sort=hit&search=${search }&n=${n}"style="color: #000000; font-weight:bold">조회순</a>
 							</div>
 							<c:if test="${sessionScope.member_email ne null}">
-							<div style="display:inline-block; position:relative; left:670px;">
+							<div style="display:inline-block; position:relative; left:60%;">
 							<a href="bqnawriteform.do" class="button special"><i class="icon fa-pencil"> 새 글 쓰기</i></a>
 							</div>
 						</c:if>
