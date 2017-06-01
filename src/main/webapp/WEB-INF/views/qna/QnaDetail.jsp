@@ -128,6 +128,13 @@ function recommendcheck(checkValue){
 	}
 
 	$(document).ready(function() {
+		
+		if(window.innerWidth > 500){
+			$("#answerarea").html('');
+			$("#answerarea").html('<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" onclick="return answerdelete(\"${answercomment.bcomment_id}\",\"${detail.board_id}\",\"${currentPage}\")">');
+		}else if(window.innerWidth <= 500){
+			$("#answerarea").html('');
+		}
 		//eongoo
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
@@ -189,6 +196,15 @@ function recommendcheck(checkValue){
 	        .replace(/\*/g, '%2A')
 	        .replace(/%20/g, '+');
 	}
+	
+	$(window).resize(function(){
+		if(window.innerWidth > 500){
+			$("#answerarea").html('');
+			$("#answerarea").html('<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" onclick="return answerdelete(\"${answercomment.bcomment_id}\",\"${detail.board_id}\",\"${currentPage}\")">');
+		}else if(window.innerWidth <= 500){
+			$("#answerarea").html('');
+		}
+	});
 
 
 </script>
@@ -317,8 +333,8 @@ function recommendcheck(checkValue){
 												href="AnswerCancel.do?bcomment_id=${answercomment.bcomment_id}&board_id=${detail.board_id}&currentPage=${currentPage}"
 												class="icon fa-check-circle"
 												style="font-size: 50px; color: #00B700"></a>&nbsp;&nbsp; <br>
-											<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" 
-											onclick='return answerdelete("${answercomment.bcomment_id}","${detail.board_id}","${currentPage}")'>
+											<span id="answerarea">
+											</span>
 										</div>
 										<script>
 										function answerdelete(bcomment_id,board_id,currentPage){

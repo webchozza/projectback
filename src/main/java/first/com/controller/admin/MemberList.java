@@ -72,7 +72,9 @@ public class MemberList {
 		model.addAttribute("search", search);
 
 		if(ap != null && ap.equals("AjaxMemberListMobile")){ model.addAttribute("ap","mobile"); return "admin/MemberListMobile";
-		}else if(ap.equals("web")){ model.addAttribute("ap","web"); return "MemberList"; 
+		}else if(ap.equals("web")){ 
+			model.addAttribute("ap","web"); 
+			return "MemberList"; 
 		}else if(ap.equals("mobile")){ model.addAttribute("ap","mobile"); return "MemberList"; 
 		}else if(ap != null){ model.addAttribute("ap","web"); return "admin/MemberListPage";//at Ajax request
 		}

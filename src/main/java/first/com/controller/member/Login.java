@@ -65,7 +65,7 @@ public class Login {
 			session.setAttribute("member_name", result.getMember_name());
 			session.setAttribute("member_id", result.getMember_id());
 
-			mav.setViewName("Main");
+			mav.setViewName("redirect:main.do");
 
 			return mav;
 		} // 에러 발생할 경우 이동
@@ -87,7 +87,7 @@ public class Login {
 		// 새로운 객체 생성하여 기존에 객체에 저장한 값 delete
 		mav.addObject("member", new MemberDTO());
 		// MainForm으로 이동
-		mav.setViewName("Main");
+		mav.setViewName("redirect:main.do");
 
 		return mav;
 	}
