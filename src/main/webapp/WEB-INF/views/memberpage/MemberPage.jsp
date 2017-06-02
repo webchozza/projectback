@@ -47,7 +47,7 @@ $(document).ready(function(){
 			</div>
 		</div>
 		<div class="row 100% uniform" style="background-color: #f5f6f7; width:30%; display: inline-block; max-height:30%; position:relative; left:10px; ">
-		<div class="4u" style="width: 90%; height: 117px;">
+		<div class="4u" style="width: 90%; height: 129px;">
 		<div id="me"><span id="plusFollow" class="image fit fa fa-user-plus" style="width:110px; text-align: left; font-size: 25px; color: #f56a6a;"></span></div>
 		</div>
 		</div>

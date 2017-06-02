@@ -13,9 +13,9 @@
 			<section>
 				<div class="posts">
 					<!-- Q&A -->
-					<article style="width:40%;">
+					<article style="min-width:300px; width:40%; display:inline-block;">
 						<h3>Community</h3>
-						<div class="table-wrapper" style="height: 650px;">
+						<div class="table-wrapper" style="height:90%;">
 							<table>
 								<c:forEach var="colist" items="${main.colist}">
 										<c:url var="detailurl" value="/bfreedetail.do">
@@ -36,7 +36,7 @@
 					</article>
 
 					<!-- 구인구직 -->
-					<article style="width:40%;">
+					<article style="min-width:300px; width:40%; display:inline-block;">
 						<h3>Q&A</h3>
 						<div class="table-wrapper">
 							<table>
@@ -57,7 +57,7 @@
 							<li><a href="/dokky/bqnalist.do" class="button">더 보기</a></li>
 						</ul>
 						<h3>OpenSource</h3>
-						<div class="table-wrapper" style="height: 325px;">
+						<div class="table-wrapper" style="height: 40%;">
 							<table>
 								<c:forEach var="oslist" items="${main.oslist}">
 										<c:url var="detailurl" value="/bcodedetail.do">
