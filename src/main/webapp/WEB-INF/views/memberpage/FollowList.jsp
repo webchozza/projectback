@@ -52,7 +52,7 @@ table {
 					<tbody>
 					<c:forEach var="follow" items="${list}">
 					<tr>
-							<td width="30%" align="center"><a href="/dokky/MemberPage.do?member_id=${follow.member_id}&session_id=${sessionScope.member_id}" id="b">${follow.member_name}</a></td>
+							<td width="30%" align="center" style="min-width:200px;"><a href="/dokky/MemberPage.do?member_id=${follow.member_id}&session_id=${sessionScope.member_id}" id="b">${follow.member_name}</a></td>
 							<td width="10%" style="padding-right: 30px;"><a class="icon fa-hand-paper-o">${follow.following_count}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-hand-o-up">${follow.follower_count}</a>
 						</tr>
