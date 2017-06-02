@@ -5,7 +5,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="resources/assets/js/main/allsearchlist.js?v=1"></script>
+<script src="resources/assets/js/main/allsearchlist.js?v=3"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -73,6 +73,11 @@ $(document).ready(function(){
 		}
 	});
 });
+
+$(window).on('popstate', function(event) {
+	  var data = event.originalEvent.state;
+	    $('#area').html(data.data);
+	});
 </script>
 </head>
 <body>
@@ -107,8 +112,32 @@ $(document).ready(function(){
 					</thead>
 					<tbody>
 					<c:forEach var="board" items="${allSearchList}">
+					<c:if test="${board.bgroup_id eq 1}"><!-- qna -->
+						<c:url var="detailurl" value="/bcodedetail.do">
+							<c:param name="board_id" value="${board.board_id }"/>
+							<c:param name="currentPage" value="1"/>
+		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
+						</c:url>
+					</c:if>
+					<c:if test="${board.bgroup_id eq 2}">
+						<c:url var="detailurl" value="/bfreedetail.do">
+							<c:param name="board_id" value="${board.board_id }"/>
+							<c:param name="currentPage" value="1"/>
+		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
+						</c:url>
+					</c:if>
+					<c:if test="${board.bgroup_id eq 3}">
+						<c:url var="detailurl" value="#"/><!-- 구인구직 -->
+					</c:if>
+					<c:if test="${board.bgroup_id eq 4}">
+						<c:url var="detailurl" value="/bqnadetail.do">
+							<c:param name="board_id" value="${board.board_id }"/>
+							<c:param name="currentPage" value="1"/>
+		    				<c:param name="session_id" value="${sessionScope.member_id}"/>
+						</c:url>
+					</c:if>
 						<tr>
-							<td scope="col"><a href="javascript:a()" id="b">${board.board_title}</a></td>
+							<td scope="col"><a href="${detailurl}" id="b">${board.board_title}</a></td>
 							<td scope="col"><a class="icon fa-comment">${board.board_comment_count}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-thumbs-up">${board.board_like}</a>&nbsp;&nbsp;&nbsp; 
 							<a class="icon fa-eye">${board.board_hit}</a></td>

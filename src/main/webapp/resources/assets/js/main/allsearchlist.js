@@ -4,6 +4,8 @@ function paging(path, i, search, n) {
 		AllSearch : search,
 		n : n,
 		ap : 'AjaxPaging'
+	},function(data){
+		history.pushState({data:data},'allsearch',"/dokky/AllSearchList.do");
 	});
 }
 
@@ -17,6 +19,8 @@ function sch() {
 		currentPage : i,
 		AllSearch : AllSearch,
 		ap : 'AjaxSearch'
+	},function(data){
+		history.pushState({data:data},'allsearch',"/dokky/AllSearchList.do");
 	});
 }
 
@@ -36,5 +40,7 @@ function category(n){
 		AllSearch : AllSearch,
 		n : n,
 		ap : "AjaxCategory"
+	},function(data){
+		history.pushState({data:data},'allsearch',"/dokky/AllSearchList.do");
 	});
 }

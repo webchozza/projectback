@@ -10,7 +10,7 @@
 $(document).ready(function(){
 	
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1000px');
+		$(".inner").css('height', '1500px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 $(window).resize(function(){
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1000px');
+		$(".inner").css('height', '1500px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
@@ -124,7 +124,7 @@ display:none;
 </head>
 <body>
 	<!-- 사이드바 -->
-	<div id="sidebar" style="height:2000px;">
+	<div id="sidebar">
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">

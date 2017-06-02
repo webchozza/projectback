@@ -147,6 +147,16 @@ public class RecommendService implements RecommendDAO {
 		List<HashMap<String, Object>> similarboardlist = new ArrayList<HashMap<String, Object>>();
 
 		String str = board.getBoard_content()+board.getBoard_title()+board.getBoard_nickname();
+		
+		str = str.replaceAll("p", "").replaceAll(",", "").replaceAll("=", "").replaceAll(";", "").replaceAll("font", "")
+				.replaceAll("\\&", "").replaceAll("span", "").replaceAll("\\[", "").replaceAll("\\]", "")
+				.replaceAll("nbsp", "").replaceAll(":", "").replaceAll("==", "").replaceAll("\\+", "").replaceAll("\"", "")
+				.replaceAll("\\<", "").replaceAll("\\>", "").replaceAll("\\.", "").replaceAll("\\-", "").replaceAll("\\*", "")
+				.replaceAll("\\-", "").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("margin", "").replaceAll("bottom", "")
+				.replaceAll("rgb", "").replaceAll("style", "").replaceAll("box", "").replaceAll("color", "").replaceAll("height", "")
+				.replaceAll("width", "").replaceAll("background", "").replaceAll("gothic", "").replaceAll("border", "").replaceAll("\\?", "")
+				.replaceAll("255", "").replaceAll("size", "").replaceAll("sizing", "").replaceAll("line", "").replaceAll("/", "")
+				.replaceAll("arial", "");
 
 		List<List<Pair<String, String>>> result = komoran.analyzeWithoutSpace(str);
 		List<String> list = new ArrayList<String>();
@@ -155,7 +165,8 @@ public class RecommendService implements RecommendDAO {
 			for(int i=0; i<repeat.size();i++){
 				System.out.println(repeat.get(i));
 				if(repeat.get(i).getSecond().equals("MAG")||repeat.get(i).getSecond().equals("NNG")
-						||repeat.get(i).getSecond().equals("NNP")||repeat.get(i).getSecond().equals("SL")){
+						||repeat.get(i).getSecond().equals("NNP")||repeat.get(i).getSecond().equals("SL")
+						||repeat.get(i).getSecond().equals("SL")){
 					list.add(num, repeat.get(i).getFirst());
 					num++;
 				}
@@ -172,7 +183,7 @@ public class RecommendService implements RecommendDAO {
 		map.put("similarboardlist", similarlist);
 			similarboardlist = sqlSessionTemplate.selectList("recommend.similarboard", map);
 		}
-
+System.out.println("??");
 		return similarboardlist;
 	}
 }

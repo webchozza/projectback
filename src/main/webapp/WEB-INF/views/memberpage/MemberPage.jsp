@@ -25,6 +25,14 @@ function gosubmit1_message() {
 $(document).ready(function(){
 	followcheck("${followCheck}");
 });
+
+$(window).on('popstate', function(event) {
+	  var data = event.originalEvent.state;
+	  var session_id = $("#session_id").val();
+	  if(data == null){
+		  location.href="/dokky/MemberPage.do?member_id="+session_id;
+	  }
+	});
 </script>
 </head>
 <body>
