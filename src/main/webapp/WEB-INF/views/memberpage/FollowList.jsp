@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/follow.js?v=1"></script>
+<script src="resources/assets/js/memberpage/follow.js?v=2"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -27,6 +27,12 @@ table {
 	width: 60%;
 }
 </style>
+<script>
+$(window).on('popstate', function(event) {
+	  var data = event.originalEvent.state;
+	    $('#movearea').html(data.data);
+	});
+</script>
 </head>
 <body>
 <div id="area">

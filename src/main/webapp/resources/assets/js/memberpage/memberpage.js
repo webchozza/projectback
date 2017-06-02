@@ -8,6 +8,8 @@ $(document).ready(function(){
 		member_id : member_id,
 		currentPage : i,
 		ap : 'AjaxMemberPage'
+	},function(data){
+		history.pushState({data:data},'myboard',"/dokky/MemberPage.do");
 	});
 });
 

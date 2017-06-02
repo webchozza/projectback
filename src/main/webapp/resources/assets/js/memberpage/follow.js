@@ -8,6 +8,8 @@ function paging(path, i, search, n) {
 		n : n,
 		search : search,
 		ap : 'AjaxPaging'
+	},function(data){
+		history.pushState({data:data},'follow',"/dokky/ListFollow.do");
 	});
 }
 
@@ -23,6 +25,8 @@ function sch() {
 		currentPage : i,
 		search : search,
 		ap : 'AjaxSearch'
+	},function(data){
+		history.pushState({data:data},'follow',"/dokky/ListFollow.do");
 	});
 }
 
@@ -53,6 +57,8 @@ function scrap(){
 		currentPage : i,
 		search : search,
 		ap : 'AjaxScrap'
+	},function(data){
+		history.pushState({data:data},'scrap',"/dokky/ScrapList.do");
 	});
 }
 
@@ -68,5 +74,7 @@ function memberpage(){
 		currentPage : i,
 		search : search,
 		ap : 'AjaxMemberPage'
+	},function(data){
+		history.pushState({data:data},'myboard',"/dokky/MemberPage.do");
 	});
 }

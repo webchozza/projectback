@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="${pageContext.request.contextPath}/resources/assets/js/memberpage/scrap.js?v=1"></script>
+<script src="resources/assets/js/memberpage/scrap.js?v=2"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -22,6 +22,12 @@ border-bottom-color: #FFFFFF;
   text-decoration:none !important
 }
 </style>
+<script>
+$(window).on('popstate', function(event) {
+	  var data = event.originalEvent.state;
+	    $('#movearea').html(data.data);
+	});
+</script>
 </head>
 <body>
 <div id="movearea">
