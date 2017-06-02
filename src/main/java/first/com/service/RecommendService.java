@@ -183,7 +183,7 @@ public class RecommendService implements RecommendDAO {
 		map.put("similarboardlist", similarlist);
 			similarboardlist = sqlSessionTemplate.selectList("recommend.similarboard", map);
 		}
-System.out.println("??");
+System.out.println("계산 완료");
 		return similarboardlist;
 	}
 }

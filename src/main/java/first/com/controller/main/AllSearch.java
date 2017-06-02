@@ -41,7 +41,6 @@ public class AllSearch {
 							Model model){
 
 		if(AllSearch != null){ search = AllSearch; }
-
 		/////
 		List<String> searchtokenlist = new ArrayList<String>();
 		//true면 검색어에 공백 포함, false면 검색어에 공백 미포함
@@ -63,7 +62,6 @@ public class AllSearch {
 			searchtokenlist.add(0, search);
 		}
 		//////
-
 		startrow = ((currentPage-1) * blockCount)+1;
 		endrow = (startrow + blockCount)-1;
 		
@@ -72,7 +70,7 @@ public class AllSearch {
 		map.put("endrow", endrow);
 		map.put("searchlist",searchtokenlist);
 		map.put("category", category[n]);
-
+		System.out.println(map.get("searchlist"));
 		List<BoardDTO> list = mainSearch.allSearch(map);
 
 		totalCount = mainSearch.allBordCount(map);
@@ -90,10 +88,12 @@ public class AllSearch {
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("AllSearch", search);
 
-		if(ap != null){
+		if(ap != null && !ap.equals("AjaxPage")){
 			return "main/AllSearchList";//at Ajax request
+		}else if(ap != null && ap.equals("AjaxPage")){
+			return "main/AllSearchPage";
 		}
-		
+
 		return "AllSearchList";
 	}
 
