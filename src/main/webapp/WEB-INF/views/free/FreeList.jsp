@@ -25,8 +25,19 @@ a.tag {
 	color: #3d4449
 }
 </style>
+<script>
+$(window).on('popstate', function(event) {
+	  var data = event.originalEvent.state;
+	  if(data == null){
+		  location.href="/dokky/main.do";
+	  }else{
+	    $('#movearea').html(data.data);
+	  }
+	});
+</script>
 </head>
 <body>
+<div id="movearea">
 	<h4>Community</h4>
 
 	<!-- 바디 -->
@@ -106,6 +117,6 @@ a.tag {
 			</div>
 		</div>
 	</section>
-
+</div>
 </body>
 </html>

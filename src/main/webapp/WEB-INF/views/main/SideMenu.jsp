@@ -180,14 +180,33 @@ display:none;
 			<nav id="menu">
 				<ul>
 					<li><a href="/dokky/main.do">메인</a></li>
-					<li><a href="/dokky/bqnalist.do">Q&A게시판</a></li>
+					<li><a href="javascript:;" onclick="goQna()">Q&A게시판</a></li>
+					<script>
+					function goQna(){
+						$("#mainarea").load("/dokky/bqnalist.do",{ap:"AjaxQna"},function(data){
+							history.pushState({data:data},'Qna',"/dokky/bqnalist.do");
+						});
+					}
+					
+					function goCo(){
+						$("#mainarea").load("/dokky/bfreelist.do",{ap:"AjaxCo"},function(data){
+							history.pushState({data:data},'Co',"/dokky/bfreelist.do");
+						});
+					}
+					
+					function goCode(){
+						$("#mainarea").load("/dokky/bcodelist.do",{ap:"AjaxCode"},function(data){
+							history.pushState({data:data},'Code',"/dokky/bcodelist.do");
+						});
+					}
+					</script>
 					<li><span class="opener">구인구직</span>
 						<ul>
 							<li><a href="#">구인</a></li>
 							<li><a href="#">구직</a></li>
 						</ul></li>
-					<li><a href="/dokky/bfreelist.do">자유게시판</a></li>
-					<li><a href="/dokky/bcodelist.do">오픈소스</a></li>
+					<li><a href="javascript:;" onclick="goCo()">자유게시판</a></li>
+					<li><a href="javascript:;" onclick="goCode()">오픈소스</a></li>
 				</ul>
 			</nav>
 				<div class="mini-posts">

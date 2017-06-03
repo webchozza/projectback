@@ -7,6 +7,7 @@
 <title>Body</title>
 </head>
 <body>
+<div id="mainarea">
 	<!-- 바디 -->
 	<section id="banner">
 		<div class="content">
@@ -79,8 +80,8 @@
 
 				</div>
 			</section>
-
 		</div>
 	</section>
+</div>
 </body>
 </html>
