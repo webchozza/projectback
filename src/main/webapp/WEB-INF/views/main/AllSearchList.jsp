@@ -164,6 +164,7 @@ $(document).ready(function(){
 <input type="hidden" id="member_id" value="${member_id}"/>
 <input type="hidden" id="path" value="${path}"/>
 <input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+<input type="text" id="mpch" value="${mpch}"/>
 </form>
 </body>
 </html>

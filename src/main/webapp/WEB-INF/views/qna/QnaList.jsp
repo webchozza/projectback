@@ -16,7 +16,8 @@ $(window).on('popstate', function(event) {
 	  if(data == null){
 		  location.href="/dokky/main.do";
 	  }else{
-	    $('#movearea').html(data.data);
+		$('#movearea').before(data.header);
+	    $('#mainarea').html(data.data);
 	  }
 	});
 </script>

@@ -46,7 +46,7 @@ function codelist(line1){
 	  if(data == null){
 		  location.href="/dokky/main.do";
 	  }else{
-	    $('#codearea').html(data.data);
+	    $('#mainarea').html(data.data);
 	  }
 	});
 </script>

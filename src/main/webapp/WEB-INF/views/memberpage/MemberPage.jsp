@@ -29,10 +29,22 @@ $(document).ready(function(){
 $(window).on('popstate', function(event) {
 	  var data = event.originalEvent.state;
 	  var session_id = $("#session_id").val();
-	  if(data == null){
-		  location.href="/dokky/MemberPage.do?member_id="+session_id;
+	  var mpch = $("#mpch").val();
+	  
+	  if(mpch == "on"){
+		  $("#movearea").html(data.data);
+	  }else{
+		  $("#movearea").html("");
+	  	  $("#mainarea").html("");
+	      $("#mainarea").load("/dokky/MemberPage.do", {
+			member_id : session_id,
+			ap : "PushState",
+	      },function(){
+				$("#mpch").val("on");
+		});
 	  }
 	});
+	
 </script>
 </head>
 <body>
@@ -79,6 +91,7 @@ $(window).on('popstate', function(event) {
 <input type="hidden" name="i" id="i" value="${i}"/>
 <input type="hidden" id="path" value="${path}"/>
 <input type="hidden" id="session_id" value="${sessionScope.member_id}"/>
+<input type="hidden" id="mpch" value="${mpch}"/>
 </form>
 </body>
 </html>

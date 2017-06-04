@@ -4,7 +4,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="resources/assets/js/memberpage/myboard.js?v=6"></script>
+<script src="resources/assets/js/memberpage/myboard.js?v=4"></script>
 <title>DOKKY</title>
 <style>
 input[name=ss] {
@@ -25,7 +25,21 @@ border-bottom-color: #FFFFFF;
 <script>
 $(window).on('popstate', function(event) {
 	  var data = event.originalEvent.state;
-	    $('#movearea').html(data.data);
+	  var member_id = ${sessionScope.member_id};
+	  var mpch = $("#mpch").val();
+	  
+	  if(mpch == "on"){
+		  $("#movearea").html(data.data);
+	  }else{
+		  $("#movearea").html("");
+	  	  $("#mainarea").html("");
+	      $("#mainarea").load("/dokky/MemberPage.do", {
+			member_id : member_id,
+			ap : "PushState",
+	      },function(){
+				$("#mpch").val("on");
+		});
+	  }
 	});
 </script>
 </head>

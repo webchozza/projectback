@@ -9,7 +9,7 @@ function paging(path, i, search, n) {
 		search : search,
 		ap : 'AjaxPaging'
 	},function(data){
-		history.pushState({data:data},'follow',"/dokky/ListFollow.do");
+		history.pushState({data:data},'follow',"/dokky/MemberPage.do?member_id="+member_id);
 	});
 }
 
@@ -26,22 +26,7 @@ function sch() {
 		search : search,
 		ap : 'AjaxSearch'
 	},function(data){
-		history.pushState({data:data},'follow',"/dokky/ListFollow.do");
-	});
-}
-
-function follow(){
-	
-	var form = document.getElementById('searchform');
-	var i = form.i.value;
-	var search = form.search.value;
-	var member_id = $("#member_id").val();
-	
-	$("#movearea").load("/dokky/ListFollow.do", {
-		member_id : member_id,
-		currentPage : i,
-		search : search,
-		ap : 'AjaxFollow'
+				history.pushState({data:data},'follow',"/dokky/MemberPage.do?member_id="+member_id);
 	});
 }
 
@@ -58,7 +43,7 @@ function scrap(){
 		search : search,
 		ap : 'AjaxScrap'
 	},function(data){
-		history.pushState({data:data},'scrap',"/dokky/ScrapList.do");
+				history.pushState({data:data},'scrap',"/dokky/MemberPage.do?member_id="+member_id);
 	});
 }
 
@@ -75,6 +60,6 @@ function memberpage(){
 		search : search,
 		ap : 'AjaxMemberPage'
 	},function(data){
-		history.pushState({data:data},'myboard',"/dokky/MemberPage.do");
+				history.pushState({data:data},'myboard',"/dokky/MemberPage.do?member_id="+member_id);
 	});
 }

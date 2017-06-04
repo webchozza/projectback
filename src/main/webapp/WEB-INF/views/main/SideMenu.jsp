@@ -155,9 +155,9 @@ display:none;
 
 			<section id="icons">
 				<ul>
-					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-cog" id="notice"> 회원정보</a>
+					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-cog" id="notice" style="color: #3d4449;"> 회원정보</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/dokky/massagelist.do" class="fa-envelope-open" id="notice"> 쪽지함</a>&nbsp;<br>
+					<a href="/dokky/massagelist.do" class="fa-envelope-open" id="notice" style="color: #3d4449;"> 쪽지함</a>&nbsp;<br>
 					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;
@@ -194,17 +194,19 @@ display:none;
 						});
 					}
 					
+					function goJob(){
+						$("#mainarea").load("/dokky/bjoblist.do",{ap:"AjaxJob"},function(data){
+							history.pushState({data:data},'Job',"/dokky/bjoblist.do");
+						});
+					}
+					
 					function goCode(){
 						$("#mainarea").load("/dokky/bcodelist.do",{ap:"AjaxCode"},function(data){
 							history.pushState({data:data},'Code',"/dokky/bcodelist.do");
 						});
 					}
 					</script>
-					<li><span class="opener">구인구직</span>
-						<ul>
-							<li><a href="#">구인</a></li>
-							<li><a href="#">구직</a></li>
-						</ul></li>
+					<li><a href="javascript:;" onclick="goJob()">구인구직</a></li>
 					<li><a href="javascript:;" onclick="goCo()">자유게시판</a></li>
 					<li><a href="javascript:;" onclick="goCode()">오픈소스</a></li>
 				</ul>

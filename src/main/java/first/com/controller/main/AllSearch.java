@@ -87,13 +87,14 @@ public class AllSearch {
 		model.addAttribute("i", currentPage);
 		model.addAttribute("path", page.getFullPath());
 		model.addAttribute("AllSearch", search);
-
+		
 		if(ap != null && !ap.equals("AjaxPage")){
+			model.addAttribute("mpch", "on");
 			return "main/AllSearchList";//at Ajax request
 		}else if(ap != null && ap.equals("AjaxPage")){
 			return "main/AllSearchPage";
 		}
-
+		model.addAttribute("mpch", "on");
 		return "AllSearchList";
 	}
 

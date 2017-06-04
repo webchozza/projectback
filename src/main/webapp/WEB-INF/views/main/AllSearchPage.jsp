@@ -26,8 +26,15 @@ border-bottom-color: #FFFFFF;
 <script>
 $(window).on('popstate', function(event) {
 	  var data = event.originalEvent.state;
+	  var mpch = $("#mpch").val();
+	  
+	  if(mpch == "on"){
 	    $('#pagearea').html(data.data);
-	});
+	  }else{
+	  	  $("#mainarea").html("");
+	      $("#mainarea").load("/dokky/AllSearchList.do", { ap : "AjaxSearch" });
+	  }
+});
 </script>
 </head>
 <body>
