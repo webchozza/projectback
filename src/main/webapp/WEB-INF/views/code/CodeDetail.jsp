@@ -129,7 +129,7 @@ function recommendcheck(checkValue){
 		scrapcheck("${scrapCheck}");
 		recommendcheck("${recommendCheck}");
 		//jj
-		viewTags("${board_tag}");
+		viewTags("${detail.board_tag}");
 		
 		//eongoo
 		var board_id = $("#board_id").val();
