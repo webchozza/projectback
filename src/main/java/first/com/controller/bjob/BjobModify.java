@@ -29,7 +29,7 @@ public class BjobModify {
 		
 		String content= boardDTO.getBoard_content().replaceAll("<br />", "\r\n");
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag(tagService.modifyFormView(boardDTO.getBoard_tag(), 2));//bgroup_id=2
+		boardDTO.setBoard_tag(tagService.modifyFormView(boardDTO.getBoard_tag(), 3));//bgroup_id=2
 		mav.addObject("currentPage", request.getParameter("currentPage"));
 		mav.addObject("boardDTO", boardDTO);
 		mav.setViewName("jobModifyForm");
@@ -43,7 +43,7 @@ public class BjobModify {
 
 		String content= boardDTO.getBoard_content().replaceAll("\r\n", "<br />");
 		boardDTO.setBoard_content(content);
-		boardDTO.setBoard_tag(tagService.insertTag(boardDTO.getBoard_tag(), 2));//bgroup_id=2
+		boardDTO.setBoard_tag(tagService.insertTag(boardDTO.getBoard_tag(), 3));//bgroup_id=2
 		
 		bjobService.bjobModify(boardDTO);
 		mav.setViewName("redirect:bjobdetail.do?board_id="+boardDTO.getBoard_id()+"&currentPage="+request.getParameter("currentPage")+"&session_id="+session_id);

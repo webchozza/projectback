@@ -146,7 +146,7 @@ public class RecommendService implements RecommendDAO {
 		//유사도 계산 후 유사도 높은 순으로 6개의 게시글 정보를 담을 리스트
 		List<HashMap<String, Object>> similarboardlist = new ArrayList<HashMap<String, Object>>();
 
-		String str = board.getBoard_content()+board.getBoard_title()+board.getBoard_nickname();
+		String str = board.getBoard_content()+board.getBoard_title();
 		
 		str = str.replaceAll("p", "").replaceAll(",", "").replaceAll("=", "").replaceAll(";", "").replaceAll("font", "")
 				.replaceAll("\\&", "").replaceAll("span", "").replaceAll("\\[", "").replaceAll("\\]", "")
