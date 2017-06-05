@@ -338,7 +338,7 @@ function recommendcheck(checkValue){
 											</c:if>
 											<p>${answercomment.bcomment_content }</p>
 
-										</div>${sessionScope.member_id}, ${answercomment.member_id}
+										</div>
 										<div style="overflow: hidden; width:20%;" align="center">&nbsp;&nbsp;
 											<a
 												href="javascript:;"
