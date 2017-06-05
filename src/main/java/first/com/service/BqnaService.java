@@ -21,37 +21,37 @@ public class BqnaService implements BqnaDAO {
 	private SqlSessionTemplate SST;
 	
 	@Override
-	public List<BoardDTO> bqnaList(BqnaListDTO bqnaListDTO) {// qna 由ъ뒪�듃
+	public List<BoardDTO> bqnaList(BqnaListDTO bqnaListDTO) {// qna 리스트
 		return SST.selectList("bqna.bqnaList", bqnaListDTO);
 	}
 
 	@Override
-	public BoardDTO bqnaDetail(int id) {// qna �긽�꽭蹂닿린
+	public BoardDTO bqnaDetail(int id) {// qna 상세보기
 		return SST.selectOne("bqna.bqnaDetail", id);
 	}
 
 	@Override
-	public String bqnaWriteForm() {//湲��벐湲고뤌
+	public String bqnaWriteForm() {//글쓰기폼
 		return null;
 	}
 
 	@Override
-	public int bqnaWrite(BoardDTO boardDTO) {//qna 湲��벐湲�
+	public int bqnaWrite(BoardDTO boardDTO) {//qna 글쓰기
 		return SST.insert("bqna.bqnaWrite", boardDTO);
 	}
 
 	@Override
-	public BoardDTO bqnaModifyForm(BoardDTO boardDTO) {//�닔�젙�뤌
+	public BoardDTO bqnaModifyForm(BoardDTO boardDTO) {//수정폼
 		return boardDTO;
 	}
 
 	@Override
-	public int bqnaModify(BoardDTO boardDTO) {//�닔�젙
+	public int bqnaModify(BoardDTO boardDTO) {//수정
 		return SST.update("bqna.bqnaModify", boardDTO);
 	}
 
 	@Override
-	public int bqnaDelete(int board_id) {//�궘�젣
+	public int bqnaDelete(int board_id) {//삭제
 		return SST.delete("bqna.bqnaDelete", board_id);
 	}
 
@@ -62,17 +62,17 @@ public class BqnaService implements BqnaDAO {
 	}
 	
 	@Override
-	public List<BcommentDTO> bcqnaList(int board_id) {//�뙎湲�由ъ뒪�듃
+	public List<BcommentDTO> bcqnaList(int board_id) {//댓글리스트
 		return SST.selectList("bqna.bcqnaList", board_id);
 	}
 
 	@Override
-	public int bCqnaWrite(BcommentDTO bcommentDTO) {//�뙎湲��벐湲�
+	public int bCqnaWrite(BcommentDTO bcommentDTO) {//댓글쓰기
 		return SST.insert("bqna.bcqnaWrite", bcommentDTO);
 	}
 
 	@Override
-	public int bCqnaDelete(int board_id) {//�뙎湲��궘�젣
+	public int bCqnaDelete(int board_id) {//댓글삭제
 		return SST.delete("bqna.bcqnaDelete", board_id);
 	}
 
@@ -95,22 +95,22 @@ public class BqnaService implements BqnaDAO {
 	}
 
 	@Override
-	public int bqnaUpdateHit(int board_id) {//議고쉶�닔
+	public int bqnaUpdateHit(int board_id) {//조회수
 		return SST.update("bqna.bqnaUpdateHit", board_id);
 	}
 
 	@Override
-	public int bqnaLike(int board_id) {//異붿쿇
+	public int bqnaLike(int board_id) {//추천
 		return SST.update("bqna.bqnaUpdateLike", board_id);
 	}
 
 	@Override
-	public int bqnaUpdateCountco(int board_id) {//�뙎湲��닔 �뾽�뜲�씠�듃
+	public int bqnaUpdateCountco(int board_id) {//댓글수 업데이트
 		return SST.update("bqna.bqnaUpdateCountco", board_id);
 	}
 	
 	@Override
-	public void answerChoice(Map map){//�떟蹂�梨꾪깮
+	public void answerChoice(Map map){//답변채택
 		int check = SST.selectOne("bqna.answerconfirmcheck", map);
 		if(check==0){
 		SST.insert("bqna.bqnaAnswerChoice", map);

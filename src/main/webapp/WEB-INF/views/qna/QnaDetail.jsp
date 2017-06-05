@@ -211,7 +211,7 @@ function recommendcheck(checkValue){
 	$(window).resize(function(){
 		if(window.innerWidth > 500){
 			$("#answerarea").html('');
-			$("#answerarea").html('<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" onclick="return answerdelete(\"${answercomment.bcomment_id}\",\"${detail.board_id}\",\"${currentPage}\",\"${answercomment.answer_id}\",\"${sessionScope.member_id}\")">');
+			$("#answerarea").html('<input type="button" value="질문자 채택" class="button special" style="background-color:#00B700" onclick="return answerdelete(\"${answercomment.bcomment_id}\",\"${detail.board_id}\",\"${currentPage}\")">');
 		}else if(window.innerWidth <= 500){
 			$("#answerarea").html('');
 		}
@@ -338,23 +338,18 @@ function recommendcheck(checkValue){
 											</c:if>
 											<p>${answercomment.bcomment_content }</p>
 
-										</div>${sessionScope.member_id}, ${answercomment.member_id}
+										</div>
 										<div style="overflow: hidden; width:20%;" align="center">&nbsp;&nbsp;
 											<a
-												href="javascript:;"
+												href="AnswerCancel.do?bcomment_id=${answercomment.bcomment_id}&board_id=${detail.board_id}&currentPage=${currentPage}"
 												class="icon fa-check-circle"
-												style="font-size: 50px; color: #00B700" onclick='return answerdelete("${answercomment.bcomment_id}","${detail.board_id}","${currentPage}","${answercomment.answer_id}","${sessionScope.member_id}")'></a>&nbsp;&nbsp; <br>
+												style="font-size: 50px; color: #00B700"></a>&nbsp;&nbsp; <br>
 											<span id="answerarea">
-											<!-- 질문자 채택 취소 버튼  -->
+											<!-- 질ㅁ -->
 											</span>
 										</div>
 										<script>
-										function answerdelete(bcomment_id,board_id,currentPage,answer_id,session_id){
-											
-											if(session_id != answer_id){
-												return false;
-											}
-											
+										function answerdelete(bcomment_id,board_id,currentPage){
 											if(confirm("답변을 취소하시겠습니까?")==false){
 												return false;
 											}
