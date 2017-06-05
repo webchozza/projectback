@@ -10,7 +10,7 @@
 $(document).ready(function(){
 	
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1000px');
+		$(".inner").css('height', '1500px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 $(window).resize(function(){
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1000px');
+		$(".inner").css('height', '1500px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
@@ -124,7 +124,7 @@ display:none;
 </head>
 <body>
 	<!-- 사이드바 -->
-	<div id="sidebar" style="height:2000px;">
+	<div id="sidebar">
 		<div class="inner">
 			<!-- 서치 -->
 			<section id="search" class="alt">
@@ -155,9 +155,9 @@ display:none;
 
 			<section id="icons">
 				<ul>
-					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-cog" id="notice"> 회원정보</a>
+					<a href="/dokky/checkmodify.do?member_email=${sessionScope.member_email}" class="icon fa-cog" id="notice" style="color: #3d4449;"> 회원정보</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="/dokky/massagelist.do" class="fa-envelope-open" id="notice"> 쪽지함</a>&nbsp;<br>
+					<a href="/dokky/massagelist.do" class="fa-envelope-open" id="notice" style="color: #3d4449;"> 쪽지함</a>&nbsp;<br>
 					<a href="/dokky/logout.do?member_id=${sessionScope.member_id}" class="icon fa-sign-out" style="color: #3d4449;"> 로그아웃</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="javascript:;" id="notibutton" class="icon fa-bell alram" id="noti" onclick="notipop()"> 알림</a>&nbsp;
@@ -180,14 +180,35 @@ display:none;
 			<nav id="menu">
 				<ul>
 					<li><a href="/dokky/main.do">메인</a></li>
-					<li><a href="/dokky/bqnalist.do">Q&A게시판</a></li>
-					<li><span class="opener">구인구직</span>
-						<ul>
-							<li><a href="#">구인</a></li>
-							<li><a href="#">구직</a></li>
-						</ul></li>
-					<li><a href="/dokky/bfreelist.do">자유게시판</a></li>
-					<li><a href="/dokky/bcodelist.do">오픈소스</a></li>
+					<li><a href="javascript:;" onclick="goQna()">Q&A게시판</a></li>
+					<script>
+					function goQna(){
+						$("#mainarea").load("/dokky/bqnalist.do",{ap:"AjaxQna"},function(data){
+							history.pushState({data:data},'Qna',"/dokky/bqnalist.do");
+						});
+					}
+					
+					function goCo(){
+						$("#mainarea").load("/dokky/bfreelist.do",{ap:"AjaxCo"},function(data){
+							history.pushState({data:data},'Co',"/dokky/bfreelist.do");
+						});
+					}
+					
+					function goJob(){
+						$("#mainarea").load("/dokky/bjoblist.do",{ap:"AjaxJob"},function(data){
+							history.pushState({data:data},'Job',"/dokky/bjoblist.do");
+						});
+					}
+					
+					function goCode(){
+						$("#mainarea").load("/dokky/bcodelist.do",{ap:"AjaxCode"},function(data){
+							history.pushState({data:data},'Code',"/dokky/bcodelist.do");
+						});
+					}
+					</script>
+					<li><a href="javascript:;" onclick="goJob()">구인구직</a></li>
+					<li><a href="javascript:;" onclick="goCo()">자유게시판</a></li>
+					<li><a href="javascript:;" onclick="goCode()">오픈소스</a></li>
 				</ul>
 			</nav>
 				<div class="mini-posts">

@@ -1,4 +1,4 @@
-package first.com.controller.bqna;
+package first.com.controller.bjob;
 
 import java.util.List;
 
@@ -9,16 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import first.com.controller.bfree.BfreePaging;
-import first.com.dao.BqnaDAO;
+import first.com.dao.BjobDAO;
 import first.com.model.BoardDTO;
 
 @Controller
-public class BqnaList {
-	
+public class BjobList {
+
 	@Resource
-	private BqnaDAO bqnaService;
-	
+	private BjobDAO bjobService;
+
 	private int n;
 	private String search;
 
@@ -27,23 +26,23 @@ public class BqnaList {
 	private int blockCount = 10;
 	private int blockPage = 5;
 	private String pagingHtml;
-	private BfreePaging page;
+	private BjobPaging page;
 	private String sort;
 	
-	private BqnaListDTO bqnaListVO = new BqnaListDTO();
-	
-	@RequestMapping(value="/bqnalist")
-	public ModelAndView bqnaList(HttpServletRequest request) throws Exception {
+	private BjobListDTO bjobListVO= new BjobListDTO(); 
+
+	@RequestMapping(value = "/bjoblist")
+	public ModelAndView bjobList(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		List<BoardDTO> boardDTO = null;
-		
-		if(request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty() 
-				|| request.getParameter("currentPage").equals("0")){
+
+		if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+				|| request.getParameter("currentPage").equals("0")) {
 			currentPage = 1;
 		} else {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-	
+
 		if (request.getParameter("n") == null || request.getParameter("n").trim().isEmpty()
 				|| request.getParameter("n").equals("0")) {
 			n = 0;
@@ -62,21 +61,20 @@ public class BqnaList {
 		} else {
 			sort = request.getParameter("sort");
 		}
-		
-		bqnaListVO.setSort(sort);
-		bqnaListVO.setN(n);
-		bqnaListVO.setSearch(search);
-		boardDTO = bqnaService.bqnaList(bqnaListVO);
-		
+
+		bjobListVO.setSort(sort);
+		bjobListVO.setN(n);
+		bjobListVO.setSearch(search);
+		boardDTO = bjobService.bjobList(bjobListVO);
 		
 		totalCount = boardDTO.size();
-		page = new BfreePaging("bqnalist", currentPage, totalCount, blockCount, blockPage, search, n, sort);
+		
+		page = new BjobPaging("bjoblist", currentPage, totalCount, blockCount, blockPage, search, n, sort);
 		pagingHtml = page.getPagingHtml().toString();
-		
 		int lastCount = totalCount;
-		
 		if (page.getEndCount() < totalCount)
 			lastCount = page.getEndCount() + 1;
+		
 		boardDTO = boardDTO.subList(page.getStartCount(), lastCount);
 		
 		mav.addObject("search", search);
@@ -85,14 +83,15 @@ public class BqnaList {
 		mav.addObject("pagingHtml", pagingHtml);
 		mav.addObject("currentPage", currentPage);
 		mav.addObject("sort", sort);
-		mav.addObject("bqnalist", boardDTO);
-		
+		mav.addObject("bjoblist", boardDTO);
+
 		if(request.getParameter("ap") != null){
-			mav.setViewName("qna/QnaList");
+			mav.setViewName("job/jobList");
 		}else{
-			mav.setViewName("QnaList");
+			mav.setViewName("jobList");
 		}
 		return mav;
 
 	}
+
 }
