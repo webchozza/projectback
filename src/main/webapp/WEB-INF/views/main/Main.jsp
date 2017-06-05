@@ -60,7 +60,7 @@
 						</ul>
 						<!-- OpenSource -->
 						<h3>OpenSource</h3>
-						<div class="table-wrapper" style="height: 33%;">
+						<div class="table-wrapper" style="height: 36%;">
 							<table>
 								<c:forEach var="oslist" items="${main.oslist}">
 										<c:url var="detailurl" value="/bcodedetail.do">
@@ -79,6 +79,7 @@
 							<li><a href="/dokky/bcodelist.do" class="button">더 보기</a></li>
 						</ul>
 					</article>
+					<br><br><br><br><br><br>
 					<!-- Job -->
 					<article style="min-width:300px; width:87%; display:inline-block;">
 						<h3>Job</h3>

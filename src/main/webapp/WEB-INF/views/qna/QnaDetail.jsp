@@ -345,6 +345,7 @@ function recommendcheck(checkValue){
 												class="icon fa-check-circle"
 												style="font-size: 50px; color: #00B700"></a>&nbsp;&nbsp; <br>
 											<span id="answerarea">
+											<!-- 질ㅁ -->
 											</span>
 										</div>
 										<script>

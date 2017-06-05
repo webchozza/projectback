@@ -10,7 +10,7 @@
 $(document).ready(function(){
 	
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1500px');
+		$(".inner").css('height', '2000px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
@@ -70,7 +70,7 @@ $(document).ready(function(){
 
 $(window).resize(function(){
 	if(window.innerWidth > 500){
-		$(".inner").css('height', '1500px');
+		$(".inner").css('height', '2000px');
 	}else if(window.innerWidth <= 500){
 		$(".inner").css('height', '');
 	}
