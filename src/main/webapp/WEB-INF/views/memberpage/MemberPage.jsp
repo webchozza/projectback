@@ -81,6 +81,7 @@ $(window).on('popstate', function(event) {
 					</form>
 				</section></div>
 	<div id="movearea">
+	<center><img src="resources/images/mploading.gif"/></center>
 	</div>
 			<form name="note">
 		<input type="hidden" name="name_from" id="name_from"

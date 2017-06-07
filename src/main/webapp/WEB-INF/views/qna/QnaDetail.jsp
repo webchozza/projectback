@@ -295,7 +295,6 @@ function recommendcheck(checkValue){
 										<div id="scrapbutton"></div>
 										<div class="fb-share-button" data-href="http://www.facebook.com" data-layout="button" data-size="large" data-mobile-iframe="true">
 										<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.naver.com%2F&amp;src=sdkpreparse">공유하기</a></div><br><br>
-										<a id="kakao-link-btn" href="javascript:;"><img src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 								</center></td>
 							</tr>
 							<tr>
@@ -384,7 +383,7 @@ function recommendcheck(checkValue){
 												<i><fmt:formatDate value="${clist.bcomment_date }"
 														pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp;
 												<c:if test="${sessionScope.member_email ne null}">
-													<c:if test="${sessionScope.member_id==clist.member_id}">
+													<c:if test="${sessionScope.member_id==clist.member_id or sessionScope.member_id == 5}">
 
 														<a
 															href="bqnadeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${detail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}"
@@ -454,7 +453,7 @@ function recommendcheck(checkValue){
 								<td colspan="2" align="right">
 									<div align="right">
 										<c:if test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id==detail.member_id }">
+											<c:if test="${sessionScope.member_id==detail.member_id or sessionScope.member_id == 5}">
 												<a
 													href="bqnamodifyform.do?board_id=${detail.board_id }&currentPage=${currentPage}"
 													class="button">수정</a>

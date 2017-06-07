@@ -88,6 +88,8 @@ function weather(url){
 			var main = '<img src="resources/images/Rain.jpg" style="width:65px;">';
 		}else if(main == "Thunderstorm"){
 			var main = '<img src="resources/images/thunder.png" style="width:65px;">';
+		}else if(main == "Drizzle"){
+			var main = '<img src="resources/images/drizzle.png" style="width:60px;">';
 		}
 
 		var str = '<div style="display: inline-block;"><b style="font-size:25px;">&nbsp;'+n+'</b><br>'+main+'</div>'+'<div style="display: inline-block;"><img src="resources/images/Humidity.jpg" style="width:10px;"><b>  '+humidity+'</b>%<br>';

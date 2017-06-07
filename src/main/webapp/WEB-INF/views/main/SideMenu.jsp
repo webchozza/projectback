@@ -211,6 +211,7 @@ display:none;
 					<li><a href="javascript:;" onclick="goCode()">오픈소스</a></li>
 				</ul>
 			</nav>
+			<c:if test="${sessionScope.member_id ne 5}">
 				<div class="mini-posts">
 					<article>
 					<b><p id="recotitle" style="position:relative; bottom:35px; color:#398ECF; font-size:15px;">
@@ -219,6 +220,7 @@ display:none;
 					<div id="recodiv" style="position:relative; bottom:60px;">
 					</div>
 				</div>
+			</c:if>
 		</div>
 	</div>
 	

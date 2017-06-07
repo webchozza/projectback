@@ -243,7 +243,7 @@ function recommendcheck(checkValue){
 										<i><fmt:formatDate value="${clist.bcomment_date }"
 												pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp; <c:if
 											test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id==clist.member_id}">
+											<c:if test="${sessionScope.member_id==clist.member_id or sessionScope.member_id == 5}">
 
 												<a
 													href="bjobdeletecomment.do?bcomment_id=${clist.bcomment_id }&board_id=${bjobDetail.board_id}&currentPage=${currentPage}&session_id=${sessionScope.member_id}"
@@ -290,7 +290,7 @@ function recommendcheck(checkValue){
 									<div align="right">
 										<c:if test="${sessionScope.member_email ne null}">
 											<c:if
-												test="${sessionScope.member_id==bjobDetail.member_id }">
+												test="${sessionScope.member_id==bjobDetail.member_id or sessionScope.member_id == 5}">
 												<a
 													href="bjobmodifyform.do?board_id=${bjobDetail.board_id }&currentPage=${currentPage}"
 													class="button">수정</a>

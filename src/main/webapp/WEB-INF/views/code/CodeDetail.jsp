@@ -266,7 +266,7 @@ function recommendcheck(checkValue){
 									<td colspan="2"><strong><a href="MemberPage.do?member_id=${detail3.member_id }">${detail3.member_name}</a></strong>
 										<i><fmt:formatDate value="${detail3.bcomment_date }" pattern="yyyy.MM.dd hh:mm" /></i>&nbsp;&nbsp;&nbsp; 
 										<c:if test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id eq detail3.member_id}">
+											<c:if test="${sessionScope.member_id eq detail3.member_id or sessionScope.member_id == 5}">
 												<a href="/dokky/bcodedeletecomment.do?board_id=${detail3.board_id}&session_id=${sessionScope.member_id}&bcomment_id=${detail3.bcomment_id}"
 													class="icon fa-trash"
 													style="font-size: 14px; color: #7f888f"
@@ -309,7 +309,7 @@ function recommendcheck(checkValue){
 								<td colspan="2" align="right">
 									<div align="right">
 										<c:if test="${sessionScope.member_email ne null}">
-											<c:if test="${sessionScope.member_id==detail.member_id }">
+											<c:if test="${sessionScope.member_id==detail.member_id or sessionScope.member_id == 5}">
 												<a href="bcodewrite.do?board_id=${detail.board_id }"
 													class="button">수정</a>
 										<a href="/dokky/bcodedelete.do?board_id=<c:out value="${detail.board_id}"/>&session_id=${sessionScope.member_id}" onclick="return deleteconfirm()" class="button">삭제</a>
